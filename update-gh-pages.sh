@@ -12,7 +12,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   cp -Rf $HOME/_site/* .
 
   git add -f .
-  git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages"
+  git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to master"
   git push -fq origin master > /dev/null
 
   echo -e "Done magic with coverage\n"
