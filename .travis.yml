@@ -6,7 +6,11 @@ env:
 
 branches:
   except:
-    - gh-pages
+    - master
+
+branches:
+  only:
+    - develop
 
 script: rake travis
 
