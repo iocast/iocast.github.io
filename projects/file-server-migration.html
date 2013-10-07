@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>iocast ~ file-server-migration</title>
+        
+        <link rel="stylesheet" href="/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!--[if lt IE 9]>
+         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+         <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Posts</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                
+                
+                <h3>Project Info</h3>
+                <ul>
+                    
+                    <li><a href="https://github.com/iocast/file-server-migration/zipball/master">Download <strong>ZIP File</strong></a></li>
+                    
+                    
+                    
+                    
+                    <li><a href="https://github.com/iocast/file-server-migration/issues/new">Report<strong>An Issue</strong></a></li>
+                    
+                    
+                    <li><a href="http://github.com/iocast/file-server-migration">Fork On <strong>GitHub</strong></a></li>
+                    
+                </ul>
+                
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+            </header>
+            <section>
+                <h1>file server migration tool</h1>
+
+<p>This bash scripts conntects to a server, syncs all configured folders to the local machines and sets on the local folders the defined permissons. The intention of this tool is to automate a migration or "data clone" of a Mac OS X file server, e.g. to move to a Active Directory bassed login mechanism.</p>
+
+<p>The cornerstones are <code>rsync</code> and bash json reader called <a href="http://stedolan.github.io/jq/">jq</a> which is included in this repository.</p>
+
+<p>NOTE: This script can also be used to <strong>propagate the posix and/or ACLs</strong> on a system without using the sync and share mechanism.</p>
+
+
+<h2>Preperation</h2>
+
+The following steps need to be done antecedent:
+
+<ol>
+    <li>rsa key creation</li>
+    <ul>
+        <li><code>cd ~/.ssh/</code> (goes to the default key location)</li>
+        <li><code>ssh-keygen -t rsa -C "mail address"</code> (creates a new rsa key pair)</li>
+        <li><code>pbcopy < ~/.ssh/id_rsa.pub</code> (copies the public key to the clipboard)</li>
+    </ul>
+    <li>configuration of the source server</li>
+    <ul>
+        <li><code>vim ~/.ssh/authorized_keys</code> (edits/creates a new authorized key file)</li>
+        <li>paste the clipboard (rsa public key) to the <code>authorized_keys</code> file</li>
+    </ul>
+    <li>changing rsync rights on the source server</li>
+    <ul>
+        <li><code>sudo visudo</code> (edits the sudoers)</li>
+        <li><code>&gt;user&lt; ALL= NOPASSWD:/usr/bin/rsync</code> (add this to the appropriate position in the file)</li>
+    </ul>
+</ol>
+    
+    
+<h2>Configuration</h2>
+    
+<p>The configuration file is a ``json`` file, which consists of four sections. First the ``source`` need to be defined which is the server from where you want to copy. Next thing is the ``destination`` from where you run this script and want to sync the files to. Then we have some configuration parts like ``rsa`` which holds the path to the private key created in the [preperation section](#preperation) and the prefix for the ``log`` file.</p>
+    
+<p>The last section defines all the folders/shares to be synced from the source to the destination server. The ``folder`` defines the folder name on the source system, ``name`` the share name to be created. If it is empty it will use the ``folder`` name as share name. Next you define a list of ACLs. Here you define the ``group``, ``access``, and ``permisson`` according to the [chmod man page](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/chmod.1.html).</p>
+    
+<p>In addition you can define for each folder/share if it need to be synced from the source to the destination, if the posix or ACLs rights need to be propagated or if you want to create a share. Set for that the desired boolean value on the appropriate attriubte. For more information about OS X sharing consider the [sharing man page](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/sharing.1.html).</p>
+    
+<p>Following a example how to define a configuration file:</p>
+    
+<div class="highlight"><pre><code class="json"><span class="p">{</span>
+	<span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;server&gt;:/&lt;path&gt;&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span>
+	<span class="p">},</span>
+	<span class="nt">&quot;destination&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/&lt;path&gt;&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;staff&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;modus&quot;</span><span class="p">:</span> <span class="s2">&quot;Du=rwx,Dg=,Do=,Fu=rwx,Fg=,Fo=&quot;</span>
+	<span class="p">},</span>
+	<span class="nt">&quot;rsa&quot;</span><span class="p">:</span> <span class="s2">&quot;/&lt;path-to-private-rsa-key&gt;&quot;</span><span class="p">,</span>
+	<span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;./&lt;log-prefix&gt;&quot;</span><span class="p">,</span>
+	<span class="nt">&quot;shares&quot;</span><span class="p">:</span> <span class="p">[{</span>
+		<span class="nt">&quot;folder&quot;</span><span class="p">:</span> <span class="s2">&quot;test_folder&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;acl&quot;</span> <span class="p">:</span> <span class="p">[{</span>
+			<span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;group:D\\group-admin&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;allow&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;permisson&quot;</span><span class="p">:</span> <span class="s2">&quot;readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,list,search,add_file,add_subdirectory,delete_child,read,write,append,execute,file_inherit,directory_inherit,chown&quot;</span>
+		<span class="p">},</span>
+		<span class="p">{</span>
+			<span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;group:D\\group-employees&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;allow&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;permisson&quot;</span><span class="p">:</span> <span class="s2">&quot;readattr,readextattr,readsecurity,list,search,add_file,add_subdirectory,read,file_inherit,directory_inherit&quot;</span>
+		<span class="p">}],</span>
+		<span class="nt">&quot;sync&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;posix&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;share&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;acl&quot;</span><span class="p">:</span> <span class="kc">true</span>
+	<span class="p">},</span>
+	<span class="p">{</span>
+		<span class="nt">&quot;folder&quot;</span><span class="p">:</span> <span class="s2">&quot;other_folder&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+		<span class="nt">&quot;acl&quot;</span> <span class="p">:</span> <span class="p">[{</span>
+			<span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;group:D\\group-employees&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;allow&quot;</span><span class="p">,</span>
+			<span class="nt">&quot;permisson&quot;</span><span class="p">:</span> <span class="s2">&quot;readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,list,search,add_file,add_subdirectory,delete_child,read,write,append,execute,file_inherit,directory_inherit,chown&quot;</span>
+		<span class="p">}],</span>
+		<span class="nt">&quot;sync&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;posix&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;share&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nt">&quot;acl&quot;</span><span class="p">:</span> <span class="kc">true</span>
+	<span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/javascripts/scale.fix.js"></script>
+    </body>
+</html>
