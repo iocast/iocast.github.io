@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-08T11:44:48+00:00</updated>
+    <updated>2013-10-08T11:46:19+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -153,6 +153,7 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
   git clone --quiet --branch&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;master https://&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GH_TOKEN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
 
   &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;master
+  rm -rf ./*
   cp -Rf &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/_site/* .
 
   git add -f .

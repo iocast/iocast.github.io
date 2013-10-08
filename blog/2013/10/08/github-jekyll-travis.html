@@ -154,6 +154,7 @@ travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</spa
   git clone --quiet --branch<span class="o">=</span>master https://<span class="k">${</span><span class="nv">GH_TOKEN</span><span class="k">}</span>@github.com/iocast/iocast.github.io.git master &gt; /dev/null
 
   <span class="nb">cd </span>master
+  rm -rf ./*
   cp -Rf <span class="nv">$HOME</span>/_site/* .
 
   git add -f .
