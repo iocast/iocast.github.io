@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-08T09:07:20+00:00</updated>
+    <updated>2013-10-08T09:23:14+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -35,9 +35,9 @@
     
     <entry>
         <title>Creating your own blog using github pages, jekyll and travis</title>
-        <link href="http://iocast.github.io/blog/2013/10/08/github%2Bjekyll%2Btravis.html"/>
+        <link href="http://iocast.github.io/blog/2013/10/08/github-jekyll-travis.html"/>
         <updated>2013-10-08T00:00:00+00:00</updated>
-        <id>http://iocast.github.io/blog/2013/10/08/github+jekyll+travis</id>
+        <id>http://iocast.github.io/blog/2013/10/08/github-jekyll-travis</id>
         <content type="html">&lt;p&gt;Github offers at the tme of writing three differnt types of pages: for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages (Help)&quot;&gt;users, organizations and projects&lt;/a&gt;. For th users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continous integration solution for deployment purposes.&lt;/p&gt;
