@@ -44,21 +44,17 @@
 
 <p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
 
-<p>```bash</p>
+<div class="highlight"><pre><code class="bash"><span class="c"># Creates our branch, without any parents (it&#39;s an orphan!)</span>
+git checkout --orphan develop
+<span class="c"># Remove all files from the old working tree</span>
+git rm -rf .
 
-<h1>Creates our branch, without any parents (it&rsquo;s an orphan!)</h1>
-
-<p>git checkout &ndash;orphan develop</p>
-
-<h1>Remove all files from the old working tree</h1>
-
-<p>git rm -rf .</p>
-
-<p>echo &ldquo;My GitHub Page&rdquo; > index.html
+<span class="nb">echo</span> <span class="s2">&quot;My GitHub Page&quot;</span> &gt; index.html
 git add index.html
-git commit -a -m &ldquo;First pages commit&rdquo;
+git commit -a -m <span class="s2">&quot;First pages commit&quot;</span>
 git push origin develop
-```</p>
+</code></pre></div>
+
 
 <p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to this <code>develop</code> branch.</p>
 

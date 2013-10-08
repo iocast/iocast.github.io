@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-08T07:40:36+00:00</updated>
+    <updated>2013-10-08T07:43:02+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -36,21 +36,17 @@
 
 &lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
 
-&lt;p&gt;```bash&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Creates our branch, without any parents (it&amp;#39;s an orphan!)&lt;/span&gt;
+git checkout --orphan develop
+&lt;span class=&quot;c&quot;&gt;# Remove all files from the old working tree&lt;/span&gt;
+git rm -rf .
 
-&lt;h1&gt;Creates our branch, without any parents (it&amp;rsquo;s an orphan!)&lt;/h1&gt;
-
-&lt;p&gt;git checkout &amp;ndash;orphan develop&lt;/p&gt;
-
-&lt;h1&gt;Remove all files from the old working tree&lt;/h1&gt;
-
-&lt;p&gt;git rm -rf .&lt;/p&gt;
-
-&lt;p&gt;echo &amp;ldquo;My GitHub Page&amp;rdquo; &gt; index.html
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My GitHub Page&amp;quot;&lt;/span&gt; &amp;gt; index.html
 git add index.html
-git commit -a -m &amp;ldquo;First pages commit&amp;rdquo;
+git commit -a -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;First pages commit&amp;quot;&lt;/span&gt;
 git push origin develop
-```&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Now we are ready to add our &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; page to this &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
 
