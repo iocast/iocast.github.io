@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-07T20:42:48+00:00</updated>
+    <updated>2013-10-08T05:39:30+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -28,7 +28,35 @@
         <link href="http://iocast.github.io/blog/2013/10/08/github%2Bjekyll%2Btravis.html"/>
         <updated>2013-10-08T00:00:00+00:00</updated>
         <id>http://iocast.github.io/blog/2013/10/08/github+jekyll+travis</id>
-        <content type="html">&lt;p&gt;Github offers at the tme of writing three differnt kind of pages types; for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages&quot;&gt;users, organizations and projects&lt;/a&gt;. For th users and organizations the &amp;lsquo;&amp;rsquo;&amp;lsquo;master&amp;rsquo;&amp;lsquo;&amp;rsquo; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &amp;lsquo;&amp;rsquo;&amp;lsquo;username.github.io&amp;rsquo;&amp;lsquo;&amp;rsquo;, a subpath of the user pages would be created &amp;lsquo;&amp;rsquo;&amp;lsquo;username.github.io/projectname&amp;rsquo;&amp;lsquo;&amp;rsquo;.&lt;/p&gt;
+        <content type="html">&lt;p&gt;Github offers at the tme of writing three differnt types of pages: for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages (Help)&quot;&gt;users, organizations and projects&lt;/a&gt;. For th users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continous integration solution for deployment purposes.&lt;/p&gt;
+
+&lt;h1&gt;Github&lt;/h1&gt;
+
+&lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
+
+&lt;p&gt;```bash&lt;/p&gt;
+
+&lt;h1&gt;Creates our branch, without any parents (it&amp;rsquo;s an orphan!)&lt;/h1&gt;
+
+&lt;p&gt;git checkout &amp;ndash;orphan develop&lt;/p&gt;
+
+&lt;h1&gt;Remove all files from the old working tree&lt;/h1&gt;
+
+&lt;p&gt;git rm -rf .&lt;/p&gt;
+
+&lt;p&gt;echo &amp;ldquo;My GitHub Page&amp;rdquo; &gt; index.html
+git add index.html
+git commit -a -m &amp;ldquo;First pages commit&amp;rdquo;
+git push origin develop
+```&lt;/p&gt;
+
+&lt;p&gt;Now we are ready to add our &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; page to this &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
+
+&lt;h1&gt;Jekyll&lt;/h1&gt;
+
+&lt;h1&gt;Travis CI&lt;/h1&gt;
 </content>
     </entry>
     

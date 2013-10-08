@@ -36,7 +36,35 @@
 <div class="meta_wrapper"><time datetime="2013-10-08">October  8, 2013</time><ul class="tag_list_in_post"><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/github">github</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/jekyll">jekyll</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/travis">travis</a></li></ul></div>
 
 
-<p>Github offers at the tme of writing three differnt kind of pages types; for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages">users, organizations and projects</a>. For th users and organizations the &lsquo;&rsquo;&lsquo;master&rsquo;&lsquo;&rsquo; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lsquo;&rsquo;&lsquo;username.github.io&rsquo;&lsquo;&rsquo;, a subpath of the user pages would be created &lsquo;&rsquo;&lsquo;username.github.io/projectname&rsquo;&lsquo;&rsquo;.</p>
+<p>Github offers at the tme of writing three differnt types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)">users, organizations and projects</a>. For th users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
+
+<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github">Github&rsquo;s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI">travis</a> as our continous integration solution for deployment purposes.</p>
+
+<h1>Github</h1>
+
+<p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
+
+<p>```bash</p>
+
+<h1>Creates our branch, without any parents (it&rsquo;s an orphan!)</h1>
+
+<p>git checkout &ndash;orphan develop</p>
+
+<h1>Remove all files from the old working tree</h1>
+
+<p>git rm -rf .</p>
+
+<p>echo &ldquo;My GitHub Page&rdquo; > index.html
+git add index.html
+git commit -a -m &ldquo;First pages commit&rdquo;
+git push origin develop
+```</p>
+
+<p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to this <code>develop</code> branch.</p>
+
+<h1>Jekyll</h1>
+
+<h1>Travis CI</h1>
 
 </article>
 
