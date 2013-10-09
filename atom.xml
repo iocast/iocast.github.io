@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-08T18:04:04+00:00</updated>
+    <updated>2013-10-09T07:08:56+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -13,17 +13,38 @@
     
     
     <entry>
+        <title>Mac OS X file server migration</title>
+        <link href="http://iocast.github.io/blog/2013/10/09/osx-file-server-migration.html"/>
+        <updated>2013-10-09T00:00:00+00:00</updated>
+        <id>http://iocast.github.io/blog/2013/10/09/osx-file-server-migration</id>
+        <content type="html">&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
+
+&lt;p&gt;So to solve these problems and many more I created a little bash script which is able to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sync files from a remote server using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;changing the POSIX permissions on the local server after sync&lt;/li&gt;
+&lt;li&gt;creating optionally a share point for each folder to be synced&lt;/li&gt;
+&lt;li&gt;propagating ACLs on a share point or on a individual directory.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href=&quot;/projects/file-server-migration.html&quot;&gt;server migration tool&lt;/a&gt;&lt;/p&gt;
+</content>
+    </entry>
+    
+    <entry>
         <title>Creating your own blog using github pages, jekyll and travis</title>
         <link href="http://iocast.github.io/blog/2013/10/08/github-jekyll-travis.html"/>
         <updated>2013-10-08T00:00:00+00:00</updated>
         <id>http://iocast.github.io/blog/2013/10/08/github-jekyll-travis</id>
-        <content type="html">&lt;p&gt;Github offers at the tme of writing three differnt types of pages: for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages (Help)&quot;&gt;users, organizations and projects&lt;/a&gt;. For th users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
+        <content type="html">&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages (Help)&quot;&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continous integration solution for deployment purposes.&lt;/p&gt;
+&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
 
 &lt;h2&gt;Github&lt;/h2&gt;
 
-&lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
+&lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Creates our branch, without any parents (it&amp;#39;s an orphan!)&lt;/span&gt;
 git checkout --orphan develop
@@ -41,9 +62,9 @@ git push origin develop
 
 &lt;h2&gt;Jekyll&lt;/h2&gt;
 
-&lt;p&gt;Now that we have a &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt; branch, former for the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; compliation and later for your source, we can setup our blog. As described in the &lt;a href=&quot;http://jekyllrb.com/docs/home/&quot; title=&quot;Jekyll Documentation&quot;&gt;jekyll documentation&lt;/a&gt; we need to have at least a &lt;code&gt;_layouts&lt;/code&gt; directory for the templates that wrap posts, a &lt;code&gt;_posts&lt;/code&gt; for dynamic content and the rest of html and other files for you layout.&lt;/p&gt;
+&lt;p&gt;Now that we have a &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt; branch, former for the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; compilation and later for your source, we can setup our blog. As described in the &lt;a href=&quot;http://jekyllrb.com/docs/home/&quot; title=&quot;Jekyll Documentation&quot;&gt;jekyll documentation&lt;/a&gt; we need to have at least a &lt;code&gt;_layouts&lt;/code&gt; directory for the templates that wrap posts, a &lt;code&gt;_posts&lt;/code&gt; for dynamic content and the rest of html and other files for you layout.&lt;/p&gt;
 
-&lt;p&gt;In addition we need to setup a &lt;code&gt;_config.yml&lt;/code&gt; file to tell &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; the compliation options. A example could look like the following:&lt;/p&gt;
+&lt;p&gt;In addition we need to setup a &lt;code&gt;_config.yml&lt;/code&gt; file to tell &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; the compilation options. A example could look like the following:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;./_site&lt;/span&gt;
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;lsi&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;         &lt;span class=&quot;l-Scalar-Plain&quot;&gt;true&lt;/span&gt;
@@ -82,7 +103,7 @@ git push origin develop
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;As you can see in the &lt;code&gt;.travis.yml&lt;/code&gt; file the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; doployment starts with the command &lt;code&gt;rake travis&lt;/code&gt; which is implmented in the &lt;code&gt;Rakefile&lt;/code&gt; file which uses the &lt;code&gt;Gemfile&lt;/code&gt; for ruby libraray dependencies. So create the files &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Rakefile&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
+&lt;p&gt;As you can see in the &lt;code&gt;.travis.yml&lt;/code&gt; file the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; deployment starts with the command &lt;code&gt;rake travis&lt;/code&gt; which is implemented in the &lt;code&gt;Rakefile&lt;/code&gt; file which uses the &lt;code&gt;Gemfile&lt;/code&gt; for ruby library dependencies. So create the files &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Rakefile&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
 
 &lt;p&gt;For the above &lt;code&gt;_config.yml` configuration add the follwoing RubyGem dependencies to the&lt;/code&gt;Gemfile```:&lt;/p&gt;
 
@@ -119,7 +140,7 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrytped before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
+&lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$TRAVIS_PULL_REQUEST&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; -e &lt;span class=&quot;s2&quot;&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;

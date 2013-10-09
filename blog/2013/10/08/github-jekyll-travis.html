@@ -36,16 +36,16 @@
             <section>
                 <article>
 <h1>Creating your own blog using github pages, jekyll and travis</h1>
-<div class="meta_wrapper"><time datetime="2013-10-08">October  8, 2013</time><ul class="tag_list_in_post"><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/github">github</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/jekyll">jekyll</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/travis">travis</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/bash">bash</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/continous integration">continous integration</a></li></ul></div>
+<div class="meta_wrapper"><time datetime="2013-10-08">October  8, 2013</time><ul class="tag_list_in_post"><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/github">github</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/jekyll">jekyll</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/travis">travis</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/bash">bash</a></li><li class="inline tag_list_item"><a class="tag_list_link" href="/tag/continuous integration">continuous integration</a></li></ul></div>
 
 
-<p>Github offers at the tme of writing three differnt types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)">users, organizations and projects</a>. For th users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
+<p>Github offers at the time of writing three different types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
 
-<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github">Github&rsquo;s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI">travis</a> as our continous integration solution for deployment purposes.</p>
+<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github">Github&rsquo;s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI">travis</a> as our continuous integration solution for deployment purposes.</p>
 
 <h2>Github</h2>
 
-<p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a seperate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
+<p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
 
 <div class="highlight"><pre><code class="bash"><span class="c"># Creates our branch, without any parents (it&#39;s an orphan!)</span>
 git checkout --orphan develop
@@ -63,9 +63,9 @@ git push origin develop
 
 <h2>Jekyll</h2>
 
-<p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> compliation and later for your source, we can setup our blog. As described in the <a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p>
+<p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p>
 
-<p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> the compliation options. A example could look like the following:</p>
+<p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> the compilation options. A example could look like the following:</p>
 
 <div class="highlight"><pre><code class="yaml"><span class="l-Scalar-Plain">destination</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./_site</span>
 <span class="l-Scalar-Plain">lsi</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">true</span>
@@ -104,7 +104,7 @@ git push origin develop
 </code></pre></div>
 
 
-<p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> doployment starts with the command <code>rake travis</code> which is implmented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby libraray dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
+<p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
 
 <p>For the above <code>_config.yml` configuration add the follwoing RubyGem dependencies to the</code>Gemfile```:</p>
 
@@ -141,7 +141,7 @@ travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</spa
 </code></pre></div>
 
 
-<p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrytped before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
+<p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$TRAVIS_PULL_REQUEST&quot;</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="o">]</span>; <span class="k">then</span>
 <span class="k">  </span><span class="nb">echo</span> -e <span class="s2">&quot;Starting to update master\n&quot;</span>
