@@ -4,13 +4,126 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-10T06:35:11+00:00</updated>
+    <updated>2013-10-10T06:37:37+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
         <email>iocast@me.com</email>
     </author>
     
+    
+    <entry>
+        <title>Setting up a QGIS server on CentOS 6</title>
+        <link href="http://iocast.github.io/blog/2013/10/18/qgis-server-centos.html"/>
+        <updated>2013-10-18T00:00:00+00:00</updated>
+        <id>http://iocast.github.io/blog/2013/10/18/qgis-server-centos</id>
+        <content type="html">&lt;p&gt;QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory.&lt;/p&gt;
+
+&lt;a name=&quot;Installation&quot;&gt;&lt;/a&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;First you need a running CentOS on a machine. In the default CentOS software repository &lt;code&gt;qgis-server&lt;/code&gt; is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight bash %&gt;
+wget &lt;a href=&quot;http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&quot;&gt;http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;/a&gt;&lt;version&gt;.noarch.rpm
+rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;where the version I have tested it was &lt;code&gt;6-8&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Add the ELGIS repositories&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight bash %&gt;
+wget &lt;a href=&quot;http://elgis.argeo.org/repos/6/elgis-release-&quot;&gt;http://elgis.argeo.org/repos/6/elgis-release-&lt;/a&gt;&lt;version&gt;.noarch.rpm
+rpm -Uvh elgis-release-6-6_0.noarch.rpm
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;where the version I have tested it was &lt;code&gt;6-6_0&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now install QGIS server:&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight bash %&gt;
+yum install qgis-mapserver.x86_64
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to have QGIS libraries, QGIS Desktop run the following command&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bash
+yum install qgis*
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The files are installed on CentOS:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left;&quot;&gt;Script / Config                      &lt;/th&gt;
+&lt;th style=&quot;text-align:left;&quot;&gt; Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left;&quot;&gt;/usr/libexec/qgis/qgis_mapserv.fcgi   &lt;/td&gt;
+&lt;td style=&quot;text-align:left;&quot;&gt; main fast cgi script (OGC capabilities)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left;&quot;&gt;/etc/httpd/conf.d/qgis-mapserver.conf &lt;/td&gt;
+&lt;td style=&quot;text-align:left;&quot;&gt; qgis mapserver httpd configuration file&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+&lt;p&gt;  : important files and scripts&lt;/p&gt;
+
+&lt;a name=&quot;Setting.up.qgis-web-client.on.CentOS&quot;&gt;&lt;/a&gt;
+&lt;h2&gt;Setting up qgis-web-client on CentOS&lt;/h2&gt;
+
+&lt;p&gt;Download the latest version from &lt;a href=&quot;https://github.com/qgis/qgis-web-client&quot;&gt;qgis/QGIS-Web-Client&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Copy the file &lt;code&gt;apache-conf/qgis-web-client.conf.tmpl&lt;/code&gt; to &lt;code&gt;apache-conf/qgis-web-client.conf&lt;/code&gt; and change the directories and server names according to your server setup or you could add an entry like this &lt;code&gt;127.0.0.1 qgis-web-client.localhost&lt;/code&gt; to &lt;code&gt;/etc/hosts&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In addition you need to change the log paths as follow&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight apache %&gt;
+ErrorLog /var/log/httpd/qgis-web-client-error.log
+CustomLog /var/log/httpd/qgis-web-client-access.log combined
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;Copy the whole project to the defined path in the &lt;code&gt;qgis-web-client.conf&lt;/code&gt; (it e.g. to &lt;code&gt;/var/www/qgis-web-client/&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight bash %&gt;
+mkdir /var/www/qgis-web-client
+cp -R Downloads/QGIS-Web-Client-master/* /var/www/qgis-web-client/
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;Now create a symlink of the configuration file to &lt;code&gt;/etc/httpd/conf.d/&lt;/code&gt; as follow&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;% highlight bash %&gt;
+ln -s /var/www/qgis-web-client/apache-conf/qgis-web-client.conf /etc/httpd/conf.d/
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;p&gt;Reload the server configuration&lt;/p&gt;
+
+&lt;p&gt;sudo service httpd reload
+sudo service httpd restart&lt;/p&gt;
+
+&lt;p&gt;if you get a error in &lt;code&gt;/var/log/httpd/qgis-web-client-error.log&lt;/code&gt; like this
+Premature end of script headers: qgis_mapserv.fcgi&lt;/p&gt;
+
+&lt;p&gt;you need to create a symlink&lt;/p&gt;
+
+&lt;p&gt;ln -s /usr/libexec/qgis/qgis_mapserv.fcgi /usr/local/bin/&lt;/p&gt;
+
+&lt;p&gt;and add the line&lt;/p&gt;
+
+&lt;p&gt;LoadModule fcgid_module modules/mod_fcgid.so&lt;/p&gt;
+
+&lt;p&gt;to /etc/httpd/conf/httpd.conf&lt;/p&gt;
+
+&lt;p&gt;yum install mod_wsgi&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>Mac OS X file server migration</title>

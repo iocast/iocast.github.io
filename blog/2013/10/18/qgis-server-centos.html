@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>Setting up a QGIS server on CentOS 6</title>
+        
+        <link rel="stylesheet" href="/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        
+        <script src="/javascripts/jquery-2.0.3.min.js"></script>
+
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Blog</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+            </header>
+            <section>
+                <article>
+<h1>Setting up a QGIS server on CentOS 6</h1>
+<div class="meta_wrapper">
+    <time datetime="2013-10-18">October 18, 2013</time>
+    <ul class="tag_list_in_post">
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/osx">osx</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/bash">bash</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/rsync">rsync</a></li>
+    
+    </ul>
+</div>
+
+
+<p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory.</p>
+
+<a name="Installation"></a>
+<h2>Installation</h2>
+
+<p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+
+<p>&lt;% highlight bash %>
+wget <a href="http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-">http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-</a><version>.noarch.rpm
+rpm -Uvh epel-release-<version>.noarch.rpm
+&lt;% endhighlight %></p>
+
+<p>where the version I have tested it was <code>6-8</code>.</p>
+
+<p>Add the ELGIS repositories</p>
+
+<p>&lt;% highlight bash %>
+wget <a href="http://elgis.argeo.org/repos/6/elgis-release-">http://elgis.argeo.org/repos/6/elgis-release-</a><version>.noarch.rpm
+rpm -Uvh elgis-release-6-6_0.noarch.rpm
+&lt;% endhighlight %></p>
+
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
+
+<p>Now install QGIS server:</p>
+
+<p>&lt;% highlight bash %>
+yum install qgis-mapserver.x86_64
+&lt;% endhighlight %></p>
+
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+
+<p><code>bash
+yum install qgis*
+</code></p>
+
+<p>The files are installed on CentOS:</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">Script / Config                      </th>
+<th style="text-align:left;"> Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">/usr/libexec/qgis/qgis_mapserv.fcgi   </td>
+<td style="text-align:left;"> main fast cgi script (OGC capabilities)</td>
+</tr>
+<tr>
+<td style="text-align:left;">/etc/httpd/conf.d/qgis-mapserver.conf </td>
+<td style="text-align:left;"> qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>  : important files and scripts</p>
+
+<a name="Setting.up.qgis-web-client.on.CentOS"></a>
+<h2>Setting up qgis-web-client on CentOS</h2>
+
+<p>Download the latest version from <a href="https://github.com/qgis/qgis-web-client">qgis/QGIS-Web-Client</a>.</p>
+
+<p>Copy the file <code>apache-conf/qgis-web-client.conf.tmpl</code> to <code>apache-conf/qgis-web-client.conf</code> and change the directories and server names according to your server setup or you could add an entry like this <code>127.0.0.1 qgis-web-client.localhost</code> to <code>/etc/hosts</code>.</p>
+
+<p>In addition you need to change the log paths as follow</p>
+
+<p>&lt;% highlight apache %>
+ErrorLog /var/log/httpd/qgis-web-client-error.log
+CustomLog /var/log/httpd/qgis-web-client-access.log combined
+&lt;% endhighlight %></p>
+
+<p>Copy the whole project to the defined path in the <code>qgis-web-client.conf</code> (it e.g. to <code>/var/www/qgis-web-client/</code>).</p>
+
+<p>&lt;% highlight bash %>
+mkdir /var/www/qgis-web-client
+cp -R Downloads/QGIS-Web-Client-master/* /var/www/qgis-web-client/
+&lt;% endhighlight %></p>
+
+<p>Now create a symlink of the configuration file to <code>/etc/httpd/conf.d/</code> as follow</p>
+
+<p>&lt;% highlight bash %>
+ln -s /var/www/qgis-web-client/apache-conf/qgis-web-client.conf /etc/httpd/conf.d/
+&lt;% endhighlight %></p>
+
+<p>Reload the server configuration</p>
+
+<p>sudo service httpd reload
+sudo service httpd restart</p>
+
+<p>if you get a error in <code>/var/log/httpd/qgis-web-client-error.log</code> like this
+Premature end of script headers: qgis_mapserv.fcgi</p>
+
+<p>you need to create a symlink</p>
+
+<p>ln -s /usr/libexec/qgis/qgis_mapserv.fcgi /usr/local/bin/</p>
+
+<p>and add the line</p>
+
+<p>LoadModule fcgid_module modules/mod_fcgid.so</p>
+
+<p>to /etc/httpd/conf/httpd.conf</p>
+
+<p>yum install mod_wsgi</p>
+
+</article>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/javascripts/scale.fix.js"></script>
+    </body>
+</html>
