@@ -56,19 +56,19 @@
 
 <p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
 
-<p>&lt;% highlight bash %>
-wget <a href="http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-">http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-</a><version>.noarch.rpm
-rpm -Uvh epel-release-<version>.noarch.rpm
-&lt;% endhighlight %></p>
+<div class="highlight"><pre><code class="bash">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
+</code></pre></div>
+
 
 <p>where the version I have tested it was <code>6-8</code>.</p>
 
 <p>Add the ELGIS repositories</p>
 
-<p>&lt;% highlight bash %>
-wget <a href="http://elgis.argeo.org/repos/6/elgis-release-">http://elgis.argeo.org/repos/6/elgis-release-</a><version>.noarch.rpm
+<p><code>Shell
+wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
 rpm -Uvh elgis-release-6-6_0.noarch.rpm
-&lt;% endhighlight %></p>
+</code></p>
 
 <p>where the version I have tested it was <code>6-6_0</code>.</p>
 
@@ -95,18 +95,22 @@ yum install qgis*
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">/usr/libexec/qgis/qgis_mapserv.fcgi   </td>
+<td style="text-align:left;">/usr/libexec/qgis/qgis_mapserv.fcgi    </td>
 <td style="text-align:left;"> main fast cgi script (OGC capabilities)</td>
 </tr>
 <tr>
-<td style="text-align:left;">/etc/httpd/conf.d/qgis-mapserver.conf </td>
+<td style="text-align:left;">/etc/httpd/conf.d/qgis-mapserver.conf  </td>
 <td style="text-align:left;"> qgis mapserver httpd configuration file</td>
 </tr>
 </tbody>
 </table>
 
 
-<p>  : important files and scripts</p>
+<p><code>ruby
+require 'redcarpet'
+markdown = Redcarpet.new("Hello World!")
+puts markdown.to_html
+</code></p>
 
 <a name="Setting.up.qgis-web-client.on.CentOS"></a>
 <h2>Setting up qgis-web-client on CentOS</h2>
