@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-09T14:57:02+00:00</updated>
+    <updated>2013-10-10T06:11:07+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -28,7 +28,6 @@
 &lt;li&gt;propagating ACLs on a share point or on a individual directory.&lt;/li&gt;
 &lt;/ul&gt;
 
-
 &lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href=&quot;/projects/file-server-migration.html&quot;&gt;server migration tool&lt;/a&gt;&lt;/p&gt;
 </content>
     </entry>
@@ -40,9 +39,9 @@
         <id>http://iocast.github.io/blog/2013/10/08/github-jekyll-travis</id>
         <content type="html">&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href=&quot;https://help.github.com/articles/user-organization-and-project-pages&quot; title=&quot;Github Pages (Help)&quot;&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
+&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&quot;http://github.com/&quot; title=&quot;Github&quot;&gt;Github&amp;#39;s&lt;/a&gt; user pages, &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
 
-&lt;h2&gt;Github&lt;/h2&gt;
+&lt;h2 id=&quot;toc_0&quot;&gt;Github&lt;/h2&gt;
 
 &lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
 
@@ -57,10 +56,9 @@ git commit -a -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;First pages commit&a
 git push origin develop
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Now we are ready to add our &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; page to this &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
 
-&lt;h2&gt;Jekyll&lt;/h2&gt;
+&lt;h2 id=&quot;toc_1&quot;&gt;Jekyll&lt;/h2&gt;
 
 &lt;p&gt;Now that we have a &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt; branch, former for the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; compilation and later for your source, we can setup our blog. As described in the &lt;a href=&quot;http://jekyllrb.com/docs/home/&quot; title=&quot;Jekyll Documentation&quot;&gt;jekyll documentation&lt;/a&gt; we need to have at least a &lt;code&gt;_layouts&lt;/code&gt; directory for the templates that wrap posts, a &lt;code&gt;_posts&lt;/code&gt; for dynamic content and the rest of html and other files for you layout.&lt;/p&gt;
 
@@ -77,18 +75,16 @@ git push origin develop
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;exclude&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p-Indicator&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Gemfile&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Gemfile.lock&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Rakefile&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;README.md&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;update-gh-pages.sh&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;h2&gt;Travis CI&lt;/h2&gt;
+&lt;h2 id=&quot;toc_2&quot;&gt;Travis CI&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;Travis&lt;/a&gt; is used to automatically deploy the &lt;code&gt;develop&lt;/code&gt; branch and push the result of the &lt;code&gt;jekyll build&lt;/code&gt; output to the &lt;code&gt;master&lt;/code&gt; branch which the would be published to the Github pages.&lt;/p&gt;
 
 &lt;p&gt;For that we need first to get &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; access to our Github repository. If you do not have a &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; account register one on the homepage. On The &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; homepage go to the account settings and get access to the appropriate repository like in the image below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/travis_repository_access.png&quot; title=&quot;Travis Repository Access&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/travis_repository_access.png&quot; alt=&quot;alt text&quot; title=&quot;Travis Repository Access&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;The next step is to configure the build process. For that create a new file called &lt;code&gt;.travis.yml&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch and add the &lt;code&gt;master&lt;/code&gt; branch to the blacklist and the &lt;code&gt;develop&lt;/code&gt; branch to the whitelist.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;ruby&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;yaml language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;ruby&lt;/span&gt;
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rvm&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;1.9.3&lt;/span&gt;
 
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
@@ -101,11 +97,9 @@ git push origin develop
 
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake travis&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;As you can see in the &lt;code&gt;.travis.yml&lt;/code&gt; file the &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; deployment starts with the command &lt;code&gt;rake travis&lt;/code&gt; which is implemented in the &lt;code&gt;Rakefile&lt;/code&gt; file which uses the &lt;code&gt;Gemfile&lt;/code&gt; for ruby library dependencies. So create the files &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Rakefile&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
 
-&lt;p&gt;For the above &lt;code&gt;_config.yml` configuration add the follwoing RubyGem dependencies to the&lt;/code&gt;Gemfile```:&lt;/p&gt;
+&lt;p&gt;For the above &lt;code&gt;_config.yml&lt;/code&gt; configuration add the following RubyGem dependencies to the &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://rubygems.org&amp;#39;&lt;/span&gt;
 
@@ -113,7 +107,6 @@ git push origin develop
 &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rdiscount&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;redcarpet&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;For &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; deployment add the following task to the &lt;code&gt;Rakefile&lt;/code&gt;:&lt;/p&gt;
 
@@ -124,12 +117,10 @@ git push origin develop
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Lastly we need to create a &lt;code&gt;bash&lt;/code&gt; script to push the compiled &lt;a href=&quot;http://jekyllrb.com&quot; title=&quot;Jekyll&quot;&gt;jekyll&lt;/a&gt; page to the &lt;code&gt;master&lt;/code&gt; branch. For that authorize &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; to do commits and pushed as follow:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;curl -X POST -u &amp;lt;your_github_username&amp;gt; -H &lt;span class=&quot;s2&quot;&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class=&quot;s2&quot;&gt;&amp;quot;{\&amp;quot;scopes\&amp;quot;:[\&amp;quot;public_repo\&amp;quot;],\&amp;quot;note\&amp;quot;:\&amp;quot;token for pushing from travis\&amp;quot;}&amp;quot;&lt;/span&gt; https://api.github.com/authorizations
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;and copy the &lt;code&gt;token&lt;/code&gt; key from the json result.&lt;/p&gt;
 
@@ -138,7 +129,6 @@ git push origin develop
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;gem install travis
 travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class=&quot;nv&quot;&gt;GH_TOKEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;token&amp;gt; --add env.global
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
 
@@ -164,14 +154,10 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;and add the following lines to the end of the &lt;code&gt;.travis.yml&lt;/code&gt; file:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;after_success&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;./update-gh-pages.sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-
 </content>
     </entry>
     
