@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-        <title>Posts Tagged &ldquo;qgis&rdquo;</title>
+        <title>Mac OS X file server migration</title>
         
         <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
         <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
@@ -31,62 +31,44 @@
                 <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
                 <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
                 
+                <!--
+                <h3>Miscellaneous</h3>
+                <p class="view"><a href="/bibliography.html">Bibliography</a></p>
+                 -->
+                
             </header>
             <section>
-                <h2>Posts Tagged &ldquo;qgis&rdquo;</h2>
+                <article>
+<h1>Mac OS X file server migration</h1>
+<div class="meta_wrapper">
+    <time datetime="2013-10-09">October  9, 2013</time>
+    <ul class="tag_list_in_post">
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/osx">osx</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/bash">bash</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/rsync">rsync</a></li>
+    
+    </ul>
+</div>
+
+
+<p>Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.</p>
+
+<p>So to solve these problems and many more I created a little bash script which is able to:</p>
+
 <ul>
-    
-    
-    
-    
-    
-    <li class="archive_list">
-        <time style="color:#666;font-size:11px;" datetime='2013-10-12'>10/12/13</time> <a class="archive_list_article_link" href='/blog/2013/10/12/qgis-server-centos.html'>Setting up a QGIS server and PostGIS on CentOS 6</a>
-        <p class="excerpt">asdf
-        <ul class="tag_list">
-            
-            <li class="inline archive_list"><a class="tag_list_link" href="/tag/centos">centos</a></li>
-            
-            <li class="inline archive_list"><a class="tag_list_link" href="/tag/qgis">qgis</a></li>
-            
-            <li class="inline archive_list"><a class="tag_list_link" href="/tag/server">server</a></li>
-            
-            <li class="inline archive_list"><a class="tag_list_link" href="/tag/postgresql">postgresql</a></li>
-            
-            <li class="inline archive_list"><a class="tag_list_link" href="/tag/postgis">postgis</a></li>
-            
-        </ul>
-    </li>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+<li>sync files from a remote server using <code>rsync</code></li>
+<li>changing the POSIX permissions on the local server after sync</li>
+<li>creating optionally a share point for each folder to be synced</li>
+<li>propagating ACLs on a share point or on a individual directory.</li>
 </ul>
+
+
+<p>Each of these feature can be used independently. For more information see the project description: <a href="/projects/file-server-migration.html">server migration tool</a></p>
+
+</article>
 
             </section>
             <footer>
