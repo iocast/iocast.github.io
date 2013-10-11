@@ -105,7 +105,10 @@ The following steps need to be done antecedent:
 		<span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/&lt;path&gt;&quot;</span><span class="p">,</span>
 		<span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
 		<span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;staff&quot;</span><span class="p">,</span>
-		<span class="nt">&quot;modus&quot;</span><span class="p">:</span> <span class="s2">&quot;Du=rwx,Dg=,Do=,Fu=rwx,Fg=,Fo=&quot;</span>
+		<span class="nt">&quot;modus&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;rsync&quot;</span><span class="p">:</span> <span class="s2">&quot;Du=rwx,Dg=,Do=,Fu=rwx,Fg=,Fo=&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;chmod&quot;</span><span class="p">:</span> <span class="s2">&quot;0700&quot;</span>
+		<span class="p">}</span>
 	<span class="p">},</span>
 	<span class="nt">&quot;rsa&quot;</span><span class="p">:</span> <span class="s2">&quot;/&lt;path-to-private-rsa-key&gt;&quot;</span><span class="p">,</span>
 	<span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;./&lt;log-prefix&gt;&quot;</span><span class="p">,</span>
