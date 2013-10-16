@@ -4,13 +4,120 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-14T11:52:26+00:00</updated>
+    <updated>2013-10-16T10:56:37+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
         <email>iocast@me.com</email>
     </author>
     
+    
+    <entry>
+        <title>icoast ~ How to install python 2.7.x on a CentOS 6 and compiling mod_wsgi against Python 2.7.x</title>
+        <link href="http://iocast.github.io/blog/2013/10/16/centos-python-modwsgi.html"/>
+        <updated>2013-10-16T00:00:00+00:00</updated>
+        <id>http://iocast.github.io/blog/2013/10/16/centos-python-modwsgi</id>
+        <content type="html">&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;a name=&quot;Getting.Python.2.7.x&quot;&gt;&lt;/a&gt;
+&lt;h2&gt;Getting Python 2.7.x&lt;/h2&gt;
+
+&lt;p&gt;The following explanations are based on a blog of &lt;a href=&quot;http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5&quot; title=&quot;Setup OSQA on CentOS 5.5 | nickhowell.co.uk&quot;&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href=&quot;http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html&quot; title=&quot;How do I compile mod_wsgi for Python 2.7&quot;&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;cd /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Extract and install it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tar -zxvf Python-2.7.5.tgz
+cd Python-2.7.5
+./configure --enable-shared
+make &amp;amp;&amp;amp; make altinstall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;yum install httpd httpd-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
+
+&lt;p&gt;Download and unpack the latest version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+cd mod_wsgi-3.4.tar.gz
+./configure --with-python=/usr/local/bin/python2.7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;whereis python
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;make &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7...&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+cd virtualenv-1.10.1
+python2.7 setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;install psycopg2&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+cd psycopg2-2.5.1
+vi setup.cfg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add the following line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;now install it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;/usr/local/bin/python2.7 setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;virtualenv-2.7 --system-site-packages ENV
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+    </entry>
     
     <entry>
         <title>icoast ~ Setting up a QGIS server and PostGIS on CentOS 6</title>
@@ -67,7 +174,7 @@
 
 &lt;p&gt;Installation:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgis2_93
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
@@ -76,9 +183,9 @@
 
 &lt;p&gt;Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;service postgresql-9.2 initdb
-service postgresql-9.2 start
-chkconfig postgresql-9.2 on
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;service postgresql-9.3 initdb
+service postgresql-9.3 start
+chkconfig postgresql-9.3 on
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
