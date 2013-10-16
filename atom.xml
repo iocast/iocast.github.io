@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-16T17:05:55+00:00</updated>
+    <updated>2013-10-16T17:55:00+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -238,7 +238,7 @@ createdb gis
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;psql gis
 CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class=&quot;s1&quot;&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
-ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;gis
+ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class=&quot;s1&quot;&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
