@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-10-16T10:56:37+00:00</updated>
+    <updated>2013-10-16T17:05:55+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -381,7 +381,7 @@ git push origin develop
 
 &lt;p&gt;For that we need first to get &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; access to our Github repository. If you do not have a &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; account register one on the homepage. On The &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; homepage go to the account settings and get access to the appropriate repository like in the image below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/travis_repository_access.png&quot; title=&quot;Travis Repository Access&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/travis_repository_access.png&quot; title=&quot;Travis Repository Access&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The next step is to configure the build process. For that create a new file called &lt;code&gt;.travis.yml&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch and add the &lt;code&gt;master&lt;/code&gt; branch to the blacklist and the &lt;code&gt;develop&lt;/code&gt; branch to the whitelist.&lt;/p&gt;
 
