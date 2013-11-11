@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-        <title>icoast ~ Setting up a QGIS server and PostGIS on CentOS 6</title>
+        <title>Setting up a QGIS server and PostGIS on CentOS 6</title>
         
         <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
         <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
@@ -39,7 +39,7 @@
             </header>
             <section>
                 <article>
-<h1>icoast ~ Setting up a QGIS server and PostGIS on CentOS 6</h1>
+<h1>Setting up a QGIS server and PostGIS on CentOS 6</h1>
 <div class="meta_wrapper">
     <time datetime="2013-10-12">October 12, 2013</time>
     <ul class="tag_list_in_post">
@@ -171,15 +171,15 @@ createdb gis
 <p>Login into the database create a user and set a encrypted password</p>
 
 <div class="highlight"><pre><code class="bash">psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span>;
-ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span>;
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
+ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
 </code></pre></div>
 
 
 <p>Now test your configuration and install PostGIS extension</p>
 
 <div class="highlight"><pre><code class="bash">psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
+CREATE EXTENSION postgis<span class="p">;</span>
 </code></pre></div>
 
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-        <title>icoast ~ Creating your own blog using github pages, jekyll and travis</title>
+        <title>Creating your own blog using github pages, jekyll and travis</title>
         
         <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
         <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
@@ -39,7 +39,7 @@
             </header>
             <section>
                 <article>
-<h1>icoast ~ Creating your own blog using github pages, jekyll and travis</h1>
+<h1>Creating your own blog using github pages, jekyll and travis</h1>
 <div class="meta_wrapper">
     <time datetime="2013-10-08">October  8, 2013</time>
     <ul class="tag_list_in_post">
@@ -165,7 +165,7 @@ travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</spa
 
 <p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$TRAVIS_PULL_REQUEST&quot;</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<div class="highlight"><pre><code class="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$TRAVIS_PULL_REQUEST&quot;</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k">  </span><span class="nb">echo</span> -e <span class="s2">&quot;Starting to update master\n&quot;</span>
 
   cp -R _site <span class="nv">$HOME</span>/_site
