@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-11-11T07:35:08+00:00</updated>
+    <updated>2013-11-11T07:59:44+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -26,7 +26,7 @@ dpkg -l | grep 'postgres\|gdal'
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;You should get a list like the following one:
-&lt;code&gt;
+&lt;code&gt;bash
 ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
