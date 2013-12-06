@@ -56,19 +56,62 @@
                 <a name="File.Server.Migration.Tool"></a>
 <h1>File Server Migration Tool</h1>
 
-<p>This bash scripts connects to a server, syncs all configured folders to the local machines and sets on the local folders the defined permissions. The intention of this tool is to automate a migration or "data clone" of a Mac OS X file server, e.g. to move to a Active Directory based login mechanism.</p>
+<p>This repository is a collection of several "helper" scripts for analyzing directory structures, migrating a file server, creating automatic user network directories based on a active directory group, propagating POSIX and ACL permissions, and refresh applications using a git repository. Each task is assigned to an individual bash script, which can be glued together by creating an own wrapper.</p>
 
-<p>The cornerstones are <code>rsync</code> and bash json reader called <a href="http://stedolan.github.io/jq/" title="./jq">jq</a> which is included in this repository.</p>
+<p>The following scripts (tasks) are available:</p>
 
-<p>NOTE: This script can also be used to <strong>propagate the posix and/or ACLs</strong> on a system without using the sync and share mechanism.</p>
+<ul>
+<li><strong><a href="#directory_analyses">directory analyses</a></strong>: currently only determining directory size (script: <code>folder_size.sh</code>)</li>
+<li><strong><a href="#file_server_migration">file server migration</a></strong>: using <code>rsync</code> to migrate data. Defining network shares only available for OS X Servers (script: <code>migrate_data.sh</code>)</li>
+<li><strong><a href="#permission_propagation">permission propagation</a></strong>: Propagating permission and manage shares (script: <code>file_server_migration.sh</code>)</li>
+<li><strong><a href="#share_management">share management</a></strong>: Propagating permission and manage shares (script: <code>file_server_migration.sh</code>)</li>
+<li><strong><a href="#user_network_share">user network directory</a></strong>: connects to a active directory and checks if network share is available (script: <code>user_network_share.sh</code>)</li>
+<li><strong><a href="#application_updater">application update</a></strong>: connects to git repositories and clones it to the local directory (scrip: <code>git_repo_udpater.sh</code>)</li>
+</ul>
 
-<a name="Preparation"></a>
-<h2>Preparation</h2>
+
+<a name="L.a.name..directory_analyses....a.Directory.Analyses"></a>
+<h2><a name="directory_analyses"></a>Directory Analyses</h2>
+
+<p>The <code>folder_size.sh</code> script analysis a directory structure and excerpts each directory size. Run it as follow</p>
+
+<pre><code class="bash">./folder_size.sh --config configs/folders.json
+</code></pre>
+
+<p>where the configuration json file consists of all folders to analyze including the depth. Let say you want to get the sizes of all folders in the directory <code>/home</code> with different depth for each folder you can do it like that.</p>
+
+<pre><code class="json">{
+    "source": "/home",
+    "folders": [
+        { "folder": "bob", "depth": 0 },
+        { "folder": "tom", "depth": 2 },
+        { "folder": "clark", "depth": 1 }
+    ],
+    "subfolders": [
+        {
+            "parent": "bob",
+            "folders": [
+                { "folder": "projects", "depth": 1 }
+            ]
+        }
+    ]
+}
+</code></pre>
+
+<p>In the <code>"subfolders"</code> attribute you can define subdirectories of a parent folder that need to be listed separately in the output.</p>
+
+<a name="L.a.id..file_server_migration....a.File.Server.Migration"></a>
+<h2><a id="file_server_migration"></a>File Server Migration</h2>
+
+<p>The file server migration script <code>migrate_data.sh</code> synchronizes directories from a remote server to the local server using <code>rsync</code>. In addition it can automatically set new POSIX rights, adding extended ACL attributes (<a href="#permission_propagation">permission propagation</a>) and <a href="#share_management">creating a shares</a>.</p>
+
+<a name="Preparation.for.unattended.synchronization"></a>
+<h3>Preparation for unattended synchronization</h3>
 
 <p>The following steps need to be done antecedent:</p>
 
 <ol>
-<li>rsa key creation
+<li>rsa key generation
 
 <ul>
 <li><code>cd ~/.ssh/</code> (goes to the default key location)</li>
@@ -76,14 +119,14 @@
 <li><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code> (copies the public key to the clipboard)</li>
 </ul>
 </li>
-<li>configuration of the source server
+<li>configuration of the remote server
 
 <ul>
 <li><code>vim ~/.ssh/authorized_keys</code> (edits/creates a new authorized key file)</li>
 <li>paste the clipboard (rsa public key) to the <code>authorized_keys</code> file</li>
 </ul>
 </li>
-<li>changing rsync rights on the source server
+<li>changing rsync rights on the remote server
 
 <ul>
 <li><code>sudo visudo</code> (edits the sudoers)</li>
@@ -94,9 +137,9 @@
 
 
 <a name="Configuration"></a>
-<h2>Configuration</h2>
+<h3>Configuration</h3>
 
-<p>The configuration file is a <code>json</code> file, which consists of four sections. First the <code>source</code> need to be defined which is the server from where you want to copy. Next thing is the <code>destination</code> from where you run this script and want to sync the files to. Then we have some configuration parts like <code>rsa</code> which holds the path to the private key created in the <a href="#preparation">preparation section</a> and the prefix for the <code>log</code> file.</p>
+<p>The configuration file is a <code>json</code> file, which consists of four sections. First the <code>source</code> need to be defined which is the server from where you want to copy (remote server). Next is the <code>destination</code> from where you run this script and want to sync the files to. Then we have some configuration parts like <code>rsa</code> which holds the path to the private key created in the <a href="#preparation">preparation section</a> and the prefix for the <code>log</code> file.</p>
 
 <p>The last section defines all the folders/shares to be synced from the source to the destination server. The <code>folder</code> defines the folder name on the source system, <code>name</code> the share name to be created. If it is empty it will use the <code>folder</code> name as share name. Next you define a list of ACLs. Here you define the <code>owner</code>, <code>access</code>, and <code>permisson</code> according to the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/chmod.1.html">chmod man page</a>.</p>
 
@@ -124,18 +167,15 @@
         {
             "folder": "test_folder",
             "name": "test",
-            "acls" : [
-                {
+            "acls" : [{
                     "owner": "group:D\\group-admin",
                     "access": "allow",
                     "permission": "readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,list,search,add_file,add_subdirectory,delete_child,read,write,append,execute,file_inherit,directory_inherit,chown"
-                },
-                {
+                }, {
                     "owner": "group:D\\group-employees",
                     "access": "allow",
                     "permission": "readattr,readextattr,readsecurity,list,search,add_file,add_subdirectory,read,file_inherit,directory_inherit"
-                }
-            ],
+            }],
             "sync": true,
             "posix": true,
             "share": true,
@@ -144,13 +184,11 @@
         {
             "folder": "other_folder",
             "name": "",
-            "acls" : [
-                {
+            "acls" : [{
                     "owner": "group:D\\group-employees",
                     "access": "allow",
                     "permission": "readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,list,search,add_file,add_subdirectory,delete_child,read,write,append,execute,file_inherit,directory_inherit,chown"
-                }
-            ],
+            }],
             "sync": true,
             "posix": true,
             "share": true,
@@ -159,6 +197,55 @@
     ]
 }
 </code></pre>
+
+<a name="Run.it"></a>
+<h3>Run it</h3>
+
+<p>Now you can run it as follow:</p>
+
+<pre><code class="bash">./migrate_data.sh --config configs/shares.json --exclude configs/excludes.txt
+</code></pre>
+
+<p>where the <code>excludes.txt</code> consists of files and folders the be excluded during the synchronization process.</p>
+
+<a name="L.a.id..permission_propagation....a.Permission.propagation"></a>
+<h2><a id="permission_propagation"></a>Permission propagation</h2>
+
+<p>Maybe you have seen in the <a href="#file_server_migration">file server migration</a> description that for each folder the attributes <code>posix</code> and <code>acl</code> as well as the <code>acls</code> exists. If you want for example to propagate your POSIXs and ACLs again, you can simple set the attributes <code>sync</code> and <code>share</code> to <code>false</code> for all folders and run the script again.</p>
+
+<a name="L.a.id..share_management....a.Share.Management"></a>
+<h2><a id="share_management"></a>Share Management</h2>
+
+<p>The same procedure as in <a href="#share_management">share management</a> takes here place. To (re-)create the shares on a OS X Server you simple need to set the attributes <code>sync</code>, <code>posix</code>, and <code>acl</code> to <code>false</code> for all folders and run this script again.</p>
+
+<a name="L.a.id..user_network_share....a.User.Network.Share"></a>
+<h2><a id="user_network_share"></a>User Network Share</h2>
+
+<p>The idea of this script is create a folder for each user in a active directory group named by its username and propagate POSIX and ACL rights. All you need to do is to run the script <code>user_network_share.sh</code> an follow the onscreen prompts.</p>
+
+<pre><code class="bash">./user_network_share.sh
+</code></pre>
+
+<a name="L.a.id..application_updater....a.Application.Updater"></a>
+<h2><a id="application_updater"></a>Application Updater</h2>
+
+<p><code>git_repo_updater.sh</code> scans a defined directory for each subfolder and runs a <code>git pull</code> inside each folder.</p>
+
+<p>You can automate this script by adding the following line to the <code>crontab</code></p>
+
+<pre><code># m h dom mon dow user  command
+0  *    * * *   root    /opt/repos/git_repo_updater.sh
+</code></pre>
+
+<p>If you are using ssh to login to a git server do not add a passphrase when creating the rsa key files, because this script updates all repos unattended.</p>
+
+<p>In addition the <code>ssh-agent</code> need to be running in the background. Running these lines</p>
+
+<pre><code>echo 'eval $(ssh-agent)' &gt;&gt; /etc/profile
+echo `eval $(ssh-add)'` &gt;&gt; ~/.bash_profile
+</code></pre>
+
+<p>automatically starts the <code>ssh-agent</code> in the background.</p>
 
             </section>
             <footer>

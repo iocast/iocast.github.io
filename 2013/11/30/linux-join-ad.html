@@ -1,0 +1,17 @@
+<pre><code class="bash">apt-get install likewise-open
+domainjoin-cli join --ou Hosting/BAUG-IRL/computers/plus/servers d.ethz.ch ottmi
+</code></pre>
+
+<a name="Restricting.access.to.specific.groups"></a>
+<h3>Restricting access to specific groups</h3>
+
+<p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups (in this case 'domain admins' and 'unix admins' with a Pre-Windows 2000 domain of OMG) run:</p>
+
+<pre><code class="bash">lwconfig RequireMembershipOf "d.ethz.ch\\baug-irl-plus-admins" "d.ethz.ch\\baug-irl-plus-employees"
+lw-update-dns
+</code></pre>
+
+<p>check changes
+<code>bash
+lwconfig --detail RequireMembershipOf
+</code></p>

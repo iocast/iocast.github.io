@@ -4,13 +4,38 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-11-18T17:32:14+00:00</updated>
+    <updated>2013-12-06T14:23:46+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
         <email>iocast@me.com</email>
     </author>
     
+    
+    <entry>
+        <title>Linux Join Ad</title>
+        <link href="http://iocast.github.io/2013/11/30/linux-join-ad.html"/>
+        <updated>2013-11-30T00:00:00+00:00</updated>
+        <id>http://iocast.github.io/2013/11/30/linux-join-ad</id>
+        <content type="html">&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;apt-get install likewise-open
+domainjoin-cli join --ou Hosting/BAUG-IRL/computers/plus/servers d.ethz.ch ottmi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;a name=&quot;Restricting.access.to.specific.groups&quot;&gt;&lt;/a&gt;
+&lt;h3&gt;Restricting access to specific groups&lt;/h3&gt;
+
+&lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups (in this case 'domain admins' and 'unix admins' with a Pre-Windows 2000 domain of OMG) run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;lwconfig RequireMembershipOf &quot;d.ethz.ch\\baug-irl-plus-admins&quot; &quot;d.ethz.ch\\baug-irl-plus-employees&quot;
+lw-update-dns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;check changes
+&lt;code&gt;bash
+lwconfig --detail RequireMembershipOf
+&lt;/code&gt;&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>Installation of PostgreSQL 9.3, PostGIS 2.1, PLR with R 3.0.2 and libgdal1h (libgdal >= 1.10.0) on Ubuntu 12.03 LTS (precise)</title>
