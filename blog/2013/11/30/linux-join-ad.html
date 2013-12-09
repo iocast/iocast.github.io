@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>Joining a Active Directory on Linux - the easiest way!</title>
+        
+        <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        
+        <script src="/assets/javascripts/jquery-2.0.3.min.js"></script>
+
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Blog</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+                <!--
+                <h3>Miscellaneous</h3>
+                <p class="view"><a href="/bibliography.html">Bibliography</a></p>
+                 -->
+                
+            </header>
+            <section>
+                <article>
+<h1>Joining a Active Directory on Linux - the easiest way!</h1>
+<div class="meta_wrapper">
+    <time datetime="2013-11-30">November 30, 2013</time>
+    <ul class="tag_list_in_post">
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/centos">centos</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/qgis">qgis</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/server">server</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/postgresql">postgresql</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/postgis">postgis</a></li>
+    
+    </ul>
+</div>
+
+
+<p>The easiest way, at least for me, is to use the <code>likewise-open</code> package. You can find the official documentation <a href="https://help.ubuntu.com/community/LikewiseOpen">here</a>. Under Ubuntu you can simple install this package using <code>apt-get</code>.</p>
+
+<pre><code class="bash">apt-get install likewise-open
+</code></pre>
+
+<p>Once you have installed it, you can join a Active Directory (AD) as follow.</p>
+
+<pre><code class="bash">domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;
+</code></pre>
+
+<p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
+
+<p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
+
+<a name="Restricting.access.to.specific.groups"></a>
+<h3>Restricting access to specific groups</h3>
+
+<p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
+
+<pre><code class="bash">lwconfig RequireMembershipOf "&lt;server&gt;\\&lt;group-1&gt;" "&lt;erver&gt;\\&lt;group-2&gt;"
+lw-update-dns
+</code></pre>
+
+<p>If you forget which groups have access to you server, you could check it by running the following command:</p>
+
+<pre><code class="bash">lwconfig --detail RequireMembershipOf
+</code></pre>
+
+</article>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/assets/javascripts/scale.fix.js"></script>
+    </body>
+</html>

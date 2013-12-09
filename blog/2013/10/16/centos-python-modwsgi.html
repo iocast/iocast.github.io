@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>Python 2.7.x and mos_wsgi on a CentOS 6</title>
+        
+        <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        
+        <script src="/assets/javascripts/jquery-2.0.3.min.js"></script>
+
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Blog</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+                <!--
+                <h3>Miscellaneous</h3>
+                <p class="view"><a href="/bibliography.html">Bibliography</a></p>
+                 -->
+                
+            </header>
+            <section>
+                <article>
+<h1>Python 2.7.x and mos_wsgi on a CentOS 6</h1>
+<div class="meta_wrapper">
+    <time datetime="2013-10-16">October 16, 2013</time>
+    <ul class="tag_list_in_post">
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/centos">centos</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/server">server</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/apache">apache</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/httpd">httpd</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/python">python</a></li>
+    
+    </ul>
+</div>
+
+
+<p>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your <code>eth0</code> at startup.</p>
+
+<pre><code class="bash">vi /etc/sysconfig/network-scripts/ifcfg-eth0
+</code></pre>
+
+<p>and set <code>ONBOOT</code> to <code>yes</code>.</p>
+
+<a name="Getting.Python.2.7.x"></a>
+<h2>Getting Python 2.7.x</h2>
+
+<p>The following explanations are based on a blog of <a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk">Asim Teeshan</a> and a post on <a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7">Fire3Net</a>.</p>
+
+<p>First we need some development tools. Install the following once</p>
+
+<pre><code class="bash">yum install gcc make zlib-devel bzip2-devel openssl-devel
+</code></pre>
+
+<p>Now download the latest 2.7.x Python release and enable shared library during the configuation</p>
+
+<pre><code class="bash">cd /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+</code></pre>
+
+<p>Extract and install it:</p>
+
+<pre><code class="bash">tar -zxvf Python-2.7.5.tgz
+cd Python-2.7.5
+./configure --enable-shared
+make &amp;&amp; make altinstall
+</code></pre>
+
+<p>Install Python setuptools for using <code>easy_setup</code></p>
+
+<pre><code class="bash">wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+</code></pre>
+
+<p>Before we can install <code>mod_wsgi</code> we need to install the http development libraries</p>
+
+<pre><code class="bash">yum install httpd httpd-devel
+</code></pre>
+
+<p>Now we are ready to compile <code>mod_wsgi</code> against Python 2.7.x</p>
+
+<p>Download and unpack the latest version</p>
+
+<pre><code class="bash">wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+cd mod_wsgi-3.4.tar.gz
+./configure --with-python=/usr/local/bin/python2.7
+</code></pre>
+
+<p>Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:</p>
+
+<pre><code class="bash">whereis python
+</code></pre>
+
+<p>Once the configuration completed you can install it:</p>
+
+<pre><code class="bash">make &amp;&amp; make install
+</code></pre>
+
+<p>If you run into problems along the lines <strong>cannot load shared library libpython2.7...</strong> then you need run the <code>ldconfig</code> first to tell where the <code>libpython2.7.so*</code> files are:</p>
+
+<pre><code class="bash">ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+</code></pre>
+
+<p>Lastly we can install <code>virtualenv</code> as follow:</p>
+
+<pre><code class="bash">wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+cd virtualenv-1.10.1
+python2.7 setup.py install
+</code></pre>
+
+<p>install psycopg2</p>
+
+<pre><code class="bash">wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+cd psycopg2-2.5.1
+vi setup.cfg
+</code></pre>
+
+<p>and add the following line</p>
+
+<pre><code>pg_config=/usr/pgsql-9.3/bin/pg_config
+</code></pre>
+
+<p>now install it</p>
+
+<pre><code class="bash">/usr/local/bin/python2.7 setup.py install
+</code></pre>
+
+<p>now creating a virtual env for you web application do it as follow</p>
+
+<pre><code class="bash">virtualenv-2.7 --system-site-packages ENV
+</code></pre>
+
+</article>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/assets/javascripts/scale.fix.js"></script>
+    </body>
+</html>
