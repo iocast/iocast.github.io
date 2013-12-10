@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2013-12-09T11:51:04+00:00</updated>
+    <updated>2013-12-10T06:50:37+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -32,7 +32,7 @@
 &lt;p&gt;Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under &lt;code&gt;/home/likewise-open&lt;/code&gt; and then a subfolder named as his username.&lt;/p&gt;
 
 &lt;a name=&quot;Restricting.access.to.specific.groups&quot;&gt;&lt;/a&gt;
-&lt;h3&gt;Restricting access to specific groups&lt;/h3&gt;
+&lt;h2&gt;Restricting access to specific groups&lt;/h2&gt;
 
 &lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:&lt;/p&gt;
 
@@ -43,6 +43,14 @@ lw-update-dns
 &lt;p&gt;If you forget which groups have access to you server, you could check it by running the following command:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;lwconfig --detail RequireMembershipOf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;a name=&quot;Login&quot;&gt;&lt;/a&gt;
+&lt;h2&gt;Login&lt;/h2&gt;
+
+&lt;p&gt;Now you are able to login to your server using active directory authentication:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;ssh &amp;lt;ad_domain&amp;gt;\\&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content>
     </entry>
