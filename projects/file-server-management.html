@@ -63,8 +63,8 @@
 <ul>
 <li><strong><a href="#directory_analyses">directory analyses</a></strong>: currently only determining directory size (script: <code>folder_size.sh</code>)</li>
 <li><strong><a href="#file_server_migration">file server migration</a></strong>: using <code>rsync</code> to migrate data. Defining network shares only available for OS X Servers (script: <code>migrate_data.sh</code>)</li>
-<li><strong><a href="#permission_propagation">permission propagation</a></strong>: Propagating permission and manage shares (script: <code>file_server_migration.sh</code>)</li>
-<li><strong><a href="#share_management">share management</a></strong>: Propagating permission and manage shares (script: <code>file_server_migration.sh</code>)</li>
+<li><strong><a href="#permission_propagation">permission propagation</a></strong>: Propagating permission and manage shares (script: <code>perms_share_mgmt.sh</code>)</li>
+<li><strong><a href="#share_management">share management</a></strong>: Propagating permission and manage shares (script: <code>perms_share_mgmt.sh</code>)</li>
 <li><strong><a href="#user_network_share">user network directory</a></strong>: connects to a active directory and checks if network share is available (script: <code>user_network_share.sh</code>)</li>
 <li><strong><a href="#application_updater">application update</a></strong>: connects to git repositories and clones it to the local directory (scrip: <code>git_repo_udpater.sh</code>)</li>
 </ul>
@@ -213,6 +213,11 @@
 
 <p>Maybe you have seen in the <a href="#file_server_migration">file server migration</a> description that for each folder the attributes <code>posix</code> and <code>acl</code> as well as the <code>acls</code> exists. If you want for example to propagate your POSIXs and ACLs again, you can simple set the attributes <code>sync</code> and <code>share</code> to <code>false</code> for all folders and run the script again.</p>
 
+<p>When using the <code>migrate_data.sh</code> script as described in <a href="#file_server_migration">file server migration</a> the problem is, that it always asks for confirmation. Because of that, the <code>perms_share_mgmt.sh</code> script is also able to propagate permissions and create new shares, based on the same configuration file as in <a href="#file_server_migration">file server migration</a>.</p>
+
+<pre><code class="bash">./perms_share_mgmt.sh --config configs/shares.json
+</code></pre>
+
 <a name="L.a.id..share_management....a.Share.Management"></a>
 <h2><a id="share_management"></a>Share Management</h2>
 
@@ -224,6 +229,59 @@
 <p>The idea of this script is create a folder for each user in a active directory group named by its username and propagate POSIX and ACL rights. All you need to do is to run the script <code>user_network_share.sh</code> an follow the onscreen prompts.</p>
 
 <pre><code class="bash">./user_network_share.sh
+</code></pre>
+
+<p>Optionally you could also silently run this script using a configuration  file.</p>
+
+<pre><code class="bash">./user_network_share.sh --config configs/network_share.json
+</code></pre>
+
+<p>where <code>network_share.json</code> holds all the configuration information which you need to provide when using the onscreen prompt mode.</p>
+
+<pre><code class="json">{
+    "datasource" : {
+        "credentials": {
+            "username": "ad_user",
+            "password": "ad_password"
+        },
+        "path": "/Active Directory/D/All Domains",
+        "group": "employee-group",
+        "home": "/home/",
+        "archive": "/media/archive/"
+    },
+    "posix": {
+        "username": "root",
+        "group": "root",
+        "modus": "0700",
+    },
+    "propagation": {
+        "posix": true,
+        "acl": true
+    }
+}
+</code></pre>
+
+<p>If you want, you could automate this script using a <code>cron</code> job or under Mac OS X Server using the provided property list configuration file <code>configs/iocast.network.share.active-directory.plist</code>.</p>
+
+<p>Before you can install it, you need to change the working directory, to the path where you have installed this application.</p>
+
+<pre><code class="xml">...
+&lt;key&gt;WorkingDirectory&lt;/key&gt;
+&lt;string&gt;/opt/file-server-management&lt;/string&gt;
+...
+</code></pre>
+
+<p>Then <strong>install</strong> and load it as follow.</p>
+
+<pre><code class="bash">ln -s /opt/file-server-management/configs/iocast.network.share.active-directory.plist /Library/LaunchDaemons/
+launchctl load -w /Library/LaunchDaemons/iocast.network.share.active-directory.plist
+launchctl start iocast.network.share.active-directory
+</code></pre>
+
+<p>To <strong>uninstall</strong> it run these commands</p>
+
+<pre><code class="bash">launchctl unload /Library/LaunchDaemons/iocast.network.share.active-directory.plist
+rm -f /Library/LaunchDaemons/iocast.network.share.active-directory.plist
 </code></pre>
 
 <a name="L.a.id..application_updater....a.Application.Updater"></a>
