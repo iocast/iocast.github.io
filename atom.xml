@@ -4,7 +4,7 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2014-01-21T17:13:31+00:00</updated>
+    <updated>2014-01-24T16:35:03+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
@@ -56,10 +56,10 @@ lw-update-dns
     </entry>
     
     <entry>
-        <title>PGSQL 9.3 with PostGIS 2.1 and PL/R against libgdal1h from scratch</title>
-        <link href="http://iocast.github.io/blog/2013/11/11/postgresql-postgis-plr-libgdal1h.html"/>
+        <title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title>
+        <link href="http://iocast.github.io/blog/2013/11/11/ubuntu-postgresql-postgis-plr-libgdal1h.html"/>
         <updated>2013-11-11T00:00:00+00:00</updated>
-        <id>http://iocast.github.io/blog/2013/11/11/postgresql-postgis-plr-libgdal1h</id>
+        <id>http://iocast.github.io/blog/2013/11/11/ubuntu-postgresql-postgis-plr-libgdal1h</id>
         <content type="html">&lt;a name=&quot;Removing.preinstalled.packages&quot;&gt;&lt;/a&gt;
 &lt;h2&gt;Removing preinstalled packages&lt;/h2&gt;
 
