@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>iocast ~ database-server-management</title>
+        
+        <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        
+        <script src="/assets/javascripts/jquery-2.0.3.min.js"></script>
+
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Blog</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                <p class="view"><a href="/wiki">Wiki <small>powered by TiddlyWiki</small></a></p>
+                
+                
+                <h3>Project Info</h3>
+                <ul>
+                    
+                    <li><a href="https://github.com/iocast/database-server-management/zipball/master">Download <strong>ZIP File</strong></a></li>
+                    
+                    
+                    
+                    
+                    <li><a href="https://github.com/iocast/database-server-management/issues/new">Report<strong>An Issue</strong></a></li>
+                    
+                    
+                    <li><a href="http://github.com/iocast/database-server-management">Fork On <strong>GitHub</strong></a></li>
+                    
+                </ul>
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+                <!--
+                <h3>Miscellaneous</h3>
+                <p class="view"><a href="/bibliography.html">Bibliography</a></p>
+                 -->
+                
+            </header>
+            <section>
+                <a name="Database.Server.Management.Tool"></a>
+<h1>Database Server Management Tool</h1>
+
+<p>The repository holds a bunch of script to manage databases. Currently you are able to automatically backup <strong>PostgreSQL</strong> and <strong>MariaDB</strong> as well as <strong>MySQL</strong> database servers. These scripts are based on the example scripts found in the <a href="http://wiki.postgresql.org/wiki/Automated_Backup_on_Linux">PostgreSQL wiki</a> from Thom, Chronos, Kesslernetworks and Marcp.</p>
+
+<a name="Databases"></a>
+<h2>Databases</h2>
+
+<p>Currently I support PostgreSQL and MariaDB. Both are based on the same logic and more or less same configuration file.</p>
+
+<a name="PostgreSQL"></a>
+<h3>PostgreSQL</h3>
+
+<p>First we need to change the permission of the <code>pgpass.conf</code> file, because otherwise PostgreSQL would not consider it and the username and password.</p>
+
+<pre><code class="bash">chmod 0600 postgresql/pgpass.conf
+vi postgresql/pgpass.conf
+</code></pre>
+
+<p>Now change the configuration file according to your needs. Note that the user defined in <code>pgpass.conf</code> should be the same as the one in the configuration file</p>
+
+<pre><code class="bash">vi postgresql/pg_backup.conf
+</code></pre>
+
+<a name="MariaDB"></a>
+<h3>MariaDB</h3>
+
+<p>Change the configuration file according to your needs</p>
+
+<pre><code class="bash">vi mariadb/mariadb_backup.config
+</code></pre>
+
+<p>Now define the password for the configured user in the <code>my.cnf</code> file. If you do not have defined a user, then the scripts takes the default user <code>root</code>.</p>
+
+<pre><code class="bash">vi mariadb/my.cnf
+</code></pre>
+
+<a name="Scheduling"></a>
+<h2>Scheduling</h2>
+
+<p>To run automatic backups you could use your preferred the schedulling management engine installed on your system. In my cause, I use <code>cron</code> under a Linux system. Because of simplycity I directly change the master <code>crontab</code> file and add my changes there. You could also you the <strong>daily</strong>, <strong>weekly</strong> directory under <code>/etc</code> if you system provides that.</p>
+
+<pre><code class="bash">vi /etc/crontab
+</code></pre>
+
+<p>and add the following lines for a daily backup on 5 mintues after midnight</p>
+
+<pre><code># m h dom mon dow user  command
+5  0    * * *   root    /opt/repos/database-server-management/&lt;database&gt;/&lt;db&gt;_backup_rotated.sh
+</code></pre>
+
+<p>where <code>&lt;database&gt;</code> is <em>postgresql</em> or <strong>mariadb</strong> and <code>&lt;db&gt;</code> could be <strong>pg</strong> or <strong>mariadb</strong>.</p>
+
+<p>Lastly we need to restart <code>cron</code></p>
+
+<pre><code class="bash">service cron restart
+</code></pre>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/assets/javascripts/scale.fix.js"></script>
+    </body>
+</html>
