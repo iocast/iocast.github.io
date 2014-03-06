@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-        <title>iocast ~ file-server-management</title>
+        <title>iocast ~ server-management</title>
         
         <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
         <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
@@ -28,15 +28,15 @@
                 <h3>Project Info</h3>
                 <ul>
                     
-                    <li><a href="https://github.com/iocast/file-server-management/zipball/master">Download <strong>ZIP File</strong></a></li>
+                    <li><a href="https://github.com/iocast/server-management/zipball/master">Download <strong>ZIP File</strong></a></li>
                     
                     
                     
                     
-                    <li><a href="https://github.com/iocast/file-server-management/issues/new">Report<strong>An Issue</strong></a></li>
+                    <li><a href="https://github.com/iocast/server-management/issues/new">Report<strong>An Issue</strong></a></li>
                     
                     
-                    <li><a href="http://github.com/iocast/file-server-management">Fork On <strong>GitHub</strong></a></li>
+                    <li><a href="http://github.com/iocast/server-management">Fork On <strong>GitHub</strong></a></li>
                     
                 </ul>
                 
@@ -54,8 +54,71 @@
                 
             </header>
             <section>
-                <a name="File.Server.Migration.Tool"></a>
-<h1>File Server Migration Tool</h1>
+                <a name="Server.Management"></a>
+<h1>Server Management</h1>
+
+<p>This repository holds a collection of scripts to automatically backup databases, such as PostgreSQL or MariaDB, to migrate a Windows or OS X file server and backup files to a SMB share. Currently it consists of three different parts.</p>
+
+<a name="Database.Server.Management.Tool"></a>
+<h2>Database Server Management Tool</h2>
+
+<p>The repository holds a bunch of script to manage databases. Currently you are able to automatically backup <strong>PostgreSQL</strong> and <strong>MariaDB</strong> as well as <strong>MySQL</strong> database servers. These scripts are based on the example scripts found in the <a href="http://wiki.postgresql.org/wiki/Automated_Backup_on_Linux">PostgreSQL wiki</a> from Thom, Chronos, Kesslernetworks and Marcp.</p>
+
+<a name="Databases"></a>
+<h3>Databases</h3>
+
+<p>Currently I support PostgreSQL and MariaDB. Both are based on the same logic and more or less same configuration file.</p>
+
+<a name="PostgreSQL"></a>
+<h4>PostgreSQL</h4>
+
+<p>First we need to change the permission of the <code>pgpass.conf</code> file, because otherwise PostgreSQL would not consider it and the username and password.</p>
+
+<pre><code class="bash">chmod 0600 postgresql/pgpass.conf
+vi postgresql/pgpass.conf
+</code></pre>
+
+<p>Now change the configuration file according to your needs. Note that the user defined in <code>pgpass.conf</code> should be the same as the one in the configuration file</p>
+
+<pre><code class="bash">vi postgresql/pg_backup.conf
+</code></pre>
+
+<a name="MariaDB"></a>
+<h4>MariaDB</h4>
+
+<p>Change the configuration file according to your needs</p>
+
+<pre><code class="bash">vi mariadb/mariadb_backup.config
+</code></pre>
+
+<p>Now define the password for the configured user in the <code>my.cnf</code> file. If you do not have defined a user, then the scripts takes the default user <code>root</code>.</p>
+
+<pre><code class="bash">vi mariadb/my.cnf
+</code></pre>
+
+<a name="Scheduling"></a>
+<h3>Scheduling</h3>
+
+<p>To run automatic backups you could use your preferred the schedulling management engine installed on your system. In my cause, I use <code>cron</code> under a Linux system. Because of simplycity I directly change the master <code>crontab</code> file and add my changes there. You could also you the <strong>daily</strong>, <strong>weekly</strong> directory under <code>/etc</code> if you system provides that.</p>
+
+<pre><code class="bash">vi /etc/crontab
+</code></pre>
+
+<p>and add the following lines for a daily backup on 5 mintues after midnight</p>
+
+<pre><code># m h dom mon dow user  command
+5  0    * * *   root    /opt/repos/database-server-management/&lt;database&gt;/&lt;db&gt;_backup_rotated.sh
+</code></pre>
+
+<p>where <code>&lt;database&gt;</code> is <strong>postgresql</strong> or <strong>mariadb</strong> and <code>&lt;db&gt;</code> could be <strong>pg</strong> or <strong>mariadb</strong>.</p>
+
+<p>Lastly we need to restart <code>cron</code></p>
+
+<pre><code class="bash">service cron restart
+</code></pre>
+
+<a name="File.Server.Migration.Tool"></a>
+<h2>File Server Migration Tool</h2>
 
 <p>This repository is a collection of several "helper" scripts for analyzing directory structures, migrating a file server, creating automatic user network directories based on a active directory group, propagating POSIX and ACL permissions, and refresh applications using a git repository. Each task is assigned to an individual bash script, which can be glued together by creating an own wrapper.</p>
 
@@ -72,7 +135,7 @@
 
 
 <a name="L.a.name..directory_analyses....a.Directory.Analyses"></a>
-<h2><a name="directory_analyses"></a>Directory Analyses</h2>
+<h3><a name="directory_analyses"></a>Directory Analyses</h3>
 
 <p>The <code>folder_size.sh</code> script analysis a directory structure and excerpts each directory size. Run it as follow</p>
 
@@ -102,12 +165,12 @@
 <p>In the <code>"subfolders"</code> attribute you can define subdirectories of a parent folder that need to be listed separately in the output.</p>
 
 <a name="L.a.id..file_server_migration....a.File.Server.Migration"></a>
-<h2><a id="file_server_migration"></a>File Server Migration</h2>
+<h3><a id="file_server_migration"></a>File Server Migration</h3>
 
 <p>The file server migration script <code>migrate_data.sh</code> synchronizes directories from a remote server to the local server using <code>rsync</code>. In addition it can automatically set new POSIX rights, adding extended ACL attributes (<a href="#permission_propagation">permission propagation</a>) and <a href="#share_management">creating a shares</a>.</p>
 
 <a name="Preparation.for.unattended.synchronization"></a>
-<h3>Preparation for unattended synchronization</h3>
+<h4>Preparation for unattended synchronization</h4>
 
 <p>The following steps need to be done antecedent:</p>
 
@@ -138,7 +201,7 @@
 
 
 <a name="Configuration"></a>
-<h3>Configuration</h3>
+<h4>Configuration</h4>
 
 <p>The configuration file is a <code>json</code> file, which consists of four sections. First the <code>source</code> need to be defined which is the server from where you want to copy (remote server). Next is the <code>destination</code> from where you run this script and want to sync the files to. Then we have some configuration parts like <code>rsa</code> which holds the path to the private key created in the <a href="#preparation">preparation section</a> and the prefix for the <code>log</code> file.</p>
 
@@ -200,7 +263,7 @@
 </code></pre>
 
 <a name="Run.it"></a>
-<h3>Run it</h3>
+<h4>Run it</h4>
 
 <p>Now you can run it as follow:</p>
 
@@ -210,7 +273,7 @@
 <p>where the <code>excludes.txt</code> consists of files and folders the be excluded during the synchronization process.</p>
 
 <a name="L.a.id..permission_propagation....a.Permission.propagation"></a>
-<h2><a id="permission_propagation"></a>Permission propagation</h2>
+<h3><a id="permission_propagation"></a>Permission propagation</h3>
 
 <p>Maybe you have seen in the <a href="#file_server_migration">file server migration</a> description that for each folder the attributes <code>posix</code> and <code>acl</code> as well as the <code>acls</code> exists. If you want for example to propagate your POSIXs and ACLs again, you can simple set the attributes <code>sync</code> and <code>share</code> to <code>false</code> for all folders and run the script again.</p>
 
@@ -220,12 +283,12 @@
 </code></pre>
 
 <a name="L.a.id..share_management....a.Share.Management"></a>
-<h2><a id="share_management"></a>Share Management</h2>
+<h3><a id="share_management"></a>Share Management</h3>
 
 <p>The same procedure as in <a href="#permission_propagation">permission propagation</a> takes place here. To (re-)create the shares on a OS X Server you simple need to set the attributes <code>sync</code>, <code>posix</code>, and <code>acl</code> to <code>false</code> for all folders and run this script again.</p>
 
 <a name="L.a.id..user_network_share....a.User.Network.Share"></a>
-<h2><a id="user_network_share"></a>User Network Share</h2>
+<h3><a id="user_network_share"></a>User Network Share</h3>
 
 <p>The idea of this script is create a folder for each user in a active directory group named by its username and propagate POSIX and ACL rights. All you need to do is to run the script <code>user_network_share.sh</code> an follow the onscreen prompts.</p>
 
@@ -286,15 +349,19 @@ rm -f /Library/LaunchDaemons/iocast.network.share.active-directory.plist
 </code></pre>
 
 <a name="L.a.id..application_updater....a.Application.Updater"></a>
-<h2><a id="application_updater"></a>Application Updater</h2>
+<h3><a id="application_updater"></a>Application Updater</h3>
 
 <p><code>git_repo_updater.sh</code> scans a defined directory for each subfolder and runs a <code>git pull</code> inside each folder.</p>
 
 <p>You can automate this script by adding the following line to the <code>crontab</code></p>
 
-<pre><code># m h dom mon dow user  command
-0  *    * * *   root    /opt/repos/git_repo_updater.sh
-</code></pre>
+<p>``</p>
+
+<a name="m.h.dom.mon.dow.user..command"></a>
+<h1>m h dom mon dow user  command</h1>
+
+<p>0  *    * * *   root    /opt/repos/git_repo_updater.sh
+```</p>
 
 <p>If you are using ssh to login to a git server do not add a passphrase when creating the rsa key files, because this script updates all repos unattended.</p>
 
@@ -305,6 +372,20 @@ echo `eval $(ssh-add)'` &gt;&gt; ~/.bash_profile
 </code></pre>
 
 <p>automatically starts the <code>ssh-agent</code> in the background.</p>
+
+<a name="Backup.Scripts"></a>
+<h2>Backup Scripts</h2>
+
+<p>Currently a script is included to backup a machine using rsync to a SMB share. It is located under <code>linux/backup_over_cifs.sh</code>.</p>
+
+<p>Run <code>server-management/backup/linux/backup_over_cifs.sh initialize --destination server.exmaple.com</code> to initialize a configuration file called <code>.smbcredentials_server.example.com</code> which will be stored under the <strong>home directory</strong> of the <strong>current user</strong>. After this file has been created you can run the backup <code>server-management/backup/linux//backup_over_cifs.sh backup --destination server.exmaple.com</code>. Note that you need to run the backup under the same user as the initialization script.</p>
+
+<p>To run in periodical, you can create a crontab entry, e.g. 5 min past 4 in the morning:</p>
+
+<a name="m.h.dom.mon.dow.user..command"></a>
+<h1>m h dom mon dow user  command</h1>
+
+<p>05 4    * * *   root    server-management/backup/linux/backup_over_cifs.sh backup --destination server.example.com</p>
 
             </section>
             <footer>
