@@ -355,13 +355,9 @@ rm -f /Library/LaunchDaemons/iocast.network.share.active-directory.plist
 
 <p>You can automate this script by adding the following line to the <code>crontab</code></p>
 
-<p>``</p>
-
-<a name="m.h.dom.mon.dow.user..command"></a>
-<h1>m h dom mon dow user  command</h1>
-
-<p>0  *    * * *   root    /opt/repos/git_repo_updater.sh
-```</p>
+<pre><code># m h dom mon dow user  command
+0  *    * * *   root    /opt/repos/git_repo_updater.sh
+</code></pre>
 
 <p>If you are using ssh to login to a git server do not add a passphrase when creating the rsa key files, because this script updates all repos unattended.</p>
 
