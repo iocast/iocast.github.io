@@ -4,13 +4,69 @@
     <title>iocast - iocast.github.io</title>
     <link href="http://iocast.github.io/atom.xml" rel="self"/>
     <link href="http://iocast.github.io"/>
-    <updated>2014-04-01T09:41:01+00:00</updated>
+    <updated>2014-04-17T09:29:33+00:00</updated>
     <id>http://iocast.github.io/</id>
     <author>
         <name>iocast</name>
         <email>iocast@me.com</email>
     </author>
     
+    
+    <entry>
+        <title>GitHub Pages for a repository compiling using Travis CI</title>
+        <link href="http://iocast.github.io/blog/2014/04/17/github-travis-addition.html"/>
+        <updated>2014-04-17T00:00:00+00:00</updated>
+        <id>http://iocast.github.io/blog/2014/04/17/github-travis-addition</id>
+        <content type="html">&lt;p&gt;First of all check if you have already a &lt;strong&gt;personal access token&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/github_personal_access_tokens.png&quot; title=&quot;GitHub personal access tokens&quot; alt=&quot;GitHub personal access tokens&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If not, you can follow these &lt;a href=&quot;/blog/2013/10/08/github-jekyll-travis.html&quot;&gt;instructions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/travis_grant_repository_access.png&quot; title=&quot;Travis grant access to GitHub repository&quot; alt=&quot;Travis grant access to GitHub repository&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next thing is to generate a new secure string for your &lt;code&gt;.travis.yml&lt;/code&gt; file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;curl -X GET -u &amp;lt;your_github_username&amp;gt; https://api.github.com/authorizations
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should get a JSON response which looks like this&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json&quot;&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1234567&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;https://api.github.com/authorizations/1234567&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;travis: token for pushing from travis (API)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://developer.github.com/v3/oauth_authorizations/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;client_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;00000000000000000000&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1abc234d56efghi789&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;note&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;travis: token for pushing from travis&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;note_url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2014-01-01T12:00:00Z&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2014-01-01T12:00:00Z&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;scopes&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;public_repo&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So we are ready to generate the secure string for Travis. Be sure that you have installed &lt;code&gt;travis&lt;/code&gt; rubygem using the following command &lt;code&gt;gem install travis&lt;/code&gt;. Open a terminal and go to the folder where &lt;code&gt;.travis.yml&lt;/code&gt; lays and add the secure string to it&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /path/to/the/.travsi.yml/file
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class=&quot;nv&quot;&gt;GH_TOKEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>Joining a Active Directory on Linux - the easiest way!</title>
@@ -123,7 +179,7 @@ apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
 &lt;a name=&quot;Compiling.PostGIS.2.1.against.libgdal....1.10.0&quot;&gt;&lt;/a&gt;
 &lt;h2&gt;Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0&lt;/h2&gt;
 
-&lt;p&gt;To install PostGIS 2.1 it is important that &lt;code&gt;postgresql-server-dev-x.x&lt;/code&gt; is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled &lt;code&gt;libgdal&lt;/code&gt; 1.10.0 version from ubuntugis.&lt;/p&gt;
+&lt;p&gt;To install PostGIS 2.1 it is important that &lt;code&gt;postgresql-server-dev-x.x&lt;/code&gt; is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled &lt;code&gt;libgdal&lt;/code&gt; 1.10.0 version from &lt;strong&gt;ubuntugis&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Install &lt;code&gt;python-software-properties&lt;/code&gt; and add the apt sources (repositories):&lt;/p&gt;
 
@@ -608,7 +664,7 @@ git push origin develop
 
 &lt;p&gt;For that we need first to get &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; access to our Github repository. If you do not have a &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; account register one on the homepage. On The &lt;a href=&quot;http://travis-ci.org&quot; title=&quot;Travis CI&quot;&gt;travis&lt;/a&gt; homepage go to the account settings and get access to the appropriate repository like in the image below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/travis_repository_access.png&quot; title=&quot;Travis Repository Access&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/travis_repository_access.png&quot; title=&quot;Travis Repository Access&quot; alt=&quot;Travis Repository Access&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The next step is to configure the build process. For that create a new file called &lt;code&gt;.travis.yml&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch and add the &lt;code&gt;master&lt;/code&gt; branch to the blacklist and the &lt;code&gt;develop&lt;/code&gt; branch to the whitelist.&lt;/p&gt;
 

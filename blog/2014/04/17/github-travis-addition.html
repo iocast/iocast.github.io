@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <title>GitHub Pages for a repository compiling using Travis CI</title>
+        
+        <link rel="stylesheet" href="/assets/stylesheets/styles.css" />
+        <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        
+        <script src="/assets/javascripts/jquery-2.0.3.min.js"></script>
+
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>iocast <a href="/"><small>iocast.github.io</small></a></h1>
+                
+                <p class="view"><a href="/projects.html">Projects <small>by iocast</small></a></p>
+                <p class="view"><a href="/posts.html">Blog</a> <a href="/atom.xml"><small>atom feed</small></a></p>
+                <p class="view"><a href="/wiki">Wiki <small>powered by TiddlyWiki</small></a></p>
+                
+                
+                
+                <h3>Find me on ...</h3>
+                <p class"view"><a href="http://github.com/iocast">GitHub</a><br/>
+                <a href="http://bitbucket.org/iocast">BitBucket</a><br/>
+                <a href="http://twitter.com/MichelOtt2">Twitter</a><br/>
+                <a href="http://osrc.dfm.io/iocast">Open Source Report Card</a><br/></p>
+                
+                <!--
+                <h3>Miscellaneous</h3>
+                <p class="view"><a href="/bibliography.html">Bibliography</a></p>
+                 -->
+                
+            </header>
+            <section>
+                <article>
+<h1>GitHub Pages for a repository compiling using Travis CI</h1>
+<div class="meta_wrapper">
+    <time datetime="2014-04-17">April 17, 2014</time>
+    <ul class="tag_list_in_post">
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/github">github</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/jekyll">jekyll</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/travis">travis</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/bash">bash</a></li>
+    
+        <li class="inline tag_list_item"><a class="tag_list_link" href="/tag/continuous integration">continuous integration</a></li>
+    
+    </ul>
+</div>
+
+
+<p>First of all check if you have already a <strong>personal access token</strong>.</p>
+
+<p><img src="/assets/images/github_personal_access_tokens.png" title="GitHub personal access tokens" alt="GitHub personal access tokens" /></p>
+
+<p>If not, you can follow these <a href="/blog/2013/10/08/github-jekyll-travis.html">instructions</a></p>
+
+<p>On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.</p>
+
+<p><img src="/assets/images/travis_grant_repository_access.png" title="Travis grant access to GitHub repository" alt="Travis grant access to GitHub repository" /></p>
+
+<p>The next thing is to generate a new secure string for your <code>.travis.yml</code> file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.</p>
+
+<div class="highlight"><pre><code class="bash">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations
+</code></pre></div>
+
+
+<p>You should get a JSON response which looks like this</p>
+
+<div class="highlight"><pre><code class="json"><span class="err">...</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234567</span><span class="p">,</span>
+    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/authorizations/1234567&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;app&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;travis: token for pushing from travis (API)&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://developer.github.com/v3/oauth_authorizations/&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;client_id&quot;</span><span class="p">:</span> <span class="s2">&quot;00000000000000000000&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;1abc234d56efghi789&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;note&quot;</span><span class="p">:</span> <span class="s2">&quot;travis: token for pushing from travis&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;note_url&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">&quot;created_at&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-01T12:00:00Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;updated_at&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-01T12:00:00Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;public_repo&quot;</span>
+    <span class="p">]</span>
+  <span class="p">}</span><span class="err">,</span>
+<span class="err">...</span>
+</code></pre></div>
+
+
+<p>So we are ready to generate the secure string for Travis. Be sure that you have installed <code>travis</code> rubygem using the following command <code>gem install travis</code>. Open a terminal and go to the folder where <code>.travis.yml</code> lays and add the secure string to it</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nb">cd</span> /path/to/the/.travsi.yml/file
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</span><span class="o">=</span>&lt;token&gt; --add env.global
+</code></pre></div>
+
+
+<p>That's all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.</p>
+
+</article>
+
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="/assets/javascripts/scale.fix.js"></script>
+    </body>
+</html>
