@@ -68,7 +68,7 @@
 
 <p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
 
-<div class="highlight"><pre><code class="bash"><span class="c"># Creates our branch, without any parents (it&#39;s an orphan!)</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Creates our branch, without any parents (it&#39;s an orphan!)</span>
 git checkout --orphan develop
 <span class="c"># Remove all files from the old working tree</span>
 git rm -rf .
@@ -76,8 +76,7 @@ git rm -rf .
 <span class="nb">echo</span> <span class="s2">&quot;My GitHub Page&quot;</span> &gt; index.html
 git add index.html
 git commit -a -m <span class="s2">&quot;First pages commit&quot;</span>
-git push origin develop
-</code></pre></div>
+git push origin develop</code></pre></div>
 
 
 <p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to this <code>develop</code> branch.</p>
@@ -89,7 +88,7 @@ git push origin develop
 
 <p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> the compilation options. A example could look like the following:</p>
 
-<div class="highlight"><pre><code class="yaml"><span class="l-Scalar-Plain">destination</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./_site</span>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">destination</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./_site</span>
 <span class="l-Scalar-Plain">lsi</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">true</span>
 <span class="l-Scalar-Plain">pygments</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">true</span>
 <span class="l-Scalar-Plain">markdown</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">rdiscount</span>
@@ -97,8 +96,7 @@ git push origin develop
 <span class="l-Scalar-Plain">rdiscount</span><span class="p-Indicator">:</span>
   <span class="l-Scalar-Plain">extensions</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">smart</span><span class="p-Indicator">]</span>
 
-<span class="l-Scalar-Plain">exclude</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&#39;Gemfile&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;Gemfile.lock&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;Rakefile&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;README.md&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;update-gh-pages.sh&#39;</span><span class="p-Indicator">]</span>
-</code></pre></div>
+<span class="l-Scalar-Plain">exclude</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&#39;Gemfile&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;Gemfile.lock&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;Rakefile&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;README.md&#39;</span><span class="p-Indicator">,</span> <span class="s">&#39;update-gh-pages.sh&#39;</span><span class="p-Indicator">]</span></code></pre></div>
 
 
 <a name="Travis.CI"></a>
@@ -112,7 +110,7 @@ git push origin develop
 
 <p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p>
 
-<div class="highlight"><pre><code class="yaml"><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ruby</span>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ruby</span>
 <span class="l-Scalar-Plain">rvm</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.9.3</span>
 
 <span class="l-Scalar-Plain">branches</span><span class="p-Indicator">:</span>
@@ -123,51 +121,46 @@ git push origin develop
   <span class="l-Scalar-Plain">only</span><span class="p-Indicator">:</span>
     <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">develop</span>
 
-<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">rake travis</span>
-</code></pre></div>
+<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">rake travis</span></code></pre></div>
 
 
 <p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
 
 <p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">source</span> <span class="s1">&#39;http://rubygems.org&#39;</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;http://rubygems.org&#39;</span>
 
 <span class="n">gem</span> <span class="s1">&#39;jekyll&#39;</span>
 <span class="n">gem</span> <span class="s1">&#39;rdiscount&#39;</span>
-<span class="n">gem</span> <span class="s1">&#39;redcarpet&#39;</span>
-</code></pre></div>
+<span class="n">gem</span> <span class="s1">&#39;redcarpet&#39;</span></code></pre></div>
 
 
 <p>For <a href="http://travis-ci.org" title="Travis CI">travis</a> deployment add the following task to the <code>Rakefile</code>:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="c1">#!/usr/bin/env rake</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#!/usr/bin/env rake</span>
 
 <span class="n">task</span> <span class="ss">:travis</span> <span class="k">do</span>
   <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;jekyll build&quot;</span><span class="p">)</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 
 <p>Lastly we need to create a <code>bash</code> script to push the compiled <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to the <code>master</code> branch. For that authorize <a href="http://travis-ci.org" title="Travis CI">travis</a> to do commits and pushed as follow:</p>
 
-<div class="highlight"><pre><code class="bash">curl -X POST -u &lt;your_github_username&gt; -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;scopes\&quot;:[\&quot;public_repo\&quot;],\&quot;note\&quot;:\&quot;token for pushing from travis\&quot;}&quot;</span> https://api.github.com/authorizations
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">curl -X POST -u &lt;your_github_username&gt; -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;scopes\&quot;:[\&quot;public_repo\&quot;],\&quot;note\&quot;:\&quot;token for pushing from travis\&quot;}&quot;</span> https://api.github.com/authorizations</code></pre></div>
 
 
 <p>and copy the <code>token</code> key from the json result.</p>
 
 <p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p>
 
-<div class="highlight"><pre><code class="bash">gem install travis
-travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</span><span class="o">=</span>&lt;token&gt; --add env.global
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install travis
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</span><span class="o">=</span>&lt;token&gt; --add env.global</code></pre></div>
 
 
 <p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$TRAVIS_PULL_REQUEST&quot;</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="k">  </span><span class="nb">echo</span> -e <span class="s2">&quot;Starting to update master\n&quot;</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$TRAVIS_PULL_REQUEST&quot;</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;Starting to update master\n&quot;</span>
 
   cp -R _site <span class="nv">$HOME</span>/_site
 
@@ -185,14 +178,12 @@ travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</spa
   git push -fq origin master &gt; /dev/null
 
   <span class="nb">echo</span> -e <span class="s2">&quot;Done magic with coverage\n&quot;</span>
-<span class="k">fi</span>
-</code></pre></div>
+<span class="k">fi</span></code></pre></div>
 
 
 <p>and add the following lines to the end of the <code>.travis.yml</code> file:</p>
 
-<div class="highlight"><pre><code class="yaml"><span class="l-Scalar-Plain">after_success</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./update-gh-pages.sh</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">after_success</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./update-gh-pages.sh</span></code></pre></div>
 
 
 

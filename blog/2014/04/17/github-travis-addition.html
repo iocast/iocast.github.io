@@ -71,13 +71,12 @@
 
 <p>The next thing is to generate a new secure string for your <code>.travis.yml</code> file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.</p>
 
-<div class="highlight"><pre><code class="bash">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations</code></pre></div>
 
 
 <p>You should get a JSON response which looks like this</p>
 
-<div class="highlight"><pre><code class="json"><span class="err">...</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">...</span>
   <span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234567</span><span class="p">,</span>
     <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/authorizations/1234567&quot;</span><span class="p">,</span>
@@ -95,15 +94,13 @@
       <span class="s2">&quot;public_repo&quot;</span>
     <span class="p">]</span>
   <span class="p">}</span><span class="err">,</span>
-<span class="err">...</span>
-</code></pre></div>
+<span class="err">...</span></code></pre></div>
 
 
 <p>So we are ready to generate the secure string for Travis. Be sure that you have installed <code>travis</code> rubygem using the following command <code>gem install travis</code>. Open a terminal and go to the folder where <code>.travis.yml</code> lays and add the secure string to it</p>
 
-<div class="highlight"><pre><code class="bash"><span class="nb">cd</span> /path/to/the/.travsi.yml/file
-travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</span><span class="o">=</span>&lt;token&gt; --add env.global
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /path/to/the/.travsi.yml/file
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class="nv">GH_TOKEN</span><span class="o">=</span>&lt;token&gt; --add env.global</code></pre></div>
 
 
 <p>That's all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.</p>
