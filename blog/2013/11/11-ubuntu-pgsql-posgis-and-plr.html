@@ -86,154 +86,209 @@
 
       <div class="row">
         <div id="blog_main_area" class="left col-md-9" count=8>
-  <!-- blog item -->
+  <!-- article title -->
+  <header>
+      <h1>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</h1>
+    <small class="fsize13">
+            <a href="/category/gis.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> GIS</a>
+      <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">11/Nov/2013 Mon</span> 
+    </small>
+  </header>
 
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/30-node-webkit-desktop-application.html">node-webkit desktop application and 3rd party libraries</a></h2>
-          <a href="category/desktop-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Desktop Application</a> 
-          <a href="/blog/2014/04/30-node-webkit-desktop-application.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Apr/2014 Wed</span>
-        </div>
-        <!-- image -->
+  <article class='content'>
+    <h2>Removing preinstalled packages</h2>
+<p>First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).</p>
+<div class="highlight"><pre>dpkg -l | grep <span class="s1">&#39;postgres\|gdal&#39;</span>
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I want to describe how you create a platform independent application using node-webkit including 3rd party libraries such as node-sqlite3. It shows you, how you setup a development environment, rebuild your dependencies and build your platform specific versions of your application on the basis of the [time edition project][]</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/30-node-webkit-desktop-application.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/17-github-pages-and-travis-ci.html">GitHub Pages for a repository compiling using Travis CI</a></h2>
-          <a href="category/versioning.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Versioning</a> 
-          <a href="/blog/2014/04/17-github-pages-and-travis-ci.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">17/Apr/2014 Thu</span>
-        </div>
-        <!-- image -->
+<p>You should get a list like the following one:</p>
+<div class="highlight"><pre>ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
+ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support <span class="k">for </span>PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support <span class="k">for </span>PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs <span class="k">for </span>PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager <span class="k">for </span>multiple PostgreSQL client versions
+ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities <span class="k">for </span>PostgreSQL
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Here I describe how you could use Travis CI to generate e.g. a Sphinx documentation when you already have a GitHub token for Travsi CI and want to reuse it.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/17-github-pages-and-travis-ci.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Nov/2013 Sat</span>
-        </div>
-        <!-- image -->
+<p>If you want, you could remove these packages as follow:</p>
+<div class="highlight"><pre>apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
+apt-get autoremove
+apt-get autoclean
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post shortly outlines how you could join a Active Directory under linux.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">11/Nov/2013 Mon</span>
-        </div>
-        <!-- image -->
+<h2>Installing PostgreSQL 9.3</h2>
+<p>First you need to find out your release code name:</p>
+<div class="highlight"><pre>lsb_release -c
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I am going to describe how you could install PostgreSQL 9.3 and compile PostGIS 2.1 against libgdal1h on Ubuntu 12.04. It also describes how to install the latest R environment 3.0.2 and the PL/R extension for PostgreSQL.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></h2>
-          <a href="category/web-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Web Application</a> 
-          <a href="/blog/2013/10/16-python-mod_wsgi-centos.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">16/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<p>which get you something like that <code>Codename:  precise</code></p>
+<p>Create a new file <code>codename-pgdg.list</code> in <code>/etc/apt/sources.list.d</code> according to the <a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki">PostgreSQL wiki page</a>.</p>
+<div class="highlight"><pre>vi /etc/apt/sources.list.d/precise-pgdg.list
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Read how to install Python 2.7.x on CentOS 6 and compile mod_wsgi against Python 2.7.x.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/16-python-mod_wsgi-centos.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/10/12-qgis-server-on-centos-6.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">12/Oct/2013 Sat</span>
-        </div>
-        <!-- image -->
+<p>and add the following line</p>
+<div class="highlight"><pre>deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post describes how to setup a QGSI server and PostGIS on CentOS 6.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/12-qgis-server-on-centos-6.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/09-osx-file-server-migration.html">Mac OS X file server migration</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/10/09-osx-file-server-migration.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">09/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<p>Now we need to import the repository key from</p>
+<div class="highlight"><pre>wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>How could you migrate a OS X file server from open directory to Microsoft's active directory using rsync and other bash commands.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/09-osx-file-server-migration.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html">Creating your own blog using github pages, jekyll and travis</a></h2>
-          <a href="category/miscellaneous.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a> 
-          <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">08/Oct/2013 Tue</span>
-        </div>
-        <!-- image -->
+<p>Now we can a update the repository and install the required packages from the PostgreSQL repository.</p>
+<div class="highlight"><pre>apt-get update
+apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-  <!-- /blog item -->
+<h2>Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2>
+<p>To install PostGIS 2.1 it is important that <code>postgresql-server-dev-x.x</code> is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled <code>libgdal</code> 1.10.0 version from <strong>ubuntugis</strong>.</p>
+<p>Install <code>python-software-properties</code> and add the apt sources (repositories):</p>
+<div class="highlight"><pre>apt-get install python-software-properties
+add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+apt-get update
+</pre></div>
 
-  <!-- PAGINATION -->
-  <ul class="pagination">
-    <li id="prev" class="prev disabled"><a rel="prev">&larr; Previous</a></li>
-    <li id="next" class="next"><a rel="next">&rarr; Next</a></li>
-  </ul>
-  <!-- /PAGINATION -->
+
+<p>Now install the new GDAL library called <code>libgdal1h</code> and its' development package</p>
+<div class="highlight"><pre>apt-get install libgdal1h
+apt-cache showpkg libgdal-dev*
+</pre></div>
+
+
+<p>which gets you something like that:</p>
+<div class="highlight"><pre>...
+Provides: 
+1.10.0-1~precise1 - 
+1.9.0-3.1~pgdg12.4+1 - 
+...
+</pre></div>
+
+
+<p>You can install a version using the <code>-f</code> flag</p>
+<div class="highlight"><pre>apt-get install -f libgdal-dev<span class="o">=</span>1.10.0-1~precise1
+</pre></div>
+
+
+<p>Before installing the PostGIS from source we install the required dependencies.</p>
+<div class="highlight"><pre>apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev
+</pre></div>
+
+
+<p>Download the latest PostGIS source and compile it</p>
+<div class="highlight"><pre>wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+tar xzvf postgis-2.1.0.tar.gz 
+<span class="nb">cd </span>postgis-2.1.0
+./configure
+</pre></div>
+
+
+<div class="highlight"><pre> PostGIS is now configured <span class="k">for </span>x86_64-unknown-linux-gnu
+
+-------------- Compiler Info ------------- 
+ C compiler:           gcc -g -O2
+ C++ compiler:         g++ -g -O2
+ SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P
+
+-------------- Dependencies -------------- 
+ GEOS config:          /usr/bin/geos-config
+ GEOS version:         3.3.8
+ GDAL config:          /usr/bin/gdal-config
+ GDAL version:         1.10.0
+ PostgreSQL config:    /usr/bin/pg_config
+ PostgreSQL version:   PostgreSQL 9.3.1
+ PROJ4 version:        48
+ Libxml2 config:       /usr/bin/xml2-config
+ Libxml2 version:      2.8.0
+ JSON-C support:       no
+ PostGIS debug level:  0
+ Perl:                 /usr/bin/perl
+
+--------------- Extensions --------------- 
+ PostGIS Raster:       enabled
+ PostGIS Topology:     enabled
+ SFCGAL support:       disabled
+
+-------- Documentation Generation -------- 
+ xsltproc:             
+ xsl style sheets:     
+ dblatex:              
+ convert:              
+ mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd
+</pre></div>
+
+
+<p>use <code>checkinstall</code>, which runs <code>make install</code> and registers the package in <code>dpkg</code>.</p>
+<div class="highlight"><pre>make
+checkinstall
+</pre></div>
+
+
+<h2>R 3.0.2 and PL/R for PostgreSQL</h2>
+<p>Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the <a href="http://cran.r-project.org" title="The Comprehensive R Archive Network">R-Project</a> site. First edit the</p>
+<div class="highlight"><pre>vi /etc/apt/sources.list
+</pre></div>
+
+
+<p>and add the following line and do a update</p>
+<div class="highlight"><pre>deb http://cran.r-project.org/bin/linux/ubuntu precise/
+</pre></div>
+
+
+<p>as well as the key</p>
+<div class="highlight"><pre>apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update
+</pre></div>
+
+
+<p>The search for the 3.0.2 R package version and install it.</p>
+<div class="highlight"><pre>apt-cache showpkg r-base
+apt-get install -f r-base<span class="o">=</span>3.0.2-1precise0
+</pre></div>
+
+
+<p>Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository</p>
+<div class="highlight"><pre>apt-get install postgresql-9.3-plr
+</pre></div>
+
+
+<p>So ... we are ready ... have fun.</p>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html&title=Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>  
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles with this tag"><i class="fa fa-tags"></i> server</a>
+        <a href="/tag/ubuntu.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> ubuntu</a>
+        <a href="/tag/postgresql.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgresql</a>
+        <a href="/tag/postgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgis</a>
+        <a href="/tag/ubuntugis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> ubuntugis</a>
+        <a href="/tag/libgdal.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> libgdal</a>
+  </p>
+
+  <hr /><!-- divider -->
+
         </div>
 
         <!-- SIDEBAR -->

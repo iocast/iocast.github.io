@@ -86,154 +86,136 @@
 
       <div class="row">
         <div id="blog_main_area" class="left col-md-9" count=8>
-  <!-- blog item -->
+  <!-- article title -->
+  <header>
+      <h1>Python 2.7.x and mod_wsgi on a CentOS 6</h1>
+    <small class="fsize13">
+            <a href="/category/web-application.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> Web Application</a>
+      <a href="/blog/2013/10/16-python-mod_wsgi-centos.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2013/10/16-python-mod_wsgi-centos.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">16/Oct/2013 Wed</span> 
+    </small>
+  </header>
 
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/30-node-webkit-desktop-application.html">node-webkit desktop application and 3rd party libraries</a></h2>
-          <a href="category/desktop-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Desktop Application</a> 
-          <a href="/blog/2014/04/30-node-webkit-desktop-application.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Apr/2014 Wed</span>
-        </div>
-        <!-- image -->
+  <article class='content'>
+    <p>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your <code>eth0</code> at startup.</p>
+<div class="highlight"><pre>vi /etc/sysconfig/network-scripts/ifcfg-eth0
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I want to describe how you create a platform independent application using node-webkit including 3rd party libraries such as node-sqlite3. It shows you, how you setup a development environment, rebuild your dependencies and build your platform specific versions of your application on the basis of the [time edition project][]</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/30-node-webkit-desktop-application.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/17-github-pages-and-travis-ci.html">GitHub Pages for a repository compiling using Travis CI</a></h2>
-          <a href="category/versioning.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Versioning</a> 
-          <a href="/blog/2014/04/17-github-pages-and-travis-ci.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">17/Apr/2014 Thu</span>
-        </div>
-        <!-- image -->
+<p>and set <code>ONBOOT</code> to <code>yes</code>.</p>
+<h2>Getting Python 2.7.x</h2>
+<p>The following explanations are based on a blog of <a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk">Asim Teeshan</a> and a post on <a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7">Fire3Net</a>.</p>
+<p>First we need some development tools. Install the following once</p>
+<div class="highlight"><pre>yum install gcc make zlib-devel bzip2-devel openssl-devel
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Here I describe how you could use Travis CI to generate e.g. a Sphinx documentation when you already have a GitHub token for Travsi CI and want to reuse it.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/17-github-pages-and-travis-ci.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Nov/2013 Sat</span>
-        </div>
-        <!-- image -->
+<p>Now download the latest 2.7.x Python release and enable shared library during the configuation</p>
+<div class="highlight"><pre><span class="nb">cd</span> /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post shortly outlines how you could join a Active Directory under linux.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">11/Nov/2013 Mon</span>
-        </div>
-        <!-- image -->
+<p>Extract and install it:</p>
+<div class="highlight"><pre>tar -zxvf Python-2.7.5.tgz
+<span class="nb">cd </span>Python-2.7.5
+./configure --enable-shared
+make <span class="o">&amp;&amp;</span> make altinstall
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I am going to describe how you could install PostgreSQL 9.3 and compile PostGIS 2.1 against libgdal1h on Ubuntu 12.04. It also describes how to install the latest R environment 3.0.2 and the PL/R extension for PostgreSQL.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></h2>
-          <a href="category/web-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Web Application</a> 
-          <a href="/blog/2013/10/16-python-mod_wsgi-centos.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">16/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<p>Install Python setuptools for using <code>easy_setup</code></p>
+<div class="highlight"><pre>wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Read how to install Python 2.7.x on CentOS 6 and compile mod_wsgi against Python 2.7.x.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/16-python-mod_wsgi-centos.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/10/12-qgis-server-on-centos-6.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">12/Oct/2013 Sat</span>
-        </div>
-        <!-- image -->
+<p>Before we can install <code>mod_wsgi</code> we need to install the http development libraries</p>
+<div class="highlight"><pre>yum install httpd httpd-devel
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post describes how to setup a QGSI server and PostGIS on CentOS 6.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/12-qgis-server-on-centos-6.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/09-osx-file-server-migration.html">Mac OS X file server migration</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/10/09-osx-file-server-migration.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">09/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<p>Now we are ready to compile <code>mod_wsgi</code> against Python 2.7.x</p>
+<p>Download and unpack the latest version</p>
+<div class="highlight"><pre>wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+<span class="nb">cd </span>mod_wsgi-3.4.tar.gz
+./configure --with-python<span class="o">=</span>/usr/local/bin/python2.7
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>How could you migrate a OS X file server from open directory to Microsoft's active directory using rsync and other bash commands.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/09-osx-file-server-migration.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html">Creating your own blog using github pages, jekyll and travis</a></h2>
-          <a href="category/miscellaneous.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a> 
-          <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">08/Oct/2013 Tue</span>
-        </div>
-        <!-- image -->
+<p>Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:</p>
+<div class="highlight"><pre>whereis python
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-  <!-- /blog item -->
+<p>Once the configuration completed you can install it:</p>
+<div class="highlight"><pre>make <span class="o">&amp;&amp;</span> make install
+</pre></div>
 
-  <!-- PAGINATION -->
-  <ul class="pagination">
-    <li id="prev" class="prev disabled"><a rel="prev">&larr; Previous</a></li>
-    <li id="next" class="next"><a rel="next">&rarr; Next</a></li>
-  </ul>
-  <!-- /PAGINATION -->
+
+<p>If you run into problems along the lines <strong>cannot load shared library libpython2.7...</strong> then you need run the <code>ldconfig</code> first to tell where the <code>libpython2.7.so*</code> files are:</p>
+<div class="highlight"><pre>ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+</pre></div>
+
+
+<p>Lastly we can install <code>virtualenv</code> as follow:</p>
+<div class="highlight"><pre>wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+<span class="nb">cd </span>virtualenv-1.10.1
+python2.7 setup.py install
+</pre></div>
+
+
+<p>install psycopg2</p>
+<div class="highlight"><pre>wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+<span class="nb">cd </span>psycopg2-2.5.1
+vi setup.cfg
+</pre></div>
+
+
+<p>and add the following line</p>
+<div class="highlight"><pre><span class="n">pg_config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">pgsql</span><span class="o">-</span><span class="mf">9.3</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pg_config</span>
+<span class="err">````</span>
+
+
+<span class="n">now</span> <span class="n">install</span> <span class="n">it</span>
+
+<span class="err">```</span><span class="n">bash</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+
+
+<p>now creating a virtual env for you web application do it as follow</p>
+<div class="highlight"><pre>virtualenv-2.7 --system-site-packages ENV
+</pre></div>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/blog/2013/10/16-python-mod_wsgi-centos.html&title=Python 2.7.x and mod_wsgi on a CentOS 6&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>  
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles with this tag"><i class="fa fa-tags"></i> server</a>
+        <a href="/tag/centos.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> centos</a>
+        <a href="/tag/httpd.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> httpd</a>
+        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> python</a>
+        <a href="/tag/apache.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> apache</a>
+  </p>
+
+  <hr /><!-- divider -->
+
         </div>
 
         <!-- SIDEBAR -->

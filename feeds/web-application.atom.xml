@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="/" rel="alternate"></link><link href="/feeds/web-application.atom.xml" rel="self"></link><id>/</id><updated>2013-10-16T00:00:00+02:00</updated><entry><title>Python 2.7.x and mod_wsgi on a CentOS 6</title><link href="/blog/2013/10/16-python-mod_wsgi-centos.html" rel="alternate"></link><updated>2013-10-16T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:,2013-10-16:blog/2013/10/16-python-mod_wsgi-centos.html</id><summary type="html">&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Getting Python 2.7.x&lt;/h2&gt;
+&lt;p&gt;The following explanations are based on a blog of &lt;a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk"&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7"&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Extract and install it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf Python-2.7.5.tgz
+&lt;span class="nb"&gt;cd &lt;/span&gt;Python-2.7.5
+./configure --enable-shared
+make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make altinstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum install httpd httpd-devel
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
+&lt;p&gt;Download and unpack the latest version&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;mod_wsgi-3.4.tar.gz
+./configure --with-python&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/bin/python2.7
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;whereis python
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7...&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;virtualenv-1.10.1
+python2.7 setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;install psycopg2&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;psycopg2-2.5.1
+vi setup.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and add the following line&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pg_config&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pgsql&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;9.3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pg_config&lt;/span&gt;
+&lt;span class="err"&gt;````&lt;/span&gt;
+
+
+&lt;span class="n"&gt;now&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;
+
+&lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;virtualenv-2.7 --system-site-packages ENV
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="server"></category><category term="apache"></category><category term="httpd"></category><category term="python"></category></entry></feed>

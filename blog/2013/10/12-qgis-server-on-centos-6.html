@@ -86,154 +86,178 @@
 
       <div class="row">
         <div id="blog_main_area" class="left col-md-9" count=8>
-  <!-- blog item -->
+  <!-- article title -->
+  <header>
+      <h1>Setting up a QGIS server and PostGIS on CentOS 6</h1>
+    <small class="fsize13">
+            <a href="/category/gis.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> GIS</a>
+      <a href="/blog/2013/10/12-qgis-server-on-centos-6.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2013/10/12-qgis-server-on-centos-6.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">12/Oct/2013 Sat</span> 
+    </small>
+  </header>
 
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/30-node-webkit-desktop-application.html">node-webkit desktop application and 3rd party libraries</a></h2>
-          <a href="category/desktop-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Desktop Application</a> 
-          <a href="/blog/2014/04/30-node-webkit-desktop-application.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Apr/2014 Wed</span>
-        </div>
-        <!-- image -->
+  <article class='content'>
+    <p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
+<h2>PostgreSQL and PostGIS</h2>
+<p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
+<h3>Configuration</h3>
+<p>Configure yum repository</p>
+<div class="highlight"><pre>vi /etc/yum.repos.d/CentOS-Base.repo
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I want to describe how you create a platform independent application using node-webkit including 3rd party libraries such as node-sqlite3. It shows you, how you setup a development environment, rebuild your dependencies and build your platform specific versions of your application on the basis of the [time edition project][]</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/30-node-webkit-desktop-application.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2014/04/17-github-pages-and-travis-ci.html">GitHub Pages for a repository compiling using Travis CI</a></h2>
-          <a href="category/versioning.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Versioning</a> 
-          <a href="/blog/2014/04/17-github-pages-and-travis-ci.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">17/Apr/2014 Thu</span>
-        </div>
-        <!-- image -->
+<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">exclude=postgresql*</span>
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Here I describe how you could use Travis CI to generate e.g. a Sphinx documentation when you already have a GitHub token for Travsi CI and want to reuse it.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2014/04/17-github-pages-and-travis-ci.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">30/Nov/2013 Sat</span>
-        </div>
-        <!-- image -->
+<h3>Install PGDG RPM file</h3>
+<p>A PGDG file is available for each distribution/architecture/database version combination at http://yum.postgresql.org </p>
+<div class="highlight"><pre>wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post shortly outlines how you could join a Active Directory under linux.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">11/Nov/2013 Mon</span>
-        </div>
-        <!-- image -->
+<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
+<p>Install RPM distribution:</p>
+<div class="highlight"><pre>rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>In this post I am going to describe how you could install PostgreSQL 9.3 and compile PostGIS 2.1 against libgdal1h on Ubuntu 12.04. It also describes how to install the latest R environment 3.0.2 and the PL/R extension for PostgreSQL.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></h2>
-          <a href="category/web-application.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Web Application</a> 
-          <a href="/blog/2013/10/16-python-mod_wsgi-centos.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">16/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<h3>Installation of PostgreSQL and PostGIS</h3>
+<p>List the available packages:</p>
+<div class="highlight"><pre>yum list postgres*
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Read how to install Python 2.7.x on CentOS 6 and compile mod_wsgi against Python 2.7.x.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/16-python-mod_wsgi-centos.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></h2>
-          <a href="category/gis.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> GIS</a> 
-          <a href="/blog/2013/10/12-qgis-server-on-centos-6.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">12/Oct/2013 Sat</span>
-        </div>
-        <!-- image -->
+<p>Installation:</p>
+<div class="highlight"><pre>yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>This post describes how to setup a QGSI server and PostGIS on CentOS 6.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/12-qgis-server-on-centos-6.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/09-osx-file-server-migration.html">Mac OS X file server migration</a></h2>
-          <a href="category/server-management.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Server Management</a> 
-          <a href="/blog/2013/10/09-osx-file-server-migration.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">09/Oct/2013 Wed</span>
-        </div>
-        <!-- image -->
+<h3>Configuration</h3>
+<p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
+<div class="highlight"><pre>service postgresql-9.3 initdb
+service postgresql-9.3 start
+chkconfig postgresql-9.3 on
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>How could you migrate a OS X file server from open directory to Microsoft's active directory using rsync and other bash commands.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/09-osx-file-server-migration.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
-      <div class="item" style="display: none;">
-        <div class="item-title">
-            <h2><a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html">Creating your own blog using github pages, jekyll and travis</a></h2>
-          <a href="category/miscellaneous.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a> 
-          <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">08/Oct/2013 Tue</span>
-        </div>
-        <!-- image -->
+<p>Some important files</p>
+<table>
+<thead>
+<tr>
+<th align="left">File / Application</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
+<td align="left">changing host etc.</td>
+</tr>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
+<td align="left">client authentication configuration</td>
+</tr>
+</tbody>
+</table>
+<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
+<div class="highlight"><pre><span class="c1"># IPv4 local connections:</span>
+<span class="c1">#host    all             all             127.0.0.1/32            ident</span>
+<span class="l-Scalar-Plain">host    all             all             127.0.0.1/32            md5</span>
+<span class="l-Scalar-Plain"># IPv6 local connections</span><span class="p-Indicator">:</span>
+<span class="c1">#host    all             all             ::1/128                 ident</span>
+<span class="l-Scalar-Plain">host    all             all             ::1/128                 md5</span>
+</pre></div>
 
-        <!-- blog short preview -->
-        <p>
-            <p>Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</p>
-        </p>
 
-        <!-- read more button -->
-        <a href="/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-      </div>
- 
-  <!-- /blog item -->
+<h3>Database and User</h3>
+<p>Before we can start, we need to create a new database and user.</p>
+<p>Login as <code>postgres</code> superuser and create a new database</p>
+<div class="highlight"><pre>su -l postgres
+createdb gis
+</pre></div>
 
-  <!-- PAGINATION -->
-  <ul class="pagination">
-    <li id="prev" class="prev disabled"><a rel="prev">&larr; Previous</a></li>
-    <li id="next" class="next"><a rel="next">&rarr; Next</a></li>
-  </ul>
-  <!-- /PAGINATION -->
+
+<p>Login into the database create a user and set a encrypted password</p>
+<div class="highlight"><pre>psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span>;
+ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span>;
+</pre></div>
+
+
+<p>Now test your configuration and install PostGIS extension</p>
+<div class="highlight"><pre>psql -h localhost -d gis -U gis -W
+CREATE EXTENSION postgis;
+</pre></div>
+
+
+<h2>Installation QGIS</h2>
+<p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+<p _="%" endhighlight="endhighlight">{% highlight bash %}
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-<version>.noarch.rpm
+rpm -Uvh epel-release-<version>.noarch.rpm</p>
+<p>where the version I have tested it was <code>6-8</code>.</p>
+<p>Add the ELGIS repositories</p>
+<div class="highlight"><pre>wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh elgis-release-6-6_0.noarch.rpm
+</pre></div>
+
+
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
+<p>Now install QGIS server:</p>
+<div class="highlight"><pre>yum install qgis-mapserver.x86_64
+</pre></div>
+
+
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+<div class="highlight"><pre>yum install qgis*
+</pre></div>
+
+
+<p>The scripts and configs are installed on CentOS:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Script / Config</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
+<td align="left">main fast cgi script (OGC capabilities)</td>
+</tr>
+<tr>
+<td align="left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
+<td align="left">qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/blog/2013/10/12-qgis-server-on-centos-6.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/blog/2013/10/12-qgis-server-on-centos-6.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/blog/2013/10/12-qgis-server-on-centos-6.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/blog/2013/10/12-qgis-server-on-centos-6.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/blog/2013/10/12-qgis-server-on-centos-6.html&title=Setting up a QGIS server and PostGIS on CentOS 6&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>  
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles with this tag"><i class="fa fa-tags"></i> server</a>
+        <a href="/tag/centos.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> centos</a>
+        <a href="/tag/postgresql.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgresql</a>
+        <a href="/tag/postgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgis</a>
+        <a href="/tag/qgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> qgis</a>
+  </p>
+
+  <hr /><!-- divider -->
+
         </div>
 
         <!-- SIDEBAR -->
