@@ -88,109 +88,109 @@
         <div id="blog_main_area" class="left col-md-9" count=8>
   <!-- article title -->
   <header>
-      <h1>Python 2.7.x and mod_wsgi on a CentOS 6</h1>
+      <h1>Javascript localization part 1</h1>
     <small class="fsize13">
             <a href="/category/web-application.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> Web Application</a>
-      <a href="/blog/2013/10/16-python-mod_wsgi-centos.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2013/10/16-python-mod_wsgi-centos.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">16/Oct/2013 Wed</span> 
+      <a href="/blog/2014/07/21-javascript-internationalization-part1.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2014/07/21-javascript-internationalization-part1.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">21/Jul/2014 Mon</span> 
     </small>
   </header>
 
   <article class='content'>
-    <p>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your <code>eth0</code> at startup.</p>
-<div class="highlight"><pre>vi /etc/sysconfig/network-scripts/ifcfg-eth0
+    <p>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.</p>
+<p>Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.</p>
+<p>Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  <code>mmmm yyyy</code> or <code>mm/dd/yyyy</code>. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.</p>
+<div class="highlight"><pre><span class="n">var</span> <span class="n">dateobj</span><span class="o">=</span> <span class="n">new</span> <span class="n">Date</span><span class="p">()</span> 
+<span class="n">dateobj</span><span class="p">.</span><span class="n">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dateobj</span><span class="p">.</span><span class="n">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dateobj</span><span class="p">.</span><span class="n">getFullYear</span><span class="p">()</span>
+<span class="c1">// 21/7/2014</span>
 </pre></div>
 
 
-<p>and set <code>ONBOOT</code> to <code>yes</code>.</p>
-<h2>Getting Python 2.7.x</h2>
-<p>The following explanations are based on a blog of <a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk">Asim Teeshan</a> and a post on <a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7">Fire3Net</a>.</p>
-<p>First we need some development tools. Install the following once</p>
-<div class="highlight"><pre>yum install gcc make zlib-devel bzip2-devel openssl-devel
+<p>or</p>
+<div class="highlight"><pre><span class="nb">Date</span><span class="p">.</span><span class="nx">locale</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">en</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">month_names</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;January&#39;</span><span class="p">,</span> <span class="s1">&#39;February&#39;</span><span class="p">,</span> <span class="s1">&#39;March&#39;</span><span class="p">,</span> <span class="s1">&#39;April&#39;</span><span class="p">,</span> <span class="s1">&#39;May&#39;</span><span class="p">,</span> <span class="s1">&#39;June&#39;</span><span class="p">,</span> <span class="s1">&#39;July&#39;</span><span class="p">,</span> <span class="s1">&#39;August&#39;</span><span class="p">,</span> <span class="s1">&#39;September&#39;</span><span class="p">,</span> <span class="s1">&#39;October&#39;</span><span class="p">,</span> <span class="s1">&#39;November&#39;</span><span class="p">,</span> <span class="s1">&#39;December&#39;</span><span class="p">],</span>
+        <span class="nx">month_names_short</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="s1">&#39;Mar&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr&#39;</span><span class="p">,</span> <span class="s1">&#39;May&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Aug&#39;</span><span class="p">,</span> <span class="s1">&#39;Sep&#39;</span><span class="p">,</span> <span class="s1">&#39;Oct&#39;</span><span class="p">,</span> <span class="s1">&#39;Nov&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMonthName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">lang</span> <span class="o">=</span> <span class="nx">lang</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">lang</span> <span class="k">in</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">locale</span><span class="p">)</span> <span class="o">?</span> <span class="nx">lang</span> <span class="o">:</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">locale</span><span class="p">[</span><span class="nx">lang</span><span class="p">].</span><span class="nx">month_names</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()];</span>
+<span class="p">};</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMonthNameShort</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">lang</span> <span class="o">=</span> <span class="nx">lang</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">lang</span> <span class="k">in</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">locale</span><span class="p">)</span> <span class="o">?</span> <span class="nx">lang</span> <span class="o">:</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">locale</span><span class="p">[</span><span class="nx">lang</span><span class="p">].</span><span class="nx">month_names_short</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()];</span>
+<span class="p">};</span>
+
+<span class="c1">// that can be used as follow:</span>
+<span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">now</span><span class="p">.</span><span class="nx">getMonthNameShort</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+<span class="c1">// July 2014</span>
 </pre></div>
 
 
-<p>Now download the latest 2.7.x Python release and enable shared library during the configuation</p>
-<div class="highlight"><pre><span class="nb">cd</span> /opt/
-wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+<p>The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.</p>
+<p>The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.</p>
+<p>For the <code>Date</code> object now have these functions, whereas I personally prefer the <code>toLocaleString()</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Date.prototype.toLocaleDateString()</td>
+<td align="left">returns a string with a language sensitive representation of the date portion of this date.</td>
+</tr>
+<tr>
+<td align="left">Date.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this date.</td>
+</tr>
+<tr>
+<td align="left">Date.prototype.toLocaleTimeString()</td>
+<td align="left">returns a string with a language sensitive representation of the time portion of this date.</td>
+</tr>
+</tbody>
+</table>
+<p>You can use it as follow</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+<span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">month</span><span class="o">:</span> <span class="s1">&#39;long&#39;</span><span class="p">,</span> <span class="nx">year</span><span class="o">:</span> <span class="s1">&#39;numeric&#39;</span> <span class="p">});</span>
+<span class="c1">// July 2014</span>
+<span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">month</span><span class="o">:</span> <span class="s1">&#39;2-digit&#39;</span><span class="p">,</span> <span class="nx">day</span><span class="o">:</span> <span class="s1">&#39;2-digit&#39;</span><span class="p">,</span> <span class="nx">year</span><span class="o">:</span> <span class="s1">&#39;numberic&#39;</span> <span class="p">});</span>
+<span class="c1">// 21/07/2014</span>
 </pre></div>
 
 
-<p>Extract and install it:</p>
-<div class="highlight"><pre>tar -zxvf Python-2.7.5.tgz
-<span class="nb">cd </span>Python-2.7.5
-./configure --enable-shared
-make <span class="o">&amp;&amp;</span> make altinstall
-</pre></div>
-
-
-<p>Install Python setuptools for using <code>easy_setup</code></p>
-<div class="highlight"><pre>wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-sh setuptools-0.6c11-py2.7.egg
-</pre></div>
-
-
-<p>Before we can install <code>mod_wsgi</code> we need to install the http development libraries</p>
-<div class="highlight"><pre>yum install httpd httpd-devel
-</pre></div>
-
-
-<p>Now we are ready to compile <code>mod_wsgi</code> against Python 2.7.x</p>
-<p>Download and unpack the latest version</p>
-<div class="highlight"><pre>wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
-tar -zxvf mod_wsgi-3.4.tar.gz
-<span class="nb">cd </span>mod_wsgi-3.4.tar.gz
-./configure --with-python<span class="o">=</span>/usr/local/bin/python2.7
-</pre></div>
-
-
-<p>Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:</p>
-<div class="highlight"><pre>whereis python
-</pre></div>
-
-
-<p>Once the configuration completed you can install it:</p>
-<div class="highlight"><pre>make <span class="o">&amp;&amp;</span> make install
-</pre></div>
-
-
-<p>If you run into problems along the lines <strong>cannot load shared library libpython2.7...</strong> then you need run the <code>ldconfig</code> first to tell where the <code>libpython2.7.so*</code> files are:</p>
-<div class="highlight"><pre>ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
-ln -s /usr/local/lib/libpython2.7.so /usr/
-ldconfig
-</pre></div>
-
-
-<p>Lastly we can install <code>virtualenv</code> as follow:</p>
-<div class="highlight"><pre>wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
-tar -zxvf virtualenv-1.10.1.tar.gz
-<span class="nb">cd </span>virtualenv-1.10.1
-python2.7 setup.py install
-</pre></div>
-
-
-<p>install psycopg2</p>
-<div class="highlight"><pre>wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
-tar -zxvf psycopg2-2.5.1.tar.gz
-<span class="nb">cd </span>psycopg2-2.5.1
-vi setup.cfg
-</pre></div>
-
-
-<p>and add the following line</p>
-<div class="highlight"><pre><span class="n">pg_config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">pgsql</span><span class="o">-</span><span class="mf">9.3</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pg_config</span>
-<span class="err">````</span>
-
-
-<span class="n">now</span> <span class="n">install</span> <span class="n">it</span>
-
-<span class="err">```</span><span class="n">bash</span>
-<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
-</pre></div>
-
-
-<p>now creating a virtual env for you web application do it as follow</p>
-<div class="highlight"><pre>virtualenv-2.7 --system-site-packages ENV
+<p>where the first parameter is the <code>locale</code> and the second parameter represents the <code>options</code>. The allowed options can be found on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString">Mozilla Developer Network</a>. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.</p>
+<p>The same applies to the <code>Number</code> object.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Number.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this number.</td>
+</tr>
+</tbody>
+</table>
+<p>You can use it as follow</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">;</span>
+<span class="nx">number</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
+<span class="c1">// 3,600</span>
+<span class="nx">number</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// 3.600</span>
+<span class="nx">number</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">style</span><span class="o">:</span> <span class="s1">&#39;currency&#39;</span><span class="p">,</span>
+    <span class="nx">currency</span><span class="o">:</span> <span class="s1">&#39;USD&#39;</span>
+<span class="p">});</span>
+<span class="c1">// $3,600</span>
 </pre></div>
   </article>
 
@@ -198,11 +198,11 @@ vi setup.cfg
 
   <!-- SOCIAL -->
 <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==/blog/2013/10/16-python-mod_wsgi-centos.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/blog/2013/10/16-python-mod_wsgi-centos.html&title=Python 2.7.x and mod_wsgi on a CentOS 6&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/blog/2014/07/21-javascript-internationalization-part1.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/blog/2014/07/21-javascript-internationalization-part1.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/blog/2014/07/21-javascript-internationalization-part1.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/blog/2014/07/21-javascript-internationalization-part1.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/blog/2014/07/21-javascript-internationalization-part1.html&title=Javascript localization part 1&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->
