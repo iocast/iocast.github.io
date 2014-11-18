@@ -85,7 +85,7 @@
     <article class="container">
 
       <div class="row">
-        <div id="blog_main_area" class="left col-md-9" count=8>
+        <div id="blog_main_area" class="left col-md-9" count=10>
   <!-- article title -->
   <header>
       <h1>Python 2.7.x and mod_wsgi on a CentOS 6</h1>
@@ -178,14 +178,14 @@ vi setup.cfg
 
 
 <p>and add the following line</p>
-<div class="highlight"><pre><span class="n">pg_config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">pgsql</span><span class="o">-</span><span class="mf">9.3</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pg_config</span>
-<span class="err">````</span>
+<div class="highlight"><pre>pg_config=/usr/pgsql-9.3/bin/pg_config
+````
 
 
-<span class="n">now</span> <span class="n">install</span> <span class="n">it</span>
+now install it
 
-<span class="err">```</span><span class="n">bash</span>
-<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+```bash
+/usr/local/bin/python2.7 setup.py install
 </pre></div>
 
 
@@ -207,11 +207,11 @@ vi setup.cfg
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="5 articles with this tag"><i class="fa fa-tags"></i> server</a>
+        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles with this tag"><i class="fa fa-tags"></i> server</a>
         <a href="/tag/centos.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> centos</a>
         <a href="/tag/httpd.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> httpd</a>
-        <a href="/tag/apache.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> apache</a>
         <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> python</a>
+        <a href="/tag/apache.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> apache</a>
   </p>
 
   <hr /><!-- divider -->
@@ -269,9 +269,13 @@ vi setup.cfg
             <h3>Categories</h3>
 
             <ul>
-               <li><a href="http://iocast.github.io/category/gis.html"><i class="fa fa-dot-circle-o"></i> GIS</a>
+               <li><a href="http://iocast.github.io/category/desktop-application.html"><i class="fa fa-dot-circle-o"></i> Desktop Application</a>
+              </li>
+              <li><a href="http://iocast.github.io/category/gis.html"><i class="fa fa-dot-circle-o"></i> GIS</a>
               </li>
               <li><a href="http://iocast.github.io/category/miscellaneous.html"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a>
+              </li>
+              <li><a href="http://iocast.github.io/category/server.html"><i class="fa fa-dot-circle-o"></i> server</a>
               </li>
               <li><a href="http://iocast.github.io/category/server-management.html"><i class="fa fa-dot-circle-o"></i> Server Management</a>
               </li>
@@ -290,13 +294,24 @@ vi setup.cfg
 
             <!-- hide this part -->
             <div class="hidden">
-  None  None  None  None  None  None  None  None             </div>
+  None  None  None  None  None  None  None  None  None  None             </div>
 
             <ul class="tree">
               <li>
                 <span><i class="fa fa-minus-square-o"></i>2014</span>
                 <ul>
                   <li>
+                    <span><i class="fa fa-plus-square-o"></i>11</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html">
+                          <small>21/Nov/2014 Fri</small>f</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">
+                          <small>09/Nov/2014 Sun</small>My personal file server on a Cubox from SolidRun using Arch Linux</a>
+                      </li>
+                    </ul>
                     <span><i class="fa fa-plus-square-o"></i>07</span>
                     <ul>
                       <li style="display: none;">
@@ -342,7 +357,7 @@ vi setup.cfg
                           <small>09/Oct/2013 Wed</small>Mac OS X file server migration</a>
                       </li>
                       <li style="display: none;">
-                        <a href="http://iocast.github.io/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html">
+                        <a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html">
                           <small>08/Oct/2013 Tue</small>Creating your own blog using github pages, jekyll and travis</a>
                       </li>
                     </ul>

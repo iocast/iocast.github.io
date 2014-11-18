@@ -85,14 +85,82 @@
     <article class="container">
 
       <div class="row">
-        <div id="blog_main_area" class="left col-md-9" count=2>
-  <div class="item">
-      <div class="item-title">
-        <h2>github</h2>
-      </div>
-          <p><a href="http://iocast.github.io/blog/2014/04/17-github-pages-and-travis-ci.html"><span class="label label-default light">17/Apr/2014 Thu</span> GitHub Pages for a repository compiling using Travis CI</a></p>
-          <p><a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html"><span class="label label-default light">08/Oct/2013 Tue</span> Creating your own blog using github pages, jekyll and travis</a></p>
-  </div>
+        <div id="blog_main_area" class="left col-md-9" count=10>
+  <!-- article title -->
+  <header>
+      <h1>f</h1>
+    <small class="fsize13">
+            <a href="http://iocast.github.io/category/desktop-application.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> Desktop Application</a>
+      <a href="http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2014/11/21-linux-ocr-pdf.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">21/Nov/2014 Fri</span> 
+    </small>
+  </header>
+
+  <article class='content'>
+    <p>Base ocr recgonition application</p>
+<div class="highlight"><pre>apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu
+</pre></div>
+
+
+<p>For creating PDF/A compatible searachable PDF i use <code>OCRmyPDF</code> which is at time of writing not available over Ubuntu's default package manager. So install dependencies manually.</p>
+<div class="highlight"><pre>apt-get install imagemagick parallel unpaper
+</pre></div>
+
+
+<p>Do not forget to install Java. You could also use OpenJDK version 8 if you like.</p>
+<div class="highlight"><pre>apt-get install openjdk-7-jre
+</pre></div>
+
+
+<p>Download latest version from github and extract it. I used <code>/opt</code>. change the owner and permissions</p>
+<div class="highlight"><pre>chmod -R root:root /opt/OCRmyPDF-x.x-stable
+chmod -R 755 /opt/OCRmyPDF-x.x-stable
+</pre></div>
+
+
+<p>when running it for the first time it will install all dependencies.</p>
+<div class="highlight"><pre>sudo sh ./OCRmyPDF.sh -h
+</pre></div>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+    <a href="http://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html&title=f&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>  
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/sqlite.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> sqlite</a>
+        <a href="/tag/nodejs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> nodejs</a>
+        <a href="/tag/node-sqlite3.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> node-sqlite3</a>
+        <a href="/tag/development.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> development</a>
+        <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> javascript</a>
+        <a href="/tag/node-webkit.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> node-webkit</a>
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'iocast';
+        var disqus_identifier = "blog/2014/11/21-linux-ocr-pdf.html";
+        var disqus_title = "f";
+        var disqus_url = "http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
         </div>
 
         <!-- SIDEBAR -->
@@ -156,13 +224,31 @@
 
             <!-- hide this part -->
             <div class="hidden">
-  None  None             </div>
+  None  None  None  None  None  None  None  None  None  None             </div>
 
             <ul class="tree">
               <li>
                 <span><i class="fa fa-minus-square-o"></i>2014</span>
                 <ul>
                   <li>
+                    <span><i class="fa fa-plus-square-o"></i>11</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html">
+                          <small>21/Nov/2014 Fri</small>f</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">
+                          <small>09/Nov/2014 Sun</small>My personal file server on a Cubox from SolidRun using Arch Linux</a>
+                      </li>
+                    </ul>
+                    <span><i class="fa fa-plus-square-o"></i>07</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html">
+                          <small>21/Jul/2014 Mon</small>Javascript localization part 1</a>
+                      </li>
+                    </ul>
                     <span><i class="fa fa-plus-square-o"></i>04</span>
                     <ul>
                       <li style="display: none;">
@@ -175,8 +261,31 @@
                 <span><i class="fa fa-minus-square-o"></i>2013</span>
                 <ul>
                   <li>
+                    <span><i class="fa fa-plus-square-o"></i>11</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html">
+                          <small>30/Nov/2013 Sat</small>Joining a Active Directory on Linux - the easiest way!</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">
+                          <small>11/Nov/2013 Mon</small>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a>
+                      </li>
+                    </ul>
                     <span><i class="fa fa-plus-square-o"></i>10</span>
                     <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">
+                          <small>16/Oct/2013 Wed</small>Python 2.7.x and mod_wsgi on a CentOS 6</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html">
+                          <small>12/Oct/2013 Sat</small>Setting up a QGIS server and PostGIS on CentOS 6</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2013/10/09-osx-file-server-migration.html">
+                          <small>09/Oct/2013 Wed</small>Mac OS X file server migration</a>
+                      </li>
                       <li style="display: none;">
                         <a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html">
                           <small>08/Oct/2013 Tue</small>Creating your own blog using github pages, jekyll and travis</a>

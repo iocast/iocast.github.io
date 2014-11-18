@@ -85,7 +85,7 @@
     <article class="container">
 
       <div class="row">
-        <div id="blog_main_area" class="left col-md-9" count=8>
+        <div id="blog_main_area" class="left col-md-9" count=10>
   <!-- article title -->
   <header>
       <h1>Setting up a QGIS server and PostGIS on CentOS 6</h1>
@@ -181,14 +181,14 @@ createdb gis
 
 <p>Login into the database create a user and set a encrypted password</p>
 <div class="highlight"><pre>psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span>;
-ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span>;
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
+ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
 </pre></div>
 
 
 <p>Now test your configuration and install PostGIS extension</p>
 <div class="highlight"><pre>psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
+CREATE EXTENSION postgis<span class="p">;</span>
 </pre></div>
 
 
@@ -249,10 +249,10 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="5 articles with this tag"><i class="fa fa-tags"></i> server</a>
+        <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles with this tag"><i class="fa fa-tags"></i> server</a>
         <a href="/tag/centos.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> centos</a>
-        <a href="/tag/postgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgis</a>
         <a href="/tag/postgresql.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgresql</a>
+        <a href="/tag/postgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> postgis</a>
         <a href="/tag/qgis.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> qgis</a>
   </p>
 
@@ -311,9 +311,13 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
             <h3>Categories</h3>
 
             <ul>
-               <li><a href="http://iocast.github.io/category/gis.html"><i class="fa fa-dot-circle-o"></i> GIS</a>
+               <li><a href="http://iocast.github.io/category/desktop-application.html"><i class="fa fa-dot-circle-o"></i> Desktop Application</a>
+              </li>
+              <li><a href="http://iocast.github.io/category/gis.html"><i class="fa fa-dot-circle-o"></i> GIS</a>
               </li>
               <li><a href="http://iocast.github.io/category/miscellaneous.html"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a>
+              </li>
+              <li><a href="http://iocast.github.io/category/server.html"><i class="fa fa-dot-circle-o"></i> server</a>
               </li>
               <li><a href="http://iocast.github.io/category/server-management.html"><i class="fa fa-dot-circle-o"></i> Server Management</a>
               </li>
@@ -332,13 +336,24 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
 
             <!-- hide this part -->
             <div class="hidden">
-  None  None  None  None  None  None  None  None             </div>
+  None  None  None  None  None  None  None  None  None  None             </div>
 
             <ul class="tree">
               <li>
                 <span><i class="fa fa-minus-square-o"></i>2014</span>
                 <ul>
                   <li>
+                    <span><i class="fa fa-plus-square-o"></i>11</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html">
+                          <small>21/Nov/2014 Fri</small>f</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">
+                          <small>09/Nov/2014 Sun</small>My personal file server on a Cubox from SolidRun using Arch Linux</a>
+                      </li>
+                    </ul>
                     <span><i class="fa fa-plus-square-o"></i>07</span>
                     <ul>
                       <li style="display: none;">
@@ -384,7 +399,7 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
                           <small>09/Oct/2013 Wed</small>Mac OS X file server migration</a>
                       </li>
                       <li style="display: none;">
-                        <a href="http://iocast.github.io/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html">
+                        <a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html">
                           <small>08/Oct/2013 Tue</small>Creating your own blog using github pages, jekyll and travis</a>
                       </li>
                     </ul>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/gis.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2013-11-11T00:00:00+01:00</updated><entry><title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title><link href="http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html" rel="alternate"></link><updated>2013-11-11T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-11-11:blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html</id><summary type="html">&lt;h2&gt;Removing preinstalled packages&lt;/h2&gt;
 &lt;p&gt;First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;dpkg -l | grep &lt;span class="s1"&gt;&amp;#39;postgres\|gdal&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;dpkg -l &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;postgres\|gdal&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -10,12 +10,12 @@
 ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
 ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
-ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1
-ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1 -- scripts
-ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1
-ii  postgresql-client-common           129ubuntu1                        manager &lt;span class="k"&gt;for &lt;/span&gt;multiple PostgreSQL client versions
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager &lt;span class="k"&gt;for&lt;/span&gt; multiple PostgreSQL client versions
 ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
-ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -44,7 +44,7 @@ apt-get autoclean
 
 
 &lt;p&gt;Now we need to import the repository key from&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+&lt;div class="highlight"&gt;&lt;pre&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -96,7 +96,7 @@ tar xzvf postgis-2.1.0.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt; PostGIS is now configured &lt;span class="k"&gt;for &lt;/span&gt;x86_64-unknown-linux-gnu
+&lt;div class="highlight"&gt;&lt;pre&gt; PostGIS is now configured &lt;span class="k"&gt;for&lt;/span&gt; x86_64-unknown-linux-gnu
 
 -------------- Compiler Info ------------- 
  C compiler:           gcc -g -O2
@@ -249,14 +249,14 @@ createdb gis
 
 &lt;p&gt;Login into the database create a user and set a encrypted password&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
-ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now test your configuration and install PostGIS extension&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
+CREATE EXTENSION postgis&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

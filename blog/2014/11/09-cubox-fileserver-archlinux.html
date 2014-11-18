@@ -88,42 +88,204 @@
         <div id="blog_main_area" class="left col-md-9" count=10>
   <!-- article title -->
   <header>
-      <h1>Joining a Active Directory on Linux - the easiest way!</h1>
+      <h1>My personal file server on a Cubox from SolidRun using Arch Linux</h1>
     <small class="fsize13">
-            <a href="http://iocast.github.io/category/server-management.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> Server Management</a>
-      <a href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2013/11/30-ad-on-linux-the-easiest-way.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">30/Nov/2013 Sat</span> 
+            <a href="http://iocast.github.io/category/server.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> server</a>
+      <a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2014/11/09-cubox-fileserver-archlinux.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">09/Nov/2014 Sun</span> 
     </small>
   </header>
 
   <article class='content'>
-    <p>The easiest way, at least for me, is to use the <code>likewise-open</code> package. You can find the official documentation <a href="https://help.ubuntu.com/community/LikewiseOpen">here</a>. Under Ubuntu you can simple install this package using <code>apt-get</code>.</p>
-<div class="highlight"><pre>apt-get install likewise-open
+    <p>For my file server I have the following requirements:</p>
+<ol>
+<li>it should consume as less as possible electricity</li>
+<li>it should be very silent, means no active cooling</li>
+<li>the operation system should use OpenSSH</li>
+</ol>
+<p>Thus, for the hardware I have decided to use a <a href="http://www.solid-run.com/">Cubox from SolidRun</a> because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Arch Linux</a> because it is more up-to-date then the Debian or Ubuntu distribution.</p>
+<h1>Installation</h1>
+<p>Download the latest version of Arch Linux for the <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Marvell ARMv7 platform</a> from the official site. Next, plug your MicroSD into your computer and find out which drive (<code>/dev/sdx</code>) it is</p>
+<div class="highlight"><pre>df -ah
 </pre></div>
 
 
-<p>Once you have installed it, you can join a Active Directory (AD) as follow.</p>
-<div class="highlight"><pre>domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;
+<p>Clear your disk and create <strong>one</strong> <code>ext3</code> partition.</p>
+<div class="highlight"><pre>mkfs.ext3 /dev/sdx1
 </pre></div>
 
 
-<p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
-<p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
-<h2>Restricting access to specific groups</h2>
-<p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
-<div class="highlight"><pre>lwconfig RequireMembershipOf <span class="s2">&quot;&lt;server&gt;\\&lt;group-1&gt;&quot;</span> <span class="s2">&quot;&lt;erver&gt;\\&lt;group-2&gt;&quot;</span>
-lw-update-dns
+<p>Know mount it and extract Arch Linux onto your MicroSD partition</p>
+<div class="highlight"><pre>mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
 </pre></div>
 
 
-<p>If you forget which groups have access to you server, you could check it by running the following command:</p>
-<div class="highlight"><pre>lwconfig --detail RequireMembershipOf
+<p>The default login is user <code>root</code> with password <code>root</code>.</p>
+<h1>Configuration</h1>
+<p>Now lets configure some basic stuff, like date and time, DHCP, etc.</p>
+<h2>Clientid</h2>
+<p>If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in <code>/etc/dhcpcd.conf</code>:</p>
+<div class="highlight"><pre># Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361. 
+duid
 </pre></div>
 
 
-<h2>Login</h2>
-<p>Now you are able to login to your server using active directory authentication:</p>
-<div class="highlight"><pre>ssh &lt;ad_domain&gt;<span class="se">\\</span>&lt;user&gt;@&lt;server&gt;
+<p>to:</p>
+<div class="highlight"><pre># Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+</pre></div>
+
+
+<p>Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.</p>
+<p>To automatically start the DCHP daemon at start up you have to enable it.</p>
+<div class="highlight"><pre>systemctl enable dhcpcd
+systemctl enable dhcpcd@eth0.service
+</pre></div>
+
+
+<h2>System Upgrade</h2>
+<div class="highlight"><pre>pacman -Syu
+</pre></div>
+
+
+<h2>Bad experience with <code>vi</code></h2>
+<p>If you have bad experience or strange behaviour with the standard <code>vi</code> simply install <code>vim</code>.</p>
+<div class="highlight"><pre>pacman -S vim-minimal
+</pre></div>
+
+
+<h2>Locale and Date/Time</h2>
+<p>Change your timezone to the one your are living at. All time zones can be found in the folder <code>/etc/timezones</code>.</p>
+<div class="highlight"><pre># To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+</pre></div>
+
+
+<p>Also do not forget to change your <code>locale</code></p>
+<div class="highlight"><pre>localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+</pre></div>
+
+
+<h1>Samba</h1>
+<p>For internal file sharing you could use Samba. Tips and tricks can be found on <a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks">Arch Linux Samba site</a></p>
+<div class="highlight"><pre>pacman -S samba
+</pre></div>
+
+
+<p>Your can restart the service using the follwing</p>
+<div class="highlight"><pre>systemctl enable smbd.service
+systemctl enable nmbd.service
+</pre></div>
+
+
+<p>Create a new samba group</p>
+<div class="highlight"><pre>groupadd sambashare
+</pre></div>
+
+
+<p>and add user to it</p>
+<div class="highlight"><pre># add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+</pre></div>
+
+
+<p>Adding a user to the samba group</p>
+<div class="highlight"><pre>usermod -a -G sambashare unix_user_name
+</pre></div>
+
+
+<p>On my Cubox I use the following configuration (<code>/etc/samba/smb.conf</code>):</p>
+<div class="highlight"><pre><span class="k">[global]</span>
+<span class="na">workgroup</span> <span class="o">=</span> <span class="s">iocast</span>
+<span class="na">server string</span> <span class="o">=</span> <span class="s">file server</span>
+<span class="na">security</span> <span class="o">=</span> <span class="s">user</span>
+<span class="na">create mask</span> <span class="o">=</span> <span class="s">0775</span>
+<span class="na">force create mode</span> <span class="o">=</span> <span class="s">0775</span>
+<span class="na">directory mask</span> <span class="o">=</span> <span class="s">02775</span>
+<span class="na">force directory mode</span> <span class="o">=</span> <span class="s">02775</span>
+<span class="na">force group</span> <span class="o">=</span> <span class="s">sambashare</span>
+
+<span class="k">[michel]</span>
+<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk</span>
+<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/data/</span>
+<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">writable</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel</span>
+<span class="na">write list</span> <span class="o">=</span> <span class="s">michel</span>
+
+<span class="k">[michel backup]</span>
+<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk backup</span>
+<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/backup/</span>
+<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">writable</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel</span>
+<span class="na">write list</span> <span class="o">=</span> <span class="s">michel</span>
+
+<span class="k">[ninalaki]</span>
+<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk1</span>
+<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/data1/</span>
+<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">writable</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel karolina</span>
+<span class="na">write list</span> <span class="o">=</span> <span class="s">michel karolina</span>
+
+<span class="k">[ninalaki backup]</span>
+<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk1 backup</span>
+<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/backup1/</span>
+<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">writable</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
+<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel karolina</span>
+<span class="na">write list</span> <span class="o">=</span> <span class="s">michel karolina</span>
+</pre></div>
+
+
+<h1>Disks management</h1>
+<p>To automatically mount disks on startup, you need to add them to the <code>/etc/fstab</code> configuration file. Also use the option <code>nofail</code> to not report any error if the disk is absent. For more information read the <a href="https://wiki.archlinux.org/index.php/fstab">manual on Arch Linux</a></p>
+<p>Run <code>lsblk -f</code> or <code>ls -l /dev/disk/by-uuid</code> to list the partitions / disks. Edit the <code>/etc/fstab</code> and prefix the values in the UUID column with <code>UUID=</code>:</p>
+<div class="highlight"><pre># &lt;file system&gt;                           &lt;dir&gt;            &lt;type&gt;  &lt;options&gt;                        &lt;dump&gt;  &lt;pass&gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/ ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,relatime,data=ordered  0       0
+</pre></div>
+
+
+<h1>Dynamic DNS</h1>
+<p>If you use <a href="http://www.afraid.org">afraid.org</a> as your dynamic DNS service you can get an example <code>cron</code> entry from the <strong>Dynamic DNS</strong> menu entry. It look likes the following</p>
+<div class="highlight"><pre>PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1 &amp;
+</pre></div>
+
+
+<p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code>. First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
+<div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">afraid.org for pasithee.mooo.com</span>
+<span class="na">Requires</span><span class="o">=</span><span class="s">network-online.target</span>
+<span class="na">Requires</span><span class="o">=</span><span class="s">network.target</span>
+<span class="na">After</span><span class="o">=</span><span class="s">dhcpcd.service</span>
+
+<span class="k">[Timer]</span>
+<span class="na">OnCalendar</span><span class="o">=</span><span class="s">*:3,8,13,18,23,28,33,38,43,48,53,58</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1</span>
 </pre></div>
   </article>
 
@@ -131,19 +293,20 @@ lw-update-dns
 
   <!-- SOCIAL -->
 <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html&title=Joining a Active Directory on Linux - the easiest way!&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html&title=My personal file server on a Cubox from SolidRun using Arch Linux&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
         <a href="/tag/server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles with this tag"><i class="fa fa-tags"></i> server</a>
-        <a href="/tag/ubuntu.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> ubuntu</a>
-        <a href="/tag/active-directory.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> active directory</a>
-        <a href="/tag/likewise-open.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> likewise-open</a>
+        <a href="/tag/samba.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> samba</a>
+        <a href="/tag/file-server.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> file server</a>
+        <a href="/tag/dyndns.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> dyndns</a>
+        <a href="/tag/arch-linux.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> arch linux</a>
   </p>
 
   <hr /><!-- divider -->
@@ -152,9 +315,9 @@ lw-update-dns
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'iocast';
-        var disqus_identifier = "blog/2013/11/30-ad-on-linux-the-easiest-way.html";
-        var disqus_title = "Joining a Active Directory on Linux - the easiest way!";
-        var disqus_url = "http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html";
+        var disqus_identifier = "blog/2014/11/09-cubox-fileserver-archlinux.html";
+        var disqus_title = "My personal file server on a Cubox from SolidRun using Arch Linux";
+        var disqus_url = "http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/miscellaneous.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2013-10-08T00:00:00+02:00</updated><entry><title>Creating your own blog using github pages, jekyll and travis</title><link href="http://iocast.github.io/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html" rel="alternate"></link><updated>2013-10-08T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-08:blog/2013/10/08-githup-pages-with-jekyll-and-travis.html</id><summary type="html">&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)"&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/miscellaneous.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2013-10-08T00:00:00+02:00</updated><entry><title>Creating your own blog using github pages, jekyll and travis</title><link href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html" rel="alternate"></link><updated>2013-10-08T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-08:blog/2013/10/08-github-pages-with-jekyll-and-travis.html</id><summary type="html">&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)"&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href="http://github.com/" title="Github"&gt;Github's&lt;/a&gt; user pages, &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
 &lt;h2&gt;Github&lt;/h2&gt;
 &lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
@@ -83,22 +83,22 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 
 
 &lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$TRAVIS_PULL_REQUEST&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;span class="k"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_PULL_REQUEST&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;
 
   cp -R _site &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site
 
   &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;
   git config --global user.email &lt;span class="s2"&gt;&amp;quot;iocast@me.com&amp;quot;&lt;/span&gt;
   git config --global user.name &lt;span class="s2"&gt;&amp;quot;iocast&amp;quot;&lt;/span&gt;
-  git clone --quiet --branch&lt;span class="o"&gt;=&lt;/span&gt;master https://&lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
+  git clone --quiet --branch&lt;span class="o"&gt;=&lt;/span&gt;master https://&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
 
   &lt;span class="nb"&gt;cd &lt;/span&gt;master
   rm -rf ./*
   cp -Rf &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site/* .
 
   git add -f .
-  git commit -m &lt;span class="s2"&gt;&amp;quot;Travis build $TRAVIS_BUILD_NUMBER pushed to master&amp;quot;&lt;/span&gt;
+  git commit -m &lt;span class="s2"&gt;&amp;quot;Travis build &lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_BUILD_NUMBER&lt;/span&gt;&lt;span class="s2"&gt; pushed to master&amp;quot;&lt;/span&gt;
   git push -fq origin master &amp;gt; /dev/null
 
   &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Done magic with coverage\n&amp;quot;&lt;/span&gt;

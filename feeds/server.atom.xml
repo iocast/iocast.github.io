@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/server.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2014-11-09T00:00:00+01:00</updated><entry><title>My personal file server on a Cubox from SolidRun using Arch Linux</title><link href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" rel="alternate"></link><updated>2014-11-09T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</id><summary type="html">&lt;p&gt;For my file server I have the following requirements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;it should consume as less as possible electricity&lt;/li&gt;
+&lt;li&gt;it should be very silent, means no active cooling&lt;/li&gt;
+&lt;li&gt;the operation system should use OpenSSH&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Thus, for the hardware I have decided to use a &lt;a href="http://www.solid-run.com/"&gt;Cubox from SolidRun&lt;/a&gt; because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Arch Linux&lt;/a&gt; because it is more up-to-date then the Debian or Ubuntu distribution.&lt;/p&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;Download the latest version of Arch Linux for the &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Marvell ARMv7 platform&lt;/a&gt; from the official site. Next, plug your MicroSD into your computer and find out which drive (&lt;code&gt;/dev/sdx&lt;/code&gt;) it is&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;df -ah
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Clear your disk and create &lt;strong&gt;one&lt;/strong&gt; &lt;code&gt;ext3&lt;/code&gt; partition.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkfs.ext3 /dev/sdx1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Know mount it and extract Arch Linux onto your MicroSD partition&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The default login is user &lt;code&gt;root&lt;/code&gt; with password &lt;code&gt;root&lt;/code&gt;.&lt;/p&gt;
+&lt;h1&gt;Configuration&lt;/h1&gt;
+&lt;p&gt;Now lets configure some basic stuff, like date and time, DHCP, etc.&lt;/p&gt;
+&lt;h2&gt;Clientid&lt;/h2&gt;
+&lt;p&gt;If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in &lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361. 
+duid
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.&lt;/p&gt;
+&lt;p&gt;To automatically start the DCHP daemon at start up you have to enable it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable dhcpcd
+systemctl enable dhcpcd@eth0.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;System Upgrade&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -Syu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Bad experience with &lt;code&gt;vi&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;If you have bad experience or strange behaviour with the standard &lt;code&gt;vi&lt;/code&gt; simply install &lt;code&gt;vim&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S vim-minimal
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Locale and Date/Time&lt;/h2&gt;
+&lt;p&gt;Change your timezone to the one your are living at. All time zones can be found in the folder &lt;code&gt;/etc/timezones&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Also do not forget to change your &lt;code&gt;locale&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Samba&lt;/h1&gt;
+&lt;p&gt;For internal file sharing you could use Samba. Tips and tricks can be found on &lt;a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks"&gt;Arch Linux Samba site&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S samba
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Your can restart the service using the follwing&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable smbd.service
+systemctl enable nmbd.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Create a new samba group&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;groupadd sambashare
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and add user to it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Adding a user to the samba group&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;usermod -a -G sambashare unix_user_name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On my Cubox I use the following configuration (&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
+&lt;span class="na"&gt;workgroup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;iocast&lt;/span&gt;
+&lt;span class="na"&gt;server string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;file server&lt;/span&gt;
+&lt;span class="na"&gt;security&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;user&lt;/span&gt;
+&lt;span class="na"&gt;create mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
+&lt;span class="na"&gt;force create mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
+&lt;span class="na"&gt;directory mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
+&lt;span class="na"&gt;force directory mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
+&lt;span class="na"&gt;force group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;sambashare&lt;/span&gt;
+
+&lt;span class="k"&gt;[michel]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+
+&lt;span class="k"&gt;[michel backup]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk backup&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+
+&lt;span class="k"&gt;[ninalaki]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data1/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+
+&lt;span class="k"&gt;[ninalaki backup]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1 backup&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup1/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Disks management&lt;/h1&gt;
+&lt;p&gt;To automatically mount disks on startup, you need to add them to the &lt;code&gt;/etc/fstab&lt;/code&gt; configuration file. Also use the option &lt;code&gt;nofail&lt;/code&gt; to not report any error if the disk is absent. For more information read the &lt;a href="https://wiki.archlinux.org/index.php/fstab"&gt;manual on Arch Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;lsblk -f&lt;/code&gt; or &lt;code&gt;ls -l /dev/disk/by-uuid&lt;/code&gt; to list the partitions / disks. Edit the &lt;code&gt;/etc/fstab&lt;/code&gt; and prefix the values in the UUID column with &lt;code&gt;UUID=&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# &amp;lt;file system&amp;gt;                           &amp;lt;dir&amp;gt;            &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;                        &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/ ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,relatime,data=ordered  0       0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Dynamic DNS&lt;/h1&gt;
+&lt;p&gt;If you use &lt;a href="http://www.afraid.org"&gt;afraid.org&lt;/a&gt; as your dynamic DNS service you can get an example &lt;code&gt;cron&lt;/code&gt; entry from the &lt;strong&gt;Dynamic DNS&lt;/strong&gt; menu entry. It look likes the following&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1 &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt;. First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;afraid.org for pasithee.mooo.com&lt;/span&gt;
+&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network-online.target&lt;/span&gt;
+&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network.target&lt;/span&gt;
+&lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;dhcpcd.service&lt;/span&gt;
+
+&lt;span class="k"&gt;[Timer]&lt;/span&gt;
+&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*:3,8,13,18,23,28,33,38,43,48,53,58&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="server"></category><category term="arch linux"></category><category term="file server"></category><category term="samba"></category><category term="dyndns"></category></entry></feed>

@@ -1,10 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>iocast</title><link>http://iocast.github.io/</link><description></description><atom:link href="http://iocast.github.io/feeds/iocast.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 21 Jul 2014 00:00:00 +0200</lastBuildDate><item><title>Javascript localization part 1</title><link>http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html</link><description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>iocast</title><link>http://iocast.github.io/</link><description></description><atom:link href="http://iocast.github.io/feeds/iocast.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 21 Nov 2014 00:00:00 +0100</lastBuildDate><item><title>f</title><link>http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html</link><description>&lt;p&gt;Base ocr recgonition application&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For creating PDF/A compatible searachable PDF i use &lt;code&gt;OCRmyPDF&lt;/code&gt; which is at time of writing not available over Ubuntu's default package manager. So install dependencies manually.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install imagemagick parallel unpaper
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Do not forget to install Java. You could also use OpenJDK version 8 if you like.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install openjdk-7-jre
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Download latest version from github and extract it. I used &lt;code&gt;/opt&lt;/code&gt;. change the owner and permissions&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod -R root:root /opt/OCRmyPDF-x.x-stable
+chmod -R 755 /opt/OCRmyPDF-x.x-stable
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;when running it for the first time it will install all dependencies.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo sh ./OCRmyPDF.sh -h
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Fri, 21 Nov 2014 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2014-11-21:blog/2014/11/21-linux-ocr-pdf.html</guid><category>development</category><category>javascript</category><category>nodejs</category><category>node-webkit</category><category>node-sqlite3</category><category>sqlite</category></item><item><title>My personal file server on a Cubox from SolidRun using Arch Linux</title><link>http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html</link><description>&lt;p&gt;For my file server I have the following requirements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;it should consume as less as possible electricity&lt;/li&gt;
+&lt;li&gt;it should be very silent, means no active cooling&lt;/li&gt;
+&lt;li&gt;the operation system should use OpenSSH&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Thus, for the hardware I have decided to use a &lt;a href="http://www.solid-run.com/"&gt;Cubox from SolidRun&lt;/a&gt; because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Arch Linux&lt;/a&gt; because it is more up-to-date then the Debian or Ubuntu distribution.&lt;/p&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;Download the latest version of Arch Linux for the &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Marvell ARMv7 platform&lt;/a&gt; from the official site. Next, plug your MicroSD into your computer and find out which drive (&lt;code&gt;/dev/sdx&lt;/code&gt;) it is&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;df -ah
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Clear your disk and create &lt;strong&gt;one&lt;/strong&gt; &lt;code&gt;ext3&lt;/code&gt; partition.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkfs.ext3 /dev/sdx1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Know mount it and extract Arch Linux onto your MicroSD partition&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The default login is user &lt;code&gt;root&lt;/code&gt; with password &lt;code&gt;root&lt;/code&gt;.&lt;/p&gt;
+&lt;h1&gt;Configuration&lt;/h1&gt;
+&lt;p&gt;Now lets configure some basic stuff, like date and time, DHCP, etc.&lt;/p&gt;
+&lt;h2&gt;Clientid&lt;/h2&gt;
+&lt;p&gt;If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in &lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361. 
+duid
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.&lt;/p&gt;
+&lt;p&gt;To automatically start the DCHP daemon at start up you have to enable it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable dhcpcd
+systemctl enable dhcpcd@eth0.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;System Upgrade&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -Syu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Bad experience with &lt;code&gt;vi&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;If you have bad experience or strange behaviour with the standard &lt;code&gt;vi&lt;/code&gt; simply install &lt;code&gt;vim&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S vim-minimal
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Locale and Date/Time&lt;/h2&gt;
+&lt;p&gt;Change your timezone to the one your are living at. All time zones can be found in the folder &lt;code&gt;/etc/timezones&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Also do not forget to change your &lt;code&gt;locale&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Samba&lt;/h1&gt;
+&lt;p&gt;For internal file sharing you could use Samba. Tips and tricks can be found on &lt;a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks"&gt;Arch Linux Samba site&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S samba
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Your can restart the service using the follwing&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable smbd.service
+systemctl enable nmbd.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Create a new samba group&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;groupadd sambashare
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and add user to it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Adding a user to the samba group&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;usermod -a -G sambashare unix_user_name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On my Cubox I use the following configuration (&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
+&lt;span class="na"&gt;workgroup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;iocast&lt;/span&gt;
+&lt;span class="na"&gt;server string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;file server&lt;/span&gt;
+&lt;span class="na"&gt;security&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;user&lt;/span&gt;
+&lt;span class="na"&gt;create mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
+&lt;span class="na"&gt;force create mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
+&lt;span class="na"&gt;directory mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
+&lt;span class="na"&gt;force directory mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
+&lt;span class="na"&gt;force group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;sambashare&lt;/span&gt;
+
+&lt;span class="k"&gt;[michel]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+
+&lt;span class="k"&gt;[michel backup]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk backup&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+
+&lt;span class="k"&gt;[ninalaki]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data1/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+
+&lt;span class="k"&gt;[ninalaki backup]&lt;/span&gt;
+&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1 backup&lt;/span&gt;
+&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup1/&lt;/span&gt;
+&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Disks management&lt;/h1&gt;
+&lt;p&gt;To automatically mount disks on startup, you need to add them to the &lt;code&gt;/etc/fstab&lt;/code&gt; configuration file. Also use the option &lt;code&gt;nofail&lt;/code&gt; to not report any error if the disk is absent. For more information read the &lt;a href="https://wiki.archlinux.org/index.php/fstab"&gt;manual on Arch Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;lsblk -f&lt;/code&gt; or &lt;code&gt;ls -l /dev/disk/by-uuid&lt;/code&gt; to list the partitions / disks. Edit the &lt;code&gt;/etc/fstab&lt;/code&gt; and prefix the values in the UUID column with &lt;code&gt;UUID=&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# &amp;lt;file system&amp;gt;                           &amp;lt;dir&amp;gt;            &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;                        &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/ ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,relatime,data=ordered  0       0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Dynamic DNS&lt;/h1&gt;
+&lt;p&gt;If you use &lt;a href="http://www.afraid.org"&gt;afraid.org&lt;/a&gt; as your dynamic DNS service you can get an example &lt;code&gt;cron&lt;/code&gt; entry from the &lt;strong&gt;Dynamic DNS&lt;/strong&gt; menu entry. It look likes the following&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1 &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt;. First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;afraid.org for pasithee.mooo.com&lt;/span&gt;
+&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network-online.target&lt;/span&gt;
+&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network.target&lt;/span&gt;
+&lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;dhcpcd.service&lt;/span&gt;
+
+&lt;span class="k"&gt;[Timer]&lt;/span&gt;
+&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*:3,8,13,18,23,28,33,38,43,48,53,58&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sun, 09 Nov 2014 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</guid><category>server</category><category>arch linux</category><category>file server</category><category>samba</category><category>dyndns</category></item><item><title>Javascript localization part 1</title><link>http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html</link><description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
 &lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
 &lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;dateobj&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; 
-&lt;span class="n"&gt;dateobj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getDate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dateobj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dateobj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getFullYear&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="c1"&gt;// 21/7/2014&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;var dateobj= new Date() 
+dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
+// 21/7/2014
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -159,7 +371,7 @@ lw-update-dns
 &lt;div class="highlight"&gt;&lt;pre&gt;ssh &amp;lt;ad_domain&amp;gt;&lt;span class="se"&gt;\\&lt;/span&gt;&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sat, 30 Nov 2013 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2013-11-30:blog/2013/11/30-ad-on-linux-the-easiest-way.html</guid><category>active directory</category><category>likewise-open</category><category>ubuntu</category><category>server</category></item><item><title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title><link>http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html</link><description>&lt;h2&gt;Removing preinstalled packages&lt;/h2&gt;
 &lt;p&gt;First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;dpkg -l | grep &lt;span class="s1"&gt;&amp;#39;postgres\|gdal&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;dpkg -l &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;postgres\|gdal&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -168,12 +380,12 @@ lw-update-dns
 ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
 ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
-ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1
-ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1 -- scripts
-ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL 9.1
-ii  postgresql-client-common           129ubuntu1                        manager &lt;span class="k"&gt;for &lt;/span&gt;multiple PostgreSQL client versions
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager &lt;span class="k"&gt;for&lt;/span&gt; multiple PostgreSQL client versions
 ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
-ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities &lt;span class="k"&gt;for &lt;/span&gt;PostgreSQL
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -202,7 +414,7 @@ apt-get autoclean
 
 
 &lt;p&gt;Now we need to import the repository key from&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+&lt;div class="highlight"&gt;&lt;pre&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -254,7 +466,7 @@ tar xzvf postgis-2.1.0.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt; PostGIS is now configured &lt;span class="k"&gt;for &lt;/span&gt;x86_64-unknown-linux-gnu
+&lt;div class="highlight"&gt;&lt;pre&gt; PostGIS is now configured &lt;span class="k"&gt;for&lt;/span&gt; x86_64-unknown-linux-gnu
 
 -------------- Compiler Info ------------- 
  C compiler:           gcc -g -O2
@@ -404,14 +616,14 @@ vi setup.cfg
 
 
 &lt;p&gt;and add the following line&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pg_config&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pgsql&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;9.3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pg_config&lt;/span&gt;
-&lt;span class="err"&gt;````&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
+````
 
 
-&lt;span class="n"&gt;now&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;
+now install it
 
-&lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
-&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+```bash
+/usr/local/bin/python2.7 setup.py install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -501,14 +713,14 @@ createdb gis
 
 &lt;p&gt;Login into the database create a user and set a encrypted password&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
-ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;;
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now test your configuration and install PostGIS extension&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
+CREATE EXTENSION postgis&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -561,7 +773,7 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
 &lt;li&gt;creating optionally a share point for each folder to be synced&lt;/li&gt;
 &lt;li&gt;propagating ACLs on a share point or on a individual directory.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href="/projects/file-server-management.html"&gt;server migration tool&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Wed, 09 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-09:blog/2013/10/09-osx-file-server-migration.html</guid><category>osx</category><category>bash</category><category>rsync</category></item><item><title>Creating your own blog using github pages, jekyll and travis</title><link>http://iocast.github.io/blog/2013/10/08-githup-pages-with-jekyll-and-travis.html</link><description>&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)"&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href="/projects/file-server-management.html"&gt;server migration tool&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Wed, 09 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-09:blog/2013/10/09-osx-file-server-migration.html</guid><category>osx</category><category>bash</category><category>rsync</category></item><item><title>Creating your own blog using github pages, jekyll and travis</title><link>http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html</link><description>&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)"&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href="http://github.com/" title="Github"&gt;Github's&lt;/a&gt; user pages, &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
 &lt;h2&gt;Github&lt;/h2&gt;
 &lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
@@ -645,22 +857,22 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 
 
 &lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$TRAVIS_PULL_REQUEST&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;span class="k"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_PULL_REQUEST&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;
 
   cp -R _site &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site
 
   &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;
   git config --global user.email &lt;span class="s2"&gt;&amp;quot;iocast@me.com&amp;quot;&lt;/span&gt;
   git config --global user.name &lt;span class="s2"&gt;&amp;quot;iocast&amp;quot;&lt;/span&gt;
-  git clone --quiet --branch&lt;span class="o"&gt;=&lt;/span&gt;master https://&lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
+  git clone --quiet --branch&lt;span class="o"&gt;=&lt;/span&gt;master https://&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
 
   &lt;span class="nb"&gt;cd &lt;/span&gt;master
   rm -rf ./*
   cp -Rf &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site/* .
 
   git add -f .
-  git commit -m &lt;span class="s2"&gt;&amp;quot;Travis build $TRAVIS_BUILD_NUMBER pushed to master&amp;quot;&lt;/span&gt;
+  git commit -m &lt;span class="s2"&gt;&amp;quot;Travis build &lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_BUILD_NUMBER&lt;/span&gt;&lt;span class="s2"&gt; pushed to master&amp;quot;&lt;/span&gt;
   git push -fq origin master &amp;gt; /dev/null
 
   &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Done magic with coverage\n&amp;quot;&lt;/span&gt;
@@ -670,4 +882,4 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 
 &lt;p&gt;and add the following lines to the end of the &lt;code&gt;.travis.yml&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;after_success&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;./update-gh-pages.sh&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Tue, 08 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-08:blog/2013/10/08-githup-pages-with-jekyll-and-travis.html</guid><category>github</category><category>jekyll</category><category>travis</category><category>bash</category><category>continuous integration</category></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Tue, 08 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-08:blog/2013/10/08-github-pages-with-jekyll-and-travis.html</guid><category>github</category><category>jekyll</category><category>travis</category><category>bash</category><category>continuous integration</category></item></channel></rss>
