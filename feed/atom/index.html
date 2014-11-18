@@ -1,28 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feed/atom/index.html" rel="self"></link><id>http://iocast.github.io/</id><updated>2014-11-21T00:00:00+01:00</updated><entry><title>f</title><link href="http://iocast.github.io/blog/2014/11/21-linux-ocr-pdf.html" rel="alternate"></link><updated>2014-11-21T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-11-21:blog/2014/11/21-linux-ocr-pdf.html</id><summary type="html">&lt;p&gt;Base ocr recgonition application&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;For creating PDF/A compatible searachable PDF i use &lt;code&gt;OCRmyPDF&lt;/code&gt; which is at time of writing not available over Ubuntu's default package manager. So install dependencies manually.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install imagemagick parallel unpaper
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Do not forget to install Java. You could also use OpenJDK version 8 if you like.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install openjdk-7-jre
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Download latest version from github and extract it. I used &lt;code&gt;/opt&lt;/code&gt;. change the owner and permissions&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;chmod -R root:root /opt/OCRmyPDF-x.x-stable
-chmod -R 755 /opt/OCRmyPDF-x.x-stable
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;when running it for the first time it will install all dependencies.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo sh ./OCRmyPDF.sh -h
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="development"></category><category term="javascript"></category><category term="nodejs"></category><category term="node-webkit"></category><category term="node-sqlite3"></category><category term="sqlite"></category></entry><entry><title>My personal file server on a Cubox from SolidRun using Arch Linux</title><link href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" rel="alternate"></link><updated>2014-11-09T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</id><summary type="html">&lt;p&gt;For my file server I have the following requirements:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feed/atom/index.html" rel="self"></link><id>http://iocast.github.io/</id><updated>2014-11-09T00:00:00+01:00</updated><entry><title>My personal file server on a Cubox from SolidRun using Arch Linux</title><link href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html" rel="alternate"></link><updated>2014-11-09T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</id><summary type="html">&lt;p&gt;For my file server I have the following requirements:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;it should consume as less as possible electricity&lt;/li&gt;
 &lt;li&gt;it should be very silent, means no active cooling&lt;/li&gt;
