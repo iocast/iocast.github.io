@@ -273,9 +273,9 @@ UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,rel
 </pre></div>
 
 
-<p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code>. First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
+<p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code> (see <a href="https://wiki.archlinux.org/index.php/Systemd/Timers">here</a>). First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
 <div class="highlight"><pre><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">afraid.org for pasithee.mooo.com</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">timer for service afraid.org.timer</span>
 <span class="na">Requires</span><span class="o">=</span><span class="s">network-online.target</span>
 <span class="na">Requires</span><span class="o">=</span><span class="s">network.target</span>
 <span class="na">After</span><span class="o">=</span><span class="s">dhcpcd.service</span>
@@ -283,9 +283,31 @@ UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,rel
 <span class="k">[Timer]</span>
 <span class="na">OnCalendar</span><span class="o">=</span><span class="s">*:3,8,13,18,23,28,33,38,43,48,53,58</span>
 
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</pre></div>
+
+
+<p>Then create a service file of the same name <code>/etc/systemd/system/afraid.org.service</code> and add the following lines</p>
+<div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">service for afraid.org for pasithee.mooo.com</span>
+
 <span class="k">[Service]</span>
 <span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1</span>
+</pre></div>
+
+
+<p>Now you can test the service.</p>
+<div class="highlight"><pre># test service
+systemctl start afraid.org.service
+systemctl stop afraid.org.service
+</pre></div>
+
+
+<p>As soon as it works you can enable the timer</p>
+<div class="highlight"><pre>systemctl enable afraid.org.timer
+systemctl start afraid.org.timer
 </pre></div>
   </article>
 

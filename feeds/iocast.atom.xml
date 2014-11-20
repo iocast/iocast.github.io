@@ -175,9 +175,9 @@ UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,rel
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt;. First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
+&lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt; (see &lt;a href="https://wiki.archlinux.org/index.php/Systemd/Timers"&gt;here&lt;/a&gt;). First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;afraid.org for pasithee.mooo.com&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timer for service afraid.org.timer&lt;/span&gt;
 &lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network-online.target&lt;/span&gt;
 &lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network.target&lt;/span&gt;
 &lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;dhcpcd.service&lt;/span&gt;
@@ -185,9 +185,31 @@ UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,rel
 &lt;span class="k"&gt;[Timer]&lt;/span&gt;
 &lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*:3,8,13,18,23,28,33,38,43,48,53,58&lt;/span&gt;
 
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;multi-user.target&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then create a service file of the same name &lt;code&gt;/etc/systemd/system/afraid.org.service&lt;/code&gt; and add the following lines&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;service for afraid.org for pasithee.mooo.com&lt;/span&gt;
+
 &lt;span class="k"&gt;[Service]&lt;/span&gt;
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
-&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can test the service.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# test service
+systemctl start afraid.org.service
+systemctl stop afraid.org.service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As soon as it works you can enable the timer&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable afraid.org.timer
+systemctl start afraid.org.timer
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="server"></category><category term="arch linux"></category><category term="file server"></category><category term="samba"></category><category term="dyndns"></category></entry><entry><title>Javascript localization part 1</title><link href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html" rel="alternate"></link><updated>2014-07-21T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-07-21:blog/2014/07/21-javascript-internationalization-part1.html</id><summary type="html">&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
 &lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
 &lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
