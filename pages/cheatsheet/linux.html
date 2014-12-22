@@ -164,7 +164,8 @@
 <dt><code>-s</code></dt>
 <dd>
 <p>sum all subfolders</p>
-<p>du <directory></directory></p>
+<p>:::bash
+du <directory></directory></p>
 </dd>
 </dl>
 <h3 id="compression">Compression</h3>
@@ -175,11 +176,9 @@
 </pre></div>
 <h3 id="synchronization">Synchronization</h3>
 <p>Synchronization</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#! /bin/bash</span>
+<div class="highlight"><pre><span class="c">#! /bin/bash</span>
 rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; <span class="p">&amp;</span>
 </pre></div>
-</td></tr></table>
 <h3 id="cloning">Cloning</h3>
 <p>burning image to disk (also usb drives)</p>
 <p>optional use <code>bs=8192</code></p>
