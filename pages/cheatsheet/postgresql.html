@@ -123,18 +123,16 @@
 <dt><code>-e</code></dt>
 <dd>echo</dd>
 <dt><code>--locale=&lt;locale&gt;</code></dt>
-<dd>(This is equivalent to specifying both --lc-collate and --lc-ctype)</dd>
+<dd>(This is equivalent to specifying both <code>--lc-collate</code> and <code>--lc-ctype</code>)</dd>
 <dt><code>--lc-collate='&lt;locale&gt;'</code></dt>
 <dd>collation order</dd>
 <dt><code>--lc-ctype='&lt;locale&gt;'</code></dt>
 <dd>character classification</dd>
 <dt><code>-T</code></dt>
-<dd>
-<p>template</p>
-<p>:::bash
-createdb -U postgres <database></database></p>
-</dd>
+<dd>template</dd>
 </dl>
+<div class="highlight"><pre>createdb -U postgres &lt;database&gt;
+</pre></div>
 <h3 id="drop">Drop</h3>
 <div class="highlight"><pre>dropdb -U &lt;user&gt; -h &lt;host&gt; -i -e &lt;database&gt;
 </pre></div>
@@ -152,11 +150,10 @@ createdb -U postgres <database></database></p>
 <dt><code>-S</code></dt>
 <dd>(The new user will not be a superuser.)</dd>
 <dt><code>-E</code></dt>
-<dd>
-<p>(Encrypts the user's password stored in the database. If not specified, the default password behavior is used.)</p>
-<p>createuser -D -S -E -P <name></name></p>
-</dd>
+<dd>(Encrypts the user's password stored in the database. If not specified, the default password behavior is used.)</dd>
 </dl>
+<div class="highlight"><pre>createuser -D -S -E -P &lt;name&gt;
+</pre></div>
 <h3 id="export-to-file">Export To File</h3>
 <p><code>\h copy</code> tells you what are the parameters for export</p>
 <div class="highlight"><pre>COPY (&lt;sql&gt;) TO '&lt;file&gt;' CSV
