@@ -89,9 +89,9 @@
         <div id="blog_main_area" class="left col-md-9" count=9>
 	
 		<header>
-			<h1>Linux</h1>
+			<h1>Git</h1>
 			<small class="fsize13">
-      			<a href="http://iocast.github.io/pages/cheatsheet/linux.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pages/cheatsheet/linux.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      			<a href="http://iocast.github.io/pages/cheatsheet/git.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pages/cheatsheet/git.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       			<span class="label label-default light">22/Dec/2014 Mon</span> 
    			</small>
 
@@ -99,118 +99,207 @@
 		
 		
 		<article class='content'>
-    		<h2>User &amp; Group Management</h2>
-<table>
-<thead>
-<tr>
-<th>Purpose</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>new group</td>
-<td><code>groupadd sambashare</code></td>
-</tr>
-<tr>
-<td>new user</td>
-<td><code>useradd -m -g users -G sambashare -s /bin/bash unix_user</code></td>
-</tr>
-<tr>
-<td>change password</td>
-<td><code>passwd unix_user</code></td>
-</tr>
-</tbody>
-</table>
-<h2>Samba Management</h2>
-<table>
-<thead>
-<tr>
-<th>Purpose</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>new user</td>
-<td><code>pdbedit -a -u samba_user</code></td>
-</tr>
-<tr>
-<td>change password</td>
-<td><code>smbpasswd samba_user</code></td>
-</tr>
-</tbody>
-</table>
-<h2>File and Directory Handling</h2>
-<h3>Find &amp; Remove</h3>
-<p>specific files</p>
-<div class="highlight"><pre>find &lt;path&gt; -name &#39;&lt;file-name&gt;&#39; -delete
+    		<h2>Settings</h2>
+<h3>Username</h3>
+<p>in a local git repo</p>
+<div class="highlight"><pre>git config user.name &quot;iocast&quot;
+git config user.email &quot;iocast@me.com&quot;
 </pre></div>
 
 
-<p>If something ''more portable'' needed then you're better off with</p>
-<div class="highlight"><pre>find &lt;directory name&gt; -name &#39;*.pyc&#39; -exec rm {} \;
+<p>or for global settings</p>
+<div class="highlight"><pre>git config --global user.name &quot;iocast&quot;
+git config --global user.email &quot;iocast@me.com&quot;
 </pre></div>
 
 
-<h3>File Manipulation</h3>
-<p>search the line which begins with <code>var feature server</code> and replaces the whole line with <code>var featureserver = "http://featureserver.org/fs"</code></p>
-<div class="highlight"><pre>sed -e &#39;s%^var featureserver.*%var featureserver = &quot;http://featureserver.org/fs&quot;%g&#39; featureserver.org/assets/js/map.js &gt; <span class="cp">${</span><span class="n">tmp</span><span class="cp">}</span>/website/assets/js/map.js
+<h2>General</h2>
+<p>download from git repository (normally branch 'master')</p>
+<div class="highlight"><pre>git clone &lt;remote_repo&gt;
 </pre></div>
 
 
-<p>template command is as follow, where the first character after <code>s</code> is used as separator and afterwards it comes a regex. Use <code>-i</code> to do an ''in place'' replacement (no need for pipe)</p>
-<div class="highlight"><pre><span class="x">sed -ie &#39;s/</span><span class="p">$</span><span class="nv">search_for</span><span class="x">/</span><span class="p">$</span><span class="nv">replace_with</span><span class="x">/g&#39; </span><span class="p">$</span><span class="nv">file</span><span class="x"></span>
+<p>download specific branch</p>
+<div class="highlight"><pre>git clone -b &lt;branch&gt; &lt;remote_repo&gt;
 </pre></div>
 
 
-<h3>Folder size</h3>
-<ul>
-<li><code>-h</code> human readable file size</li>
-<li>
-<p><code>-s</code> sum all subfolders</p>
-<p>du <directory></p>
-</li>
-</ul>
-<h3>Compression</h3>
-<div class="highlight"><pre>tar -cvzf &lt;file.tar.bz2&gt; --exclude-vcs --exlude=&#39;*.svn&#39; folder/
+<p>commit changes (check if you are on the correct branch)</p>
+<div class="highlight"><pre>git commit -m &quot;message&quot;
 </pre></div>
 
 
-<h3>Extraction</h3>
-<div class="highlight"><pre>tar -zxvf &lt;file.tar.bz2&gt;
+<h3>Push / Pull</h3>
+<p>send branch to repository/server</p>
+<div class="highlight"><pre>git push origin &lt;branch&gt;
 </pre></div>
 
 
-<h3>Synchronization</h3>
-<p>Synchronization</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#! /bin/bash</span>
-rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; <span class="p">&amp;</span>
-</pre></div>
-</td></tr></table>
-
-<h3>Cloning</h3>
-<p>burning image to disk (also usb drives)
-optional use <code>bs=8192</code></p>
-<div class="highlight"><pre>dd if=&lt;path&gt;.iso of=&lt;disk&gt;
+<p>get branch from repository/server (update)</p>
+<div class="highlight"><pre>git pull origin &lt;branch&gt;
 </pre></div>
 
 
-<h2>Job / Programs</h2>
-<p>Keep job running despite of a logout</p>
-<div class="highlight"><pre>nohup &lt;command&gt; &amp;
+<p>resetting local repository</p>
+<div class="highlight"><pre>git reset --hard origin/master
 </pre></div>
 
 
-<h2>System information</h2>
-<div class="highlight"><pre>dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+<h3>Branching</h3>
+<p>list all branches</p>
+<dl>
+<dt>Options:</dt>
+<dd>
+<p><code>-a</code> lists all branches</p>
+<p>git branch [options]</p>
+</dd>
+</dl>
+<p>create local branch</p>
+<div class="highlight"><pre>git branch develop
 </pre></div>
 
 
-<h3>Packages</h3>
-<p>getting installed packages including version number</p>
-<div class="highlight"><pre><span class="x">time dpkg -l | perl -lane &#39;print &quot;</span><span class="p">$</span><span class="nv">F</span><span class="x">[1] : </span><span class="p">$</span><span class="nv">F</span><span class="x">[2]&quot; if m/^ii/&#39;</span>
+<p>delete a branch (origin - server)</p>
+<div class="highlight"><pre>git branch -d develop
+git push origin --delete develop
+</pre></div>
+
+
+<p>switch branch to work on it</p>
+<div class="highlight"><pre>git checkout develop
+</pre></div>
+
+
+<p>push branch to repository/server</p>
+<div class="highlight"><pre>git push origin &lt;name&gt;
+</pre></div>
+
+
+<h3>Tagging</h3>
+<p>first of all switch to master</p>
+<div class="highlight"><pre>git checkout master
+</pre></div>
+
+
+<p>and if necessary merge from a other branch</p>
+<div class="highlight"><pre>git merge --no-ff &lt;branch&gt;
+</pre></div>
+
+
+<p>create tag</p>
+<div class="highlight"><pre>git tag -a 1.2 -m &quot;message&quot;
+</pre></div>
+
+
+<p>push to repository/server</p>
+<div class="highlight"><pre>git push --tags
+</pre></div>
+
+
+<p>list tags</p>
+<div class="highlight"><pre>git tag
+</pre></div>
+
+
+<p>change to tag</p>
+<div class="highlight"><pre>git checkout &lt;tag&gt;
+</pre></div>
+
+
+<p>or make changes based on this tag (e.g. for hotfixes for this specific tag) where the first argument is the new branch name an the second is the tag name</p>
+<div class="highlight"><pre>git checkout -b hotfix-1.3.1 1.3
+</pre></div>
+
+
+<h2>Release Managment</h2>
+<p>assume we are working on branch 'develop' an are ready to create a new release.</p>
+<h3>Releases</h3>
+<h4>Creating</h4>
+<p>Switched to a new branch "release-1.2"</p>
+<div class="highlight"><pre>git checkout -b release-1.2 develop
+</pre></div>
+
+
+<p>change version number on the notes or other files and commit it</p>
+<div class="highlight"><pre>git commit -a -m &quot;Bumped version number to 1.2&quot;
+</pre></div>
+
+
+<h4>Working</h4>
+<p>then modify all files needed for release-1.2 and commit changes (several commits can take place)</p>
+<div class="highlight"><pre>git commit -m &quot;message&quot;
+</pre></div>
+
+
+<h4>Finishing</h4>
+<p>Now we can finish this release.
+Switch to branch 'master'</p>
+<div class="highlight"><pre>git checkout master
+</pre></div>
+
+
+<p>merge from the release-1.2 branch and push to repository/server</p>
+<div class="highlight"><pre>git merge --no-ff release-1.2
+git push origin master
+</pre></div>
+
+
+<p>tag as release in branch master and push tag to repository/server</p>
+<div class="highlight"><pre>git tag -a 1.2 -m &quot;message&quot;
+git push --tags
+</pre></div>
+
+
+<p>release banch on our local drive is not needed anymore.
+Deleted branch release-1.2</p>
+<div class="highlight"><pre>git branch -d release-1.2
+</pre></div>
+
+
+<h3>Hot Fixes</h3>
+<p>Hot fixes are done from the master (or release) branch.</p>
+<h4>Creating</h4>
+<p>Switched to a new branch "hotfix-1.2.1"</p>
+<div class="highlight"><pre>git checkout -b hotfix-1.2.1 master
+</pre></div>
+
+
+<p>change version number on the notes or other files and commit it</p>
+<div class="highlight"><pre>git commit -a -m &quot;Bumped version number to 1.2.1&quot;
+</pre></div>
+
+
+<h4>Working</h4>
+<p>then modify all files needed files for hotfix-1.21 and commit changes (several commits can take place)</p>
+<div class="highlight"><pre>git commit -m &quot;message&quot;
+</pre></div>
+
+
+<h4>Finishing</h4>
+<p>Switched to branch 'master'</p>
+<div class="highlight"><pre>git checkout master
+</pre></div>
+
+
+<p>merge changes</p>
+<div class="highlight"><pre>git merge --no-ff hotfix-1.2.1
+</pre></div>
+
+
+<p>tag it and push tag to repository/server</p>
+<div class="highlight"><pre>git tag -a 1.2.1 -m &quot;message&quot;
+git push --tag
+</pre></div>
+
+
+<p>switch to develop and merge hotfix into it</p>
+<div class="highlight"><pre>git checkout develop
+git merge --no-ff hotfix-1.2.1
+</pre></div>
+
+
+<p>and delete hotfix</p>
+<div class="highlight"><pre>git branch -d hotfix-1.2.1
 </pre></div>
   		</article>
 		
@@ -220,9 +309,9 @@ optional use <code>bs=8192</code></p>
       		<div id="disqus_thread"></div>
      			<script type="text/javascript">
         			var disqus_shortname = 'iocast';
-        			var disqus_identifier = "pages/cheatsheet/linux.html";
-       				var disqus_title = "Linux";
-        			var disqus_url = "http://iocast.github.io/pages/cheatsheet/linux.html";
+        			var disqus_identifier = "pages/cheatsheet/git.html";
+       				var disqus_title = "Git";
+        			var disqus_url = "http://iocast.github.io/pages/cheatsheet/git.html";
         			(function() {
           				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
