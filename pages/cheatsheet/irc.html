@@ -99,42 +99,33 @@
 		
 		
 		<article class='content'>
-    		<h2>User</h2>
-<h3>Register</h3>
-<div class="highlight"><pre>/msg NickServ register &lt;password&gt; &lt;email&gt;
-</pre></div>
-
-
-<h3>Login</h3>
-<div class="highlight"><pre>/msg nickserv identify &lt;password&gt;
-</pre></div>
-
-
-<h2>Administering Channel</h2>
+    		
+<h2 id="user">User</h2>
+<h3 id="register">Register</h3>
+<pre><code>/msg NickServ register &lt;password&gt; &lt;email&gt;
+</code></pre>
+<h3 id="login">Login</h3>
+<pre><code>/msg nickserv identify &lt;password&gt;
+</code></pre>
+<h2 id="administering-channel">Administering Channel</h2>
 <p>You cannot administer a channel until you become an operator with the op command. Only an operator can create other operators. If no operators are left in a channel, the channel can no longer be administered. You shouldn't be operator any longer than you have to, as it creates an unhelpful class distinction among channel users and not knowing who is operator can help keep trolls from causing trouble. Once you have finished, drop to normal user status with the deop command.</p>
 <p>You can see all the flags assigned to all users in a channel with:</p>
-<div class="highlight"><pre>/msg chanserv access #&lt;channel&gt; list
-</pre></div>
-
-
-<h3>Register a Channel</h3>
-<div class="highlight"><pre>/msg chanserv register #&lt;channel&gt;
-</pre></div>
-
-
-<h3>Becoming Founder</h3>
-<div class="highlight"><pre>/msg ChanServ flags #vectorformats iocast +*F
+<pre><code>/msg chanserv access #&lt;channel&gt; list
+</code></pre>
+<h3 id="register-a-channel">Register a Channel</h3>
+<pre><code>/msg chanserv register #&lt;channel&gt;
+</code></pre>
+<h3 id="becoming-founder">Becoming Founder</h3>
+<pre><code>/msg ChanServ flags #vectorformats iocast +*F
 /msg ChanServ flags #vectorformats iocast -OV
-</pre></div>
-
-
+</code></pre>
 <p>The first command grants all flags to a user, including the founder flag <code>F</code> which must be explicitly granted (it isn't part of the <code>*</code>).</p>
 <p>The second command removes two flags which normally should not be used. <code>O</code> automatically makes the user an operator when they join the channel, which should be avoided as previously explained. <code>V</code> automatically voices a user when they join the channel. Voicing is only needed on moderated channels where new users cannot speak upon joining without the voice flag. An open channel for community participation should not require this, and not having the <code>V</code> flag makes it easier to identify a problem with the channel.</p>
-<h3>Becoming Operator</h3>
-<div class="highlight"><pre>/msg chanserv op #&lt;channel&gt; &lt;username&gt;
+<h3 id="becoming-operator">Becoming Operator</h3>
+<pre><code>/msg chanserv op #&lt;channel&gt; &lt;username&gt;
 /msg chanserv flags #&lt;channel&gt; &lt;username&gt; &lt;flags&gt;
 /msg chanserv deop #&lt;channel&gt; &lt;username&gt;
-</pre></div>
+</code></pre>
   		</article>
 		
   		<hr /><!-- divider -->
@@ -160,6 +151,36 @@
 
         <!-- SIDEBAR -->
         <div class="right col-md-3">
+
+
+          <div class="widget">
+
+            <h3>Table of Content</h3>
+			
+			<nav class="toc">
+    
+    <div class="toc">
+<ul>
+<li><a href="#user">User</a><ul>
+<li><a href="#register">Register</a></li>
+<li><a href="#login">Login</a></li>
+</ul>
+</li>
+<li><a href="#administering-channel">Administering Channel</a><ul>
+<li><a href="#register-a-channel">Register a Channel</a></li>
+<li><a href="#becoming-founder">Becoming Founder</a></li>
+<li><a href="#becoming-operator">Becoming Operator</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    
+	
+			</nav>
+
+          </div>
+
+
 
         </div>
         <!-- /SIDEBAR -->

@@ -98,111 +98,82 @@
   </header>
 
   <article class='content'>
-    <h2>Removing preinstalled packages</h2>
+    <h2 id="removing-preinstalled-packages">Removing preinstalled packages</h2>
 <p>First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).</p>
-<div class="highlight"><pre>dpkg -l <span class="p">|</span> grep <span class="s1">&#39;postgres\|gdal&#39;</span>
-</pre></div>
-
-
+<p><code>bash
+dpkg -l | grep 'postgres\|gdal'</code></p>
 <p>You should get a list like the following one:</p>
-<div class="highlight"><pre>ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+<p><code>bash
+ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
 ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
-ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support <span class="k">for</span> PostgreSQL 9.1
-ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support <span class="k">for</span> PostgreSQL 9.1 -- scripts
-ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs <span class="k">for</span> PostgreSQL 9.1
-ii  postgresql-client-common           129ubuntu1                        manager <span class="k">for</span> multiple PostgreSQL client versions
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs for PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager for multiple PostgreSQL client versions
 ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
-ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities <span class="k">for</span> PostgreSQL
-</pre></div>
-
-
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities for PostgreSQL</code></p>
 <p>If you want, you could remove these packages as follow:</p>
-<div class="highlight"><pre>apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
+<p><code>bash
+apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
 apt-get autoremove
-apt-get autoclean
-</pre></div>
-
-
-<h2>Installing PostgreSQL 9.3</h2>
+apt-get autoclean</code></p>
+<h2 id="installing-postgresql-93">Installing PostgreSQL 9.3</h2>
 <p>First you need to find out your release code name:</p>
-<div class="highlight"><pre>lsb_release -c
-</pre></div>
-
-
+<p><code>bash
+lsb_release -c</code></p>
 <p>which get you something like that <code>Codename:  precise</code></p>
 <p>Create a new file <code>codename-pgdg.list</code> in <code>/etc/apt/sources.list.d</code> according to the <a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki">PostgreSQL wiki page</a>.</p>
-<div class="highlight"><pre>vi /etc/apt/sources.list.d/precise-pgdg.list
-</pre></div>
-
-
+<p><code>bash
+vi /etc/apt/sources.list.d/precise-pgdg.list</code></p>
 <p>and add the following line</p>
-<div class="highlight"><pre>deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
-</pre></div>
-
-
+<p><code>bash
+deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main</code></p>
 <p>Now we need to import the repository key from</p>
-<div class="highlight"><pre>wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc <span class="p">|</span> sudo apt-key add -
-</pre></div>
-
-
+<p><code>bash
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -</code></p>
 <p>Now we can a update the repository and install the required packages from the PostgreSQL repository.</p>
-<div class="highlight"><pre>apt-get update
-apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
-</pre></div>
-
-
-<h2>Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2>
+<p><code>bash
+apt-get update
+apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3</code></p>
+<h2 id="compiling-postgis-21-against-libgdal-1100">Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2>
 <p>To install PostGIS 2.1 it is important that <code>postgresql-server-dev-x.x</code> is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled <code>libgdal</code> 1.10.0 version from <strong>ubuntugis</strong>.</p>
 <p>Install <code>python-software-properties</code> and add the apt sources (repositories):</p>
-<div class="highlight"><pre>apt-get install python-software-properties
+<p><code>bash
+apt-get install python-software-properties
 add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-apt-get update
-</pre></div>
-
-
+apt-get update</code></p>
 <p>Now install the new GDAL library called <code>libgdal1h</code> and its' development package</p>
-<div class="highlight"><pre>apt-get install libgdal1h
-apt-cache showpkg libgdal-dev*
-</pre></div>
-
-
+<p><code>bash
+apt-get install libgdal1h
+apt-cache showpkg libgdal-dev*</code></p>
 <p>which gets you something like that:</p>
-<div class="highlight"><pre>...
+<p><code>bash
+...
 Provides: 
 1.10.0-1~precise1 - 
 1.9.0-3.1~pgdg12.4+1 - 
-...
-</pre></div>
-
-
+...</code></p>
 <p>You can install a version using the <code>-f</code> flag</p>
-<div class="highlight"><pre>apt-get install -f libgdal-dev<span class="o">=</span>1.10.0-1~precise1
-</pre></div>
-
-
+<p><code>bash
+apt-get install -f libgdal-dev=1.10.0-1~precise1</code></p>
 <p>Before installing the PostGIS from source we install the required dependencies.</p>
-<div class="highlight"><pre>apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev
-</pre></div>
-
-
+<p><code>bash
+apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev</code></p>
 <p>Download the latest PostGIS source and compile it</p>
-<div class="highlight"><pre>wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+<p><code>bash
+wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
 tar xzvf postgis-2.1.0.tar.gz 
-<span class="nb">cd </span>postgis-2.1.0
-./configure
-</pre></div>
-
-
-<div class="highlight"><pre> PostGIS is now configured <span class="k">for</span> x86_64-unknown-linux-gnu
-
--------------- Compiler Info ------------- 
+cd postgis-2.1.0
+./configure</code></p>
+<p>```bash
+ PostGIS is now configured for x86_64-unknown-linux-gnu</p>
+<p>-------------- Compiler Info ------------- 
  C compiler:           gcc -g -O2
  C++ compiler:         g++ -g -O2
- SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P
-
--------------- Dependencies -------------- 
+ SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P</p>
+<p>-------------- Dependencies -------------- 
  GEOS config:          /usr/bin/geos-config
  GEOS version:         3.3.8
  GDAL config:          /usr/bin/gdal-config
@@ -214,59 +185,52 @@ tar xzvf postgis-2.1.0.tar.gz
  Libxml2 version:      2.8.0
  JSON-C support:       no
  PostGIS debug level:  0
- Perl:                 /usr/bin/perl
-
---------------- Extensions --------------- 
+ Perl:                 /usr/bin/perl</p>
+<p>--------------- Extensions --------------- 
  PostGIS Raster:       enabled
  PostGIS Topology:     enabled
- SFCGAL support:       disabled
-
--------- Documentation Generation -------- 
- xsltproc:             
- xsl style sheets:     
- dblatex:              
- convert:              
+ SFCGAL support:       disabled</p>
+<p>-------- Documentation Generation -------- 
+ xsltproc:           <br />
+ xsl style sheets:   <br />
+ dblatex:            <br />
+ convert:            <br />
  mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd
-</pre></div>
-
-
+```</p>
 <p>use <code>checkinstall</code>, which runs <code>make install</code> and registers the package in <code>dpkg</code>.</p>
-<div class="highlight"><pre>make
-checkinstall
-</pre></div>
-
-
-<h2>R 3.0.2 and PL/R for PostgreSQL</h2>
+<p><code>bash
+make
+checkinstall</code></p>
+<h2 id="r-302-and-plr-for-postgresql">R 3.0.2 and PL/R for PostgreSQL</h2>
 <p>Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the <a href="http://cran.r-project.org" title="The Comprehensive R Archive Network">R-Project</a> site. First edit the</p>
-<div class="highlight"><pre>vi /etc/apt/sources.list
-</pre></div>
-
-
-<p>and add the following line and do a update</p>
-<div class="highlight"><pre>deb http://cran.r-project.org/bin/linux/ubuntu precise/
-</pre></div>
-
-
-<p>as well as the key</p>
-<div class="highlight"><pre>apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-apt-get update
-</pre></div>
-
-
+<p><code>bash
+vi /etc/apt/sources.list</code>
+and add the following line and do a update</p>
+<p><code>bash
+deb http://cran.r-project.org/bin/linux/ubuntu precise/</code>
+as well as the key</p>
+<p><code>bash
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update</code></p>
 <p>The search for the 3.0.2 R package version and install it.</p>
-<div class="highlight"><pre>apt-cache showpkg r-base
-apt-get install -f r-base<span class="o">=</span>3.0.2-1precise0
-</pre></div>
-
-
+<p><code>bash
+apt-cache showpkg r-base
+apt-get install -f r-base=3.0.2-1precise0</code></p>
 <p>Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository</p>
-<div class="highlight"><pre>apt-get install postgresql-9.3-plr
-</pre></div>
-
-
+<p><code>bash
+apt-get install postgresql-9.3-plr</code></p>
 <p>So ... we are ready ... have fun.</p>
   </article>
 
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
+        <li><a href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html">Javascript localization part 1</a></li>
+        <li><a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">My personal file server on a Cubox from SolidRun using Arch Linux</a></li>
+      </ul>
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->

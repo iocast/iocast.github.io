@@ -6,499 +6,383 @@
 &lt;li&gt;the operation system should use OpenSSH&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Thus, for the hardware I have decided to use a &lt;a href="http://www.solid-run.com/"&gt;Cubox from SolidRun&lt;/a&gt; because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Arch Linux&lt;/a&gt; because it is more up-to-date then the Debian or Ubuntu distribution.&lt;/p&gt;
-&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;h1 id="installation"&gt;Installation&lt;/h1&gt;
 &lt;p&gt;Download the latest version of Arch Linux for the &lt;a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox"&gt;Marvell ARMv7 platform&lt;/a&gt; from the official site. Next, plug your MicroSD into your computer and find out which drive (&lt;code&gt;/dev/sdx&lt;/code&gt;) it is&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;df -ah
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;df -ah
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Clear your disk and create &lt;strong&gt;one&lt;/strong&gt; &lt;code&gt;ext3&lt;/code&gt; partition.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;mkfs.ext3 /dev/sdx1
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;mkfs.ext3 /dev/sdx1
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Know mount it and extract Arch Linux onto your MicroSD partition&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /media/arch
+&lt;pre&gt;&lt;code&gt;mkdir /media/arch
 mount /dev/sdx1 /media/arch
 tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
 umount /media/arch
 rm -rf /media/arch
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The default login is user &lt;code&gt;root&lt;/code&gt; with password &lt;code&gt;root&lt;/code&gt;.&lt;/p&gt;
-&lt;h1&gt;Configuration&lt;/h1&gt;
+&lt;h1 id="configuration"&gt;Configuration&lt;/h1&gt;
 &lt;p&gt;Now lets configure some basic stuff, like date and time, DHCP, etc.&lt;/p&gt;
-&lt;h2&gt;Network&lt;/h2&gt;
+&lt;h2 id="network"&gt;Network&lt;/h2&gt;
 &lt;p&gt;Create the &lt;code&gt;/etc/systemd/network/eth0.network&lt;/code&gt; file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;for DHCP&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Match]&lt;/span&gt;
-&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;eth0&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;[Match]
+Name=eth0
 
-&lt;span class="k"&gt;[Network]&lt;/span&gt;
-&lt;span class="na"&gt;DHCP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;both&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+[Network]
+DHCP=both
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;for fixed IP&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Match]&lt;/span&gt;
-&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;eth0&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;[Match]
+Name=eth0
 
-&lt;span class="k"&gt;[Network]&lt;/span&gt;
-&lt;span class="na"&gt;Address&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;10.0.1.2/24&lt;/span&gt;
-&lt;span class="na"&gt;Gateway&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;10.0.1.1&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+[Network]
+Address=10.0.1.2/24
+Gateway=10.0.1.1
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Restart systemd-networkd. To do so, run this command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl restart systemd-networkd
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Clientid&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;systemctl restart systemd-networkd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="clientid"&gt;Clientid&lt;/h3&gt;
 &lt;p&gt;If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in &lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
+&lt;pre&gt;&lt;code&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
 duid
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;to:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# Use the hardware address of the interface for the Client ID (DHCPv4).
+&lt;pre&gt;&lt;code&gt;# Use the hardware address of the interface for the Client ID (DHCPv4).
 clientid
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.&lt;/p&gt;
 &lt;p&gt;To automatically start the DCHP daemon at start up you have to enable it.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable dhcpcd
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;System Upgrade&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pacman -Syu
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Bad experience with &lt;code&gt;vi&lt;/code&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;systemctl enable dhcpcd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="system-upgrade"&gt;System Upgrade&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Syu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="bad-experience-with-vi"&gt;Bad experience with &lt;code&gt;vi&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;If you have bad experience or strange behaviour with the standard &lt;code&gt;vi&lt;/code&gt; simply install &lt;code&gt;vim&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S vim-minimal
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Locale and Date/Time&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S vim-minimal
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="locale-and-datetime"&gt;Locale and Date/Time&lt;/h2&gt;
 &lt;p&gt;Change your timezone to the one your are living at. All time zones can be found in the folder &lt;code&gt;/etc/timezones&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# To check the current zone defined for the system:
+&lt;pre&gt;&lt;code&gt;# To check the current zone defined for the system:
 timedatectl status
 # To list available zones:
 timedatectl list-timezones
 # To change your time zone:
 timedatectl set-timezone Europe/Zurich
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Also do not forget to change your &lt;code&gt;locale&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;localectl status
+&lt;pre&gt;&lt;code&gt;localectl status
 ls /usr/share/i18n/locales
 localectl set-locale LANG=de_CH.UTF-8
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;Samba&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="samba"&gt;Samba&lt;/h1&gt;
 &lt;p&gt;For internal file sharing you could use Samba. Tips and tricks can be found on &lt;a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks"&gt;Arch Linux Samba site&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pacman -S samba
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;pacman -S samba
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Your can restart the service using the follwing&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable smbd.service
+&lt;pre&gt;&lt;code&gt;systemctl enable smbd.service
 systemctl enable nmbd.service
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Create a new samba group&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;groupadd sambashare
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;groupadd sambashare
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and add user to it&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# add user to the samba grup
+&lt;pre&gt;&lt;code&gt;# add user to the samba grup
 pdbedit -a -u samba_user
 # changing samba password
 smbpasswd samba_user
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Adding a user to the samba group&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;usermod -a -G sambashare unix_user_name
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;usermod -a -G sambashare unix_user_name
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;On my Cubox I use the following configuration (&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
-&lt;span class="na"&gt;workgroup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;iocast&lt;/span&gt;
-&lt;span class="na"&gt;server string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;file server&lt;/span&gt;
-&lt;span class="na"&gt;security&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;user&lt;/span&gt;
-&lt;span class="na"&gt;create mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
-&lt;span class="na"&gt;force create mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0775&lt;/span&gt;
-&lt;span class="na"&gt;directory mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
-&lt;span class="na"&gt;force directory mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;02775&lt;/span&gt;
-&lt;span class="na"&gt;force group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;sambashare&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;[global]
+workgroup = iocast
+server string = file server
+security = user
+create mask = 0775
+force create mode = 0775
+directory mask = 02775
+force directory mode = 02775
+force group = sambashare
 
-&lt;span class="k"&gt;[michel]&lt;/span&gt;
-&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk&lt;/span&gt;
-&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data/&lt;/span&gt;
-&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
-&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
-&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
-&lt;span class="na"&gt;read list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;karolina&lt;/span&gt;
+[michel]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel
+read list = karolina
 
-&lt;span class="k"&gt;[michel backup]&lt;/span&gt;
-&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk backup&lt;/span&gt;
-&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup/&lt;/span&gt;
-&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
-&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel&lt;/span&gt;
+[michel backup]
+comment = data disk backup
+path = /storage/backup/
+public = no
+writable = no
+guest ok = no
+valid users = michel
+write list = michel
 
-&lt;span class="k"&gt;[ninalaki]&lt;/span&gt;
-&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1&lt;/span&gt;
-&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/data1/&lt;/span&gt;
-&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
-&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
-&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
+[ninalaki]
+comment = data disk1
+path = /storage/data1/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
 
-&lt;span class="k"&gt;[ninalaki backup]&lt;/span&gt;
-&lt;span class="na"&gt;comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data disk1 backup&lt;/span&gt;
-&lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/storage/backup1/&lt;/span&gt;
-&lt;span class="na"&gt;public&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;writable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;guest ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;no&lt;/span&gt;
-&lt;span class="na"&gt;valid users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
-&lt;span class="na"&gt;write list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;michel karolina&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;Disks management&lt;/h1&gt;
+[ninalaki backup]
+comment = data disk1 backup
+path = /storage/backup1/
+public = no
+writable = no
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="disks-management"&gt;Disks management&lt;/h1&gt;
 &lt;p&gt;To automatically mount disks on startup, you need to add them to the &lt;code&gt;/etc/fstab&lt;/code&gt; configuration file. Also use the option &lt;code&gt;nofail&lt;/code&gt; to not report any error if the disk is absent. For more information read the &lt;a href="https://wiki.archlinux.org/index.php/fstab"&gt;manual on Arch Linux&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Run &lt;code&gt;lsblk -f&lt;/code&gt; or &lt;code&gt;ls -l /dev/disk/by-uuid&lt;/code&gt; to list the partitions / disks. Edit the &lt;code&gt;/etc/fstab&lt;/code&gt; and prefix the values in the UUID column with &lt;code&gt;UUID=&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# &amp;lt;file system&amp;gt;                           &amp;lt;dir&amp;gt;            &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;                        &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+&lt;pre&gt;&lt;code&gt;# &amp;lt;file system&amp;gt;                           &amp;lt;dir&amp;gt;            &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;                        &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
 UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/   ext4    nofail,rw,relatime,data=ordered  0       0
 UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/ ext4    nofail,rw,relatime,data=ordered  0       0
 UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,relatime,data=ordered  0       0
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;Dynamic DNS&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="dynamic-dns"&gt;Dynamic DNS&lt;/h1&gt;
 &lt;p&gt;If you use &lt;a href="http://www.afraid.org"&gt;afraid.org&lt;/a&gt; as your dynamic DNS service you can get an example &lt;code&gt;cron&lt;/code&gt; entry from the &lt;strong&gt;Dynamic DNS&lt;/strong&gt; menu entry. It look likes the following&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+&lt;pre&gt;&lt;code&gt;PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1 &amp;amp;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt; (see &lt;a href="https://wiki.archlinux.org/index.php/Systemd/Timers"&gt;here&lt;/a&gt;). First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timer for service afraid.org.timer&lt;/span&gt;
-&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network-online.target&lt;/span&gt;
-&lt;span class="na"&gt;Requires&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;network.target&lt;/span&gt;
-&lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;dhcpcd.service&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=timer for service afraid.org.timer
+Requires=network-online.target
+Requires=network.target
+After=dhcpcd.service
 
-&lt;span class="k"&gt;[Timer]&lt;/span&gt;
-&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*:3,8,13,18,23,28,33,38,43,48,53,58&lt;/span&gt;
+[Timer]
+OnCalendar=*:3,8,13,18,23,28,33,38,43,48,53,58
 
-&lt;span class="k"&gt;[Install]&lt;/span&gt;
-&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;multi-user.target&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Then create a service file of the same name &lt;code&gt;/etc/systemd/system/afraid.org.service&lt;/code&gt; and add the following lines&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;service for afraid.org for pasithee.mooo.com&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=service for afraid.org for pasithee.mooo.com
 
-&lt;span class="k"&gt;[Service]&lt;/span&gt;
-&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
-&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+[Service]
+Type=simple
+ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now you can test the service.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# test service
+&lt;pre&gt;&lt;code&gt;# test service
 systemctl start afraid.org.service
 systemctl stop afraid.org.service
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;As soon as it works you can enable the timer&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;systemctl enable afraid.org.timer
+&lt;pre&gt;&lt;code&gt;systemctl enable afraid.org.timer
 systemctl start afraid.org.timer
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sun, 09 Nov 2014 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</guid><category>server</category><category>arch linux</category><category>file server</category><category>samba</category><category>dyndns</category></item><item><title>Javascript localization part 1</title><link>http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html</link><description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sun, 09 Nov 2014 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2014-11-09:blog/2014/11/09-cubox-fileserver-archlinux.html</guid><category>server</category><category>arch linux</category><category>file server</category><category>samba</category><category>dyndns</category></item><item><title>Javascript localization part 1</title><link>http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html</link><description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
 &lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
 &lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;var dateobj= new Date() 
-dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
+&lt;pre&gt;&lt;code&gt;:::javasript
+var dateobj= new Date() 
+dateobj.getDate() + "/" + dateobj.getMonth()+1 + "/" + dateobj.getFullYear()
 // 21/7/2014
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;or&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;en&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nx"&gt;month_names&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;January&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;February&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;March&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;April&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;May&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;June&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;July&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;August&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;September&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;October&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;November&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;December&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-        &lt;span class="nx"&gt;month_names_short&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Jan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Feb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Mar&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Apr&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;May&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Jun&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Jul&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Aug&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Sep&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Oct&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Nov&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Dec&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::javascript
+Date.locale = {
+    en: {
+        month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    }
+};
 
-&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;month_names&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;()];&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
-&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthNameShort&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;month_names_short&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;()];&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
+Date.prototype.getMonthName = function(lang) {
+    lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : 'en';
+    return Date.locale[lang].month_names[this.getMonth()];
+};
+Date.prototype.getMonthNameShort = function(lang) {
+    lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : 'en';
+    return Date.locale[lang].month_names_short[this.getMonth()];
+};
 
-&lt;span class="c1"&gt;// that can be used as follow:&lt;/span&gt;
-&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="nx"&gt;now&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthNameShort&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getFullYear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="c1"&gt;// July 2014&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+// that can be used as follow:
+var now = new Date();
+now.getMonthNameShort + " " + now.getFullYear();
+// July 2014
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.&lt;/p&gt;
 &lt;p&gt;The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.&lt;/p&gt;
 &lt;p&gt;For the &lt;code&gt;Date&lt;/code&gt; object now have these functions, whereas I personally prefer the &lt;code&gt;toLocaleString()&lt;/code&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align="left"&gt;Function&lt;/th&gt;
-&lt;th align="left"&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;Date.prototype.toLocaleDateString()&lt;/td&gt;
-&lt;td align="left"&gt;returns a string with a language sensitive representation of the date portion of this date.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;Date.prototype.toLocaleString()&lt;/td&gt;
-&lt;td align="left"&gt;returns a string with a language sensitive representation of this date.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;Date.prototype.toLocaleTimeString()&lt;/td&gt;
-&lt;td align="left"&gt;returns a string with a language sensitive representation of the time portion of this date.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;Function                             | Purpose
+:------------------------------------|:----------------------------------------
+Date.prototype.toLocaleDateString()  | returns a string with a language sensitive representation of the date portion of this date.
+Date.prototype.toLocaleString()      | returns a string with a language sensitive representation of this date.
+Date.prototype.toLocaleTimeString()  | returns a string with a language sensitive representation of the time portion of this date.&lt;/p&gt;
 &lt;p&gt;You can use it as follow&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;month&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;long&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;year&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;numeric&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;span class="c1"&gt;// July 2014&lt;/span&gt;
-&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;month&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2-digit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;day&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2-digit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;year&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;numberic&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;span class="c1"&gt;// 21/07/2014&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::javascript
+var now = new Date()
+date.toLocaleString('en', { month: 'long', year: 'numeric' });
+// July 2014
+date.toLocaleString('en', { month: '2-digit', day: '2-digit', year: 'numberic' });
+// 21/07/2014
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;where the first parameter is the &lt;code&gt;locale&lt;/code&gt; and the second parameter represents the &lt;code&gt;options&lt;/code&gt;. The allowed options can be found on the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"&gt;Mozilla Developer Network&lt;/a&gt;. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.&lt;/p&gt;
 &lt;p&gt;The same applies to the &lt;code&gt;Number&lt;/code&gt; object.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align="left"&gt;Function&lt;/th&gt;
-&lt;th align="left"&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;Number.prototype.toLocaleString()&lt;/td&gt;
-&lt;td align="left"&gt;returns a string with a language sensitive representation of this number.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;Function                             | Purpose
+:------------------------------------|:----------------------------------------
+Number.prototype.toLocaleString()    |  returns a string with a language sensitive representation of this number.&lt;/p&gt;
 &lt;p&gt;You can use it as follow&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3600&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="c1"&gt;// 3,600&lt;/span&gt;
-&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;de&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="c1"&gt;// 3.600&lt;/span&gt;
-&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;currency&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nx"&gt;currency&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;USD&amp;#39;&lt;/span&gt;
-&lt;span class="p"&gt;});&lt;/span&gt;
-&lt;span class="c1"&gt;// $3,600&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Mon, 21 Jul 2014 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2014-07-21:blog/2014/07/21-javascript-internationalization-part1.html</guid><category>centos</category><category>server</category><category>apache</category><category>httpd</category><category>python</category></item><item><title>GitHub Pages for a repository compiling using Travis CI</title><link>http://iocast.github.io/blog/2014/04/17-github-pages-and-travis-ci.html</link><description>&lt;p&gt;First of all check if you have already a &lt;strong&gt;personal access token&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::javascript
+var number = 3600;
+number.toLocaleString('en');
+// 3,600
+number.toLocaleString('de');
+// 3.600
+number.toLocaleString('en', {
+    style: 'currency',
+    currency: 'USD'
+});
+// $3,600
+&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Mon, 21 Jul 2014 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2014-07-21:blog/2014/07/21-javascript-internationalization-part1.html</guid><category>centos</category><category>server</category><category>apache</category><category>httpd</category><category>python</category></item><item><title>GitHub Pages for a repository compiling using Travis CI</title><link>http://iocast.github.io/blog/2014/04/17-github-pages-and-travis-ci.html</link><description>&lt;p&gt;First of all check if you have already a &lt;strong&gt;personal access token&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="GitHub personal access tokens" src="/assets/blog/github_personal_access_tokens.png" title="GitHub personal access tokens" /&gt;&lt;/p&gt;
 &lt;p&gt;If not, you can follow these &lt;a href="{% post_url 2013-10-08-github-jekyll-travis %}"&gt;instructions&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Travis grant access to GitHub repository" src="/assets/blog/travis_grant_repository_access.png" title="Travis grant access to GitHub repository" /&gt;&lt;/p&gt;
 &lt;p&gt;The next thing is to generate a new secure string for your &lt;code&gt;.travis.yml&lt;/code&gt; file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.&lt;/p&gt;
-&lt;p _="%" endhighlight="endhighlight"&gt;{% highlight bash %}
-curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations&lt;/p&gt;
+&lt;p&gt;{% highlight bash %}
+curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations
+{% endhighlight %}&lt;/p&gt;
 &lt;p&gt;You should get a JSON response which looks like this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234567&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://api.github.com/authorizations/1234567&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;travis: token for pushing from travis (API)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;http://developer.github.com/v3/oauth_authorizations/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;client_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;00000000000000000000&amp;quot;&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1abc234d56efghi789&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;note&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;travis: token for pushing from travis&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;note_url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2014-01-01T12:00:00Z&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2014-01-01T12:00:00Z&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;scopes&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-        &lt;span class="s2"&gt;&amp;quot;public_repo&amp;quot;&lt;/span&gt;
-    &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
-&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::json
+...
+{
+    "id": 1234567,
+    "url": "https://api.github.com/authorizations/1234567",
+    "app": {
+        "name": "travis: token for pushing from travis (API)",
+        "url": "http://developer.github.com/v3/oauth_authorizations/",
+        "client_id": "00000000000000000000"
+        },
+    "token": "1abc234d56efghi789",
+    "note": "travis: token for pushing from travis",
+    "note_url": null,
+    "created_at": "2014-01-01T12:00:00Z",
+    "updated_at": "2014-01-01T12:00:00Z",
+    "scopes": [
+        "public_repo"
+    ]
+},
+...
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So we are ready to generate the secure string for Travis. Be sure that you have installed &lt;code&gt;travis&lt;/code&gt; rubygem using the following command &lt;code&gt;gem install travis&lt;/code&gt;. Open a terminal and go to the folder where &lt;code&gt;.travis.yml&lt;/code&gt; lays and add the secure string to it&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/the/.travsi.yml/file
-travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;token&amp;gt; --add env.global
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+cd /path/to/the/.travsi.yml/file
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; GH_TOKEN=&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That's all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Thu, 17 Apr 2014 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2014-04-17:blog/2014/04/17-github-pages-and-travis-ci.html</guid><category>github</category><category>jekyll</category><category>travis</category><category>bash</category><category>continuous integration</category></item><item><title>Joining a Active Directory on Linux - the easiest way!</title><link>http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html</link><description>&lt;p&gt;The easiest way, at least for me, is to use the &lt;code&gt;likewise-open&lt;/code&gt; package. You can find the official documentation &lt;a href="https://help.ubuntu.com/community/LikewiseOpen"&gt;here&lt;/a&gt;. Under Ubuntu you can simple install this package using &lt;code&gt;apt-get&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install likewise-open
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-get install likewise-open&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Once you have installed it, you can join a Active Directory (AD) as follow.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.&lt;/p&gt;
 &lt;p&gt;Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under &lt;code&gt;/home/likewise-open&lt;/code&gt; and then a subfolder named as his username.&lt;/p&gt;
-&lt;h2&gt;Restricting access to specific groups&lt;/h2&gt;
+&lt;h2 id="restricting-access-to-specific-groups"&gt;Restricting access to specific groups&lt;/h2&gt;
 &lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;lwconfig RequireMembershipOf &lt;span class="s2"&gt;&amp;quot;&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;&amp;quot;&lt;/span&gt;
-lw-update-dns
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+lwconfig RequireMembershipOf "&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;" "&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;"
+lw-update-dns&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;If you forget which groups have access to you server, you could check it by running the following command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;lwconfig --detail RequireMembershipOf
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Login&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bash
+lwconfig --detail RequireMembershipOf&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="login"&gt;Login&lt;/h2&gt;
 &lt;p&gt;Now you are able to login to your server using active directory authentication:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ssh &amp;lt;ad_domain&amp;gt;&lt;span class="se"&gt;\\&lt;/span&gt;&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sat, 30 Nov 2013 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2013-11-30:blog/2013/11/30-ad-on-linux-the-easiest-way.html</guid><category>active directory</category><category>likewise-open</category><category>ubuntu</category><category>server</category></item><item><title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title><link>http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html</link><description>&lt;h2&gt;Removing preinstalled packages&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bash
+ssh &amp;lt;ad_domain&amp;gt;\\&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sat, 30 Nov 2013 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2013-11-30:blog/2013/11/30-ad-on-linux-the-easiest-way.html</guid><category>active directory</category><category>likewise-open</category><category>ubuntu</category><category>server</category></item><item><title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title><link>http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html</link><description>&lt;h2 id="removing-preinstalled-packages"&gt;Removing preinstalled packages&lt;/h2&gt;
 &lt;p&gt;First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;dpkg -l &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;postgres\|gdal&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+dpkg -l | grep 'postgres\|gdal'&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;You should get a list like the following one:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+&lt;p&gt;&lt;code&gt;bash
+ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
 ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
 ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
-ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
-ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1 -- scripts
-ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL 9.1
-ii  postgresql-client-common           129ubuntu1                        manager &lt;span class="k"&gt;for&lt;/span&gt; multiple PostgreSQL client versions
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs for PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager for multiple PostgreSQL client versions
 ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
-ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities &lt;span class="k"&gt;for&lt;/span&gt; PostgreSQL
-&lt;/pre&gt;&lt;/div&gt;
-
-
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities for PostgreSQL&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;If you want, you could remove these packages as follow:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
+&lt;p&gt;&lt;code&gt;bash
+apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
 apt-get autoremove
-apt-get autoclean
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Installing PostgreSQL 9.3&lt;/h2&gt;
+apt-get autoclean&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="installing-postgresql-93"&gt;Installing PostgreSQL 9.3&lt;/h2&gt;
 &lt;p&gt;First you need to find out your release code name:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;lsb_release -c
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+lsb_release -c&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;which get you something like that &lt;code&gt;Codename:  precise&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Create a new file &lt;code&gt;codename-pgdg.list&lt;/code&gt; in &lt;code&gt;/etc/apt/sources.list.d&lt;/code&gt; according to the &lt;a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki"&gt;PostgreSQL wiki page&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/apt/sources.list.d/precise-pgdg.list
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+vi /etc/apt/sources.list.d/precise-pgdg.list&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;and add the following line&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now we need to import the repository key from&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now we can a update the repository and install the required packages from the PostgreSQL repository.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get update
-apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Compiling PostGIS 2.1 against libgdal &amp;gt;= 1.10.0&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bash
+apt-get update
+apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="compiling-postgis-21-against-libgdal-1100"&gt;Compiling PostGIS 2.1 against libgdal &amp;gt;= 1.10.0&lt;/h2&gt;
 &lt;p&gt;To install PostGIS 2.1 it is important that &lt;code&gt;postgresql-server-dev-x.x&lt;/code&gt; is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled &lt;code&gt;libgdal&lt;/code&gt; 1.10.0 version from &lt;strong&gt;ubuntugis&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Install &lt;code&gt;python-software-properties&lt;/code&gt; and add the apt sources (repositories):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install python-software-properties
+&lt;p&gt;&lt;code&gt;bash
+apt-get install python-software-properties
 add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-apt-get update
-&lt;/pre&gt;&lt;/div&gt;
-
-
+apt-get update&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now install the new GDAL library called &lt;code&gt;libgdal1h&lt;/code&gt; and its' development package&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install libgdal1h
-apt-cache showpkg libgdal-dev*
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-get install libgdal1h
+apt-cache showpkg libgdal-dev*&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;which gets you something like that:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;p&gt;&lt;code&gt;bash
+...
 Provides: 
 1.10.0-1~precise1 - 
 1.9.0-3.1~pgdg12.4+1 - 
-...
-&lt;/pre&gt;&lt;/div&gt;
-
-
+...&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;You can install a version using the &lt;code&gt;-f&lt;/code&gt; flag&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install -f libgdal-dev&lt;span class="o"&gt;=&lt;/span&gt;1.10.0-1~precise1
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-get install -f libgdal-dev=1.10.0-1~precise1&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Before installing the PostGIS from source we install the required dependencies.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Download the latest PostGIS source and compile it&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+&lt;p&gt;&lt;code&gt;bash
+wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
 tar xzvf postgis-2.1.0.tar.gz 
-&lt;span class="nb"&gt;cd &lt;/span&gt;postgis-2.1.0
-./configure
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;div class="highlight"&gt;&lt;pre&gt; PostGIS is now configured &lt;span class="k"&gt;for&lt;/span&gt; x86_64-unknown-linux-gnu
-
--------------- Compiler Info ------------- 
+cd postgis-2.1.0
+./configure&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;```bash
+ PostGIS is now configured for x86_64-unknown-linux-gnu&lt;/p&gt;
+&lt;p&gt;-------------- Compiler Info ------------- 
  C compiler:           gcc -g -O2
  C++ compiler:         g++ -g -O2
- SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P
-
--------------- Dependencies -------------- 
+ SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P&lt;/p&gt;
+&lt;p&gt;-------------- Dependencies -------------- 
  GEOS config:          /usr/bin/geos-config
  GEOS version:         3.3.8
  GDAL config:          /usr/bin/gdal-config
@@ -510,287 +394,201 @@ tar xzvf postgis-2.1.0.tar.gz
  Libxml2 version:      2.8.0
  JSON-C support:       no
  PostGIS debug level:  0
- Perl:                 /usr/bin/perl
-
---------------- Extensions --------------- 
+ Perl:                 /usr/bin/perl&lt;/p&gt;
+&lt;p&gt;--------------- Extensions --------------- 
  PostGIS Raster:       enabled
  PostGIS Topology:     enabled
- SFCGAL support:       disabled
-
--------- Documentation Generation -------- 
- xsltproc:             
- xsl style sheets:     
- dblatex:              
- convert:              
+ SFCGAL support:       disabled&lt;/p&gt;
+&lt;p&gt;-------- Documentation Generation -------- 
+ xsltproc:           &lt;br /&gt;
+ xsl style sheets:   &lt;br /&gt;
+ dblatex:            &lt;br /&gt;
+ convert:            &lt;br /&gt;
  mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd
-&lt;/pre&gt;&lt;/div&gt;
-
-
+```&lt;/p&gt;
 &lt;p&gt;use &lt;code&gt;checkinstall&lt;/code&gt;, which runs &lt;code&gt;make install&lt;/code&gt; and registers the package in &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;make
-checkinstall
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;R 3.0.2 and PL/R for PostgreSQL&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bash
+make
+checkinstall&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="r-302-and-plr-for-postgresql"&gt;R 3.0.2 and PL/R for PostgreSQL&lt;/h2&gt;
 &lt;p&gt;Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the &lt;a href="http://cran.r-project.org" title="The Comprehensive R Archive Network"&gt;R-Project&lt;/a&gt; site. First edit the&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/apt/sources.list
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;and add the following line and do a update&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;deb http://cran.r-project.org/bin/linux/ubuntu precise/
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;as well as the key&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-apt-get update
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+vi /etc/apt/sources.list&lt;/code&gt;
+and add the following line and do a update&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bash
+deb http://cran.r-project.org/bin/linux/ubuntu precise/&lt;/code&gt;
+as well as the key&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bash
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The search for the 3.0.2 R package version and install it.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-cache showpkg r-base
-apt-get install -f r-base&lt;span class="o"&gt;=&lt;/span&gt;3.0.2-1precise0
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-cache showpkg r-base
+apt-get install -f r-base=3.0.2-1precise0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install postgresql-9.3-plr
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+apt-get install postgresql-9.3-plr&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;So ... we are ready ... have fun.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Mon, 11 Nov 2013 00:00:00 +0100</pubDate><guid>tag:iocast.github.io,2013-11-11:blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html</guid><category>server</category><category>ubuntu</category><category>ubuntugis</category><category>postgresql</category><category>postgis</category><category>libgdal</category></item><item><title>Python 2.7.x and mod_wsgi on a CentOS 6</title><link>http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html</link><description>&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+vi /etc/sysconfig/network-scripts/ifcfg-eth0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;Getting Python 2.7.x&lt;/h2&gt;
+&lt;h2 id="getting-python-27x"&gt;Getting Python 2.7.x&lt;/h2&gt;
 &lt;p&gt;The following explanations are based on a blog of &lt;a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk"&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7"&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+yum install gcc make zlib-devel bzip2-devel openssl-devel&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/
-wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+cd /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Extract and install it:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf Python-2.7.5.tgz
-&lt;span class="nb"&gt;cd &lt;/span&gt;Python-2.7.5
+&lt;p&gt;&lt;code&gt;bash
+tar -zxvf Python-2.7.5.tgz
+cd Python-2.7.5
 ./configure --enable-shared
-make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make altinstall
-&lt;/pre&gt;&lt;/div&gt;
-
-
+make &amp;amp;&amp;amp; make altinstall&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-sh setuptools-0.6c11-py2.7.egg
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum install httpd httpd-devel
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+yum install httpd httpd-devel&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
 &lt;p&gt;Download and unpack the latest version&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+&lt;p&gt;&lt;code&gt;bash
+wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
 tar -zxvf mod_wsgi-3.4.tar.gz
-&lt;span class="nb"&gt;cd &lt;/span&gt;mod_wsgi-3.4.tar.gz
-./configure --with-python&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/bin/python2.7
-&lt;/pre&gt;&lt;/div&gt;
-
-
+cd mod_wsgi-3.4.tar.gz
+./configure --with-python=/usr/local/bin/python2.7&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;whereis python
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+whereis python&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;code&gt;bash
+make &amp;amp;&amp;amp; make install&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7...&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+&lt;p&gt;&lt;code&gt;bash
+ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
 ln -s /usr/local/lib/libpython2.7.so /usr/
-ldconfig
-&lt;/pre&gt;&lt;/div&gt;
-
-
+ldconfig&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+&lt;p&gt;&lt;code&gt;bash
+wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
 tar -zxvf virtualenv-1.10.1.tar.gz
-&lt;span class="nb"&gt;cd &lt;/span&gt;virtualenv-1.10.1
-python2.7 setup.py install
-&lt;/pre&gt;&lt;/div&gt;
-
-
+cd virtualenv-1.10.1
+python2.7 setup.py install&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;install psycopg2&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+&lt;p&gt;&lt;code&gt;bash
+wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
 tar -zxvf psycopg2-2.5.1.tar.gz
-&lt;span class="nb"&gt;cd &lt;/span&gt;psycopg2-2.5.1
-vi setup.cfg
-&lt;/pre&gt;&lt;/div&gt;
-
-
+cd psycopg2-2.5.1
+vi setup.cfg&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;and add the following line&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
-````
-
-
-now install it
-
-```bash
-/usr/local/bin/python2.7 setup.py install
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;```
+pg_config=/usr/pgsql-9.3/bin/pg_config
+````&lt;/p&gt;
+&lt;p&gt;now install it&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bash
+/usr/local/bin/python2.7 setup.py install&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;virtualenv-2.7 --system-site-packages ENV
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Wed, 16 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-16:blog/2013/10/16-python-mod_wsgi-centos.html</guid><category>centos</category><category>server</category><category>apache</category><category>httpd</category><category>python</category></item><item><title>Setting up a QGIS server and PostGIS on CentOS 6</title><link>http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html</link><description>&lt;p&gt;QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer &lt;code&gt;postgresql-libs&lt;/code&gt; you need first to install the desired version of PostgreSQL and PostGIS as described bellow.&lt;/p&gt;
-&lt;h2&gt;PostgreSQL and PostGIS&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;bash
+virtualenv-2.7 --system-site-packages ENV&lt;/code&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Wed, 16 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-16:blog/2013/10/16-python-mod_wsgi-centos.html</guid><category>centos</category><category>server</category><category>apache</category><category>httpd</category><category>python</category></item><item><title>Setting up a QGIS server and PostGIS on CentOS 6</title><link>http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html</link><description>&lt;p&gt;QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer &lt;code&gt;postgresql-libs&lt;/code&gt; you need first to install the desired version of PostgreSQL and PostGIS as described bellow.&lt;/p&gt;
+&lt;h2 id="postgresql-and-postgis"&gt;PostgreSQL and PostGIS&lt;/h2&gt;
 &lt;p&gt;The following instructions are adapted from  &lt;a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository"&gt;YUM installation - PostgreSQL wiki&lt;/a&gt; and &lt;a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg"&gt;UsersWikiuPostGIS20CentOS6pgdg - PostGIS&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;h3 id="configuration"&gt;Configuration&lt;/h3&gt;
 &lt;p&gt;Configure yum repository&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/yum.repos.d/CentOS-Base.repo
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+vi /etc/yum.repos.d/CentOS-Base.repo
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and add the following excludes to &lt;code&gt;base&lt;/code&gt; and &lt;code&gt;updates&lt;/code&gt; sections:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;exclude=postgresql*&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Install PGDG RPM file&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;:::yaml
+exclude=postgresql*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="install-pgdg-rpm-file"&gt;Install PGDG RPM file&lt;/h3&gt;
 &lt;p&gt;A PGDG file is available for each distribution/architecture/database version combination at http://yum.postgresql.org &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://yum.postgresql.org/&amp;lt;version&amp;gt;/&amp;lt;distribution&amp;gt;/&amp;lt;architecture&amp;gt;/pgdg-&amp;lt;database&amp;gt;.noarch.rpm
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+wget http://yum.postgresql.org/&amp;lt;version&amp;gt;/&amp;lt;distribution&amp;gt;/&amp;lt;architecture&amp;gt;/pgdg-&amp;lt;database&amp;gt;.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;where version is &lt;code&gt;9.3&lt;/code&gt;, distribution is &lt;code&gt;redhat&lt;/code&gt;, architecture is &lt;code&gt;rhel-6-x86_64&lt;/code&gt; and database is &lt;code&gt;centos93-9.3-1&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Install RPM distribution:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Installation of PostgreSQL and PostGIS&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;:::bash
+rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="installation-of-postgresql-and-postgis"&gt;Installation of PostgreSQL and PostGIS&lt;/h3&gt;
 &lt;p&gt;List the available packages:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum list postgres*
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+yum list postgres*
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Installation:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;:::bash
+yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="configuration_1"&gt;Configuration&lt;/h3&gt;
 &lt;p&gt;Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;service postgresql-9.3 initdb
+&lt;pre&gt;&lt;code&gt;:::bash
+service postgresql-9.3 initdb
 service postgresql-9.3 start
 chkconfig postgresql-9.3 on
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Some important files&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align="left"&gt;File / Application&lt;/th&gt;
-&lt;th align="left"&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;/var/lib/pgsql/9.3/data/postgresql.conf&lt;/td&gt;
-&lt;td align="left"&gt;changing host etc.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;/var/lib/pgsql/9.3/data/pg_hba.conf&lt;/td&gt;
-&lt;td align="left"&gt;client authentication configuration&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;File / Application                       | Purpose
+:----------------------------------------|:------------------------------------
+/var/lib/pgsql/9.3/data/postgresql.conf  | changing host etc.
+/var/lib/pgsql/9.3/data/pg_hba.conf      | client authentication configuration&lt;/p&gt;
 &lt;p&gt;In the &lt;code&gt;pg_hba.conf&lt;/code&gt; file comment out the &lt;code&gt;ident&lt;/code&gt; lines except for unix domain socket and add two new lines for &lt;code&gt;md5 encryption&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# IPv4 local connections:&lt;/span&gt;
-&lt;span class="c1"&gt;#host    all             all             127.0.0.1/32            ident&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;host    all             all             127.0.0.1/32            md5&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;# IPv6 local connections&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-&lt;span class="c1"&gt;#host    all             all             ::1/128                 ident&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;host    all             all             ::1/128                 md5&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Database and User&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;:::yaml
+# IPv4 local connections:
+#host    all             all             127.0.0.1/32            ident
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+#host    all             all             ::1/128                 ident
+host    all             all             ::1/128                 md5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="database-and-user"&gt;Database and User&lt;/h3&gt;
 &lt;p&gt;Before we can start, we need to create a new database and user.&lt;/p&gt;
 &lt;p&gt;Login as &lt;code&gt;postgres&lt;/code&gt; superuser and create a new database&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;su -l postgres
+&lt;pre&gt;&lt;code&gt;:::bash
+su -l postgres
 createdb gis
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Login into the database create a user and set a encrypted password&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-ALTER USER gis WITH ENCRYPTED PASSWORD &lt;span class="s1"&gt;&amp;#39;gis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD 'gis';
+ALTER USER gis WITH ENCRYPTED PASSWORD 'gis';
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now test your configuration and install PostGIS extension&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Installation QGIS&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;:::bash
+psql -h localhost -d gis -U gis -W
+CREATE EXTENSION postgis;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="installation-qgis"&gt;Installation QGIS&lt;/h2&gt;
 &lt;p&gt;First you need a running CentOS on a machine. In the default CentOS software repository &lt;code&gt;qgis-server&lt;/code&gt; is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:&lt;/p&gt;
-&lt;p _="%" endhighlight="endhighlight"&gt;{% highlight bash %}
+&lt;p&gt;{% highlight bash %}
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm
-rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm&lt;/p&gt;
+rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
+{% endhighlight %}&lt;/p&gt;
 &lt;p&gt;where the version I have tested it was &lt;code&gt;6-8&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Add the ELGIS repositories&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget http://elgis.argeo.org/repos/6/elgis-release-&amp;lt;version&amp;gt;.noarch.rpm
+&lt;pre&gt;&lt;code&gt;:::bash
+wget http://elgis.argeo.org/repos/6/elgis-release-&amp;lt;version&amp;gt;.noarch.rpm
 rpm -Uvh elgis-release-6-6_0.noarch.rpm
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;where the version I have tested it was &lt;code&gt;6-6_0&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now install QGIS server:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum install qgis-mapserver.x86_64
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+yum install qgis-mapserver.x86_64
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you want to have QGIS libraries, QGIS Desktop run the following command&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;yum install qgis*
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+yum install qgis*
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The scripts and configs are installed on CentOS:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align="left"&gt;Script / Config&lt;/th&gt;
-&lt;th align="left"&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;/usr/libexec/qgis/qgis_mapserv.fcgi&lt;/td&gt;
-&lt;td align="left"&gt;main fast cgi script (OGC capabilities)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align="left"&gt;/etc/httpd/conf.d/qgis-mapserver.conf&lt;/td&gt;
-&lt;td align="left"&gt;qgis mapserver httpd configuration file&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sat, 12 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-12:blog/2013/10/12-qgis-server-on-centos-6.html</guid><category>centos</category><category>qgis</category><category>server</category><category>postgresql</category><category>postgis</category></item><item><title>Mac OS X file server migration</title><link>http://iocast.github.io/blog/2013/10/09-osx-file-server-migration.html</link><description>&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
+&lt;p&gt;Script / Config                       | Purpose
+:-------------------------------------|:----------------------------------------
+/usr/libexec/qgis/qgis_mapserv.fcgi   | main fast cgi script (OGC capabilities)
+/etc/httpd/conf.d/qgis-mapserver.conf | qgis mapserver httpd configuration file&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Sat, 12 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-12:blog/2013/10/12-qgis-server-on-centos-6.html</guid><category>centos</category><category>qgis</category><category>server</category><category>postgresql</category><category>postgis</category></item><item><title>Mac OS X file server migration</title><link>http://iocast.github.io/blog/2013/10/09-osx-file-server-migration.html</link><description>&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
 &lt;p&gt;So to solve these problems and many more I created a little bash script which is able to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;sync files from a remote server using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
@@ -800,111 +598,104 @@ rpm -Uvh elgis-release-6-6_0.noarch.rpm
 &lt;/ul&gt;
 &lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href="/projects/file-server-management.html"&gt;server migration tool&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Wed, 09 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-09:blog/2013/10/09-osx-file-server-migration.html</guid><category>osx</category><category>bash</category><category>rsync</category></item><item><title>Creating your own blog using github pages, jekyll and travis</title><link>http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html</link><description>&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)"&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href="http://github.com/" title="Github"&gt;Github's&lt;/a&gt; user pages, &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
-&lt;h2&gt;Github&lt;/h2&gt;
+&lt;h2 id="github"&gt;Github&lt;/h2&gt;
 &lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Creates our branch, without any parents (it&amp;#39;s an orphan!)&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::bash
+# Creates our branch, without any parents (it's an orphan!)
 git checkout --orphan develop
-&lt;span class="c"&gt;# Remove all files from the old working tree&lt;/span&gt;
+# Remove all files from the old working tree
 git rm -rf .
 
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;My GitHub Page&amp;quot;&lt;/span&gt; &amp;gt; index.html
+echo "My GitHub Page" &amp;gt; index.html
 git add index.html
-git commit -a -m &lt;span class="s2"&gt;&amp;quot;First pages commit&amp;quot;&lt;/span&gt;
+git commit -a -m "First pages commit"
 git push origin develop
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now we are ready to add our &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; page to this &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
-&lt;h2&gt;Jekyll&lt;/h2&gt;
+&lt;h2 id="jekyll"&gt;Jekyll&lt;/h2&gt;
 &lt;p&gt;Now that we have a &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt; branch, former for the &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; compilation and later for your source, we can setup our blog. As described in the &lt;a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation"&gt;jekyll documentation&lt;/a&gt; we need to have at least a &lt;code&gt;_layouts&lt;/code&gt; directory for the templates that wrap posts, a &lt;code&gt;_posts&lt;/code&gt; for dynamic content and the rest of html and other files for you layout.&lt;/p&gt;
 &lt;p&gt;In addition we need to setup a &lt;code&gt;_config.yml&lt;/code&gt; file to tell &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; the compilation options. A example could look like the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;destination&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;./_site&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;lsi&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;         &lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;pygments&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;    &lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;markdown&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;    &lt;span class="l-Scalar-Plain"&gt;rdiscount&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;permalink&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;   &lt;span class="l-Scalar-Plain"&gt;date&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;rdiscount&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;extensions&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;smart&lt;/span&gt;&lt;span class="p-Indicator"&gt;]&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::yaml
+destination: ./_site
+lsi:         true
+pygments:    true
+markdown:    rdiscount
+permalink:   date
+rdiscount:
+  extensions: [smart]
 
-&lt;span class="l-Scalar-Plain"&gt;exclude&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Gemfile&amp;#39;&lt;/span&gt;&lt;span class="p-Indicator"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Gemfile.lock&amp;#39;&lt;/span&gt;&lt;span class="p-Indicator"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Rakefile&amp;#39;&lt;/span&gt;&lt;span class="p-Indicator"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;README.md&amp;#39;&lt;/span&gt;&lt;span class="p-Indicator"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;update-gh-pages.sh&amp;#39;&lt;/span&gt;&lt;span class="p-Indicator"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Travis CI&lt;/h2&gt;
+exclude: ['Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', 'update-gh-pages.sh']
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="travis-ci"&gt;Travis CI&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://travis-ci.org" title="Travis CI"&gt;Travis&lt;/a&gt; is used to automatically deploy the &lt;code&gt;develop&lt;/code&gt; branch and push the result of the &lt;code&gt;jekyll build&lt;/code&gt; output to the &lt;code&gt;master&lt;/code&gt; branch which the would be published to the Github pages.&lt;/p&gt;
 &lt;p&gt;For that we need first to get &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; access to our Github repository. If you do not have a &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; account register one on the homepage. On The &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; homepage go to the account settings and get access to the appropriate repository like in the image below:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Travis Repository Access" src="/assets/blog/travis_repository_access.png" title="Travis Repository Access" /&gt;&lt;/p&gt;
 &lt;p&gt;The next step is to configure the build process. For that create a new file called &lt;code&gt;.travis.yml&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch and add the &lt;code&gt;master&lt;/code&gt; branch to the blacklist and the &lt;code&gt;develop&lt;/code&gt; branch to the whitelist.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ruby&lt;/span&gt;
-&lt;span class="l-Scalar-Plain"&gt;rvm&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;1.9.3&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::yaml
+language: ruby
+rvm: 1.9.3
 
-&lt;span class="l-Scalar-Plain"&gt;branches&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;except&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;
+branches:
+  except:
+    - master
 
-&lt;span class="l-Scalar-Plain"&gt;branches&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;only&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;develop&lt;/span&gt;
+branches:
+  only:
+    - develop
 
-&lt;span class="l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;rake travis&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+script: rake travis
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;As you can see in the &lt;code&gt;.travis.yml&lt;/code&gt; file the &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; deployment starts with the command &lt;code&gt;rake travis&lt;/code&gt; which is implemented in the &lt;code&gt;Rakefile&lt;/code&gt; file which uses the &lt;code&gt;Gemfile&lt;/code&gt; for ruby library dependencies. So create the files &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Rakefile&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
 &lt;p&gt;For the above &lt;code&gt;_config.yml&lt;/code&gt; configuration add the following RubyGem dependencies to the &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::ruby
+source 'http://rubygems.org'
 
-&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;jekyll&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rdiscount&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;redcarpet&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+gem 'jekyll'
+gem 'rdiscount'
+gem 'redcarpet'
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; deployment add the following task to the &lt;code&gt;Rakefile&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;#!/usr/bin/env rake&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::ruby
+#!/usr/bin/env rake
 
-&lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="ss"&gt;:travis&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-  &lt;span class="nb"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;jekyll build&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+task :travis do
+  system("jekyll build")
+end
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Lastly we need to create a &lt;code&gt;bash&lt;/code&gt; script to push the compiled &lt;a href="http://jekyllrb.com" title="Jekyll"&gt;jekyll&lt;/a&gt; page to the &lt;code&gt;master&lt;/code&gt; branch. For that authorize &lt;a href="http://travis-ci.org" title="Travis CI"&gt;travis&lt;/a&gt; to do commits and pushed as follow:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -X POST -u &amp;lt;your_github_username&amp;gt; -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s2"&gt;&amp;quot;{\&amp;quot;scopes\&amp;quot;:[\&amp;quot;public_repo\&amp;quot;],\&amp;quot;note\&amp;quot;:\&amp;quot;token for pushing from travis\&amp;quot;}&amp;quot;&lt;/span&gt; https://api.github.com/authorizations
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;:::bash
+curl -X POST -u &amp;lt;your_github_username&amp;gt; -H "Content-Type: application/json" -d "{\"scopes\":[\"public_repo\"],\"note\":\"token for pushing from travis\"}" https://api.github.com/authorizations
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and copy the &lt;code&gt;token&lt;/code&gt; key from the json result.&lt;/p&gt;
 &lt;p&gt;Now install the travis gem, encrypt the values of environment variables and add it to the &lt;code&gt;.tavis.yml&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;gem install travis
-travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;token&amp;gt; --add env.global
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;pre&gt;&lt;code&gt;::bash
+gem install travis
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; GH_TOKEN=&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_PULL_REQUEST&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Starting to update master\n&amp;quot;&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;:::bash
+if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  echo -e "Starting to update master\n"
 
-  cp -R _site &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site
+  cp -R _site $HOME/_site
 
-  &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;
-  git config --global user.email &lt;span class="s2"&gt;&amp;quot;iocast@me.com&amp;quot;&lt;/span&gt;
-  git config --global user.name &lt;span class="s2"&gt;&amp;quot;iocast&amp;quot;&lt;/span&gt;
-  git clone --quiet --branch&lt;span class="o"&gt;=&lt;/span&gt;master https://&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
+  cd $HOME
+  git config --global user.email "iocast@me.com"
+  git config --global user.name "iocast"
+  git clone --quiet --branch=master https://${GH_TOKEN}@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
 
-  &lt;span class="nb"&gt;cd &lt;/span&gt;master
+  cd master
   rm -rf ./*
-  cp -Rf &lt;span class="nv"&gt;$HOME&lt;/span&gt;/_site/* .
+  cp -Rf $HOME/_site/* .
 
   git add -f .
-  git commit -m &lt;span class="s2"&gt;&amp;quot;Travis build &lt;/span&gt;&lt;span class="nv"&gt;$TRAVIS_BUILD_NUMBER&lt;/span&gt;&lt;span class="s2"&gt; pushed to master&amp;quot;&lt;/span&gt;
+  git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to master"
   git push -fq origin master &amp;gt; /dev/null
 
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Done magic with coverage\n&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+  echo -e "Done magic with coverage\n"
+fi
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and add the following lines to the end of the &lt;code&gt;.travis.yml&lt;/code&gt; file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;after_success&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;./update-gh-pages.sh&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Tue, 08 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-08:blog/2013/10/08-github-pages-with-jekyll-and-travis.html</guid><category>github</category><category>jekyll</category><category>travis</category><category>bash</category><category>continuous integration</category></item></channel></rss>
+&lt;pre&gt;&lt;code&gt;:::yaml
+after_success: ./update-gh-pages.sh
+&lt;/code&gt;&lt;/pre&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">iocast</dc:creator><pubDate>Tue, 08 Oct 2013 00:00:00 +0200</pubDate><guid>tag:iocast.github.io,2013-10-08:blog/2013/10/08-github-pages-with-jekyll-and-travis.html</guid><category>github</category><category>jekyll</category><category>travis</category><category>bash</category><category>continuous integration</category></item></channel></rss>

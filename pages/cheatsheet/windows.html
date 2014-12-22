@@ -99,41 +99,32 @@
 		
 		
 		<article class='content'>
-    		<h2>Desktop</h2>
+    		
+<h2 id="desktop">Desktop</h2>
 <p>For all the command in this section I used ''command line prompt''.</p>
-<h3>Sharing</h3>
+<h3 id="sharing">Sharing</h3>
 <p>remove a network share</p>
-<div class="highlight"><pre>net use /delete &lt;drive name or network path&gt;
-</pre></div>
-
-
-<h2>Server</h2>
+<pre><code>net use /delete &lt;drive name or network path&gt;
+</code></pre>
+<h2 id="server">Server</h2>
 <p>For all the command below I used ''PowerShell''.</p>
-<h3>Sharing</h3>
+<h3 id="sharing_1">Sharing</h3>
 <p>''list'' of all connected users</p>
-<div class="highlight"><pre>Get-SmbSession
-</pre></div>
-
-
+<pre><code>Get-SmbSession
+</code></pre>
 <p>for ''command line'' use</p>
-<div class="highlight"><pre>net session
-</pre></div>
-
-
+<pre><code>net session
+</code></pre>
 <p>''closing'' a session can be done using the session id, computer name or user name as follow:</p>
-<div class="highlight"><pre>Close-SmbSession -SessionId 171798691989
+<pre><code>Close-SmbSession -SessionId 171798691989
 Close-SmbSession –ClientComputerName \\192.168.0.20
 Close-SmbSession –ClientUserName Domain\Username
-</pre></div>
-
-
-<h2>Miscellaneous</h2>
-<h3>Synchronization</h3>
+</code></pre>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<h3 id="synchronization">Synchronization</h3>
 <p>''mirror''</p>
-<div class="highlight"><pre>robocopy &lt;source&gt; &lt;destination&gt; /MIR /XD &quot;&lt;source&gt;/&lt;path&gt;/&lt;to&gt;/&lt;folder&gt;&quot;
-</pre></div>
-
-
+<pre><code>robocopy &lt;source&gt; &lt;destination&gt; /MIR /XD "&lt;source&gt;/&lt;path&gt;/&lt;to&gt;/&lt;folder&gt;"
+</code></pre>
 <p><code>XD</code>: exluding directories</p>
   		</article>
 		
@@ -160,6 +151,37 @@ Close-SmbSession –ClientUserName Domain\Username
 
         <!-- SIDEBAR -->
         <div class="right col-md-3">
+
+
+          <div class="widget">
+
+            <h3>Table of Content</h3>
+			
+			<nav class="toc">
+    
+    <div class="toc">
+<ul>
+<li><a href="#desktop">Desktop</a><ul>
+<li><a href="#sharing">Sharing</a></li>
+</ul>
+</li>
+<li><a href="#server">Server</a><ul>
+<li><a href="#sharing_1">Sharing</a></li>
+</ul>
+</li>
+<li><a href="#miscellaneous">Miscellaneous</a><ul>
+<li><a href="#synchronization">Synchronization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    
+	
+			</nav>
+
+          </div>
+
+
 
         </div>
         <!-- /SIDEBAR -->

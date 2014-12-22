@@ -105,239 +105,200 @@
 <li>the operation system should use OpenSSH</li>
 </ol>
 <p>Thus, for the hardware I have decided to use a <a href="http://www.solid-run.com/">Cubox from SolidRun</a> because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Arch Linux</a> because it is more up-to-date then the Debian or Ubuntu distribution.</p>
-<h1>Installation</h1>
+<h1 id="installation">Installation</h1>
 <p>Download the latest version of Arch Linux for the <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Marvell ARMv7 platform</a> from the official site. Next, plug your MicroSD into your computer and find out which drive (<code>/dev/sdx</code>) it is</p>
-<div class="highlight"><pre>df -ah
-</pre></div>
-
-
+<pre><code>df -ah
+</code></pre>
 <p>Clear your disk and create <strong>one</strong> <code>ext3</code> partition.</p>
-<div class="highlight"><pre>mkfs.ext3 /dev/sdx1
-</pre></div>
-
-
+<pre><code>mkfs.ext3 /dev/sdx1
+</code></pre>
 <p>Know mount it and extract Arch Linux onto your MicroSD partition</p>
-<div class="highlight"><pre>mkdir /media/arch
+<pre><code>mkdir /media/arch
 mount /dev/sdx1 /media/arch
 tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
 umount /media/arch
 rm -rf /media/arch
-</pre></div>
-
-
+</code></pre>
 <p>The default login is user <code>root</code> with password <code>root</code>.</p>
-<h1>Configuration</h1>
+<h1 id="configuration">Configuration</h1>
 <p>Now lets configure some basic stuff, like date and time, DHCP, etc.</p>
-<h2>Network</h2>
+<h2 id="network">Network</h2>
 <p>Create the <code>/etc/systemd/network/eth0.network</code> file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.</p>
 <p><strong>for DHCP</strong></p>
-<div class="highlight"><pre><span class="k">[Match]</span>
-<span class="na">Name</span><span class="o">=</span><span class="s">eth0</span>
+<pre><code>[Match]
+Name=eth0
 
-<span class="k">[Network]</span>
-<span class="na">DHCP</span><span class="o">=</span><span class="s">both</span>
-</pre></div>
-
-
+[Network]
+DHCP=both
+</code></pre>
 <p><strong>for fixed IP</strong></p>
-<div class="highlight"><pre><span class="k">[Match]</span>
-<span class="na">Name</span><span class="o">=</span><span class="s">eth0</span>
+<pre><code>[Match]
+Name=eth0
 
-<span class="k">[Network]</span>
-<span class="na">Address</span><span class="o">=</span><span class="s">10.0.1.2/24</span>
-<span class="na">Gateway</span><span class="o">=</span><span class="s">10.0.1.1</span>
-</pre></div>
-
-
+[Network]
+Address=10.0.1.2/24
+Gateway=10.0.1.1
+</code></pre>
 <p>Restart systemd-networkd. To do so, run this command:</p>
-<div class="highlight"><pre>systemctl restart systemd-networkd
-</pre></div>
-
-
-<h3>Clientid</h3>
+<pre><code>systemctl restart systemd-networkd
+</code></pre>
+<h3 id="clientid">Clientid</h3>
 <p>If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in <code>/etc/dhcpcd.conf</code>:</p>
-<div class="highlight"><pre># Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
+<pre><code># Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
 duid
-</pre></div>
-
-
+</code></pre>
 <p>to:</p>
-<div class="highlight"><pre># Use the hardware address of the interface for the Client ID (DHCPv4).
+<pre><code># Use the hardware address of the interface for the Client ID (DHCPv4).
 clientid
-</pre></div>
-
-
+</code></pre>
 <p>Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.</p>
 <p>To automatically start the DCHP daemon at start up you have to enable it.</p>
-<div class="highlight"><pre>systemctl enable dhcpcd
-</pre></div>
-
-
-<h2>System Upgrade</h2>
-<div class="highlight"><pre>pacman -Syu
-</pre></div>
-
-
-<h2>Bad experience with <code>vi</code></h2>
+<pre><code>systemctl enable dhcpcd
+</code></pre>
+<h2 id="system-upgrade">System Upgrade</h2>
+<pre><code>pacman -Syu
+</code></pre>
+<h2 id="bad-experience-with-vi">Bad experience with <code>vi</code></h2>
 <p>If you have bad experience or strange behaviour with the standard <code>vi</code> simply install <code>vim</code>.</p>
-<div class="highlight"><pre>pacman -S vim-minimal
-</pre></div>
-
-
-<h2>Locale and Date/Time</h2>
+<pre><code>pacman -S vim-minimal
+</code></pre>
+<h2 id="locale-and-datetime">Locale and Date/Time</h2>
 <p>Change your timezone to the one your are living at. All time zones can be found in the folder <code>/etc/timezones</code>.</p>
-<div class="highlight"><pre># To check the current zone defined for the system:
+<pre><code># To check the current zone defined for the system:
 timedatectl status
 # To list available zones:
 timedatectl list-timezones
 # To change your time zone:
 timedatectl set-timezone Europe/Zurich
-</pre></div>
-
-
+</code></pre>
 <p>Also do not forget to change your <code>locale</code></p>
-<div class="highlight"><pre>localectl status
+<pre><code>localectl status
 ls /usr/share/i18n/locales
 localectl set-locale LANG=de_CH.UTF-8
-</pre></div>
-
-
-<h1>Samba</h1>
+</code></pre>
+<h1 id="samba">Samba</h1>
 <p>For internal file sharing you could use Samba. Tips and tricks can be found on <a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks">Arch Linux Samba site</a></p>
-<div class="highlight"><pre>pacman -S samba
-</pre></div>
-
-
+<pre><code>pacman -S samba
+</code></pre>
 <p>Your can restart the service using the follwing</p>
-<div class="highlight"><pre>systemctl enable smbd.service
+<pre><code>systemctl enable smbd.service
 systemctl enable nmbd.service
-</pre></div>
-
-
+</code></pre>
 <p>Create a new samba group</p>
-<div class="highlight"><pre>groupadd sambashare
-</pre></div>
-
-
+<pre><code>groupadd sambashare
+</code></pre>
 <p>and add user to it</p>
-<div class="highlight"><pre># add user to the samba grup
+<pre><code># add user to the samba grup
 pdbedit -a -u samba_user
 # changing samba password
 smbpasswd samba_user
-</pre></div>
-
-
+</code></pre>
 <p>Adding a user to the samba group</p>
-<div class="highlight"><pre>usermod -a -G sambashare unix_user_name
-</pre></div>
-
-
+<pre><code>usermod -a -G sambashare unix_user_name
+</code></pre>
 <p>On my Cubox I use the following configuration (<code>/etc/samba/smb.conf</code>):</p>
-<div class="highlight"><pre><span class="k">[global]</span>
-<span class="na">workgroup</span> <span class="o">=</span> <span class="s">iocast</span>
-<span class="na">server string</span> <span class="o">=</span> <span class="s">file server</span>
-<span class="na">security</span> <span class="o">=</span> <span class="s">user</span>
-<span class="na">create mask</span> <span class="o">=</span> <span class="s">0775</span>
-<span class="na">force create mode</span> <span class="o">=</span> <span class="s">0775</span>
-<span class="na">directory mask</span> <span class="o">=</span> <span class="s">02775</span>
-<span class="na">force directory mode</span> <span class="o">=</span> <span class="s">02775</span>
-<span class="na">force group</span> <span class="o">=</span> <span class="s">sambashare</span>
+<pre><code>[global]
+workgroup = iocast
+server string = file server
+security = user
+create mask = 0775
+force create mode = 0775
+directory mask = 02775
+force directory mode = 02775
+force group = sambashare
 
-<span class="k">[michel]</span>
-<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk</span>
-<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/data/</span>
-<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">writable</span> <span class="o">=</span> <span class="s">yes</span>
-<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel karolina</span>
-<span class="na">write list</span> <span class="o">=</span> <span class="s">michel</span>
-<span class="na">read list</span> <span class="o">=</span> <span class="s">karolina</span>
+[michel]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel
+read list = karolina
 
-<span class="k">[michel backup]</span>
-<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk backup</span>
-<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/backup/</span>
-<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">writable</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel</span>
-<span class="na">write list</span> <span class="o">=</span> <span class="s">michel</span>
+[michel backup]
+comment = data disk backup
+path = /storage/backup/
+public = no
+writable = no
+guest ok = no
+valid users = michel
+write list = michel
 
-<span class="k">[ninalaki]</span>
-<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk1</span>
-<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/data1/</span>
-<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">writable</span> <span class="o">=</span> <span class="s">yes</span>
-<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel karolina</span>
-<span class="na">write list</span> <span class="o">=</span> <span class="s">michel karolina</span>
+[ninalaki]
+comment = data disk1
+path = /storage/data1/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
 
-<span class="k">[ninalaki backup]</span>
-<span class="na">comment</span> <span class="o">=</span> <span class="s">data disk1 backup</span>
-<span class="na">path</span> <span class="o">=</span> <span class="s">/storage/backup1/</span>
-<span class="na">public</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">writable</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">guest ok</span> <span class="o">=</span> <span class="s">no</span>
-<span class="na">valid users</span> <span class="o">=</span> <span class="s">michel karolina</span>
-<span class="na">write list</span> <span class="o">=</span> <span class="s">michel karolina</span>
-</pre></div>
-
-
-<h1>Disks management</h1>
+[ninalaki backup]
+comment = data disk1 backup
+path = /storage/backup1/
+public = no
+writable = no
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+</code></pre>
+<h1 id="disks-management">Disks management</h1>
 <p>To automatically mount disks on startup, you need to add them to the <code>/etc/fstab</code> configuration file. Also use the option <code>nofail</code> to not report any error if the disk is absent. For more information read the <a href="https://wiki.archlinux.org/index.php/fstab">manual on Arch Linux</a></p>
 <p>Run <code>lsblk -f</code> or <code>ls -l /dev/disk/by-uuid</code> to list the partitions / disks. Edit the <code>/etc/fstab</code> and prefix the values in the UUID column with <code>UUID=</code>:</p>
-<div class="highlight"><pre># &lt;file system&gt;                           &lt;dir&gt;            &lt;type&gt;  &lt;options&gt;                        &lt;dump&gt;  &lt;pass&gt;
+<pre><code># &lt;file system&gt;                           &lt;dir&gt;            &lt;type&gt;  &lt;options&gt;                        &lt;dump&gt;  &lt;pass&gt;
 UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/   ext4    nofail,rw,relatime,data=ordered  0       0
 UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/ ext4    nofail,rw,relatime,data=ordered  0       0
 UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/  ext4    nofail,rw,relatime,data=ordered  0       0
-</pre></div>
-
-
-<h1>Dynamic DNS</h1>
+</code></pre>
+<h1 id="dynamic-dns">Dynamic DNS</h1>
 <p>If you use <a href="http://www.afraid.org">afraid.org</a> as your dynamic DNS service you can get an example <code>cron</code> entry from the <strong>Dynamic DNS</strong> menu entry. It look likes the following</p>
-<div class="highlight"><pre>PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+<pre><code>PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1 &amp;
-</pre></div>
-
-
+</code></pre>
 <p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code> (see <a href="https://wiki.archlinux.org/index.php/Systemd/Timers">here</a>). First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
-<div class="highlight"><pre><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">timer for service afraid.org.timer</span>
-<span class="na">Requires</span><span class="o">=</span><span class="s">network-online.target</span>
-<span class="na">Requires</span><span class="o">=</span><span class="s">network.target</span>
-<span class="na">After</span><span class="o">=</span><span class="s">dhcpcd.service</span>
+<pre><code>[Unit]
+Description=timer for service afraid.org.timer
+Requires=network-online.target
+Requires=network.target
+After=dhcpcd.service
 
-<span class="k">[Timer]</span>
-<span class="na">OnCalendar</span><span class="o">=</span><span class="s">*:3,8,13,18,23,28,33,38,43,48,53,58</span>
+[Timer]
+OnCalendar=*:3,8,13,18,23,28,33,38,43,48,53,58
 
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</pre></div>
-
-
+[Install]
+WantedBy=multi-user.target
+</code></pre>
 <p>Then create a service file of the same name <code>/etc/systemd/system/afraid.org.service</code> and add the following lines</p>
-<div class="highlight"><pre><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">service for afraid.org for pasithee.mooo.com</span>
+<pre><code>[Unit]
+Description=service for afraid.org for pasithee.mooo.com
 
-<span class="k">[Service]</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1</span>
-</pre></div>
-
-
+[Service]
+Type=simple
+ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1
+</code></pre>
 <p>Now you can test the service.</p>
-<div class="highlight"><pre># test service
+<pre><code># test service
 systemctl start afraid.org.service
 systemctl stop afraid.org.service
-</pre></div>
-
-
+</code></pre>
 <p>As soon as it works you can enable the timer</p>
-<div class="highlight"><pre>systemctl enable afraid.org.timer
+<pre><code>systemctl enable afraid.org.timer
 systemctl start afraid.org.timer
-</pre></div>
+</code></pre>
   </article>
 
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></li>
+        <li><a href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html">Javascript localization part 1</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></li>
+      </ul>
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
