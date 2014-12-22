@@ -86,94 +86,49 @@
     <article class="container">
 
       <div class="row">
-        <div id="blog_main_area" class="left col-md-9" count=1>
-  <div class="item">
-      <div class="item-title">
-        <h2>Miscellaneous</h2>
-      </div>
-          <p><span class="label label-default light"><a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html">08/Oct/2013 Tue</span> Creating your own blog using github pages, jekyll and travis</a></p>
-  </div>
+        <div id="blog_main_area" class="left col-md-9" count=9>
+	
+		<header>
+			<h1>Oracle VirtualBox</h1>
+			<small class="fsize13">
+      			<a href="http://iocast.github.io/pages/cheatsheet/virtualbox.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pages/cheatsheet/virtualbox.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      			<span class="label label-default light">22/Dec/2014 Mon</span> 
+   			</small>
+
+		</header>
+		
+		
+		<article class='content'>
+    		<h2>VirtualBox Management</h2>
+<p>This section describes to to use <code>VBoxManage</code></p>
+<p><strong> resizing your virtual disk</strong></p>
+<div class="highlight"><pre>&#39;C:\Program Files\Oracle\VirtualBox\VBoxManage.exe&#39; modifyhd &#39;.\Windows.vdi&#39; --resize 40000
+</pre></div>
+  		</article>
+		
+  		<hr /><!-- divider -->
+
+    		<div id="comments" class="comments">
+      		<div id="disqus_thread"></div>
+     			<script type="text/javascript">
+        			var disqus_shortname = 'iocast';
+        			var disqus_identifier = "pages/cheatsheet/virtualbox.html";
+       				var disqus_title = "Oracle VirtualBox";
+        			var disqus_url = "http://iocast.github.io/pages/cheatsheet/virtualbox.html";
+        			(function() {
+          				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        			})();
+      			</script>
+      			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    		</div>
+
+
         </div>
 
         <!-- SIDEBAR -->
         <div class="right col-md-3">
-          <!-- recent work -->
-          <!-- <div class="widget">
-
-                      <h3>Recent Work</h3>
-
-                      <a class="popup-image thumb" href="assets/images/preview/slider/1.jpg">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="img-responsive" data-src="holder.js/85x85/#888:#555555/auto/" alt="img" />
-                      </a>
-                      <a class="popup-video thumb" href="http://www.youtube.com/watch?v=kh29_SERH0Y?rel=0">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="ajax-project img-responsive" data-src="holder.js/85x85/#676767:#555555/auto/" alt="img" />
-                      </a>
-                      <a class="popup-video thumb" href="http://vimeo.com/23630702">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="ajax-project img-responsive" data-src="holder.js/85x85/#888:#555555/auto/" alt="img" />
-                      </a>
-
-                      <a class="external ajax-project thumb" href="project-external-1.html">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="ajax-project img-responsive" data-src="holder.js/85x85/#676767:#555555/auto/" alt="img" />
-                      </a>
-                      <a class="external ajax-project thumb" href="project-external-2.html">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="ajax-project img-responsive" data-src="holder.js/85x85/#888:#555555/auto/" alt="img" />
-                      </a>
-                      <a class="external ajax-project thumb" href="project-external-3.html">
-                          <img src="http://iocast.github.io/theme/img/1x1.png" class="ajax-project img-responsive" data-src="holder.js/85x85/#676767:#555555/auto/" alt="img" />
-                      </a>
-
-                      <div class="clearfix"></div>
-                  </div> -->
-
-          <!-- categories -->
-          <div class="widget">
-
-            <h3>Categories</h3>
-
-            <ul>
-               <li><a href="http://iocast.github.io/category/gis.html"><i class="fa fa-dot-circle-o"></i> GIS</a>
-              </li>
-              <li><a href="http://iocast.github.io/category/miscellaneous.html"><i class="fa fa-dot-circle-o"></i> Miscellaneous</a>
-              </li>
-              <li><a href="http://iocast.github.io/category/server.html"><i class="fa fa-dot-circle-o"></i> server</a>
-              </li>
-              <li><a href="http://iocast.github.io/category/server-management.html"><i class="fa fa-dot-circle-o"></i> Server Management</a>
-              </li>
-              <li><a href="http://iocast.github.io/category/versioning.html"><i class="fa fa-dot-circle-o"></i> Versioning</a>
-              </li>
-              <li><a href="http://iocast.github.io/category/web-application.html"><i class="fa fa-dot-circle-o"></i> Web Application</a>
-              </li>
-            </ul>
-
-          </div>
-
-          <!-- Archives -->
-          <div class="widget">
-
-            <h3>Archives</h3>
-
-            <!-- hide this part -->
-            <div class="hidden">
-  None             </div>
-
-            <ul class="tree">
-              <li>
-                <span><i class="fa fa-minus-square-o"></i>2013</span>
-                <ul>
-                  <li>
-                    <span><i class="fa fa-plus-square-o"></i>10</span>
-                    <ul>
-                      <li style="display: none;">
-                        <a href="http://iocast.github.io/blog/2013/10/08-github-pages-with-jekyll-and-travis.html">
-                          <small>08/Oct/2013 Tue</small>Creating your own blog using github pages, jekyll and travis</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-
-          </div>
 
         </div>
         <!-- /SIDEBAR -->

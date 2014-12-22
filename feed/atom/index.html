@@ -29,9 +29,35 @@ rm -rf /media/arch
 &lt;p&gt;The default login is user &lt;code&gt;root&lt;/code&gt; with password &lt;code&gt;root&lt;/code&gt;.&lt;/p&gt;
 &lt;h1&gt;Configuration&lt;/h1&gt;
 &lt;p&gt;Now lets configure some basic stuff, like date and time, DHCP, etc.&lt;/p&gt;
-&lt;h2&gt;Clientid&lt;/h2&gt;
+&lt;h2&gt;Network&lt;/h2&gt;
+&lt;p&gt;Create the &lt;code&gt;/etc/systemd/network/eth0.network&lt;/code&gt; file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;for DHCP&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Match]&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;eth0&lt;/span&gt;
+
+&lt;span class="k"&gt;[Network]&lt;/span&gt;
+&lt;span class="na"&gt;DHCP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;both&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;for fixed IP&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Match]&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;eth0&lt;/span&gt;
+
+&lt;span class="k"&gt;[Network]&lt;/span&gt;
+&lt;span class="na"&gt;Address&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;10.0.1.2/24&lt;/span&gt;
+&lt;span class="na"&gt;Gateway&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;10.0.1.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Restart systemd-networkd. To do so, run this command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;systemctl restart systemd-networkd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Clientid&lt;/h3&gt;
 &lt;p&gt;If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in &lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361. 
+&lt;div class="highlight"&gt;&lt;pre&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
 duid
 &lt;/pre&gt;&lt;/div&gt;
 
