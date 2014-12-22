@@ -99,25 +99,33 @@
 
   <article class='content'>
     <p>The easiest way, at least for me, is to use the <code>likewise-open</code> package. You can find the official documentation <a href="https://help.ubuntu.com/community/LikewiseOpen">here</a>. Under Ubuntu you can simple install this package using <code>apt-get</code>.</p>
-<p><code>bash
-apt-get install likewise-open</code></p>
+<div class="highlight"><pre>apt-get install likewise-open
+</pre></div>
+
+
 <p>Once you have installed it, you can join a Active Directory (AD) as follow.</p>
-<p><code>bash
-domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;</code></p>
+<div class="highlight"><pre>domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;
+</pre></div>
+
+
 <p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
 <p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
 <h2 id="restricting-access-to-specific-groups">Restricting access to specific groups</h2>
 <p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
-<p><code>bash
-lwconfig RequireMembershipOf "&lt;server&gt;\\&lt;group-1&gt;" "&lt;erver&gt;\\&lt;group-2&gt;"
-lw-update-dns</code></p>
+<div class="highlight"><pre>lwconfig RequireMembershipOf <span class="s2">&quot;&lt;server&gt;\\&lt;group-1&gt;&quot;</span> <span class="s2">&quot;&lt;erver&gt;\\&lt;group-2&gt;&quot;</span>
+lw-update-dns
+</pre></div>
+
+
 <p>If you forget which groups have access to you server, you could check it by running the following command:</p>
-<p><code>bash
-lwconfig --detail RequireMembershipOf</code></p>
+<div class="highlight"><pre>lwconfig --detail RequireMembershipOf
+</pre></div>
+
+
 <h2 id="login">Login</h2>
 <p>Now you are able to login to your server using active directory authentication:</p>
-<p><code>bash
-ssh &lt;ad_domain&gt;\\&lt;user&gt;@&lt;server&gt;</code></p>
+<div class="highlight"><pre>ssh &lt;ad_domain&gt;<span class="se">\\</span>&lt;user&gt;@&lt;server&gt;
+</pre></div>
   </article>
 
     <h3>Related content</h3>
@@ -125,8 +133,8 @@ ssh &lt;ad_domain&gt;\\&lt;user&gt;@&lt;server&gt;</code></p>
     <ul>
         <li><a href="http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></li>
         <li><a href="http://iocast.github.io/blog/2013/10/12-qgis-server-on-centos-6.html">Setting up a QGIS server and PostGIS on CentOS 6</a></li>
-        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
         <li><a href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html">Javascript localization part 1</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
         <li><a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">My personal file server on a Cubox from SolidRun using Arch Linux</a></li>
       </ul>
   <div class="divider"><!-- lines divider --></div>

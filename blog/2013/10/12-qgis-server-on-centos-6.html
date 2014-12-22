@@ -103,107 +103,148 @@
 <p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
 <h3 id="configuration">Configuration</h3>
 <p>Configure yum repository</p>
-<pre><code>:::bash
-vi /etc/yum.repos.d/CentOS-Base.repo
-</code></pre>
+<div class="highlight"><pre>vi /etc/yum.repos.d/CentOS-Base.repo
+</pre></div>
+
+
 <p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
-<pre><code>:::yaml
-exclude=postgresql*
-</code></pre>
+<div class="highlight"><pre><span class="l-Scalar-Plain">exclude=postgresql*</span>
+</pre></div>
+
+
 <h3 id="install-pgdg-rpm-file">Install PGDG RPM file</h3>
 <p>A PGDG file is available for each distribution/architecture/database version combination at http://yum.postgresql.org </p>
-<pre><code>:::bash
-wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
-</code></pre>
+<div class="highlight"><pre>wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
+</pre></div>
+
+
 <p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
 <p>Install RPM distribution:</p>
-<pre><code>:::bash
-rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
-</code></pre>
+<div class="highlight"><pre>rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
+</pre></div>
+
+
 <h3 id="installation-of-postgresql-and-postgis">Installation of PostgreSQL and PostGIS</h3>
 <p>List the available packages:</p>
-<pre><code>:::bash
-yum list postgres*
-</code></pre>
+<div class="highlight"><pre>yum list postgres*
+</pre></div>
+
+
 <p>Installation:</p>
-<pre><code>:::bash
-yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
-</code></pre>
+<div class="highlight"><pre>yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+</pre></div>
+
+
 <h3 id="configuration_1">Configuration</h3>
 <p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
-<pre><code>:::bash
-service postgresql-9.3 initdb
+<div class="highlight"><pre>service postgresql-9.3 initdb
 service postgresql-9.3 start
 chkconfig postgresql-9.3 on
-</code></pre>
+</pre></div>
+
+
 <p>Some important files</p>
-<p>File / Application                       | Purpose
-:----------------------------------------|:------------------------------------
-/var/lib/pgsql/9.3/data/postgresql.conf  | changing host etc.
-/var/lib/pgsql/9.3/data/pg_hba.conf      | client authentication configuration</p>
+<table>
+<thead>
+<tr>
+<th align="left">File / Application</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
+<td align="left">changing host etc.</td>
+</tr>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
+<td align="left">client authentication configuration</td>
+</tr>
+</tbody>
+</table>
 <p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
-<pre><code>:::yaml
-# IPv4 local connections:
-#host    all             all             127.0.0.1/32            ident
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-#host    all             all             ::1/128                 ident
-host    all             all             ::1/128                 md5
-</code></pre>
+<div class="highlight"><pre><span class="c1"># IPv4 local connections:</span>
+<span class="c1">#host    all             all             127.0.0.1/32            ident</span>
+<span class="l-Scalar-Plain">host    all             all             127.0.0.1/32            md5</span>
+<span class="l-Scalar-Plain"># IPv6 local connections</span><span class="p-Indicator">:</span>
+<span class="c1">#host    all             all             ::1/128                 ident</span>
+<span class="l-Scalar-Plain">host    all             all             ::1/128                 md5</span>
+</pre></div>
+
+
 <h3 id="database-and-user">Database and User</h3>
 <p>Before we can start, we need to create a new database and user.</p>
 <p>Login as <code>postgres</code> superuser and create a new database</p>
-<pre><code>:::bash
-su -l postgres
+<div class="highlight"><pre>su -l postgres
 createdb gis
-</code></pre>
+</pre></div>
+
+
 <p>Login into the database create a user and set a encrypted password</p>
-<pre><code>:::bash
-psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD 'gis';
-ALTER USER gis WITH ENCRYPTED PASSWORD 'gis';
-</code></pre>
+<div class="highlight"><pre>psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
+ALTER USER gis WITH ENCRYPTED PASSWORD <span class="s1">&#39;gis&#39;</span><span class="p">;</span>
+</pre></div>
+
+
 <p>Now test your configuration and install PostGIS extension</p>
-<pre><code>:::bash
-psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
-</code></pre>
+<div class="highlight"><pre>psql -h localhost -d gis -U gis -W
+CREATE EXTENSION postgis<span class="p">;</span>
+</pre></div>
+
+
 <h2 id="installation-qgis">Installation QGIS</h2>
 <p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
-<p>{% highlight bash %}
+<p _="%" endhighlight="endhighlight">{% highlight bash %}
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-<version>.noarch.rpm
-rpm -Uvh epel-release-<version>.noarch.rpm
-{% endhighlight %}</p>
+rpm -Uvh epel-release-<version>.noarch.rpm</p>
 <p>where the version I have tested it was <code>6-8</code>.</p>
 <p>Add the ELGIS repositories</p>
-<pre><code>:::bash
-wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
+<div class="highlight"><pre>wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
 rpm -Uvh elgis-release-6-6_0.noarch.rpm
-</code></pre>
+</pre></div>
+
+
 <p>where the version I have tested it was <code>6-6_0</code>.</p>
 <p>Now install QGIS server:</p>
-<pre><code>:::bash
-yum install qgis-mapserver.x86_64
-</code></pre>
+<div class="highlight"><pre>yum install qgis-mapserver.x86_64
+</pre></div>
+
+
 <p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
-<pre><code>:::bash
-yum install qgis*
-</code></pre>
+<div class="highlight"><pre>yum install qgis*
+</pre></div>
+
+
 <p>The scripts and configs are installed on CentOS:</p>
-<p>Script / Config                       | Purpose
-:-------------------------------------|:----------------------------------------
-/usr/libexec/qgis/qgis_mapserv.fcgi   | main fast cgi script (OGC capabilities)
-/etc/httpd/conf.d/qgis-mapserver.conf | qgis mapserver httpd configuration file</p>
+<table>
+<thead>
+<tr>
+<th align="left">Script / Config</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
+<td align="left">main fast cgi script (OGC capabilities)</td>
+</tr>
+<tr>
+<td align="left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
+<td align="left">qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
   </article>
 
     <h3>Related content</h3>
     <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
         <li><a href="http://iocast.github.io/blog/2013/11/11-ubuntu-pgsql-posgis-and-plr.html">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</a></li>
-        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
         <li><a href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html">Javascript localization part 1</a></li>
-        <li><a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">My personal file server on a Cubox from SolidRun using Arch Linux</a></li>
+        <li><a href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html">Python 2.7.x and mod_wsgi on a CentOS 6</a></li>
         <li><a href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html">Joining a Active Directory on Linux - the easiest way!</a></li>
+        <li><a href="http://iocast.github.io/blog/2014/11/09-cubox-fileserver-archlinux.html">My personal file server on a Cubox from SolidRun using Arch Linux</a></li>
       </ul>
   <div class="divider"><!-- lines divider --></div>
 

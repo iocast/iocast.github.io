@@ -2,130 +2,189 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/web-application.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2014-07-21T00:00:00+02:00</updated><entry><title>Javascript localization part 1</title><link href="http://iocast.github.io/blog/2014/07/21-javascript-internationalization-part1.html" rel="alternate"></link><updated>2014-07-21T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2014-07-21:blog/2014/07/21-javascript-internationalization-part1.html</id><summary type="html">&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
 &lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
 &lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::javasript
-var dateobj= new Date() 
-dateobj.getDate() + "/" + dateobj.getMonth()+1 + "/" + dateobj.getFullYear()
+&lt;div class="highlight"&gt;&lt;pre&gt;var dateobj= new Date() 
+dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
 // 21/7/2014
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;or&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::javascript
-Date.locale = {
-    en: {
-        month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    }
-};
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;en&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;month_names&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;January&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;February&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;March&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;April&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;May&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;June&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;July&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;August&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;September&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;October&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;November&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;December&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="nx"&gt;month_names_short&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Jan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Feb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Mar&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Apr&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;May&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Jun&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Jul&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Aug&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Sep&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Oct&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Nov&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Dec&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
 
-Date.prototype.getMonthName = function(lang) {
-    lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : 'en';
-    return Date.locale[lang].month_names[this.getMonth()];
-};
-Date.prototype.getMonthNameShort = function(lang) {
-    lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : 'en';
-    return Date.locale[lang].month_names_short[this.getMonth()];
-};
+&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;month_names&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;()];&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthNameShort&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nx"&gt;lang&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;lang&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;month_names_short&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonth&lt;/span&gt;&lt;span class="p"&gt;()];&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
 
-// that can be used as follow:
-var now = new Date();
-now.getMonthNameShort + " " + now.getFullYear();
-// July 2014
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class="c1"&gt;// that can be used as follow:&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;now&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getMonthNameShort&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getFullYear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// July 2014&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.&lt;/p&gt;
 &lt;p&gt;The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.&lt;/p&gt;
 &lt;p&gt;For the &lt;code&gt;Date&lt;/code&gt; object now have these functions, whereas I personally prefer the &lt;code&gt;toLocaleString()&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Function                             | Purpose
-:------------------------------------|:----------------------------------------
-Date.prototype.toLocaleDateString()  | returns a string with a language sensitive representation of the date portion of this date.
-Date.prototype.toLocaleString()      | returns a string with a language sensitive representation of this date.
-Date.prototype.toLocaleTimeString()  | returns a string with a language sensitive representation of the time portion of this date.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="left"&gt;Function&lt;/th&gt;
+&lt;th align="left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Date.prototype.toLocaleDateString()&lt;/td&gt;
+&lt;td align="left"&gt;returns a string with a language sensitive representation of the date portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Date.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align="left"&gt;returns a string with a language sensitive representation of this date.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Date.prototype.toLocaleTimeString()&lt;/td&gt;
+&lt;td align="left"&gt;returns a string with a language sensitive representation of the time portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;p&gt;You can use it as follow&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::javascript
-var now = new Date()
-date.toLocaleString('en', { month: 'long', year: 'numeric' });
-// July 2014
-date.toLocaleString('en', { month: '2-digit', day: '2-digit', year: 'numberic' });
-// 21/07/2014
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;now&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;month&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;long&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;year&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;numeric&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="c1"&gt;// July 2014&lt;/span&gt;
+&lt;span class="nx"&gt;date&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;month&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2-digit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;day&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;2-digit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;year&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;numberic&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="c1"&gt;// 21/07/2014&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;where the first parameter is the &lt;code&gt;locale&lt;/code&gt; and the second parameter represents the &lt;code&gt;options&lt;/code&gt;. The allowed options can be found on the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"&gt;Mozilla Developer Network&lt;/a&gt;. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.&lt;/p&gt;
 &lt;p&gt;The same applies to the &lt;code&gt;Number&lt;/code&gt; object.&lt;/p&gt;
-&lt;p&gt;Function                             | Purpose
-:------------------------------------|:----------------------------------------
-Number.prototype.toLocaleString()    |  returns a string with a language sensitive representation of this number.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="left"&gt;Function&lt;/th&gt;
+&lt;th align="left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Number.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align="left"&gt;returns a string with a language sensitive representation of this number.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;p&gt;You can use it as follow&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::javascript
-var number = 3600;
-number.toLocaleString('en');
-// 3,600
-number.toLocaleString('de');
-// 3.600
-number.toLocaleString('en', {
-    style: 'currency',
-    currency: 'USD'
-});
-// $3,600
-&lt;/code&gt;&lt;/pre&gt;</summary><category term="centos"></category><category term="server"></category><category term="apache"></category><category term="httpd"></category><category term="python"></category></entry><entry><title>Python 2.7.x and mod_wsgi on a CentOS 6</title><link href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html" rel="alternate"></link><updated>2013-10-16T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-16:blog/2013/10/16-python-mod_wsgi-centos.html</id><summary type="html">&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-vi /etc/sysconfig/network-scripts/ifcfg-eth0&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3600&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// 3,600&lt;/span&gt;
+&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;de&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// 3.600&lt;/span&gt;
+&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toLocaleString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;currency&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nx"&gt;currency&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;USD&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="c1"&gt;// $3,600&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="server"></category><category term="apache"></category><category term="httpd"></category><category term="python"></category></entry><entry><title>Python 2.7.x and mod_wsgi on a CentOS 6</title><link href="http://iocast.github.io/blog/2013/10/16-python-mod_wsgi-centos.html" rel="alternate"></link><updated>2013-10-16T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-16:blog/2013/10/16-python-mod_wsgi-centos.html</id><summary type="html">&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
 &lt;h2 id="getting-python-27x"&gt;Getting Python 2.7.x&lt;/h2&gt;
 &lt;p&gt;The following explanations are based on a blog of &lt;a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk"&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7"&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-yum install gcc make zlib-devel bzip2-devel openssl-devel&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-cd /opt/
-wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Extract and install it:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-tar -zxvf Python-2.7.5.tgz
-cd Python-2.7.5
+&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf Python-2.7.5.tgz
+&lt;span class="nb"&gt;cd &lt;/span&gt;Python-2.7.5
 ./configure --enable-shared
-make &amp;amp;&amp;amp; make altinstall&lt;/code&gt;&lt;/p&gt;
+make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make altinstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-sh setuptools-0.6c11-py2.7.egg&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-yum install httpd httpd-devel&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum install httpd httpd-devel
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
 &lt;p&gt;Download and unpack the latest version&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
 tar -zxvf mod_wsgi-3.4.tar.gz
-cd mod_wsgi-3.4.tar.gz
-./configure --with-python=/usr/local/bin/python2.7&lt;/code&gt;&lt;/p&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;mod_wsgi-3.4.tar.gz
+./configure --with-python&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/bin/python2.7
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-whereis python&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;whereis python
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-make &amp;amp;&amp;amp; make install&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7...&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+&lt;div class="highlight"&gt;&lt;pre&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
 ln -s /usr/local/lib/libpython2.7.so /usr/
-ldconfig&lt;/code&gt;&lt;/p&gt;
+ldconfig
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
 tar -zxvf virtualenv-1.10.1.tar.gz
-cd virtualenv-1.10.1
-python2.7 setup.py install&lt;/code&gt;&lt;/p&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;virtualenv-1.10.1
+python2.7 setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;install psycopg2&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
 tar -zxvf psycopg2-2.5.1.tar.gz
-cd psycopg2-2.5.1
-vi setup.cfg&lt;/code&gt;&lt;/p&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;psycopg2-2.5.1
+vi setup.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;and add the following line&lt;/p&gt;
-&lt;p&gt;```
-pg_config=/usr/pgsql-9.3/bin/pg_config
-````&lt;/p&gt;
-&lt;p&gt;now install it&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-/usr/local/bin/python2.7 setup.py install&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
+````
+
+
+now install it
+
+```bash
+/usr/local/bin/python2.7 setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-virtualenv-2.7 --system-site-packages ENV&lt;/code&gt;&lt;/p&gt;</summary><category term="centos"></category><category term="server"></category><category term="apache"></category><category term="httpd"></category><category term="python"></category></entry></feed>
+&lt;div class="highlight"&gt;&lt;pre&gt;virtualenv-2.7 --system-site-packages ENV
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="server"></category><category term="apache"></category><category term="httpd"></category><category term="python"></category></entry></feed>

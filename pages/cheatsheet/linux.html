@@ -101,66 +101,103 @@
 		<article class='content'>
     		
 <h2 id="user-group-management">User &amp; Group Management</h2>
-<p>Purpose            | Command
--------------------|--------------------------------
-new group          | <code>groupadd sambashare</code>
-new user           | <code>useradd -m -g users -G sambashare -s /bin/bash unix_user</code>
-change password    | <code>passwd unix_user</code></p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new group</td>
+<td><code>groupadd sambashare</code></td>
+</tr>
+<tr>
+<td>new user</td>
+<td><code>useradd -m -g users -G sambashare -s /bin/bash unix_user</code></td>
+</tr>
+<tr>
+<td>change password</td>
+<td><code>passwd unix_user</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="samba-management">Samba Management</h2>
-<p>Purpose            | Command
--------------------|--------------------------------
-new user           | <code>pdbedit -a -u samba_user</code>
-change password    | <code>smbpasswd samba_user</code></p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new user</td>
+<td><code>pdbedit -a -u samba_user</code></td>
+</tr>
+<tr>
+<td>change password</td>
+<td><code>smbpasswd samba_user</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="file-and-directory-handling">File and Directory Handling</h2>
 <h3 id="find-remove">Find &amp; Remove</h3>
 <p>specific files</p>
-<pre><code>find &lt;path&gt; -name '&lt;file-name&gt;' -delete
-</code></pre>
+<div class="highlight"><pre>find &lt;path&gt; -name '&lt;file-name&gt;' -delete
+</pre></div>
 <p>If something ''more portable'' needed then you're better off with</p>
-<pre><code>find &lt;directory name&gt; -name '*.pyc' -exec rm {} \;
-</code></pre>
+<div class="highlight"><pre>find &lt;directory name&gt; -name '*.pyc' -exec rm {} \;
+</pre></div>
 <h3 id="file-manipulation">File Manipulation</h3>
 <p>search the line which begins with <code>var feature server</code> and replaces the whole line with <code>var featureserver = "http://featureserver.org/fs"</code></p>
-<pre><code>sed -e 's%^var featureserver.*%var featureserver = "http://featureserver.org/fs"%g' featureserver.org/assets/js/map.js &gt; ${tmp}/website/assets/js/map.js
-</code></pre>
+<div class="highlight"><pre>sed -e 's%^var featureserver.*%var featureserver = "http://featureserver.org/fs"%g' featureserver.org/assets/js/map.js &gt; <span class="cp">${</span><span class="n">tmp</span><span class="cp">}</span>/website/assets/js/map.js
+</pre></div>
 <p>template command is as follow, where the first character after <code>s</code> is used as separator and afterwards it comes a regex. Use <code>-i</code> to do an ''in place'' replacement (no need for pipe)</p>
-<pre><code>sed -ie 's/$search_for/$replace_with/g' $file
-</code></pre>
+<div class="highlight"><pre><span class="x">sed -ie 's/</span><span class="p">$</span><span class="nv">search_for</span><span class="x">/</span><span class="p">$</span><span class="nv">replace_with</span><span class="x">/g' </span><span class="p">$</span><span class="nv">file</span><span class="x"></span>
+</pre></div>
 <h3 id="folder-size">Folder size</h3>
-<ul>
-<li><code>-h</code> human readable file size</li>
-<li>
-<p><code>-s</code> sum all subfolders</p>
+<dl>
+<dt><code>-h</code></dt>
+<dd>
+<dl>
+<dt>human readable file size</dt>
+<dt><code>-s</code></dt>
+<dd>sum all subfolders</dd>
+</dl>
 <p>du <directory></directory></p>
-</li>
-</ul>
+</dd>
+</dl>
 <h3 id="compression">Compression</h3>
-<pre><code>tar -cvzf &lt;file.tar.bz2&gt; --exclude-vcs --exlude='*.svn' folder/
-</code></pre>
+<div class="highlight"><pre>tar -cvzf &lt;file.tar.bz2&gt; --exclude-vcs --exlude='*.svn' folder/
+</pre></div>
 <h3 id="extraction">Extraction</h3>
-<pre><code>tar -zxvf &lt;file.tar.bz2&gt;
-</code></pre>
+<div class="highlight"><pre>tar -zxvf &lt;file.tar.bz2&gt;
+</pre></div>
 <h3 id="synchronization">Synchronization</h3>
 <p>Synchronization</p>
-<pre><code>#! /bin/bash
-rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; &amp;
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#! /bin/bash</span>
+rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; <span class="p">&amp;</span>
+</pre></div>
+</td></tr></table>
 <h3 id="cloning">Cloning</h3>
 <p>burning image to disk (also usb drives)
 optional use <code>bs=8192</code></p>
-<pre><code>dd if=&lt;path&gt;.iso of=&lt;disk&gt;
-</code></pre>
+<div class="highlight"><pre>dd if=&lt;path&gt;.iso of=&lt;disk&gt;
+</pre></div>
 <h2 id="job-programs">Job / Programs</h2>
 <p>Keep job running despite of a logout</p>
-<pre><code>nohup &lt;command&gt; &amp;
-</code></pre>
+<div class="highlight"><pre>nohup &lt;command&gt; &amp;
+</pre></div>
 <h2 id="system-information">System information</h2>
-<pre><code>dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
-</code></pre>
+<div class="highlight"><pre>dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+</pre></div>
 <h3 id="packages">Packages</h3>
 <p>getting installed packages including version number</p>
-<pre><code>time dpkg -l | perl -lane 'print "$F[1] : $F[2]" if m/^ii/'
-</code></pre>
+<div class="highlight"><pre><span class="x">time dpkg -l | perl -lane 'print "</span><span class="p">$</span><span class="nv">F</span><span class="x">[1] : </span><span class="p">$</span><span class="nv">F</span><span class="x">[2]" if m/^ii/'</span>
+</pre></div>
   		</article>
 		
   		<hr /><!-- divider -->
@@ -193,8 +230,7 @@ optional use <code>bs=8192</code></p>
             <h3>Table of Content</h3>
 			
 			<nav class="toc">
-    
-    <div class="toc">
+	    	<div class="toc">
 <ul>
 <li><a href="#user-group-management">User &amp; Group Management</a></li>
 <li><a href="#samba-management">Samba Management</a></li>
@@ -215,8 +251,6 @@ optional use <code>bs=8192</code></p>
 </li>
 </ul>
 </div>
-    
-	
 			</nav>
 
           </div>

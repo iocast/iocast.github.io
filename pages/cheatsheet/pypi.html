@@ -102,30 +102,37 @@
     		
 <h2 id="comands">Comands</h2>
 <h3 id="registration">registration</h3>
-<pre><code>python setup.py register
-</code></pre>
+<div class="highlight"><pre>python setup.py register
+</pre></div>
 <h3 id="update">update</h3>
-<p><code>bdist</code>: create a built (binary) distribution<br/>
-<code>sdist</code>: create a source distribution (tarball, zip file, etc.)</p>
-<pre><code>python setup.py sdist upload
-</code></pre>
+<dl>
+<dt><code>bdist</code></dt>
+<dd>
+<dl>
+<dt>create a built (binary) distribution<br/></dt>
+<dt><code>sdist</code></dt>
+<dd>create a source distribution (tarball, zip file, etc.)</dd>
+</dl>
+<p>python setup.py sdist upload</p>
+</dd>
+</dl>
 <h3 id="configuration-file">configuration file</h3>
 <p>is called <code>.pypirc</code>, is located in your home direve <code>~</code> and has the following structure</p>
-<pre><code>[distutils]
-index-servers =
-    pypi
-    other
+<div class="highlight"><pre><span class="k">[distutils]</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pypi</span>
+<span class="s">    other</span>
 
-[pypi]
-    repository: &lt;repository-url&gt;
-    username: &lt;username&gt;
-    password: &lt;password&gt;
+<span class="k">[pypi]</span>
+    <span class="err">repository:</span> <span class="err">&lt;repository-url&gt;</span>
+    <span class="err">username:</span> <span class="err">&lt;username&gt;</span>
+    <span class="err">password:</span> <span class="err">&lt;password&gt;</span>
 
-[other]
-    repository: http://example.com/pypi
-    username: &lt;username&gt;
-    password: &lt;password&gt;
-</code></pre>
+<span class="k">[other]</span>
+    <span class="err">repository:</span> <span class="err">http://example.com/pypi</span>
+    <span class="err">username:</span> <span class="err">&lt;username&gt;</span>
+    <span class="err">password:</span> <span class="err">&lt;password&gt;</span>
+</pre></div>
   		</article>
 		
   		<hr /><!-- divider -->
@@ -158,8 +165,7 @@ index-servers =
             <h3>Table of Content</h3>
 			
 			<nav class="toc">
-    
-    <div class="toc">
+	    	<div class="toc">
 <ul>
 <li><a href="#comands">Comands</a><ul>
 <li><a href="#registration">registration</a></li>
@@ -169,8 +175,6 @@ index-servers =
 </li>
 </ul>
 </div>
-    
-	
 			</nav>
 
           </div>

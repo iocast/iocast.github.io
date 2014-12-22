@@ -102,119 +102,164 @@
     		
 <h2 id="basics">Basics</h2>
 <p>login as postgres use r</p>
-<pre><code>sudo su postgres -
-</code></pre>
+<div class="highlight"><pre>sudo su postgres -
+</pre></div>
 <p>run sql command</p>
-<pre><code>psql -U postgres -c "&lt;sql&gt;"
-</code></pre>
+<div class="highlight"><pre>psql -U postgres -c "&lt;sql&gt;"
+</pre></div>
 <h3 id="list">List</h3>
 <p>lists all databases</p>
-<pre><code>psql --list
-</code></pre>
+<div class="highlight"><pre>psql --list
+</pre></div>
 <h3 id="create">Create</h3>
 <p>create database</p>
-<p>: <code>-O</code> owner
-: <code>-U</code> username
-: <code>-E</code> encoding
-: <code>-e</code> echo
-: <code>--locale=&lt;locale&gt;</code> (This is equivalent to specifying both --lc-collate and --lc-ctype)
-: <code>--lc-collate='&lt;locale&gt;'</code>
-: <code>--lc-ctype='&lt;locale&gt;'</code>
-: <code>-T</code> template</p>
-<pre><code>createdb -U postgres &lt;database&gt;
-</code></pre>
+<dl>
+<dt><code>-O</code></dt>
+<dd>
+<dl>
+<dt>owner</dt>
+<dt><code>-U</code></dt>
+<dd>
+<dl>
+<dt>username</dt>
+<dt><code>-E</code></dt>
+<dd>
+<dl>
+<dt>encoding</dt>
+<dt><code>-e</code></dt>
+<dd>
+<dl>
+<dt>echo</dt>
+<dt><code>--locale=&lt;locale&gt;</code></dt>
+<dd>(This is equivalent to specifying both --lc-collate and --lc-ctype)</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dd>
+<p>--lc-collate='<locale>'`</locale></p>
+</dd>
+<dd>
+<p><code>--lc-ctype='&lt;locale&gt;'</code></p>
+</dd>
+<dd>
+<p><code>-T</code> template</p>
+<p>createdb -U postgres <database></database></p>
+</dd>
+</dl>
 <h3 id="drop">Drop</h3>
-<pre><code>dropdb -U &lt;user&gt; -h &lt;host&gt; -i -e &lt;database&gt;
-</code></pre>
+<div class="highlight"><pre>dropdb -U &lt;user&gt; -h &lt;host&gt; -i -e &lt;database&gt;
+</pre></div>
 <h3 id="log-into-database">Log into database</h3>
 <p><code>-W</code> to force password prompt</p>
-<pre><code>psql -U &lt;user&gt; -W -d &lt;database&gt;
-</code></pre>
+<div class="highlight"><pre>psql -U &lt;user&gt; -W -d &lt;database&gt;
+</pre></div>
 <h3 id="user">User</h3>
 <p>create user</p>
-<p>: <code>-D</code> (The new user will not be allowed to create databases.)
-: <code>-P</code> (If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.)
-: <code>-S</code> (The new user will not be a superuser.)
-: <code>-E</code> (Encrypts the user's password stored in the database. If not specified, the default password behavior is used.)</p>
-<pre><code>createuser -D -S -E -P &lt;name&gt;
-</code></pre>
+<dl>
+<dt><code>-D</code></dt>
+<dd>
+<dl>
+<dt>(The new user will not be allowed to create databases.)</dt>
+<dt><code>-P</code></dt>
+<dd>
+<dl>
+<dt>(If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.)</dt>
+<dt><code>-S</code></dt>
+<dd>
+<dl>
+<dt>(The new user will not be a superuser.)</dt>
+<dt><code>-E</code></dt>
+<dd>(Encrypts the user's password stored in the database. If not specified, the default password behavior is used.)</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>createuser -D -S -E -P <name></name></p>
+</dd>
+</dl>
 <h3 id="export-to-file">Export To File</h3>
 <p><code>\h copy</code> tells you what are the parameters for export</p>
-<pre><code>COPY (&lt;sql&gt;) TO '&lt;file&gt;' CSV
-</code></pre>
+<div class="highlight"><pre>COPY (&lt;sql&gt;) TO '&lt;file&gt;' CSV
+</pre></div>
 <h2 id="commands">Commands</h2>
 <p>load environment</p>
-<pre><code>psql
-</code></pre>
+<div class="highlight"><pre>psql
+</pre></div>
 <p>list all users</p>
-<pre><code>\dg
-</code></pre>
+<div class="highlight"><pre>\dg
+</pre></div>
 <p>list all databases</p>
-<pre><code>\list
-</code></pre>
+<div class="highlight"><pre>\list
+</pre></div>
 <p>list all tables</p>
-<pre><code>\dp
-</code></pre>
+<div class="highlight"><pre>\dp
+</pre></div>
 <p>table schema</p>
-<pre><code>\d &lt;table&gt;
-</code></pre>
+<div class="highlight"><pre>\d &lt;table&gt;
+</pre></div>
 <p>cancel/go out</p>
-<pre><code>CTRL+D
-</code></pre>
+<div class="highlight"><pre>CTRL+D
+</pre></div>
 <h2 id="extensions">Extensions</h2>
 <p>Connect to the PostgreSQL server</p>
-<pre><code>psql -h localhost
-</code></pre>
+<div class="highlight"><pre>psql -h localhost
+</pre></div>
 <p>create a database</p>
-<pre><code>CREATE DATABASE mydatabase;
-</code></pre>
+<div class="highlight"><pre>CREATE DATABASE mydatabase;
+</pre></div>
 <p>and connect to it</p>
-<pre><code>\c mydatabase
-</code></pre>
+<div class="highlight"><pre>\c mydatabase
+</pre></div>
 <h3 id="hstore">Hstore</h3>
 <p>creates / loads hstore extension for the current database</p>
-<pre><code>CREATE EXTENSION hstore;
-</code></pre>
+<div class="highlight"><pre>CREATE EXTENSION hstore;
+</pre></div>
 <h3 id="postgis">PostGIS</h3>
 <p>creates / load postgis extension for the current database</p>
-<pre><code>CREATE EXTENSION postgis;
-</code></pre>
+<div class="highlight"><pre>CREATE EXTENSION postgis;
+</pre></div>
 <h2 id="sql">SQL</h2>
 <p>grant access</p>
-<pre><code>ALTER DATABASE &lt;name&gt; OWNER TO &lt;user&gt;
-</code></pre>
+<div class="highlight"><pre>ALTER DATABASE &lt;name&gt; OWNER TO &lt;user&gt;
+</pre></div>
 <h2 id="issues">Issues</h2>
 <h3 id="full-disk">Full Disk</h3>
 <p>Locate the directory which uses that much space on the disk. On a standard installation it is somewhere in the <code>/var/lib/</code> directory. If found the PostgreSQL data directory (here as example <code>/var/lib/pgsql</code> run the following command to find out which directory needs how much space on the disk</p>
-<pre><code>du -h
-</code></pre>
+<div class="highlight"><pre>du -h
+</pre></div>
 <p>First stop PostgreSQL</p>
-<pre><code>/etc/init.d/postgresql stop
-</code></pre>
+<div class="highlight"><pre>/etc/init.d/postgresql stop
+</pre></div>
 <p>Then move a "big" directory to a partition/disk that has space free.</p>
-<pre><code>mv /var/lib/pgsql/main/ /media/tmp/
-</code></pre>
+<div class="highlight"><pre>mv /var/lib/pgsql/main/ /media/tmp/
+</pre></div>
 <p>Now create a symlink to this directory</p>
-<pre><code>ln -s /medai/tmp/main /var/lib/pgsql/main
-</code></pre>
+<div class="highlight"><pre>ln -s /medai/tmp/main /var/lib/pgsql/main
+</pre></div>
 <p>Start PostgreSQL</p>
-<pre><code>/etc/init.d/postgresql start
-</code></pre>
+<div class="highlight"><pre>/etc/init.d/postgresql start
+</pre></div>
 <p>and VACUUM FULL</p>
-<pre><code>psql -c "VACUUM FULL"
-</code></pre>
+<div class="highlight"><pre>psql -c "VACUUM FULL"
+</pre></div>
 <p>Shutdown the database.</p>
-<pre><code>/etc/init.d/postgresql stop
-</code></pre>
+<div class="highlight"><pre>/etc/init.d/postgresql stop
+</pre></div>
 <p>Remove the symbolic link</p>
-<pre><code>unlink /var/lib/pgsql/main
-</code></pre>
+<div class="highlight"><pre>unlink /var/lib/pgsql/main
+</pre></div>
 <p>and move the files back onto the <code>/var/lib/pgsql</code> filesystem again</p>
-<pre><code>mv /media/tmp/main/ /var/lib/pgsql/
-</code></pre>
+<div class="highlight"><pre>mv /media/tmp/main/ /var/lib/pgsql/
+</pre></div>
 <p>Now you are finished. Start the database.</p>
-<pre><code>/etc/init.d/postgresql start
-</code></pre>
+<div class="highlight"><pre>/etc/init.d/postgresql start
+</pre></div>
   		</article>
 		
   		<hr /><!-- divider -->
@@ -247,8 +292,7 @@
             <h3>Table of Content</h3>
 			
 			<nav class="toc">
-    
-    <div class="toc">
+	    	<div class="toc">
 <ul>
 <li><a href="#basics">Basics</a><ul>
 <li><a href="#list">List</a></li>
@@ -272,8 +316,6 @@
 </li>
 </ul>
 </div>
-    
-	
 			</nav>
 
           </div>

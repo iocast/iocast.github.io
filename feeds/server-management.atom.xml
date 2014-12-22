@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>iocast</title><link href="http://iocast.github.io/" rel="alternate"></link><link href="http://iocast.github.io/feeds/server-management.atom.xml" rel="self"></link><id>http://iocast.github.io/</id><updated>2013-11-30T00:00:00+01:00</updated><entry><title>Joining a Active Directory on Linux - the easiest way!</title><link href="http://iocast.github.io/blog/2013/11/30-ad-on-linux-the-easiest-way.html" rel="alternate"></link><updated>2013-11-30T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-11-30:blog/2013/11/30-ad-on-linux-the-easiest-way.html</id><summary type="html">&lt;p&gt;The easiest way, at least for me, is to use the &lt;code&gt;likewise-open&lt;/code&gt; package. You can find the official documentation &lt;a href="https://help.ubuntu.com/community/LikewiseOpen"&gt;here&lt;/a&gt;. Under Ubuntu you can simple install this package using &lt;code&gt;apt-get&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-apt-get install likewise-open&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-get install likewise-open
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Once you have installed it, you can join a Active Directory (AD) as follow.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.&lt;/p&gt;
 &lt;p&gt;Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under &lt;code&gt;/home/likewise-open&lt;/code&gt; and then a subfolder named as his username.&lt;/p&gt;
 &lt;h2 id="restricting-access-to-specific-groups"&gt;Restricting access to specific groups&lt;/h2&gt;
 &lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-lwconfig RequireMembershipOf "&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;" "&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;"
-lw-update-dns&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lwconfig RequireMembershipOf &lt;span class="s2"&gt;&amp;quot;&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;&amp;quot;&lt;/span&gt;
+lw-update-dns
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;If you forget which groups have access to you server, you could check it by running the following command:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-lwconfig --detail RequireMembershipOf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lwconfig --detail RequireMembershipOf
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2 id="login"&gt;Login&lt;/h2&gt;
 &lt;p&gt;Now you are able to login to your server using active directory authentication:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bash
-ssh &amp;lt;ad_domain&amp;gt;\\&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;&lt;/code&gt;&lt;/p&gt;</summary><category term="active directory"></category><category term="likewise-open"></category><category term="ubuntu"></category><category term="server"></category></entry><entry><title>Mac OS X file server migration</title><link href="http://iocast.github.io/blog/2013/10/09-osx-file-server-migration.html" rel="alternate"></link><updated>2013-10-09T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-09:blog/2013/10/09-osx-file-server-migration.html</id><summary type="html">&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh &amp;lt;ad_domain&amp;gt;&lt;span class="se"&gt;\\&lt;/span&gt;&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="active directory"></category><category term="likewise-open"></category><category term="ubuntu"></category><category term="server"></category></entry><entry><title>Mac OS X file server migration</title><link href="http://iocast.github.io/blog/2013/10/09-osx-file-server-migration.html" rel="alternate"></link><updated>2013-10-09T00:00:00+02:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2013-10-09:blog/2013/10/09-osx-file-server-migration.html</id><summary type="html">&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
 &lt;p&gt;So to solve these problems and many more I created a little bash script which is able to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;sync files from a remote server using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
