@@ -5,14 +5,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://iocast.github.io/index.html</loc>
-<lastmod>2014-12-22T16:03:03-00:00</lastmod>
+<lastmod>2014-12-23T08:21:27-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://iocast.github.io/categories.html</loc>
-<lastmod>2014-12-22T16:03:03-00:00</lastmod>
+<lastmod>2014-12-23T08:21:27-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -55,6 +55,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://iocast.github.io/pages/cheatsheet/sap_transactions.html</loc>
 <lastmod>2014-12-22T11:41:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://iocast.github.io/pages/cheatsheet/sphinx.html</loc>
+<lastmod>2014-12-22T08:54:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -137,6 +144,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://iocast.github.io/blog/2011/12/03-tunelling-over-an-intermediat.html</loc>
+<lastmod>2011-12-03T00:00:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://iocast.github.io/category/gis.html</loc>
 <lastmod>2013-11-11T00:00:00+00:30</lastmod>
 <changefreq>daily</changefreq>
@@ -214,6 +228,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://iocast.github.io/tag/linux.html</loc>
+<lastmod>2011-12-03T00:00:00+00:30</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://iocast.github.io/tag/server.html</loc>
 <lastmod>2014-11-09T00:00:00+00:30</lastmod>
 <changefreq>daily</changefreq>
@@ -237,6 +258,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://iocast.github.io/tag/samba.html</loc>
 <lastmod>2014-11-09T00:00:00+00:30</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://iocast.github.io/tag/networking.html</loc>
+<lastmod>2011-12-03T00:00:00+00:30</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -286,6 +314,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://iocast.github.io/tag/libgdal.html</loc>
 <lastmod>2013-11-11T00:00:00+00:30</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://iocast.github.io/tag/ssh.html</loc>
+<lastmod>2011-12-03T00:00:00+00:30</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

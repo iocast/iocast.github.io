@@ -89,22 +89,38 @@
         <div id="blog_main_area" class="left col-md-9" count=10>
 	
 		<header>
-			<h1>Oracle VirtualBox</h1>
+			<h1>Sphinx</h1>
 			<small class="fsize13">
-      			<a href="http://iocast.github.io/pages/cheatsheet/virtualbox.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pages/cheatsheet/virtualbox.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      			<span class="label label-default light">22/Dec/2014 Mon</span> 
+      			<a href="http://iocast.github.io/pages/cheatsheet/sphinx.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pages/cheatsheet/sphinx.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      			<span class="label label-default light">23/Dec/2014 Tue</span> 
    			</small>
 
 		</header>
 		
 		
 		<article class='content'>
-    		
-<h2 id="virtualbox-management">VirtualBox Management</h2>
-<p>This section describes to to use <code>VBoxManage</code></p>
-<p><strong> resizing your virtual disk</strong></p>
-<div class="highlight"><pre>'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' modifyhd '.\Windows.vdi' --resize 40000
+    		<h2 id="errors">Errors</h2>
+<h3 id="valueerror-unknown-locale-utf-8">ValueError: unknown locale: UTF-8</h3>
+<p>If you try to build your documentation (<code>sphinx-build -b html -a . _build/</code>) and get the following error</p>
+<div class="highlight"><pre>...
+  File <span class="s2">&quot;.../virtualenv/publishing/lib/python2.7/locale.py&quot;</span>, line 443, in _parse_localename
+    raise ValueError, <span class="s1">&#39;unknown locale: %s&#39;</span> % localename
+ValueError: unknown locale: UTF-8
 </pre></div>
+
+
+<p>then try the following. Add the the below lines to your <code>$HOME/.bash_profile</code></p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</pre></div>
+
+
+<p>Do</p>
+<div class="highlight"><pre><span class="nb">source</span> <span class="nv">$HOME</span>/.bash_profile
+</pre></div>
+
+
+<p>and try it again. Or simply export the <strong>locale</strong> settings before running the <code>sphinx-build</code>.</p>
   		</article>
 		
   		<hr /><!-- divider -->
@@ -113,9 +129,9 @@
       		<div id="disqus_thread"></div>
      			<script type="text/javascript">
         			var disqus_shortname = 'iocast';
-        			var disqus_identifier = "pages/cheatsheet/virtualbox.html";
-       				var disqus_title = "Oracle VirtualBox";
-        			var disqus_url = "http://iocast.github.io/pages/cheatsheet/virtualbox.html";
+        			var disqus_identifier = "pages/cheatsheet/sphinx.html";
+       				var disqus_title = "Sphinx";
+        			var disqus_url = "http://iocast.github.io/pages/cheatsheet/sphinx.html";
         			(function() {
           				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -137,11 +153,6 @@
             <h3>Table of Content</h3>
 			
 			<nav class="toc">
-	    	<div class="toc">
-<ul>
-<li><a href="#virtualbox-management">VirtualBox Management</a></li>
-</ul>
-</div>
 			</nav>
 
           </div>

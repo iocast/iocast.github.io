@@ -108,4 +108,71 @@ travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; &lt;span class
 
 &lt;p&gt;and add the following lines to the end of the &lt;code&gt;.travis.yml&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;after_success&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;./update-gh-pages.sh&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="github"></category><category term="jekyll"></category><category term="travis"></category><category term="bash"></category><category term="continuous integration"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="github"></category><category term="jekyll"></category><category term="travis"></category><category term="bash"></category><category term="continuous integration"></category></entry><entry><title>Tunneling over an intermediate to overcome demilitarized zone</title><link href="http://iocast.github.io/blog/2011/12/03-tunelling-over-an-intermediat.html" rel="alternate"></link><updated>2011-12-03T00:00:00+01:00</updated><author><name>iocast</name></author><id>tag:iocast.github.io,2011-12-03:blog/2011/12/03-tunelling-over-an-intermediat.html</id><summary type="html">&lt;p&gt;Source code: &lt;a href="resources/code/shell/tunneling.sh"&gt;shell script&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22. Last but not least, every time a server restarts we want that the tunnels automatically opens, means that we need to have an {{{cron}}} job that checks, whether an open connection exists from the server to the intermediary or not, and if the server opens a connection to the intermediary the system does not need to prompt for password. Solution is here to register the public key of the server on the intermediary.&lt;/p&gt;
+&lt;h2 id="client"&gt;Client&lt;/h2&gt;
+&lt;h3 id="opening-a-tunnel-from-client-to-intermediary"&gt;Opening a tunnel from client to intermediary&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh -L 22000:127.0.0.1:22000 -N root@152.96.56.32
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="connecting-to-server"&gt;Connecting to server&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh -P &lt;span class="m"&gt;22000&lt;/span&gt; michel@127.0.0.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="copy-files-scp"&gt;Copy files (SCP)&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#get&lt;/span&gt;
+scp -P &lt;span class="m"&gt;22000&lt;/span&gt; michel@127.0.0.1:/home/michel/tunelling.sh /Users/michel/Public/Drop&lt;span class="se"&gt;\ &lt;/span&gt;Box/
+
+&lt;span class="c"&gt;#put&lt;/span&gt;
+scp /Users/michel/Public/Drop&lt;span class="se"&gt;\ &lt;/span&gt;Box/tunelling.sh -P &lt;span class="m"&gt;22000&lt;/span&gt; michel@127.0.0.1:/home/michel/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="intermediary"&gt;Intermediary&lt;/h2&gt;
+&lt;h3 id="register-gpg-key-from-server"&gt;Register GPG key from server&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-key add &amp;lt;file&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="server"&gt;Server&lt;/h2&gt;
+&lt;h3 id="export-gpg-key"&gt;Export GPG key&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;apt-key &lt;span class="nb"&gt;export&lt;/span&gt; &amp;lt;key&amp;gt; &amp;gt; &amp;lt;file&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="open-a-connection-to-intermediary-from-server"&gt;Open a connection to intermediary from server&lt;/h3&gt;
+&lt;p&gt;Save the following script as e.g. tunneling.sh&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+
+&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -R 22000:127.0.0.1:22 -N root@152.96.56.32&amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;match&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ps -aef &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -v grep&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -z &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;match&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="nv"&gt;$cmd&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="register-cron-job"&gt;Register cron job&lt;/h3&gt;
+&lt;p&gt;Edit crontab&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;crontab -e
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Adding a new job to the crontab. The following entry executes the defined script &lt;code&gt;tunneling.sh&lt;/code&gt; every 5 minutes.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="m"&gt;5&lt;/span&gt; * * * * /&amp;lt;path&amp;gt;/tunnelilng.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Crontab is structured as follow:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;* * * * * &lt;span class="nb"&gt;command &lt;/span&gt;to be executed
+- - - - -
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ----- Day of week &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; - 7&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;Sunday&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; or 7&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ------- Month &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; - 12&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; --------- Day of month &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; - 31&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; ----------- Hour &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; - 23&lt;span class="o"&gt;)&lt;/span&gt;
+------------- Minute &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; - 59&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="bash"></category><category term="networking"></category><category term="ssh"></category></entry></feed>
