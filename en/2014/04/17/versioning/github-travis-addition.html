@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+			<meta charset="utf-8" />
+	
+  <title>GitHub Pages for a repository compiling using Travis CI | iocast&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+	
+		<link rel="icon" href="/favicon.png">
+	
+
+
+	<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.mixitup.min.js" type="text/javascript"></script>
+<script src="/js/stickyfill.js" type="text/javascript"></script>
+
+	<!--CDN links for the latest TweenLite, CSSPlugin, and EasePack-->
+	<script src="http://www.greensock.com/js/src/utils/SplitText.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
+
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+
+
+	
+		<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+		<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+		
+		<link rel="stylesheet" href="/css/post.css" type="text/css">
+		<script src="/js/post.js" type="text/javascript"></script>
+	
+
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+	</head>
+	<body>
+		
+<div class="wrapper cf">
+	<div class="content article-entry">
+		<header>
+			<h1>GitHub Pages for a repository compiling using Travis CI</h1>
+		</header>
+		<small>
+			
+				<a href="http://localhost:4000/categories/Versioning/" rel="tag tooltip" class="label light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> Versioning</a>
+			
+      <a href="http://localhost:4000/en/2014/04/17/versioning/github-travis-addition.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2014/07/21-javascript-internationalization-part1.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">21/Jul/2014 Mon</span>
+    </small>
+
+		<p>First of all check if you have already a <strong>personal access token</strong>.</p>
+<p><img src="/assets/blog/github_personal_access_tokens.png" alt="GitHub personal access tokens" title="GitHub personal access tokens"></p>
+<p>If not, you can follow these <a href="/!--￼1--">instructions</a></p>
+<p>On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.</p>
+<p><img src="/assets/blog/travis_grant_repository_access.png" alt="Travis grant access to GitHub repository" title="Travis grant access to GitHub repository"></p>
+<p>The next thing is to generate a new secure string for your <code>.travis.yml</code> file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations</span><br></pre></td></tr></table></figure>
+<p>You should get a JSON response which looks like this</p>
+<pre><code>:::json
+...
+{
+    &quot;id&quot;: 1234567,
+    &quot;url&quot;: &quot;https://api.github.com/authorizations/1234567&quot;,
+    &quot;app&quot;: {
+        &quot;name&quot;: &quot;travis: token for pushing from travis (API)&quot;,
+        &quot;url&quot;: &quot;http://developer.github.com/v3/oauth_authorizations/&quot;,
+        &quot;client_id&quot;: &quot;00000000000000000000&quot;
+        },
+    &quot;token&quot;: &quot;1abc234d56efghi789&quot;,
+    &quot;note&quot;: &quot;travis: token for pushing from travis&quot;,
+    &quot;note_url&quot;: null,
+    &quot;created_at&quot;: &quot;2014-01-01T12:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2014-01-01T12:00:00Z&quot;,
+    &quot;scopes&quot;: [
+        &quot;public_repo&quot;
+    ]
+},
+...
+</code></pre><p>So we are ready to generate the secure string for Travis. Be sure that you have installed <code>travis</code> rubygem using the following command <code>gem install travis</code>. Open a terminal and go to the folder where <code>.travis.yml</code> lays and add the secure string to it</p>
+<pre><code>:::bash
+cd /path/to/the/.travsi.yml/file
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global
+</code></pre><p>That’s all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.</p>
+
+	</div>
+	<div id="sidebar" class="sidebar">
+		<h3>Table of Content</h3>
+		<nav class="toc">
+			
+		</nav>
+	</div>
+</div>
+
+	</body>
+</html>

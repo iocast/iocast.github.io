@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+			<meta charset="utf-8" />
+	
+  <title>Joining a Active Directory on Linux - the easiest way! | iocast&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+	
+		<link rel="icon" href="/favicon.png">
+	
+
+
+	<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.mixitup.min.js" type="text/javascript"></script>
+<script src="/js/stickyfill.js" type="text/javascript"></script>
+
+	<!--CDN links for the latest TweenLite, CSSPlugin, and EasePack-->
+	<script src="http://www.greensock.com/js/src/utils/SplitText.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
+
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+
+
+	
+		<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+		<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+		
+		<link rel="stylesheet" href="/css/post.css" type="text/css">
+		<script src="/js/post.js" type="text/javascript"></script>
+	
+
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+	</head>
+	<body>
+		
+<div class="wrapper cf">
+	<div class="content article-entry">
+		<header>
+			<h1>Joining a Active Directory on Linux - the easiest way!</h1>
+		</header>
+		<small>
+			
+				<a href="http://localhost:4000/categories/Server-Management/" rel="tag tooltip" class="label light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> Server Management</a>
+			
+      <a href="http://localhost:4000/en/2013/11/30/server-management/linux-join-ad.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="blog/2014/07/21-javascript-internationalization-part1.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">21/Jul/2014 Mon</span>
+    </small>
+
+		<p>The easiest way, at least for me, is to use the <code>likewise-open</code> package. You can find the official documentation <a href="https://help.ubuntu.com/community/LikewiseOpen">here</a>. Under Ubuntu you can simple install this package using <code>apt-get</code>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install likewise-open</span><br></pre></td></tr></table></figure>
+<p>Once you have installed it, you can join a Active Directory (AD) as follow.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;</span><br></pre></td></tr></table></figure>
+<p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
+<p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
+<h2 id="Restricting_access_to_specific_groups"><a href="#Restricting_access_to_specific_groups" class="headerlink" title="Restricting access to specific groups"></a>Restricting access to specific groups</h2><p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lwconfig RequireMembershipOf <span class="string">"&lt;server&gt;\\&lt;group-1&gt;"</span> <span class="string">"&lt;erver&gt;\\&lt;group-2&gt;"</span></span><br><span class="line">lw-update-dns</span><br></pre></td></tr></table></figure>
+<p>If you forget which groups have access to you server, you could check it by running the following command:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lwconfig --detail RequireMembershipOf</span><br></pre></td></tr></table></figure>
+<h2 id="Login"><a href="#Login" class="headerlink" title="Login"></a>Login</h2><p>Now you are able to login to your server using active directory authentication:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh &lt;ad_domain&gt;\\&lt;user&gt;@&lt;server&gt;</span><br></pre></td></tr></table></figure>
+
+	</div>
+	<div id="sidebar" class="sidebar">
+		<h3>Table of Content</h3>
+		<nav class="toc">
+			<ol class="toc-item"><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Restricting_access_to_specific_groups"><span class="toc-item-text">Restricting access to specific groups</span></a></li><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Login"><span class="toc-item-text">Login</span></a></li></ol>
+		</nav>
+	</div>
+</div>
+
+	</body>
+</html>
