@@ -1,0 +1,26 @@
+/*****************
+for colors:
+http://www.paletton.com/#uid=72V0s0kllllaFw0g0qFqFg0w0aF
+*/
+/* Main Primary color */
+/* Main Secondary color (1) */
+/* Main Secondary color (2) */
+/* Main Complement color */
+.home {
+  background-color: #2a7e43;
+}
+.projects {
+  background-color: #aa7039;
+}
+.semantic-web-library {
+  background-color: #aa4839;
+}
+.cheatsheets {
+  background-color: #2a7e43;
+}
+.blog {
+  background-color: #255e69;
+}
+.blog-item {
+  background-color: #255e69;
+}
