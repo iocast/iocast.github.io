@@ -117,24 +117,18 @@ psql gis
 CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &apos;gis&apos;;
 ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
 </code></pre><p>Now test your configuration and install PostGIS extension</p>
-<pre><code>:::bash
-psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
-</code></pre><h2 id="Installation_QGIS"><a href="#Installation_QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">psql -h localhost <span class="operator">-d</span> gis -U gis -W</span><br><span class="line">CREATE EXTENSION postgis;</span><br></pre></td></tr></table></figure>
+<h2 id="Installation_QGIS"><a href="#Installation_QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://dl.fedoraproject.org/pub/epel/<span class="number">6</span>/x86_64/epel-release-&lt;version&gt;.noarch.rpm</span><br><span class="line">rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm</span><br></pre></td></tr></table></figure>
 <p>where the version I have tested it was <code>6-8</code>.</p>
 <p>Add the ELGIS repositories</p>
-<pre><code>:::bash
-wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
-rpm -Uvh elgis-release-6-6_0.noarch.rpm
-</code></pre><p>where the version I have tested it was <code>6-6_0</code>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://elgis.argeo.org/repos/<span class="number">6</span>/elgis-release-&lt;version&gt;.noarch.rpm</span><br><span class="line">rpm -Uvh elgis-release-<span class="number">6</span>-<span class="number">6</span>_0.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
 <p>Now install QGIS server:</p>
-<pre><code>:::bash
-yum install qgis-mapserver.x86_64
-</code></pre><p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
-<pre><code>:::bash
-yum install qgis*
-</code></pre><p>The scripts and configs are installed on CentOS:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install qgis-mapserver.x86_64</span><br></pre></td></tr></table></figure>
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install qgis*</span><br></pre></td></tr></table></figure>
+<p>The scripts and configs are installed on CentOS:</p>
 <table>
 <thead>
 <tr>
