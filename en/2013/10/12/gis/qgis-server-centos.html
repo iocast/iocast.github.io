@@ -56,17 +56,17 @@
     </small>
 
 		<p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
-<h2 id="PostgreSQL_and_PostGIS"><a href="#PostgreSQL_and_PostGIS" class="headerlink" title="PostgreSQL and PostGIS"></a>PostgreSQL and PostGIS</h2><p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
+<h2 id="PostgreSQL-and-PostGIS"><a href="#PostgreSQL-and-PostGIS" class="headerlink" title="PostgreSQL and PostGIS"></a>PostgreSQL and PostGIS</h2><p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
 <h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Configure yum repository</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
 <p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">exclude=postgresql*</span><br></pre></td></tr></table></figure>
-<h3 id="Install_PGDG_RPM_file"><a href="#Install_PGDG_RPM_file" class="headerlink" title="Install PGDG RPM file"></a>Install PGDG RPM file</h3><p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org">http://yum.postgresql.org</a></p>
+<h3 id="Install-PGDG-RPM-file"><a href="#Install-PGDG-RPM-file" class="headerlink" title="Install PGDG RPM file"></a>Install PGDG RPM file</h3><p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org">http://yum.postgresql.org</a></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm</span><br></pre></td></tr></table></figure>
 <p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
 <p>Install RPM distribution:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -ivh pgdg-centos93-<span class="number">9.3</span>-<span class="number">1</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
-<h3 id="Installation_of_PostgreSQL_and_PostGIS"><a href="#Installation_of_PostgreSQL_and_PostGIS" class="headerlink" title="Installation of PostgreSQL and PostGIS"></a>Installation of PostgreSQL and PostGIS</h3><p>List the available packages:</p>
+<h3 id="Installation-of-PostgreSQL-and-PostGIS"><a href="#Installation-of-PostgreSQL-and-PostGIS" class="headerlink" title="Installation of PostgreSQL and PostGIS"></a>Installation of PostgreSQL and PostGIS</h3><p>List the available packages:</p>
 <pre><code>:::bash
 yum list postgres*
 </code></pre><p>Installation:</p>
@@ -104,7 +104,7 @@ host    all             all             127.0.0.1/32            md5
 # IPv6 local connections:
 #host    all             all             ::1/128                 ident
 host    all             all             ::1/128                 md5
-</code></pre><h3 id="Database_and_User"><a href="#Database_and_User" class="headerlink" title="Database and User"></a>Database and User</h3><p>Before we can start, we need to create a new database and user.</p>
+</code></pre><h3 id="Database-and-User"><a href="#Database-and-User" class="headerlink" title="Database and User"></a>Database and User</h3><p>Before we can start, we need to create a new database and user.</p>
 <p>Login as <code>postgres</code> superuser and create a new database</p>
 <pre><code>:::bash
 su -l postgres
@@ -116,7 +116,7 @@ CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &apos;gis&apos;;
 ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
 </code></pre><p>Now test your configuration and install PostGIS extension</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">psql -h localhost <span class="operator">-d</span> gis -U gis -W</span><br><span class="line">CREATE EXTENSION postgis;</span><br></pre></td></tr></table></figure>
-<h2 id="Installation_QGIS"><a href="#Installation_QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+<h2 id="Installation-QGIS"><a href="#Installation-QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://dl.fedoraproject.org/pub/epel/<span class="number">6</span>/x86_64/epel-release-&lt;version&gt;.noarch.rpm</span><br><span class="line">rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm</span><br></pre></td></tr></table></figure>
 <p>where the version I have tested it was <code>6-8</code>.</p>
 <p>Add the ELGIS repositories</p>
@@ -177,7 +177,7 @@ ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
 	<div id="sidebar" class="sidebar">
 		<h3>Table of Content</h3>
 		<nav class="toc">
-			<ol class="toc-item"><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#PostgreSQL_and_PostGIS"><span class="toc-item-text">PostgreSQL and PostGIS</span></a><ol class="toc-item-child"><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Configuration"><span class="toc-item-text">Configuration</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Install_PGDG_RPM_file"><span class="toc-item-text">Install PGDG RPM file</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Installation_of_PostgreSQL_and_PostGIS"><span class="toc-item-text">Installation of PostgreSQL and PostGIS</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Configuration-1"><span class="toc-item-text">Configuration</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Database_and_User"><span class="toc-item-text">Database and User</span></a></li></ol></li><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Installation_QGIS"><span class="toc-item-text">Installation QGIS</span></a></li></ol>
+			<ol class="toc-item"><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#PostgreSQL-and-PostGIS"><span class="toc-item-text">PostgreSQL and PostGIS</span></a><ol class="toc-item-child"><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Configuration"><span class="toc-item-text">Configuration</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Install-PGDG-RPM-file"><span class="toc-item-text">Install PGDG RPM file</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Installation-of-PostgreSQL-and-PostGIS"><span class="toc-item-text">Installation of PostgreSQL and PostGIS</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Configuration-1"><span class="toc-item-text">Configuration</span></a></li><li class="toc-item-item toc-item-level-3"><a class="toc-item-link" href="#Database-and-User"><span class="toc-item-text">Database and User</span></a></li></ol></li><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Installation-QGIS"><span class="toc-item-text">Installation QGIS</span></a></li></ol>
 		</nav>
 	</div>
 </div>

@@ -61,7 +61,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;</span><br></pre></td></tr></table></figure>
 <p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
 <p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
-<h2 id="Restricting_access_to_specific_groups"><a href="#Restricting_access_to_specific_groups" class="headerlink" title="Restricting access to specific groups"></a>Restricting access to specific groups</h2><p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
+<h2 id="Restricting-access-to-specific-groups"><a href="#Restricting-access-to-specific-groups" class="headerlink" title="Restricting access to specific groups"></a>Restricting access to specific groups</h2><p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lwconfig RequireMembershipOf <span class="string">"&lt;server&gt;\\&lt;group-1&gt;"</span> <span class="string">"&lt;erver&gt;\\&lt;group-2&gt;"</span></span><br><span class="line">lw-update-dns</span><br></pre></td></tr></table></figure>
 <p>If you forget which groups have access to you server, you could check it by running the following command:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lwconfig --detail RequireMembershipOf</span><br></pre></td></tr></table></figure>
@@ -99,7 +99,7 @@
 	<div id="sidebar" class="sidebar">
 		<h3>Table of Content</h3>
 		<nav class="toc">
-			<ol class="toc-item"><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Restricting_access_to_specific_groups"><span class="toc-item-text">Restricting access to specific groups</span></a></li><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Login"><span class="toc-item-text">Login</span></a></li></ol>
+			<ol class="toc-item"><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Restricting-access-to-specific-groups"><span class="toc-item-text">Restricting access to specific groups</span></a></li><li class="toc-item-item toc-item-level-2"><a class="toc-item-link" href="#Login"><span class="toc-item-text">Login</span></a></li></ol>
 		</nav>
 	</div>
 </div>
