@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch | iocast&#39;s blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="iocast">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="iocast&#39;s blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://iocast.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch | iocast&#39;s blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Removing-preinstalled-packages"><span class="post-toc-number">1.</span> <span class="post-toc-text">Removing preinstalled packages</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Installing-PostgreSQL-9-3"><span class="post-toc-number">2.</span> <span class="post-toc-text">Installing PostgreSQL 9.3</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0"><span class="post-toc-number">3.</span> <span class="post-toc-text">Compiling PostGIS 2.1 against libgdal >= 1.10.0</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#R-3-0-2-and-PL-R-for-PostgreSQL"><span class="post-toc-number">4.</span> <span class="post-toc-text">R 3.0.2 and PL/R for PostgreSQL</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>iocast</strong>
+        <span>Nov 11, 2013</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/libgdal/">libgdal</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgis/">postgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgresql/">postgresql</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntu/">ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntugis/">ubuntugis</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch&url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h/index.html&via=iocast" target="_blank">
+        <li class="mdl-menu__item">
+            Share to Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            Share to Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch&url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            Share to Weibo
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<h2 id="Removing-preinstalled-packages"><a href="#Removing-preinstalled-packages" class="headerlink" title="Removing preinstalled packages"></a>Removing preinstalled packages</h2><p>First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">dpkg <span class="_">-l</span> | grep <span class="string">'postgres\|gdal'</span></div></pre></td></tr></table></figure>
+<p>You should get a list like the following one:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files</div><div class="line">ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files</div><div class="line">ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library</div><div class="line">ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server</div><div class="line">ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support <span class="keyword">for</span> PostgreSQL 9.1</div><div class="line">ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support <span class="keyword">for</span> PostgreSQL 9.1 -- scripts</div><div class="line">ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs <span class="keyword">for</span> PostgreSQL 9.1</div><div class="line">ii  postgresql-client-common           129ubuntu1                        manager <span class="keyword">for</span> multiple PostgreSQL client versions</div><div class="line">ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager</div><div class="line">ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities <span class="keyword">for</span> PostgreSQL</div></pre></td></tr></table></figure>
+<p>If you want, you could remove these packages as follow:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common</div><div class="line">apt-get autoremove</div><div class="line">apt-get autoclean</div></pre></td></tr></table></figure>
+<h2 id="Installing-PostgreSQL-9-3"><a href="#Installing-PostgreSQL-9-3" class="headerlink" title="Installing PostgreSQL 9.3"></a>Installing PostgreSQL 9.3</h2><p>First you need to find out your release code name:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">lsb_release -c</div></pre></td></tr></table></figure>
+<p>which get you something like that <code>Codename:    precise</code></p>
+<p>Create a new file <code>codename-pgdg.list</code> in <code>/etc/apt/sources.list.d</code> according to the <a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki" target="_blank" rel="external">PostgreSQL wiki page</a>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/apt/sources.list.d/precise-pgdg.list</div></pre></td></tr></table></figure>
+<p>and add the following line</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main</div></pre></td></tr></table></figure>
+<p>Now we need to import the repository key from</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -</div></pre></td></tr></table></figure>
+<p>Now we can a update the repository and install the required packages from the PostgreSQL repository.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get update</div><div class="line">apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3</div></pre></td></tr></table></figure>
+<h2 id="Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0"><a href="#Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0" class="headerlink" title="Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0"></a>Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2><p>To install PostGIS 2.1 it is important that <code>postgresql-server-dev-x.x</code> is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled <code>libgdal</code> 1.10.0 version from <strong>ubuntugis</strong>.</p>
+<p>Install <code>python-software-properties</code> and add the apt sources (repositories):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install python-software-properties</div><div class="line">add-apt-repository ppa:ubuntugis/ubuntugis-unstable</div><div class="line">apt-get update</div></pre></td></tr></table></figure>
+<p>Now install the new GDAL library called <code>libgdal1h</code> and its’ development package</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install libgdal1h</div><div class="line">apt-cache showpkg libgdal-dev*</div></pre></td></tr></table></figure>
+<p>which gets you something like that:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">Provides:</div><div class="line">1.10.0-1~precise1 -</div><div class="line">1.9.0-3.1~pgdg12.4+1 -</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>You can install a version using the <figure class="highlight plain"><figcaption><span>flag</span></figcaption><table><tr><td class="code"><pre><div class="line"></div><div class="line">```bash</div><div class="line">apt-get install -f libgdal-dev=1.10.0-1~precise1</div></pre></td></tr></table></figure></p>
+<p>Before installing the PostGIS from source we install the required dependencies.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev</div></pre></td></tr></table></figure>
+<p>Download the latest PostGIS source and compile it</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://download.osgeo.org/postgis/<span class="built_in">source</span>/postgis-2.1.0.tar.gz</div><div class="line">tar xzvf postgis-2.1.0.tar.gz</div><div class="line"><span class="built_in">cd</span> postgis-2.1.0</div><div class="line">./configure</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"> PostGIS is now configured <span class="keyword">for</span> x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">-------------- Compiler Info -------------</div><div class="line"> C compiler:           gcc -g -O2</div><div class="line"> C++ compiler:         g++ -g -O2</div><div class="line"> SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P</div><div class="line"></div><div class="line">-------------- Dependencies --------------</div><div class="line"> GEOS config:          /usr/bin/geos-config</div><div class="line"> GEOS version:         3.3.8</div><div class="line"> GDAL config:          /usr/bin/gdal-config</div><div class="line"> GDAL version:         1.10.0</div><div class="line"> PostgreSQL config:    /usr/bin/pg_config</div><div class="line"> PostgreSQL version:   PostgreSQL 9.3.1</div><div class="line"> PROJ4 version:        48</div><div class="line"> Libxml2 config:       /usr/bin/xml2-config</div><div class="line"> Libxml2 version:      2.8.0</div><div class="line"> JSON-C support:       no</div><div class="line"> PostGIS debug level:  0</div><div class="line"> Perl:                 /usr/bin/perl</div><div class="line"></div><div class="line">--------------- Extensions ---------------</div><div class="line"> PostGIS Raster:       enabled</div><div class="line"> PostGIS Topology:     enabled</div><div class="line"> SFCGAL support:       disabled</div><div class="line"></div><div class="line">-------- Documentation Generation --------</div><div class="line"> xsltproc:             </div><div class="line"> xsl style sheets:     </div><div class="line"> dblatex:              </div><div class="line"> convert:              </div><div class="line"> mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd</div></pre></td></tr></table></figure>
+<p>use <code>checkinstall</code>, which runs <code>make install</code> and registers the package in <code>dpkg</code>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">make</div><div class="line">checkinstall</div></pre></td></tr></table></figure>
+<h2 id="R-3-0-2-and-PL-R-for-PostgreSQL"><a href="#R-3-0-2-and-PL-R-for-PostgreSQL" class="headerlink" title="R 3.0.2 and PL/R for PostgreSQL"></a>R 3.0.2 and PL/R for PostgreSQL</h2><p>Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the <a href="http://cran.r-project.org" title="The Comprehensive R Archive Network" target="_blank" rel="external">R-Project</a> site. First edit the</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/apt/sources.list</div></pre></td></tr></table></figure>
+<p>and add the following line and do a update</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">deb http://cran.r-project.org/bin/linux/ubuntu precise/</div></pre></td></tr></table></figure>
+<p>as well as the key</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9</div><div class="line">apt-get update</div></pre></td></tr></table></figure>
+<p>The search for the 3.0.2 R package version and install it.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-cache showpkg r-base</div><div class="line">apt-get install <span class="_">-f</span> r-base=3.0.2-1precise0</div></pre></td></tr></table></figure>
+<p>Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install postgresql-9.3-plr</div></pre></td></tr></table></figure>
+<p>So … we are ready … have fun.</p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+
+
+    <!-- 使用 DISQUS -->
+	<div id="disqus-comment">
+		<div id="disqus_thread"></div>
+<script>
+	var disqus_config = function () {
+		this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	};
+
+	(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = '//iocast-blog.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+	</div>
+	<style>
+		#disqus-comment{
+			background-color:#eee;
+			padding:2pc;
+		}
+	</style>
+
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+        <a href="/en/2013/11/30/server-management/linux-join-ad/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Newer
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/en/2013/10/16/web-application/centos-python-modwsgi/" id="post_nav-older" class="next-content">
+            Older
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="iocast's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        iocast [at] me.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="mailto:iocast@me.com?subject=Blog: " target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             Home
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             Archives
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2014/11/">November 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/07/">July 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/04/">April 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2013/11/">November 2013<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2013/10/">October 2013<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2011/12/">December 2011<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             Article Number
+             <span class="sidebar-badge">10</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		Theme - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    
+    
+    <!-- Facebook -->
+    
+    
+    
+    <!-- Google + -->
+    
+    
+    
+    <!-- Weibo -->
+    
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;iocast's blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+    <!-- 使用 DISQUS js 代码 -->
+	<script id="dsq-count-scr" src="//iocast-blog.disqus.com/count.js" async></script>
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    // Post_Toc parent position fixed
+    $(window).load(function() {
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
