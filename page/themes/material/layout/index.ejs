@@ -6,7 +6,7 @@
 		<%- partial("_partial/blog_info") %>
 	<% } %>
 
-		<% if(page.posts) { %>
+		<% if(Array.isArray(page.posts)) { %>
 	    <% page.posts.each(function(post) { %>
 				<% if(theme.scheme == "Paradox"){ %>
 					<!-- Paradox Thumbnail -->
@@ -16,7 +16,7 @@
 					<!-- Isolation Thumbnail -->
 		        	<%- partial('_partial/Isolation-post_entry', { post: post, index: true }) %>
 				<% } %>
-	    <% });
+	    <% }); %>
 		<% } %>
 
     if (page.total > 1) { %>
