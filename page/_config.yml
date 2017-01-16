@@ -71,10 +71,7 @@ pagination_dir: page
 theme: material
 deploy:
 
-
-#hexo-generator-type plugin
+#hexo-generator-type
 types:
   - index
-  - page
-  - post
-  - cheatsheet
+  - cheathseet
