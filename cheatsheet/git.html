@@ -200,11 +200,287 @@
                         </button>
                     
 
-                    <div>
+                    <!-- Post TOC -->
 
-<p>hello test</p>
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Git
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>iocast</strong>
+        <span>Dec 22, 2014</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Git&url=http://iocast.github.io//cheatsheet/git.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Weibo
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Git&url=http://iocast.github.io//cheatsheet/git.html&via=iocast" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//cheatsheet/git.html" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//cheatsheet/git.html" target="_blank">
+            <li class="mdl-menu__item">
+                Share to Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
 
 </div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><h3 id="Username"><a href="#Username" class="headerlink" title="Username"></a>Username</h3><p>in a local git repo</p>
+<pre><code>git config user.name &quot;iocast&quot;
+git config user.email &quot;iocast@me.com&quot;
+</code></pre><p>or for global settings</p>
+<pre><code>git config --global user.name &quot;iocast&quot;
+git config --global user.email &quot;iocast@me.com&quot;
+</code></pre><h2 id="General"><a href="#General" class="headerlink" title="General"></a>General</h2><p>download from git repository (normally branch ‘master’)</p>
+<pre><code>git clone &lt;remote_repo&gt;
+</code></pre><p>download specific branch</p>
+<pre><code>git clone -b &lt;branch&gt; &lt;remote_repo&gt;
+</code></pre><p>commit changes (check if you are on the correct branch)</p>
+<pre><code>git commit -m &quot;message&quot;
+</code></pre><h3 id="Push-Pull"><a href="#Push-Pull" class="headerlink" title="Push / Pull"></a>Push / Pull</h3><p>send branch to repository/server</p>
+<pre><code>git push origin &lt;branch&gt;
+</code></pre><p>get branch from repository/server (update)</p>
+<pre><code>git pull origin &lt;branch&gt;
+</code></pre><p>resetting local repository</p>
+<pre><code>git reset --hard origin/master
+</code></pre><h3 id="Branching"><a href="#Branching" class="headerlink" title="Branching"></a>Branching</h3><p>list all branches</p>
+<p>Options:</p>
+<p><code>-a</code><br>: lists all branches</p>
+<pre><code>git branch [options]
+</code></pre><p>create local branch</p>
+<pre><code>git branch develop
+</code></pre><p>delete a branch (origin - server)</p>
+<pre><code>git branch -d develop
+git push origin --delete develop
+</code></pre><p>switch branch to work on it</p>
+<pre><code>git checkout develop
+</code></pre><p>push branch to repository/server</p>
+<pre><code>git push origin &lt;name&gt;
+</code></pre><h3 id="Tagging"><a href="#Tagging" class="headerlink" title="Tagging"></a>Tagging</h3><p>first of all switch to master</p>
+<pre><code>git checkout master
+</code></pre><p>and if necessary merge from a other branch</p>
+<pre><code>git merge --no-ff &lt;branch&gt;
+</code></pre><p>create tag</p>
+<pre><code>git tag -a 1.2 -m &quot;message&quot;
+</code></pre><p>push to repository/server</p>
+<pre><code>git push --tags
+</code></pre><p>list tags</p>
+<pre><code>git tag
+</code></pre><p>change to tag</p>
+<pre><code>git checkout &lt;tag&gt;
+</code></pre><p>or make changes based on this tag (e.g. for hotfixes for this specific tag) where the first argument is the new branch name an the second is the tag name</p>
+<pre><code>git checkout -b hotfix-1.3.1 1.3
+</code></pre><h2 id="Release-Managment"><a href="#Release-Managment" class="headerlink" title="Release Managment"></a>Release Managment</h2><p>assume we are working on branch ‘develop’ an are ready to create a new release.</p>
+<h3 id="Releases"><a href="#Releases" class="headerlink" title="Releases"></a>Releases</h3><h4 id="Creating"><a href="#Creating" class="headerlink" title="Creating"></a>Creating</h4><p>Switched to a new branch “release-1.2”</p>
+<pre><code>git checkout -b release-1.2 develop
+</code></pre><p>change version number on the notes or other files and commit it</p>
+<pre><code>git commit -a -m &quot;Bumped version number to 1.2&quot;
+</code></pre><h4 id="Working"><a href="#Working" class="headerlink" title="Working"></a>Working</h4><p>then modify all files needed for release-1.2 and commit changes (several commits can take place)</p>
+<pre><code>git commit -m &quot;message&quot;
+</code></pre><h4 id="Finishing"><a href="#Finishing" class="headerlink" title="Finishing"></a>Finishing</h4><p>Now we can finish this release.<br>Switch to branch ‘master’</p>
+<pre><code>git checkout master
+</code></pre><p>merge from the release-1.2 branch and push to repository/server</p>
+<pre><code>git merge --no-ff release-1.2
+git push origin master
+</code></pre><p>tag as release in branch master and push tag to repository/server</p>
+<pre><code>git tag -a 1.2 -m &quot;message&quot;
+git push --tags
+</code></pre><p>release banch on our local drive is not needed anymore.<br>Deleted branch release-1.2</p>
+<pre><code>git branch -d release-1.2
+</code></pre><h3 id="Hot-Fixes"><a href="#Hot-Fixes" class="headerlink" title="Hot Fixes"></a>Hot Fixes</h3><p>Hot fixes are done from the master (or release) branch.</p>
+<h4 id="Creating-1"><a href="#Creating-1" class="headerlink" title="Creating"></a>Creating</h4><p>Switched to a new branch “hotfix-1.2.1”</p>
+<pre><code>git checkout -b hotfix-1.2.1 master
+</code></pre><p>change version number on the notes or other files and commit it</p>
+<pre><code>git commit -a -m &quot;Bumped version number to 1.2.1&quot;
+</code></pre><h4 id="Working-1"><a href="#Working-1" class="headerlink" title="Working"></a>Working</h4><p>then modify all files needed files for hotfix-1.21 and commit changes (several commits can take place)</p>
+<pre><code>git commit -m &quot;message&quot;
+</code></pre><h4 id="Finishing-1"><a href="#Finishing-1" class="headerlink" title="Finishing"></a>Finishing</h4><p>Switched to branch ‘master’</p>
+<pre><code>git checkout master
+</code></pre><p>merge changes</p>
+<pre><code>git merge --no-ff hotfix-1.2.1
+</code></pre><p>tag it and push tag to repository/server</p>
+<pre><code>git tag -a 1.2.1 -m &quot;message&quot;
+git push --tag
+</code></pre><p>switch to develop and merge hotfix into it</p>
+<pre><code>git checkout develop
+git merge --no-ff hotfix-1.2.1
+</code></pre><p>and delete hotfix</p>
+<pre><code>git branch -d hotfix-1.2.1
+</code></pre>
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+    <!-- 使用 DISQUS -->
+    <div id="disqus-comment">
+        <div id="disqus_thread"></div>
+<script>
+    $('html').ready(function() {
+        setTimeout(function() {
+            var disqus_config = function () {
+                this.page.url = 'http://iocast.github.io/cheatsheet/git.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//iocast-blog.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        },1500);
+    });
+</script>
+
+    </div>
+    <style>
+        #disqus-comment{
+            background-color: #eee;
+            padding: 2pc;
+        }
+    </style>
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -289,6 +565,18 @@
     </li>
 
     <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                Categories
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/GIS/">GIS<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Miscellaneous/">Miscellaneous<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Server/">Server<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Server-Management/">Server Management<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Versioning/">Versioning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Web-Application/">Web Application<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
     
 
     <!-- Divider -->
