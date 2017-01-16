@@ -10,7 +10,7 @@
     
     <title>
         
-            Javascript localization part 1 | 
+            Mac OS X file server migration | 
         
         iocast&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://iocast.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Javascript localization part 1 | iocast&#39;s blog">
+    <meta property="og:title" content="Mac OS X file server migration | iocast&#39;s blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -262,7 +262,7 @@
         
     
             <p class="article-headline-p">
-                Javascript localization part 1
+                Mac OS X file server migration
             </p>
         </div>
 
@@ -281,7 +281,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>iocast</strong>
-        <span>Jul 21, 2014</span>
+        <span>Oct 09, 2013</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/apache/">apache</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/centos/">centos</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/httpd/">httpd</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/python/">python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a>
+        <a class="post_tag-link" href="/tags/bash/">bash</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/osx/">osx</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/rsync/">rsync</a>
     </ul>
     
 
@@ -321,7 +321,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Javascript localization part 1&url=http://iocast.github.io//en/2014/07/21/web-application/javascript-internationalization-part1/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Mac OS X file server migration&url=http://iocast.github.io//en/2013/10/09/server-management/osx-file-server-migration.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -330,7 +330,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Javascript localization part 1&url=http://iocast.github.io//en/2014/07/21/web-application/javascript-internationalization-part1/index.html&via=iocast" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Mac OS X file server migration&url=http://iocast.github.io//en/2013/10/09/server-management/osx-file-server-migration.html&via=iocast" target="_blank">
             <li class="mdl-menu__item">
                 Share to Twitter
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2014/07/21/web-application/javascript-internationalization-part1/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/10/09/server-management/osx-file-server-migration.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Facebook
             </li>
@@ -348,7 +348,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2014/07/21/web-application/javascript-internationalization-part1/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/10/09/server-management/osx-file-server-migration.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Google+
             </li>
@@ -372,57 +372,15 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.</p>
-<p>Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.</p>
-<p>Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  <code>mmmm yyyy</code> or <code>mm/dd/yyyy</code>. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> dateobj= <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">dateobj.getDate() + <span class="string">"/"</span> + dateobj.getMonth()+<span class="number">1</span> + <span class="string">"/"</span> + dateobj.getFullYear()</div><div class="line"><span class="comment">// 21/7/2014</span></div></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span>.locale = &#123;</div><div class="line">	<span class="attr">en</span>: &#123;</div><div class="line">		<span class="attr">month_names</span>: [<span class="string">'January'</span>, <span class="string">'February'</span>, <span class="string">'March'</span>, <span class="string">'April'</span>, <span class="string">'May'</span>, <span class="string">'June'</span>, <span class="string">'July'</span>, <span class="string">'August'</span>, <span class="string">'September'</span>, <span class="string">'October'</span>, <span class="string">'November'</span>, <span class="string">'December'</span>],</div><div class="line">		<span class="attr">month_names_short</span>: [<span class="string">'Jan'</span>, <span class="string">'Feb'</span>, <span class="string">'Mar'</span>, <span class="string">'Apr'</span>, <span class="string">'May'</span>, <span class="string">'Jun'</span>, <span class="string">'Jul'</span>, <span class="string">'Aug'</span>, <span class="string">'Sep'</span>, <span class="string">'Oct'</span>, <span class="string">'Nov'</span>, <span class="string">'Dec'</span>]</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Date</span>.prototype.getMonthName = <span class="function"><span class="keyword">function</span>(<span class="params">lang</span>) </span>&#123;</div><div class="line">	lang = lang &amp;&amp; (lang <span class="keyword">in</span> <span class="built_in">Date</span>.locale) ? lang : <span class="string">'en'</span>;</div><div class="line">	<span class="keyword">return</span> <span class="built_in">Date</span>.locale[lang].month_names[<span class="keyword">this</span>.getMonth()];</div><div class="line">&#125;;</div><div class="line"><span class="built_in">Date</span>.prototype.getMonthNameShort = <span class="function"><span class="keyword">function</span>(<span class="params">lang</span>) </span>&#123;</div><div class="line">	lang = lang &amp;&amp; (lang <span class="keyword">in</span> <span class="built_in">Date</span>.locale) ? lang : <span class="string">'en'</span>;</div><div class="line">	<span class="keyword">return</span> <span class="built_in">Date</span>.locale[lang].month_names_short[<span class="keyword">this</span>.getMonth()];</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// that can be used as follow:</span></div><div class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">now.getMonthNameShort + <span class="string">" "</span> + now.getFullYear();</div><div class="line"><span class="comment">// July 2014</span></div></pre></td></tr></table></figure>
-<p>The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.</p>
-<p>The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.</p>
-<p>For the <code>Date</code> object now have these functions, whereas I personally prefer the <code>toLocaleString()</code></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Function</th>
-<th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Date.prototype.toLocaleDateString()</td>
-<td style="text-align:left">returns a string with a language sensitive representation of the date portion of this date.</td>
-</tr>
-<tr>
-<td style="text-align:left">Date.prototype.toLocaleString()</td>
-<td style="text-align:left">returns a string with a language sensitive representation of this date.</td>
-</tr>
-<tr>
-<td style="text-align:left">Date.prototype.toLocaleTimeString()</td>
-<td style="text-align:left">returns a string with a language sensitive representation of the time portion of this date.</td>
-</tr>
-</tbody>
-</table>
-<p>You can use it as follow</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">date.toLocaleString(<span class="string">'en'</span>, &#123; <span class="attr">month</span>: <span class="string">'long'</span>, <span class="attr">year</span>: <span class="string">'numeric'</span> &#125;);</div><div class="line"><span class="comment">// July 2014</span></div><div class="line">date.toLocaleString(<span class="string">'en'</span>, &#123; <span class="attr">month</span>: <span class="string">'2-digit'</span>, <span class="attr">day</span>: <span class="string">'2-digit'</span>, <span class="attr">year</span>: <span class="string">'numberic'</span> &#125;);</div><div class="line"><span class="comment">// 21/07/2014</span></div></pre></td></tr></table></figure>
-<p>where the first parameter is the <code>locale</code> and the second parameter represents the <code>options</code>. The allowed options can be found on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString" target="_blank" rel="external">Mozilla Developer Network</a>. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.</p>
-<p>The same applies to the <code>Number</code> object.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Function</th>
-<th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Number.prototype.toLocaleString()</td>
-<td style="text-align:left">returns a string with a language sensitive representation of this number.</td>
-</tr>
-</tbody>
-</table>
-<p>You can use it as follow</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> number = <span class="number">3600</span>;</div><div class="line">number.toLocaleString(<span class="string">'en'</span>);</div><div class="line"><span class="comment">// 3,600</span></div><div class="line">number.toLocaleString(<span class="string">'de'</span>);</div><div class="line"><span class="comment">// 3.600</span></div><div class="line">number.toLocaleString(<span class="string">'en'</span>, &#123;</div><div class="line">	<span class="attr">style</span>: <span class="string">'currency'</span>,</div><div class="line">	<span class="attr">currency</span>: <span class="string">'USD'</span></div><div class="line">&#125;);</div><div class="line"><span class="comment">// $3,600</span></div></pre></td></tr></table></figure>
+        <p>Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.</p>
+<p>So to solve these problems and many more I created a little bash script which is able to:</p>
+<ul>
+<li>sync files from a remote server using <code>rsync</code></li>
+<li>changing the POSIX permissions on the local server after sync</li>
+<li>creating optionally a share point for each folder to be synced</li>
+<li>propagating ACLs on a share point or on a individual directory.</li>
+</ul>
+<p>Each of these feature can be used independently. For more information see the project description: <a href="/projects/file-server-management.html">server migration tool</a></p>
 
     
 
@@ -444,7 +402,7 @@
     $('html').ready(function() {
         setTimeout(function() {
             var disqus_config = function () {
-                this.page.url = 'http://iocast.github.io/en/2014/07/21/web-application/javascript-internationalization-part1/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://iocast.github.io/en/2013/10/09/server-management/osx-file-server-migration.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -475,7 +433,7 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/en/2014/11/09/server/cubox-fileserver-archlinux/" id="post_nav-newer" class="prev-content">
+        <a href="/en/2013/10/12/gis/qgis-server-centos.html" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -489,7 +447,7 @@
 
     <!-- Next Nav -->
     
-        <a href="/en/2014/04/17/versioning/github-travis-addition/" id="post_nav-older" class="next-content">
+        <a href="/en/2013/10/08/miscellaneous/github-jekyll-travis.html" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

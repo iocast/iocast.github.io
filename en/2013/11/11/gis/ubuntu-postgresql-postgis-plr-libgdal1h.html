@@ -10,7 +10,7 @@
     
     <title>
         
-            Setting up a QGIS server and PostGIS on CentOS 6 | 
+            Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch | 
         
         iocast&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://iocast.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Setting up a QGIS server and PostGIS on CentOS 6 | iocast&#39;s blog">
+    <meta property="og:title" content="Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch | iocast&#39;s blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PostgreSQL-and-PostGIS"><span class="post-toc-number">1.</span> <span class="post-toc-text">PostgreSQL and PostGIS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Configuration"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Configuration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Install-PGDG-RPM-file"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Install PGDG RPM file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Installation-of-PostgreSQL-and-PostGIS"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Installation of PostgreSQL and PostGIS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Configuration-1"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Configuration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Database-and-User"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Database and User</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Installation-QGIS"><span class="post-toc-number">2.</span> <span class="post-toc-text">Installation QGIS</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Removing-preinstalled-packages"><span class="post-toc-number">1.</span> <span class="post-toc-text">Removing preinstalled packages</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Installing-PostgreSQL-9-3"><span class="post-toc-number">2.</span> <span class="post-toc-text">Installing PostgreSQL 9.3</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0"><span class="post-toc-number">3.</span> <span class="post-toc-text">Compiling PostGIS 2.1 against libgdal >= 1.10.0</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#R-3-0-2-and-PL-R-for-PostgreSQL"><span class="post-toc-number">4.</span> <span class="post-toc-text">R 3.0.2 and PL/R for PostgreSQL</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -262,7 +262,7 @@
         
     
             <p class="article-headline-p">
-                Setting up a QGIS server and PostGIS on CentOS 6
+                Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch
             </p>
         </div>
 
@@ -281,7 +281,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>iocast</strong>
-        <span>Oct 12, 2013</span>
+        <span>Nov 11, 2013</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/centos/">centos</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgis/">postgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgresql/">postgresql</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/qgis/">qgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a>
+        <a class="post_tag-link" href="/tags/libgdal/">libgdal</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgis/">postgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgresql/">postgresql</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntu/">ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntugis/">ubuntugis</a>
     </ul>
     
 
@@ -321,7 +321,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Setting up a QGIS server and PostGIS on CentOS 6&url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch&url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -330,7 +330,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Setting up a QGIS server and PostGIS on CentOS 6&url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos/index.html&via=iocast" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch&url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h.html&via=iocast" target="_blank">
             <li class="mdl-menu__item">
                 Share to Twitter
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Facebook
             </li>
@@ -348,7 +348,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Google+
             </li>
@@ -372,96 +372,49 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
-<h2 id="PostgreSQL-and-PostGIS"><a href="#PostgreSQL-and-PostGIS" class="headerlink" title="PostgreSQL and PostGIS"></a>PostgreSQL and PostGIS</h2><p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository" target="_blank" rel="external">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg" target="_blank" rel="external">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
-<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Configure yum repository</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/yum.repos.d/CentOS-Base.repo</div></pre></td></tr></table></figure>
-<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line">exclude=postgresql*</div></pre></td></tr></table></figure>
-<h3 id="Install-PGDG-RPM-file"><a href="#Install-PGDG-RPM-file" class="headerlink" title="Install PGDG RPM file"></a>Install PGDG RPM file</h3><p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org" target="_blank" rel="external">http://yum.postgresql.org</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm</div></pre></td></tr></table></figure>
-<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
-<p>Install RPM distribution:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">rpm -ivh pgdg-centos93-9.3-1.noarch.rpm</div></pre></td></tr></table></figure>
-<h3 id="Installation-of-PostgreSQL-and-PostGIS"><a href="#Installation-of-PostgreSQL-and-PostGIS" class="headerlink" title="Installation of PostgreSQL and PostGIS"></a>Installation of PostgreSQL and PostGIS</h3><p>List the available packages:</p>
-<pre><code>:::bash
-yum list postgres*
-</code></pre><p>Installation:</p>
-<pre><code>:::bash
-yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
-</code></pre><h3 id="Configuration-1"><a href="#Configuration-1" class="headerlink" title="Configuration"></a>Configuration</h3><p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
-<pre><code>:::bash
-service postgresql-9.3 initdb
-service postgresql-9.3 start
-chkconfig postgresql-9.3 on
-</code></pre><p>Some important files</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">File / Application</th>
-<th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
-<td style="text-align:left">changing host etc.</td>
-</tr>
-<tr>
-<td style="text-align:left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
-<td style="text-align:left">client authentication configuration</td>
-</tr>
-</tbody>
-</table>
-<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
-<pre><code>:::yaml
-# IPv4 local connections:
-#host    all             all             127.0.0.1/32            ident
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-#host    all             all             ::1/128                 ident
-host    all             all             ::1/128                 md5
-</code></pre><h3 id="Database-and-User"><a href="#Database-and-User" class="headerlink" title="Database and User"></a>Database and User</h3><p>Before we can start, we need to create a new database and user.</p>
-<p>Login as <code>postgres</code> superuser and create a new database</p>
-<pre><code>:::bash
-su -l postgres
-createdb gis
-</code></pre><p>Login into the database create a user and set a encrypted password</p>
-<pre><code>:::bash
-psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &apos;gis&apos;;
-ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
-</code></pre><p>Now test your configuration and install PostGIS extension</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">psql -h localhost <span class="_">-d</span> gis -U gis -W</div><div class="line">CREATE EXTENSION postgis;</div></pre></td></tr></table></figure>
-<h2 id="Installation-QGIS"><a href="#Installation-QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm</div><div class="line">rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm</div></pre></td></tr></table></figure>
-<p>where the version I have tested it was <code>6-8</code>.</p>
-<p>Add the ELGIS repositories</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm</div><div class="line">rpm -Uvh elgis-release-6-6_0.noarch.rpm</div></pre></td></tr></table></figure>
-<p>where the version I have tested it was <code>6-6_0</code>.</p>
-<p>Now install QGIS server:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install qgis-mapserver.x86_64</div></pre></td></tr></table></figure>
-<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install qgis*</div></pre></td></tr></table></figure>
-<p>The scripts and configs are installed on CentOS:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Script / Config</th>
-<th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
-<td style="text-align:left">main fast cgi script (OGC capabilities)</td>
-</tr>
-<tr>
-<td style="text-align:left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
-<td style="text-align:left">qgis mapserver httpd configuration file</td>
-</tr>
-</tbody>
-</table>
+        <h2 id="Removing-preinstalled-packages"><a href="#Removing-preinstalled-packages" class="headerlink" title="Removing preinstalled packages"></a>Removing preinstalled packages</h2><p>First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">dpkg <span class="_">-l</span> | grep <span class="string">'postgres\|gdal'</span></div></pre></td></tr></table></figure>
+<p>You should get a list like the following one:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files</div><div class="line">ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files</div><div class="line">ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library</div><div class="line">ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server</div><div class="line">ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support <span class="keyword">for</span> PostgreSQL 9.1</div><div class="line">ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support <span class="keyword">for</span> PostgreSQL 9.1 -- scripts</div><div class="line">ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs <span class="keyword">for</span> PostgreSQL 9.1</div><div class="line">ii  postgresql-client-common           129ubuntu1                        manager <span class="keyword">for</span> multiple PostgreSQL client versions</div><div class="line">ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager</div><div class="line">ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities <span class="keyword">for</span> PostgreSQL</div></pre></td></tr></table></figure>
+<p>If you want, you could remove these packages as follow:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common</div><div class="line">apt-get autoremove</div><div class="line">apt-get autoclean</div></pre></td></tr></table></figure>
+<h2 id="Installing-PostgreSQL-9-3"><a href="#Installing-PostgreSQL-9-3" class="headerlink" title="Installing PostgreSQL 9.3"></a>Installing PostgreSQL 9.3</h2><p>First you need to find out your release code name:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">lsb_release -c</div></pre></td></tr></table></figure>
+<p>which get you something like that <code>Codename:    precise</code></p>
+<p>Create a new file <code>codename-pgdg.list</code> in <code>/etc/apt/sources.list.d</code> according to the <a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki" target="_blank" rel="external">PostgreSQL wiki page</a>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/apt/sources.list.d/precise-pgdg.list</div></pre></td></tr></table></figure>
+<p>and add the following line</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main</div></pre></td></tr></table></figure>
+<p>Now we need to import the repository key from</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -</div></pre></td></tr></table></figure>
+<p>Now we can a update the repository and install the required packages from the PostgreSQL repository.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get update</div><div class="line">apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3</div></pre></td></tr></table></figure>
+<h2 id="Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0"><a href="#Compiling-PostGIS-2-1-against-libgdal-gt-1-10-0" class="headerlink" title="Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0"></a>Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2><p>To install PostGIS 2.1 it is important that <code>postgresql-server-dev-x.x</code> is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled <code>libgdal</code> 1.10.0 version from <strong>ubuntugis</strong>.</p>
+<p>Install <code>python-software-properties</code> and add the apt sources (repositories):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install python-software-properties</div><div class="line">add-apt-repository ppa:ubuntugis/ubuntugis-unstable</div><div class="line">apt-get update</div></pre></td></tr></table></figure>
+<p>Now install the new GDAL library called <code>libgdal1h</code> and its’ development package</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install libgdal1h</div><div class="line">apt-cache showpkg libgdal-dev*</div></pre></td></tr></table></figure>
+<p>which gets you something like that:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">Provides:</div><div class="line">1.10.0-1~precise1 -</div><div class="line">1.9.0-3.1~pgdg12.4+1 -</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>You can install a version using the <figure class="highlight plain"><figcaption><span>flag</span></figcaption><table><tr><td class="code"><pre><div class="line"></div><div class="line">```bash</div><div class="line">apt-get install -f libgdal-dev=1.10.0-1~precise1</div></pre></td></tr></table></figure></p>
+<p>Before installing the PostGIS from source we install the required dependencies.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev</div></pre></td></tr></table></figure>
+<p>Download the latest PostGIS source and compile it</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://download.osgeo.org/postgis/<span class="built_in">source</span>/postgis-2.1.0.tar.gz</div><div class="line">tar xzvf postgis-2.1.0.tar.gz</div><div class="line"><span class="built_in">cd</span> postgis-2.1.0</div><div class="line">./configure</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"> PostGIS is now configured <span class="keyword">for</span> x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">-------------- Compiler Info -------------</div><div class="line"> C compiler:           gcc -g -O2</div><div class="line"> C++ compiler:         g++ -g -O2</div><div class="line"> SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P</div><div class="line"></div><div class="line">-------------- Dependencies --------------</div><div class="line"> GEOS config:          /usr/bin/geos-config</div><div class="line"> GEOS version:         3.3.8</div><div class="line"> GDAL config:          /usr/bin/gdal-config</div><div class="line"> GDAL version:         1.10.0</div><div class="line"> PostgreSQL config:    /usr/bin/pg_config</div><div class="line"> PostgreSQL version:   PostgreSQL 9.3.1</div><div class="line"> PROJ4 version:        48</div><div class="line"> Libxml2 config:       /usr/bin/xml2-config</div><div class="line"> Libxml2 version:      2.8.0</div><div class="line"> JSON-C support:       no</div><div class="line"> PostGIS debug level:  0</div><div class="line"> Perl:                 /usr/bin/perl</div><div class="line"></div><div class="line">--------------- Extensions ---------------</div><div class="line"> PostGIS Raster:       enabled</div><div class="line"> PostGIS Topology:     enabled</div><div class="line"> SFCGAL support:       disabled</div><div class="line"></div><div class="line">-------- Documentation Generation --------</div><div class="line"> xsltproc:             </div><div class="line"> xsl style sheets:     </div><div class="line"> dblatex:              </div><div class="line"> convert:              </div><div class="line"> mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd</div></pre></td></tr></table></figure>
+<p>use <code>checkinstall</code>, which runs <code>make install</code> and registers the package in <code>dpkg</code>.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">make</div><div class="line">checkinstall</div></pre></td></tr></table></figure>
+<h2 id="R-3-0-2-and-PL-R-for-PostgreSQL"><a href="#R-3-0-2-and-PL-R-for-PostgreSQL" class="headerlink" title="R 3.0.2 and PL/R for PostgreSQL"></a>R 3.0.2 and PL/R for PostgreSQL</h2><p>Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the <a href="http://cran.r-project.org" title="The Comprehensive R Archive Network" target="_blank" rel="external">R-Project</a> site. First edit the</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/apt/sources.list</div></pre></td></tr></table></figure>
+<p>and add the following line and do a update</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">deb http://cran.r-project.org/bin/linux/ubuntu precise/</div></pre></td></tr></table></figure>
+<p>as well as the key</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9</div><div class="line">apt-get update</div></pre></td></tr></table></figure>
+<p>The search for the 3.0.2 R package version and install it.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-cache showpkg r-base</div><div class="line">apt-get install <span class="_">-f</span> r-base=3.0.2-1precise0</div></pre></td></tr></table></figure>
+<p>Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install postgresql-9.3-plr</div></pre></td></tr></table></figure>
+<p>So … we are ready … have fun.</p>
 
     
 
@@ -483,7 +436,7 @@ ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
     $('html').ready(function() {
         setTimeout(function() {
             var disqus_config = function () {
-                this.page.url = 'http://iocast.github.io/en/2013/10/12/gis/qgis-server-centos/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://iocast.github.io/en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -514,7 +467,7 @@ ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/en/2013/10/16/web-application/centos-python-modwsgi/" id="post_nav-newer" class="prev-content">
+        <a href="/en/2013/11/30/server-management/linux-join-ad.html" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -528,7 +481,7 @@ ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
 
     <!-- Next Nav -->
     
-        <a href="/en/2013/10/09/server-management/osx-file-server-migration/" id="post_nav-older" class="next-content">
+        <a href="/en/2013/10/16/web-application/centos-python-modwsgi.html" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

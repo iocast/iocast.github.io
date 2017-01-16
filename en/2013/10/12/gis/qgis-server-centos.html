@@ -10,7 +10,7 @@
     
     <title>
         
-            Creating your own blog using github pages, jekyll and travis | 
+            Setting up a QGIS server and PostGIS on CentOS 6 | 
         
         iocast&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://iocast.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Creating your own blog using github pages, jekyll and travis | iocast&#39;s blog">
+    <meta property="og:title" content="Setting up a QGIS server and PostGIS on CentOS 6 | iocast&#39;s blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Github"><span class="post-toc-number">1.</span> <span class="post-toc-text">Github</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll"><span class="post-toc-number">2.</span> <span class="post-toc-text">Jekyll</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Travis-CI"><span class="post-toc-number">3.</span> <span class="post-toc-text">Travis CI</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PostgreSQL-and-PostGIS"><span class="post-toc-number">1.</span> <span class="post-toc-text">PostgreSQL and PostGIS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Configuration"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Configuration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Install-PGDG-RPM-file"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Install PGDG RPM file</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Installation-of-PostgreSQL-and-PostGIS"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Installation of PostgreSQL and PostGIS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Configuration-1"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Configuration</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Database-and-User"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Database and User</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Installation-QGIS"><span class="post-toc-number">2.</span> <span class="post-toc-text">Installation QGIS</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -262,7 +262,7 @@
         
     
             <p class="article-headline-p">
-                Creating your own blog using github pages, jekyll and travis
+                Setting up a QGIS server and PostGIS on CentOS 6
             </p>
         </div>
 
@@ -281,7 +281,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>iocast</strong>
-        <span>Oct 08, 2013</span>
+        <span>Oct 12, 2013</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/bash/">bash</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/continuous-integration/">continuous integration</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/github/">github</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/jekyll/">jekyll</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/travis/">travis</a>
+        <a class="post_tag-link" href="/tags/centos/">centos</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgis/">postgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/postgresql/">postgresql</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/qgis/">qgis</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a>
     </ul>
     
 
@@ -321,7 +321,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Creating your own blog using github pages, jekyll and travis&url=http://iocast.github.io//en/2013/10/08/miscellaneous/github-jekyll-travis/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Setting up a QGIS server and PostGIS on CentOS 6&url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -330,7 +330,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Creating your own blog using github pages, jekyll and travis&url=http://iocast.github.io//en/2013/10/08/miscellaneous/github-jekyll-travis/index.html&via=iocast" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Setting up a QGIS server and PostGIS on CentOS 6&url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos.html&via=iocast" target="_blank">
             <li class="mdl-menu__item">
                 Share to Twitter
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/10/08/miscellaneous/github-jekyll-travis/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Facebook
             </li>
@@ -348,7 +348,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/10/08/miscellaneous/github-jekyll-travis/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/10/12/gis/qgis-server-centos.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Google+
             </li>
@@ -372,33 +372,96 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>Github offers at the time of writing three different types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)" target="_blank" rel="external">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
-<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github" target="_blank" rel="external">Github’s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> as our continuous integration solution for deployment purposes.</p>
-<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Creates our branch, without any parents (it's an orphan!)</span></div><div class="line">git checkout --orphan develop</div><div class="line"><span class="comment"># Remove all files from the old working tree</span></div><div class="line">git rm -rf .</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"My GitHub Page"</span> &gt; index.html</div><div class="line">git add index.html</div><div class="line">git commit <span class="_">-a</span> -m <span class="string">"First pages commit"</span></div><div class="line">git push origin develop</div></pre></td></tr></table></figure>
-<p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> page to this <code>develop</code> branch.</p>
-<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation" target="_blank" rel="external">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p>
-<p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> the compilation options. A example could look like the following:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">destination: ./_site</div><div class="line">lsi:         true</div><div class="line">pygments:    true</div><div class="line">markdown:    rdiscount</div><div class="line">permalink:   date</div><div class="line">rdiscount:</div><div class="line">  extensions: [smart]</div><div class="line"></div><div class="line">exclude: [&apos;Gemfile&apos;, &apos;Gemfile.lock&apos;, &apos;Rakefile&apos;, &apos;README.md&apos;, &apos;update-gh-pages.sh&apos;]</div></pre></td></tr></table></figure>
-<h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><p><a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">Travis</a> is used to automatically deploy the <code>develop</code> branch and push the result of the <code>jekyll build</code> output to the <code>master</code> branch which the would be published to the Github pages.</p>
-<p>For that we need first to get <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> access to our Github repository. If you do not have a <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> account register one on the homepage. On The <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> homepage go to the account settings and get access to the appropriate repository like in the image below:</p>
-<p><img src="travis_repository_access.png" alt="Travis Repository Access" title="Travis Repository Access"></p>
-<p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">language: ruby</div><div class="line">rvm: 1.9.3</div><div class="line"></div><div class="line">branches:</div><div class="line">  except:</div><div class="line">  - master</div><div class="line"></div><div class="line">branches:</div><div class="line">  only:</div><div class="line">  - develop</div><div class="line"></div><div class="line">script: rake travis</div></pre></td></tr></table></figure>
-<p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
-<p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">source <span class="string">'http://rubygems.org'</span></div><div class="line"></div><div class="line">gem <span class="string">'jekyll'</span></div><div class="line">gem <span class="string">'rdiscount'</span></div><div class="line">gem <span class="string">'redcarpet'</span></div></pre></td></tr></table></figure>
-<p>For <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> deployment add the following task to the <code>Rakefile</code>:</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env rake</span></div><div class="line"></div><div class="line">task <span class="symbol">:travis</span> <span class="keyword">do</span></div><div class="line">  system(<span class="string">"jekyll build"</span>)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<p>Lastly we need to create a <code>bash</code> script to push the compiled <a href="http://jekyllrb.com" title="Jekyll" target="_blank" rel="external">jekyll</a> page to the <code>master</code> branch. For that authorize <a href="http://travis-ci.org" title="Travis CI" target="_blank" rel="external">travis</a> to do commits and pushed as follow:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -X POST -u &lt;your_github_username&gt; -H <span class="string">"Content-Type: application/json"</span> <span class="_">-d</span> <span class="string">"&#123;\"scopes\":[\"public_repo\"],\"note\":\"token for pushing from travis\"&#125;"</span> https://api.github.com/authorizations</div></pre></td></tr></table></figure>
-<p>and copy the <code>token</code> key from the json result.</p>
-<p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">gem install travis</div><div class="line">travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global</div></pre></td></tr></table></figure>
-<p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$TRAVIS_PULL_REQUEST</span>"</span> == <span class="string">"false"</span> ]; <span class="keyword">then</span></div><div class="line">  <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"Starting to update master\n"</span></div><div class="line"></div><div class="line">  cp -R _site <span class="variable">$HOME</span>/_site</div><div class="line"></div><div class="line">  <span class="built_in">cd</span> <span class="variable">$HOME</span></div><div class="line">  git config --global user.email <span class="string">"iocast@me.com"</span></div><div class="line">  git config --global user.name <span class="string">"iocast"</span></div><div class="line">  git <span class="built_in">clone</span> --quiet --branch=master https://<span class="variable">$&#123;GH_TOKEN&#125;</span>@github.com/iocast/iocast.github.io.git master &gt; /dev/null</div><div class="line"></div><div class="line">  <span class="built_in">cd</span> master</div><div class="line">  rm -rf ./*</div><div class="line">  cp -Rf <span class="variable">$HOME</span>/_site/* .</div><div class="line"></div><div class="line">  git add <span class="_">-f</span> .</div><div class="line">  git commit -m <span class="string">"Travis build <span class="variable">$TRAVIS_BUILD_NUMBER</span> pushed to master"</span></div><div class="line">  git push -fq origin master &gt; /dev/null</div><div class="line"></div><div class="line">  <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"Done magic with coverage\n"</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<p>and add the following lines to the end of the <code>.travis.yml</code> file:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">after_success: ./update-gh-pages.sh</div></pre></td></tr></table></figure>
+        <p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
+<h2 id="PostgreSQL-and-PostGIS"><a href="#PostgreSQL-and-PostGIS" class="headerlink" title="PostgreSQL and PostGIS"></a>PostgreSQL and PostGIS</h2><p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository" target="_blank" rel="external">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg" target="_blank" rel="external">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Configure yum repository</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/yum.repos.d/CentOS-Base.repo</div></pre></td></tr></table></figure>
+<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line">exclude=postgresql*</div></pre></td></tr></table></figure>
+<h3 id="Install-PGDG-RPM-file"><a href="#Install-PGDG-RPM-file" class="headerlink" title="Install PGDG RPM file"></a>Install PGDG RPM file</h3><p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org" target="_blank" rel="external">http://yum.postgresql.org</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm</div></pre></td></tr></table></figure>
+<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
+<p>Install RPM distribution:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">rpm -ivh pgdg-centos93-9.3-1.noarch.rpm</div></pre></td></tr></table></figure>
+<h3 id="Installation-of-PostgreSQL-and-PostGIS"><a href="#Installation-of-PostgreSQL-and-PostGIS" class="headerlink" title="Installation of PostgreSQL and PostGIS"></a>Installation of PostgreSQL and PostGIS</h3><p>List the available packages:</p>
+<pre><code>:::bash
+yum list postgres*
+</code></pre><p>Installation:</p>
+<pre><code>:::bash
+yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+</code></pre><h3 id="Configuration-1"><a href="#Configuration-1" class="headerlink" title="Configuration"></a>Configuration</h3><p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
+<pre><code>:::bash
+service postgresql-9.3 initdb
+service postgresql-9.3 start
+chkconfig postgresql-9.3 on
+</code></pre><p>Some important files</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">File / Application</th>
+<th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
+<td style="text-align:left">changing host etc.</td>
+</tr>
+<tr>
+<td style="text-align:left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
+<td style="text-align:left">client authentication configuration</td>
+</tr>
+</tbody>
+</table>
+<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
+<pre><code>:::yaml
+# IPv4 local connections:
+#host    all             all             127.0.0.1/32            ident
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+#host    all             all             ::1/128                 ident
+host    all             all             ::1/128                 md5
+</code></pre><h3 id="Database-and-User"><a href="#Database-and-User" class="headerlink" title="Database and User"></a>Database and User</h3><p>Before we can start, we need to create a new database and user.</p>
+<p>Login as <code>postgres</code> superuser and create a new database</p>
+<pre><code>:::bash
+su -l postgres
+createdb gis
+</code></pre><p>Login into the database create a user and set a encrypted password</p>
+<pre><code>:::bash
+psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &apos;gis&apos;;
+ALTER USER gis WITH ENCRYPTED PASSWORD &apos;gis&apos;;
+</code></pre><p>Now test your configuration and install PostGIS extension</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">psql -h localhost <span class="_">-d</span> gis -U gis -W</div><div class="line">CREATE EXTENSION postgis;</div></pre></td></tr></table></figure>
+<h2 id="Installation-QGIS"><a href="#Installation-QGIS" class="headerlink" title="Installation QGIS"></a>Installation QGIS</h2><p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm</div><div class="line">rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm</div></pre></td></tr></table></figure>
+<p>where the version I have tested it was <code>6-8</code>.</p>
+<p>Add the ELGIS repositories</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm</div><div class="line">rpm -Uvh elgis-release-6-6_0.noarch.rpm</div></pre></td></tr></table></figure>
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
+<p>Now install QGIS server:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install qgis-mapserver.x86_64</div></pre></td></tr></table></figure>
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install qgis*</div></pre></td></tr></table></figure>
+<p>The scripts and configs are installed on CentOS:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Script / Config</th>
+<th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
+<td style="text-align:left">main fast cgi script (OGC capabilities)</td>
+</tr>
+<tr>
+<td style="text-align:left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
+<td style="text-align:left">qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
 
     
 
@@ -420,7 +483,7 @@
     $('html').ready(function() {
         setTimeout(function() {
             var disqus_config = function () {
-                this.page.url = 'http://iocast.github.io/en/2013/10/08/miscellaneous/github-jekyll-travis/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://iocast.github.io/en/2013/10/12/gis/qgis-server-centos.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -451,7 +514,7 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/en/2013/10/09/server-management/osx-file-server-migration/" id="post_nav-newer" class="prev-content">
+        <a href="/en/2013/10/16/web-application/centos-python-modwsgi.html" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -465,7 +528,7 @@
 
     <!-- Next Nav -->
     
-        <a href="/en/2011/12/03/miscellaneous/tunneling-over-an-intermediate/" id="post_nav-older" class="next-content">
+        <a href="/en/2013/10/09/server-management/osx-file-server-migration.html" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

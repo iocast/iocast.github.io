@@ -10,7 +10,7 @@
     
     <title>
         
-            Python 2.7.x and mod_wsgi on a CentOS 6 | 
+            GitHub Pages for a repository compiling using Travis CI | 
         
         iocast&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://iocast.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Python 2.7.x and mod_wsgi on a CentOS 6 | iocast&#39;s blog">
+    <meta property="og:title" content="GitHub Pages for a repository compiling using Travis CI | iocast&#39;s blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Getting-Python-2-7-x"><span class="post-toc-number">1.</span> <span class="post-toc-text">Getting Python 2.7.x</span></a></li></ol>
+        
 
         <!--
         <li class="mdl-menu__item">
@@ -262,7 +262,7 @@
         
     
             <p class="article-headline-p">
-                Python 2.7.x and mod_wsgi on a CentOS 6
+                GitHub Pages for a repository compiling using Travis CI
             </p>
         </div>
 
@@ -281,7 +281,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>iocast</strong>
-        <span>Oct 16, 2013</span>
+        <span>Apr 17, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/apache/">apache</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/centos/">centos</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/httpd/">httpd</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/python/">python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/server/">server</a>
+        <a class="post_tag-link" href="/tags/bash/">bash</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/continuous-integration/">continuous integration</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/github/">github</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/jekyll/">jekyll</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/travis/">travis</a>
     </ul>
     
 
@@ -321,7 +321,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Python 2.7.x and mod_wsgi on a CentOS 6&url=http://iocast.github.io//en/2013/10/16/web-application/centos-python-modwsgi/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=GitHub Pages for a repository compiling using Travis CI&url=http://iocast.github.io//en/2014/04/17/versioning/github-travis-addition.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -330,7 +330,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Python 2.7.x and mod_wsgi on a CentOS 6&url=http://iocast.github.io//en/2013/10/16/web-application/centos-python-modwsgi/index.html&via=iocast" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=GitHub Pages for a repository compiling using Travis CI&url=http://iocast.github.io//en/2014/04/17/versioning/github-travis-addition.html&via=iocast" target="_blank">
             <li class="mdl-menu__item">
                 Share to Twitter
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2013/10/16/web-application/centos-python-modwsgi/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://iocast.github.io//en/2014/04/17/versioning/github-travis-addition.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Facebook
             </li>
@@ -348,7 +348,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2013/10/16/web-application/centos-python-modwsgi/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://iocast.github.io//en/2014/04/17/versioning/github-travis-addition.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to Google+
             </li>
@@ -372,39 +372,18 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your <code>eth0</code> at startup.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">vi /etc/sysconfig/network-scripts/ifcfg-eth0</div></pre></td></tr></table></figure>
-<p>and set <code>ONBOOT</code> to <code>yes</code>.</p>
-<h2 id="Getting-Python-2-7-x"><a href="#Getting-Python-2-7-x" class="headerlink" title="Getting Python 2.7.x"></a>Getting Python 2.7.x</h2><p>The following explanations are based on a blog of <a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk" target="_blank" rel="external">Asim Teeshan</a> and a post on <a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7" target="_blank" rel="external">Fire3Net</a>.</p>
-<p>First we need some development tools. Install the following once</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install gcc make zlib-devel bzip2-devel openssl-devel</div></pre></td></tr></table></figure>
-<p>Now download the latest 2.7.x Python release and enable shared library during the configuation</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> /opt/</div><div class="line">wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz</div></pre></td></tr></table></figure>
-<p>Extract and install it:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">tar -zxvf Python-2.7.5.tgz</div><div class="line"><span class="built_in">cd</span> Python-2.7.5</div><div class="line">./configure --enable-shared</div><div class="line">make &amp;&amp; make altinstall</div></pre></td></tr></table></figure>
-<p>Install Python setuptools for using <code>easy_setup</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg</div><div class="line">sh setuptools-0.6c11-py2.7.egg</div></pre></td></tr></table></figure>
-<p>Before we can install <code>mod_wsgi</code> we need to install the http development libraries</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum install httpd httpd-devel</div></pre></td></tr></table></figure>
-<p>Now we are ready to compile <code>mod_wsgi</code> against Python 2.7.x</p>
-<p>Download and unpack the latest version</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz</div><div class="line">tar -zxvf mod_wsgi-3.4.tar.gz</div><div class="line"><span class="built_in">cd</span> mod_wsgi-3.4.tar.gz</div><div class="line">./configure --with-python=/usr/<span class="built_in">local</span>/bin/python2.7</div></pre></td></tr></table></figure>
-<p>Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">whereis python</div></pre></td></tr></table></figure>
-<p>Once the configuration completed you can install it:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
-<p>If you run into problems along the lines <strong>cannot load shared library libpython2.7…</strong> then you need run the <code>ldconfig</code> first to tell where the <code>libpython2.7.so*</code> files are:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ln <span class="_">-s</span> /usr/<span class="built_in">local</span>/lib/libpython2.7.so.1.0 /usr/lib/</div><div class="line">ln <span class="_">-s</span> /usr/<span class="built_in">local</span>/lib/libpython2.7.so /usr/</div><div class="line">ldconfig</div></pre></td></tr></table></figure>
-<p>Lastly we can install <code>virtualenv</code> as follow:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget http://pypi.python.org/packages/<span class="built_in">source</span>/v/virtualenv/virtualenv-1.10.1.tar.gz</div><div class="line">tar -zxvf virtualenv-1.10.1.tar.gz</div><div class="line"><span class="built_in">cd</span> virtualenv-1.10.1</div><div class="line">python2.7 setup.py install</div></pre></td></tr></table></figure>
-<p>install psycopg2</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">wget --no-check-certificate https://pypi.python.org/packages/<span class="built_in">source</span>/p/psycopg2/psycopg2-2.5.1.tar.gz</div><div class="line">tar -zxvf psycopg2-2.5.1.tar.gz</div><div class="line"><span class="built_in">cd</span> psycopg2-2.5.1</div><div class="line">vi setup.cfg</div></pre></td></tr></table></figure>
-<p>and add the following line</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pg_config=/usr/pgsql-9.3/bin/pg_config</div></pre></td></tr></table></figure>
-<p>now install it</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/bin/python2.7 setup.py install</div></pre></td></tr></table></figure>
-<p>now creating a virtual env for you web application do it as follow</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">virtualenv-2.7 --system-site-packages ENV</div></pre></td></tr></table></figure>
+        <p>First of all check if you have already a <strong>personal access token</strong>.</p>
+<p><img src="github_personal_access_tokens.png" alt="GitHub personal access tokens" title="GitHub personal access tokens"></p>
+<p>If not, you can follow these <a href="!--￼3--">instructions</a></p>
+<p>On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.</p>
+<p><img src="travis_grant_repository_access.png" alt="Travis grant access to GitHub repository" title="Travis grant access to GitHub repository"></p>
+<p>The next thing is to generate a new secure string for your <code>.travis.yml</code> file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations</div></pre></td></tr></table></figure>
+<p>You should get a JSON response which looks like this</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">&#123;</div><div class="line">	"id": 1234567,</div><div class="line">	"url": "https://api.github.com/authorizations/1234567",</div><div class="line">	"app": &#123;</div><div class="line">		"name": "travis: token for pushing from travis (API)",</div><div class="line">		"url": "http://developer.github.com/v3/oauth_authorizations/",</div><div class="line">		"client_id": "00000000000000000000"</div><div class="line">		&#125;,</div><div class="line">	"token": "1abc234d56efghi789",</div><div class="line">	"note": "travis: token for pushing from travis",</div><div class="line">	"note_url": null,</div><div class="line">	"created_at": "2014-01-01T12:00:00Z",</div><div class="line">	"updated_at": "2014-01-01T12:00:00Z",</div><div class="line">	"scopes": [</div><div class="line">		"public_repo"</div><div class="line">	]</div><div class="line">&#125;,</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>So we are ready to generate the secure string for Travis. Be sure that you have installed <code>travis</code> rubygem using the following command <code>gem install travis</code>. Open a terminal and go to the folder where <code>.travis.yml</code> lays and add the secure string to it</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> /path/to/the/.travsi.yml/file</div><div class="line">travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global</div></pre></td></tr></table></figure>
+<p>That’s all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.</p>
 
     
 
@@ -426,7 +405,7 @@
     $('html').ready(function() {
         setTimeout(function() {
             var disqus_config = function () {
-                this.page.url = 'http://iocast.github.io/en/2013/10/16/web-application/centos-python-modwsgi/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://iocast.github.io/en/2014/04/17/versioning/github-travis-addition.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -457,7 +436,7 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/en/2013/11/11/gis/ubuntu-postgresql-postgis-plr-libgdal1h/" id="post_nav-newer" class="prev-content">
+        <a href="/en/2014/07/21/web-application/javascript-internationalization-part1.html" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -471,7 +450,7 @@
 
     <!-- Next Nav -->
     
-        <a href="/en/2013/10/12/gis/qgis-server-centos/" id="post_nav-older" class="next-content">
+        <a href="/en/2013/11/30/server-management/linux-join-ad.html" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
