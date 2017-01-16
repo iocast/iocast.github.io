@@ -1,19 +1,16 @@
-Title: PostgreSQL
-Type: cheatsheet
-Date: 2014-12-22 10:30
-Modified: 2014-12-22 11:41
-Slug: cheatsheet/postgresql
-Authors: iocast
-Summary: PostgreSQL commands
-
-
-[TOC]
+---
+title: PostgreSQL
+author: iocast
+date: 2014/12/22
+excerpt: PostgreSQL commands
+layout: cheatsheet
+---
 
 ## Basics
 
 login as postgres use r
 
-	sudo su postgres - 
+	sudo su postgres -
 
 
 run sql command
@@ -202,4 +199,3 @@ and move the files back onto the `/var/lib/pgsql` filesystem again
 Now you are finished. Start the database.
 
 	/etc/init.d/postgresql start
-

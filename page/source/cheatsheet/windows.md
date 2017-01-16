@@ -1,11 +1,10 @@
-Title: Windows
-Type: cheatsheet
-Date: 2014-12-22 10:30
-Modified: 2014-12-22 11:41
-Slug: cheatsheet/windows
-Authors: iocast
-Summary: Windows commands
-
+---
+title: Windows general
+author: iocast
+date: 2014/12/22
+excerpt: Windows general commands
+layout: cheatsheet
+---
 
 
 [TOC]
@@ -59,6 +58,3 @@ Close-SmbSession –ClientUserName Domain\Username
 
 `XD`
 : exluding directories
-
-
-

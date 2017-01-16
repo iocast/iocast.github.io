@@ -1,13 +1,10 @@
-Title: Python PyPi
-Type: cheatsheet
-Date: 2014-12-22 10:30
-Modified: 2014-12-22 11:41
-Slug: cheatsheet/pypi
-Authors: iocast
-Summary: Python PyPi commands
-
-
-[TOC]
+---
+title: Python PyPi
+author: iocast
+date: 2014/12/22
+excerpt: Python PyPi commands
+layout: cheatsheet
+---
 
 ## Comands
 
@@ -36,12 +33,12 @@ is called `.pypirc`, is located in your home direve `~` and has the following st
 	index-servers =
     	pypi
     	other
-	
+
 	[pypi]
 		repository: <repository-url>
 		username: <username>
 		password: <password>
-	
+
 	[other]
 		repository: http://example.com/pypi
 		username: <username>

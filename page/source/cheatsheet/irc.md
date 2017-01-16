@@ -1,12 +1,10 @@
-Title: IRC
-Type: cheatsheet
-Date: 2014-12-22 10:30
-Modified: 2014-12-22 11:41
-Slug: cheatsheet/irc
-Authors: iocast
-Summary: IRC commands
-
-[TOC]
+---
+title: IRC
+author: iocast
+date: 2014/12/22
+excerpt: Internet Relay Chat
+layout: cheatsheet
+---
 
 ## User
 

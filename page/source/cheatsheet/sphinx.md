@@ -1,10 +1,11 @@
-Title: Sphinx
-Type: cheatsheet
-Date: 2014-12-23 08:54
-Modified: 2014-12-22 08:54
-Slug: cheatsheet/sphinx
-Authors: iocast
-Summary: Sphinx
+---
+title: Sphinx
+author: iocast
+date: 2014/12/22
+excerpt: Sphinx
+layout: cheatsheet
+---
+
 
 ## Errors
 
