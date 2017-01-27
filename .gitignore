@@ -1,4 +1,5 @@
 .git/
+.che/
 node_modules/
 
 *.log

@@ -6,6 +6,9 @@ excerpt: Git commands
 layout: cheatsheet
 ---
 
+```
+git submodule update --init
+```
 
 ## Settings
 ### Username
