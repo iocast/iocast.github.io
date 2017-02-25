@@ -1,34 +1,40 @@
 {{ partial "header.html" . }}
 
-    <!-- Page Header -->
-    <header class="intro-header" style="background-image: url('{{ .Site.BaseURL }}/img/home-bg.jpg')">
-     <div class="container">
-       <div class="row">
-         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-           <div class="site-heading">
-             <h1>{{ .Site.Title }}</h1>
-             <hr class="small">
-             <span class="subheading">{{ .Site.Title }}</span>
-           </div>
-         </div>
-       </div>
-     </div>
-    </header>
 
-    <!-- Main Content -->
-    <div class="container">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-preview">
-          <p class="post-meta"><a href="{{ .Site.BaseURL }}">Index</a>
-            <br />
-          </p>
+<article class="mdl-grid article">
+    <div class="mdl-cell mdl-cell--12-col mdl-shadow--6dp">
+
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{ .Title }}</h2>
         </div>
-        <div class="post-preview">
-          <p class="post-meta"><a href="{{ .Site.BaseURL }}/post/">Archives</a>
-            <br />
-          </p>
+
+        <div class="mdl-card__supporting-text">
+
+          <section>
+            <p>
+              Stop cowboy, what are you trying to find?
+            </p>
+            <p>
+              {{ .Permalink | urlize }} does not exist.
+            </p>
+            <p>
+              It looks like this was the result of either:
+              <ul>
+                <li>a mistyped address</li>
+                <li>an out-of-date link</li>
+              </ul>
+            </p>
+            <p>
+              Not found: '{{ .URL }}'
+            </p>
+            <p>
+              Back to <a href="{{ .Site.BaseURL }}">root</a>.
+            </p>
+          </section>
+
         </div>
-      </div>
+
     </div>
+</article>
 
 {{ partial "footer.html" . }}
