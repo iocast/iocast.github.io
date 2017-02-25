@@ -1,0 +1,18 @@
+<div class="meta">
+  <small>by</small> <a href="/author/{{ urlize .Params.Author }}">{{ .Params.Author }}</a>
+  | {{ dateFormat .Site.Params.DateFormShort .Date }} |
+
+  in {{ range $index, $c :=  .Params.categories }}
+    <a href="/categories/{{ urlize . }}">
+          <span class="mdl-chip__text">{{ title . }}</span>
+    </a>
+  {{ end }}
+
+  <div class="tags">
+  {{ range $index, $tag :=  .Params.tags }}
+    <a href="/tags/{{ urlize . }}">
+          <span class="mdl-chip__ext">#{{ lower . }}</span>
+    </a>
+  {{ end }}
+  </div>
+</div>

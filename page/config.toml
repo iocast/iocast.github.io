@@ -1,0 +1,54 @@
+BaseUrl= "http://iocast.github.io"
+LanguageCode= "en-US"
+Title= "think twice code once!"
+paginate = 8
+
+Copyright = "All rights reserved © 2017"
+canonifyurls = true
+theme = "material-design-lite"
+newContentEditor = "nano"
+pygmentsStyle = "native"
+sourceRelativeLinksEval = true
+#canonifyURLs = true
+#relativeURLs = true
+
+DisqusShortname = "iocast-blog"
+#disqus_identifier = ""
+#disqus_title = ""
+#disqus_url = ""
+
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  cheatsheet = "cheatsheets"
+
+[[author]]
+    name = "James Campbell"
+
+[params]
+  SiteDescription = "blog, cheatsheets, best practices, and more"
+  DateForm = "Mon, 02 Jan 2006 15:04:05 MST"
+  DateFormShort = "Mon, 02 Jan 2006"
+  Description = "Welcome to my sammelsurium of things I meet in my everyday life."
+  Author = "Iocast"
+  email = "iocast@me.com"
+  PostSummariesFrontPage = 9
+  #Ganalytics = "XX-00000000-0"
+  #RSSLink = "https://www.jamescampbell.us/index.xml"
+  # set true if you are not proud of using Hugo (true will hide the footer note "Proudly published with HUGO.....")
+  #twitter = "https://www.twitter.com/jamescampbell"
+  ShowReadTime = false
+
+[[params.social]]
+  title = "github"
+  icon = "github"
+  url = "https://github.com/iocast"
+
+[menu]
+  [[menu.main]]
+    name = "Archives"
+    url = "/post/"
+  [[menu.main]]
+    name = "Cheatsheet"
+    url = "/cheatsheet/"

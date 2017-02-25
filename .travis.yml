@@ -1,13 +1,9 @@
-language: nodejs
-node_js:
-  - "6.1"
+language: go
+
+go:
+  - master
 
 sudo: false
-
-cache:
-  apt: true
-  directories:
-    - node_modules
 
 env:
   global:
@@ -22,11 +18,9 @@ branches:
   only:
   - develop
 
-before_install:
-- npm install -g hexo-cli
-
 install:
-- npm install
+  - go get github.com/bmizerany/assert
+
 
 #after_install:
 

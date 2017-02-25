@@ -1,0 +1,38 @@
+{{ partial "header.html" .}}
+
+    <!-- Page Header -->
+    <div class="title-section mdl-typography--text-center">
+      <div class="slogan">{{ upper .Site.Title }}</div>
+      <div class="sub-slogan">{{ .Site.Params.Description }}</div>
+      <!--
+      <div class="logo-font android-create-character">
+        <a href=""><img src="img/site_cover.png"> create your android character</a>
+      </div>
+    -->
+
+      <a href="#latest_posts">
+        <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+          <i class="material-icons">expand_more</i>
+        </button>
+      </a>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="latest-post-section">
+      <a name="latest_posts"></a>
+
+      <div class="latest-post-title mdl-typography--display-1-color-contrast">latest posts</div>
+
+      <div class="card-container mdl-grid">
+
+        {{ $posts := or .Site.Params.PostSummariesFrontPage 9 }}
+        {{ range first $posts (where .Data.Pages "Type" "post") }}
+          {{ .Render "summary-box"}}
+        {{ end }}
+
+      </div>
+
+    </div>
+
+{{ partial "footer.html" .}}

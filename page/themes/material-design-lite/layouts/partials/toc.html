@@ -1,0 +1,51 @@
+{{ with .TableOfContents }}
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+<!--
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+-->
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  {{ $toc := replace . "<nav" "<nav class=\"toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect\" for=\"more-post-toc\"" }}
+
+  {{ $toc := replace $toc "<a" "<a class=\"mdl-menu__item mdl-js-ripple-effect\"" }}
+
+  {{ $toc | safeHTML }}
+
+
+
+</div>
+
+{{ end }}

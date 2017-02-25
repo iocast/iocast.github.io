@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="{{ .Site.Params.SiteDescription }}">
+     <meta name="author" content="{{ .Site.Params.Author }}">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>{{ .Title }} -- {{ .Site.Title }}</title>
+
+    {{ if .RSSLink }}
+    <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+    <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+    {{ end }}
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/material.min.css">
+
+
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    <!-- Material Design Iconic Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    <!-- Site specific things -->
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/general.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/header.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/page.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/contact.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/article.css">
+
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/post.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/mobile.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="/img/logo-white.png">
+          </span>
+        </a>
+        <!-- Add spacer, to align navigation to the right in desktop -->
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        <!-- Navigation -->
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            {{ range $index, $element := .Site.Menus.main }}
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ .URL }}">{{ .Name }}</a>
+              </li>
+            {{ end }}
+
+          </nav>
+        </div>
+        <a href="/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="/img/logo-white.png">
+          </span>
+        </a>
+        <!--
+        <button class="more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+          <li>
+            <a class="mdl-menu__item" href="/contact">Contact</a>
+          </li>
+          <li>
+            <a class="mdl-menu__item" href="/about">About</a>
+          </li>
+        </ul>
+        -->
+      </div>
+    </header>
+
+    {{ partial "navbar.html" . }}
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
