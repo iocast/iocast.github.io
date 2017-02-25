@@ -21,18 +21,17 @@ branches:
 install:
   - go get -v github.com/spf13/hugo
 
-
 #after_install:
 
-before_script:
-- cd page
+#before_script:
+#  - cd page
 
 script:
-- hugo
+  - hugo --source page/ --destination ../public/
 
 #after_script:
 
 after_success:
-- cd ..
-- chmod a+x ./script/update-gh-pages.sh
-- ./script/update-gh-pages.sh
+  - cd ..
+  - chmod a+x ./script/update-gh-pages.sh
+  - ./script/update-gh-pages.sh

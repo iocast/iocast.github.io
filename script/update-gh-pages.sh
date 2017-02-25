@@ -1,7 +1,7 @@
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   echo -e "Starting to update master\n"
 
-  cp -R page/public $HOME/public
+  cp -R public $HOME/public
 
   cd $HOME
   git config --global user.email "iocast@me.com"
