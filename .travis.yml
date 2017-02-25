@@ -19,17 +19,16 @@ branches:
   - develop
 
 install:
-  - go get github.com/bmizerany/assert
+  - go get -v github.com/spf13/hugo
 
 
 #after_install:
 
 before_script:
 - cd page
-- npm install
 
 script:
-- hexo generate
+- hugo
 
 #after_script:
 
