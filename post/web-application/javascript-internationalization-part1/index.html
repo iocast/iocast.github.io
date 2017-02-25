@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Javascript localization part 1 -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a href="http://iocast.github.io/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="post">
+
+
+  
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">Javascript localization part 1</div>
+      <div class="description">Since the first edition of ECMAScript (ECMA-402) Javascript supports the output of language sensitive representation of a Date or Number object which is often overseen by many developers.</div>
+      <div class="meta">
+  <small>by</small> <a href="http://iocast.github.io/author/iocast">iocast</a>
+  | Mon, 21 Jul 2014 |
+
+  in 
+    <a href="http://iocast.github.io/categories/web-application">
+          <span class="mdl-chip__text">Web Application</span>
+    </a>
+  
+
+  <div class="tags">
+  
+    <a href="http://iocast.github.io/tags/centos">
+          <span class="mdl-chip__ext">#centos</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/server">
+          <span class="mdl-chip__ext">#server</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/apache">
+          <span class="mdl-chip__ext">#apache</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/httpd">
+          <span class="mdl-chip__ext">#httpd</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/python">
+          <span class="mdl-chip__ext">#python</span>
+    </a>
+  
+  </div>
+</div>
+
+
+
+      
+      <div class="">
+          <img src="http://iocast.github.io/post/web-application/javascript-internationalization-part1//cover.jpeg">
+      </div>
+
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+
+  <section class="content">
+      <a name="content"></a>
+      <p>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.</p>
+
+<p>Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.</p>
+
+<p>Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  <code>mmmm yyyy</code> or <code>mm/dd/yyyy</code>. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.</p>
+
+<pre><code class="language-javascript">	var dateobj= new Date()
+	dateobj.getDate() + &quot;/&quot; + dateobj.getMonth()+1 + &quot;/&quot; + dateobj.getFullYear()
+	// 21/7/2014
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="language-javascript">	Date.locale = {
+		en: {
+			month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		}
+	};
+
+	Date.prototype.getMonthName = function(lang) {
+		lang = lang &amp;&amp; (lang in Date.locale) ? lang : 'en';
+		return Date.locale[lang].month_names[this.getMonth()];
+	};
+	Date.prototype.getMonthNameShort = function(lang) {
+		lang = lang &amp;&amp; (lang in Date.locale) ? lang : 'en';
+		return Date.locale[lang].month_names_short[this.getMonth()];
+	};
+
+	// that can be used as follow:
+	var now = new Date();
+	now.getMonthNameShort + &quot; &quot; + now.getFullYear();
+	// July 2014
+</code></pre>
+
+<p>The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.</p>
+
+<p>The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.</p>
+
+<p>For the <code>Date</code> object now have these functions, whereas I personally prefer the <code>toLocaleString()</code></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Date.prototype.toLocaleDateString()</td>
+<td align="left">returns a string with a language sensitive representation of the date portion of this date.</td>
+</tr>
+
+<tr>
+<td align="left">Date.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this date.</td>
+</tr>
+
+<tr>
+<td align="left">Date.prototype.toLocaleTimeString()</td>
+<td align="left">returns a string with a language sensitive representation of the time portion of this date.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use it as follow</p>
+
+<pre><code class="language-javascript">	var now = new Date()
+	date.toLocaleString('en', { month: 'long', year: 'numeric' });
+	// July 2014
+	date.toLocaleString('en', { month: '2-digit', day: '2-digit', year: 'numberic' });
+	// 21/07/2014
+</code></pre>
+
+<p>where the first parameter is the <code>locale</code> and the second parameter represents the <code>options</code>. The allowed options can be found on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString">Mozilla Developer Network</a>. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.</p>
+
+<p>The same applies to the <code>Number</code> object.</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Number.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this number.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use it as follow</p>
+
+<pre><code class="language-javascript">	var number = 3600;
+	number.toLocaleString('en');
+	// 3,600
+	number.toLocaleString('de');
+	// 3.600
+	number.toLocaleString('en', {
+		style: 'currency',
+		currency: 'USD'
+	});
+	// $3,600
+</code></pre>
+
+  </section>
+
+  
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Setting up a QGIS server and PostGIS on CentOS 6 -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a href="http://iocast.github.io/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="post">
+
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#postgresql-and-postgis">PostgreSQL and PostGIS</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#configuration">Configuration</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#install-pgdg-rpm-file">Install PGDG RPM file</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#installation-of-postgresql-and-postgis">Installation of PostgreSQL and PostGIS</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#configuration-1">Configuration</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#database-and-user">Database and User</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#installation-qgis">Installation QGIS</a></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">Setting up a QGIS server and PostGIS on CentOS 6</div>
+      <div class="description">This post describes how to setup a QGSI server and PostGIS on CentOS 6.</div>
+      <div class="meta">
+  <small>by</small> <a href="http://iocast.github.io/author/iocast">iocast</a>
+  | Sat, 12 Oct 2013 |
+
+  in 
+    <a href="http://iocast.github.io/categories/gis">
+          <span class="mdl-chip__text">GIS</span>
+    </a>
+  
+
+  <div class="tags">
+  
+    <a href="http://iocast.github.io/tags/centos">
+          <span class="mdl-chip__ext">#centos</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/qgis">
+          <span class="mdl-chip__ext">#qgis</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/server">
+          <span class="mdl-chip__ext">#server</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/postgresql">
+          <span class="mdl-chip__ext">#postgresql</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/postgis">
+          <span class="mdl-chip__ext">#postgis</span>
+    </a>
+  
+  </div>
+</div>
+
+
+
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
+
+<h2 id="postgresql-and-postgis">PostgreSQL and PostGIS</h2>
+
+<p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Configure yum repository</p>
+
+<pre><code class="language-bash">	vi /etc/yum.repos.d/CentOS-Base.repo
+</code></pre>
+
+<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
+
+<pre><code class="language-yaml">exclude=postgresql*
+</code></pre>
+
+<h3 id="install-pgdg-rpm-file">Install PGDG RPM file</h3>
+
+<p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org">http://yum.postgresql.org</a></p>
+
+<pre><code class="language-bash">	wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
+</code></pre>
+
+<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
+
+<p>Install RPM distribution:</p>
+
+<pre><code class="language-bash">	rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
+</code></pre>
+
+<h3 id="installation-of-postgresql-and-postgis">Installation of PostgreSQL and PostGIS</h3>
+
+<p>List the available packages:</p>
+
+<pre><code>:::bash
+yum list postgres*
+</code></pre>
+
+<p>Installation:</p>
+
+<pre><code>:::bash
+yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+</code></pre>
+
+<h3 id="configuration-1">Configuration</h3>
+
+<p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
+
+<pre><code>:::bash
+service postgresql-9.3 initdb
+service postgresql-9.3 start
+chkconfig postgresql-9.3 on
+</code></pre>
+
+<p>Some important files</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">File / Application</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
+<td align="left">changing host etc.</td>
+</tr>
+
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
+<td align="left">client authentication configuration</td>
+</tr>
+</tbody>
+</table>
+
+<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
+
+<pre><code>:::yaml
+# IPv4 local connections:
+#host    all             all             127.0.0.1/32            ident
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+#host    all             all             ::1/128                 ident
+host    all             all             ::1/128                 md5
+</code></pre>
+
+<h3 id="database-and-user">Database and User</h3>
+
+<p>Before we can start, we need to create a new database and user.</p>
+
+<p>Login as <code>postgres</code> superuser and create a new database</p>
+
+<pre><code>:::bash
+su -l postgres
+createdb gis
+</code></pre>
+
+<p>Login into the database create a user and set a encrypted password</p>
+
+<pre><code>:::bash
+psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD 'gis';
+ALTER USER gis WITH ENCRYPTED PASSWORD 'gis';
+</code></pre>
+
+<p>Now test your configuration and install PostGIS extension</p>
+
+<pre><code class="language-bash">psql -h localhost -d gis -U gis -W
+CREATE EXTENSION postgis;
+</code></pre>
+
+<h2 id="installation-qgis">Installation QGIS</h2>
+
+<p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+
+<pre><code class="language-bash">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
+</code></pre>
+
+<p>where the version I have tested it was <code>6-8</code>.</p>
+
+<p>Add the ELGIS repositories</p>
+
+<pre><code class="language-bash">wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh elgis-release-6-6_0.noarch.rpm
+</code></pre>
+
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
+
+<p>Now install QGIS server:</p>
+
+<pre><code class="language-bash">yum install qgis-mapserver.x86_64
+</code></pre>
+
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+
+<pre><code class="language-bash">yum install qgis*
+</code></pre>
+
+<p>The scripts and configs are installed on CentOS:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Script / Config</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
+<td align="left">main fast cgi script (OGC capabilities)</td>
+</tr>
+
+<tr>
+<td align="left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
+<td align="left">qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
+
+  </section>
+
+  
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

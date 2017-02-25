@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on think twice code once!</title>
+    <link>http://iocast.github.io/tags/bash/index.xml</link>
+    <description>Recent content in Bash on think twice code once!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved © 2017</copyright>
+    <atom:link href="http://iocast.github.io/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>GitHub Pages for a repository compiling using Travis CI</title>
+      <link>http://iocast.github.io/post/versioning/github-travis-addition/</link>
+      <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/versioning/github-travis-addition/</guid>
+      <description>&lt;p&gt;First of all check if you have already a &lt;strong&gt;personal access token&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;github_personal_access_tokens.png&#34; alt=&#34;GitHub personal access tokens&#34; title=&#34;GitHub personal access tokens&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If not, you can follow these &lt;a href=&#34;{% post_url 2013-10-08-github-jekyll-travis %}&#34;&gt;instructions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;travis_grant_repository_access.png&#34; alt=&#34;Travis grant access to GitHub repository&#34; title=&#34;Travis grant access to GitHub repository&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next thing is to generate a new secure string for your &lt;code&gt;.travis.yml&lt;/code&gt; file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curl -X GET -u &amp;lt;your_github_username&amp;gt; https://api.github.com/authorizations
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should get a JSON response which looks like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;...
+{
+	&amp;quot;id&amp;quot;: 1234567,
+	&amp;quot;url&amp;quot;: &amp;quot;https://api.github.com/authorizations/1234567&amp;quot;,
+	&amp;quot;app&amp;quot;: {
+		&amp;quot;name&amp;quot;: &amp;quot;travis: token for pushing from travis (API)&amp;quot;,
+		&amp;quot;url&amp;quot;: &amp;quot;http://developer.github.com/v3/oauth_authorizations/&amp;quot;,
+		&amp;quot;client_id&amp;quot;: &amp;quot;00000000000000000000&amp;quot;
+		},
+	&amp;quot;token&amp;quot;: &amp;quot;1abc234d56efghi789&amp;quot;,
+	&amp;quot;note&amp;quot;: &amp;quot;travis: token for pushing from travis&amp;quot;,
+	&amp;quot;note_url&amp;quot;: null,
+	&amp;quot;created_at&amp;quot;: &amp;quot;2014-01-01T12:00:00Z&amp;quot;,
+	&amp;quot;updated_at&amp;quot;: &amp;quot;2014-01-01T12:00:00Z&amp;quot;,
+	&amp;quot;scopes&amp;quot;: [
+		&amp;quot;public_repo&amp;quot;
+	]
+},
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So we are ready to generate the secure string for Travis. Be sure that you have installed &lt;code&gt;travis&lt;/code&gt; rubygem using the following command &lt;code&gt;gem install travis&lt;/code&gt;. Open a terminal and go to the folder where &lt;code&gt;.travis.yml&lt;/code&gt; lays and add the secure string to it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /path/to/the/.travsi.yml/file
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; GH_TOKEN=&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mac OS X file server migration</title>
+      <link>http://iocast.github.io/post/server-management/osx-file-server-migration/</link>
+      <pubDate>Wed, 09 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/server-management/osx-file-server-migration/</guid>
+      <description>&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
+
+&lt;p&gt;So to solve these problems and many more I created a little bash script which is able to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sync files from a remote server using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;changing the POSIX permissions on the local server after sync&lt;/li&gt;
+&lt;li&gt;creating optionally a share point for each folder to be synced&lt;/li&gt;
+&lt;li&gt;propagating ACLs on a share point or on a individual directory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href=&#34;http://iocast.github.io/projects/file-server-management.html&#34;&gt;server migration tool&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating your own blog using github pages, jekyll and travis</title>
+      <link>http://iocast.github.io/post/miscellaneous/github-jekyll-travis/</link>
+      <pubDate>Tue, 08 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/miscellaneous/github-jekyll-travis/</guid>
+      <description>
+
+&lt;p&gt;Github offers at the time of writing three different types of pages: for &lt;a href=&#34;https://help.github.com/articles/user-organization-and-project-pages&#34; title=&#34;Github Pages (Help)&#34;&gt;users, organizations and projects&lt;/a&gt;. For the users and organizations the &lt;code&gt;master&lt;/code&gt; branch is going to be used to deploy as static web page. For projects, means in a repository which is not called &lt;code&gt;username.github.io&lt;/code&gt;, a subpath of the user pages would be created &lt;code&gt;username.github.io/projectname&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hence this post is going to discuss the a simple workflow using &lt;a href=&#34;http://github.com/&#34; title=&#34;Github&#34;&gt;Github&amp;rsquo;s&lt;/a&gt; user pages, &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; as blog and pseudo dynamic page, &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; as our continuous integration solution for deployment purposes.&lt;/p&gt;
+
+&lt;h2 id=&#34;github&#34;&gt;Github&lt;/h2&gt;
+
+&lt;p&gt;First setup a new user page on Github using for example the page generator or simply setting up a new repository called &lt;code&gt;username.github.io&lt;/code&gt;. Github will automatically create a new &lt;code&gt;master&lt;/code&gt; branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt;. Therefore create a new branch e.g. called &lt;code&gt;develop&lt;/code&gt; as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Creates our branch, without any parents (it&#39;s an orphan!)
+git checkout --orphan develop
+# Remove all files from the old working tree
+git rm -rf .
+
+echo &amp;quot;My GitHub Page&amp;quot; &amp;gt; index.html
+git add index.html
+git commit -a -m &amp;quot;First pages commit&amp;quot;
+git push origin develop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to add our &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; page to this &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
+
+&lt;h2 id=&#34;jekyll&#34;&gt;Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Now that we have a &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt; branch, former for the &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; compilation and later for your source, we can setup our blog. As described in the &lt;a href=&#34;http://jekyllrb.com/docs/home/&#34; title=&#34;Jekyll Documentation&#34;&gt;jekyll documentation&lt;/a&gt; we need to have at least a &lt;code&gt;_layouts&lt;/code&gt; directory for the templates that wrap posts, a &lt;code&gt;_posts&lt;/code&gt; for dynamic content and the rest of html and other files for you layout.&lt;/p&gt;
+
+&lt;p&gt;In addition we need to setup a &lt;code&gt;_config.yml&lt;/code&gt; file to tell &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; the compilation options. A example could look like the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;destination: ./_site
+lsi:         true
+pygments:    true
+markdown:    rdiscount
+permalink:   date
+rdiscount:
+  extensions: [smart]
+
+exclude: [&#39;Gemfile&#39;, &#39;Gemfile.lock&#39;, &#39;Rakefile&#39;, &#39;README.md&#39;, &#39;update-gh-pages.sh&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;Travis&lt;/a&gt; is used to automatically deploy the &lt;code&gt;develop&lt;/code&gt; branch and push the result of the &lt;code&gt;jekyll build&lt;/code&gt; output to the &lt;code&gt;master&lt;/code&gt; branch which the would be published to the Github pages.&lt;/p&gt;
+
+&lt;p&gt;For that we need first to get &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; access to our Github repository. If you do not have a &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; account register one on the homepage. On The &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; homepage go to the account settings and get access to the appropriate repository like in the image below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;travis_repository_access.png&#34; alt=&#34;Travis Repository Access&#34; title=&#34;Travis Repository Access&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next step is to configure the build process. For that create a new file called &lt;code&gt;.travis.yml&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch and add the &lt;code&gt;master&lt;/code&gt; branch to the blacklist and the &lt;code&gt;develop&lt;/code&gt; branch to the whitelist.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;language: ruby
+rvm: 1.9.3
+
+branches:
+  except:
+  - master
+
+branches:
+  only:
+  - develop
+
+script: rake travis
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see in the &lt;code&gt;.travis.yml&lt;/code&gt; file the &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; deployment starts with the command &lt;code&gt;rake travis&lt;/code&gt; which is implemented in the &lt;code&gt;Rakefile&lt;/code&gt; file which uses the &lt;code&gt;Gemfile&lt;/code&gt; for ruby library dependencies. So create the files &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Rakefile&lt;/code&gt; in the root directory of the &lt;code&gt;develop&lt;/code&gt; branch.&lt;/p&gt;
+
+&lt;p&gt;For the above &lt;code&gt;_config.yml&lt;/code&gt; configuration add the following RubyGem dependencies to the &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;http://rubygems.org&#39;
+
+gem &#39;jekyll&#39;
+gem &#39;rdiscount&#39;
+gem &#39;redcarpet&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; deployment add the following task to the &lt;code&gt;Rakefile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;	#!/usr/bin/env rake
+
+	task :travis do
+	  system(&amp;quot;jekyll build&amp;quot;)
+	end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly we need to create a &lt;code&gt;bash&lt;/code&gt; script to push the compiled &lt;a href=&#34;http://jekyllrb.com&#34; title=&#34;Jekyll&#34;&gt;jekyll&lt;/a&gt; page to the &lt;code&gt;master&lt;/code&gt; branch. For that authorize &lt;a href=&#34;http://travis-ci.org&#34; title=&#34;Travis CI&#34;&gt;travis&lt;/a&gt; to do commits and pushed as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;	curl -X POST -u &amp;lt;your_github_username&amp;gt; -H &amp;quot;Content-Type: application/json&amp;quot; -d &amp;quot;{\&amp;quot;scopes\&amp;quot;:[\&amp;quot;public_repo\&amp;quot;],\&amp;quot;note\&amp;quot;:\&amp;quot;token for pushing from travis\&amp;quot;}&amp;quot; https://api.github.com/authorizations
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and copy the &lt;code&gt;token&lt;/code&gt; key from the json result.&lt;/p&gt;
+
+&lt;p&gt;Now install the travis gem, encrypt the values of environment variables and add it to the &lt;code&gt;.tavis.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;gem install travis
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; GH_TOKEN=&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly you need to create a bash file which pushes the update to he &lt;code&gt;master&lt;/code&gt; branch using the &lt;code&gt;GH_TOKEN&lt;/code&gt; which was encrypted before and need to be registered in the &lt;code&gt;.travis.yml&lt;/code&gt; as &lt;code&gt;after_success&lt;/code&gt; task:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ &amp;quot;$TRAVIS_PULL_REQUEST&amp;quot; == &amp;quot;false&amp;quot; ]; then
+  echo -e &amp;quot;Starting to update master\n&amp;quot;
+
+  cp -R _site $HOME/_site
+
+  cd $HOME
+  git config --global user.email &amp;quot;iocast@me.com&amp;quot;
+  git config --global user.name &amp;quot;iocast&amp;quot;
+  git clone --quiet --branch=master https://${GH_TOKEN}@github.com/iocast/iocast.github.io.git master &amp;gt; /dev/null
+
+  cd master
+  rm -rf ./*
+  cp -Rf $HOME/_site/* .
+
+  git add -f .
+  git commit -m &amp;quot;Travis build $TRAVIS_BUILD_NUMBER pushed to master&amp;quot;
+  git push -fq origin master &amp;gt; /dev/null
+
+  echo -e &amp;quot;Done magic with coverage\n&amp;quot;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add the following lines to the end of the &lt;code&gt;.travis.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;after_success: ./update-gh-pages.sh
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tunneling over an intermediate to overcome demilitarized zone</title>
+      <link>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</link>
+      <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
+      <description>
+
+&lt;p&gt;Source code: &lt;a href=&#34;resources/code/shell/tunneling.sh&#34;&gt;shell script&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22. Last but not least, every time a server restarts we want that the tunnels automatically opens, means that we need to have an &lt;code&gt;cron&lt;/code&gt; job that checks, whether an open connection exists from the server to the intermediary or not, and if the server opens a connection to the intermediary the system does not need to prompt for password. Solution is here to register the public key of the server on the intermediary.&lt;/p&gt;
+
+&lt;h2 id=&#34;client&#34;&gt;Client&lt;/h2&gt;
+
+&lt;h3 id=&#34;opening-a-tunnel-from-client-to-intermediary&#34;&gt;Opening a tunnel from client to intermediary&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -L 22000:127.0.0.1:22000 -N root@152.96.56.32
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;connecting-to-server&#34;&gt;Connecting to server&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -P 22000 michel@127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;copy-files-scp&#34;&gt;Copy files (SCP)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#get
+scp -P 22000 michel@127.0.0.1:/home/michel/tunelling.sh /Users/michel/Public/Drop\ Box/
+
+#put
+scp /Users/michel/Public/Drop\ Box/tunelling.sh -P 22000 michel@127.0.0.1:/home/michel/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;intermediary&#34;&gt;Intermediary&lt;/h2&gt;
+
+&lt;h3 id=&#34;register-gpg-key-from-server&#34;&gt;Register GPG key from server&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-key add &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;server&#34;&gt;Server&lt;/h2&gt;
+
+&lt;h3 id=&#34;export-gpg-key&#34;&gt;Export GPG key&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-key export &amp;lt;key&amp;gt; &amp;gt; &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;open-a-connection-to-intermediary-from-server&#34;&gt;Open a connection to intermediary from server&lt;/h3&gt;
+
+&lt;p&gt;Save the following script as e.g. tunneling.sh&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/sh
+
+cmd=&amp;quot;ssh -R 22000:127.0.0.1:22 -N root@152.96.56.32&amp;quot;
+
+match=$(ps -aef | grep &amp;quot;${cmd}&amp;quot; | grep -v grep)
+if [ -z &amp;quot;${match}&amp;quot; ] ; then
+$cmd &amp;amp;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;register-cron-job&#34;&gt;Register cron job&lt;/h3&gt;
+
+&lt;p&gt;Edit crontab&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;crontab -e
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Adding a new job to the crontab. The following entry executes the defined script &lt;code&gt;tunneling.sh&lt;/code&gt; every 5 minutes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;5 * * * * /&amp;lt;path&amp;gt;/tunnelilng.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Crontab is structured as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;* * * * * command to be executed
+- - - - -
+| | | | |
+| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
+| | | ------- Month (1 - 12)
+| | --------- Day of month (1 - 31)
+| ----------- Hour (0 - 23)
+------------- Minute (0 - 59)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

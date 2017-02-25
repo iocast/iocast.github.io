@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>think twice code once!</title>
+    <link>http://iocast.github.io/index.xml</link>
+    <description>Recent content on think twice code once!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved © 2017</copyright>
+    <lastBuildDate>Sun, 21 Feb 2016 15:22:59 -0500</lastBuildDate>
+    <atom:link href="http://iocast.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Contact</title>
+      <link>http://iocast.github.io/contact/</link>
+      <pubDate>Sun, 21 Feb 2016 15:22:59 -0500</pubDate>
+      
+      <guid>http://iocast.github.io/contact/</guid>
+      <description>&lt;p&gt;adsfdsaf dsaf&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>http://iocast.github.io/cheatsheet/git/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/git/</guid>
+      <description>
+
+&lt;pre&gt;&lt;code&gt;git submodule update --init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;settings&#34;&gt;Settings&lt;/h2&gt;
+
+&lt;h3 id=&#34;username&#34;&gt;Username&lt;/h3&gt;
+
+&lt;p&gt;in a local git repo&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config user.name &amp;quot;iocast&amp;quot;
+git config user.email &amp;quot;iocast@me.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or for global settings&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global user.name &amp;quot;iocast&amp;quot;
+git config --global user.email &amp;quot;iocast@me.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;general&#34;&gt;General&lt;/h2&gt;
+
+&lt;p&gt;download from git repository (normally branch &amp;lsquo;master&amp;rsquo;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone &amp;lt;remote_repo&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;download specific branch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone -b &amp;lt;branch&amp;gt; &amp;lt;remote_repo&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;commit changes (check if you are on the correct branch)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;quot;message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;push-pull&#34;&gt;Push / Pull&lt;/h3&gt;
+
+&lt;p&gt;send branch to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push origin &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;get branch from repository/server (update)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git pull origin &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;resetting local repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git reset --hard origin/master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;branching&#34;&gt;Branching&lt;/h3&gt;
+
+&lt;p&gt;list all branches&lt;/p&gt;
+
+&lt;p&gt;Options:&lt;/p&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;-a&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;p&gt;lists all branches&lt;/p&gt;
+
+&lt;p&gt;git branch [options]&lt;/p&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;create local branch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git branch develop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;delete a branch (origin - server)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git branch -d develop
+git push origin --delete develop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;switch branch to work on it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout develop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;push branch to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push origin &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;tagging&#34;&gt;Tagging&lt;/h3&gt;
+
+&lt;p&gt;first of all switch to master&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and if necessary merge from a other branch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git merge --no-ff &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;create tag&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git tag -a 1.2 -m &amp;quot;message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;push to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push --tags
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;list tags&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git tag
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;change to tag&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout &amp;lt;tag&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or make changes based on this tag (e.g. for hotfixes for this specific tag) where the first argument is the new branch name an the second is the tag name&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout -b hotfix-1.3.1 1.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;release-managment&#34;&gt;Release Managment&lt;/h2&gt;
+
+&lt;p&gt;assume we are working on branch &amp;lsquo;develop&amp;rsquo; an are ready to create a new release.&lt;/p&gt;
+
+&lt;h3 id=&#34;releases&#34;&gt;Releases&lt;/h3&gt;
+
+&lt;h4 id=&#34;creating&#34;&gt;Creating&lt;/h4&gt;
+
+&lt;p&gt;Switched to a new branch &amp;ldquo;release-1.2&amp;rdquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout -b release-1.2 develop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;change version number on the notes or other files and commit it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -a -m &amp;quot;Bumped version number to 1.2&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;working&#34;&gt;Working&lt;/h4&gt;
+
+&lt;p&gt;then modify all files needed for release-1.2 and commit changes (several commits can take place)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;quot;message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;finishing&#34;&gt;Finishing&lt;/h4&gt;
+
+&lt;p&gt;Now we can finish this release.
+Switch to branch &amp;lsquo;master&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;merge from the release-1.2 branch and push to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git merge --no-ff release-1.2
+git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;tag as release in branch master and push tag to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git tag -a 1.2 -m &amp;quot;message&amp;quot;
+git push --tags
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;release banch on our local drive is not needed anymore.
+Deleted branch release-1.2&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git branch -d release-1.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;hot-fixes&#34;&gt;Hot Fixes&lt;/h3&gt;
+
+&lt;p&gt;Hot fixes are done from the master (or release) branch.&lt;/p&gt;
+
+&lt;h4 id=&#34;creating-1&#34;&gt;Creating&lt;/h4&gt;
+
+&lt;p&gt;Switched to a new branch &amp;ldquo;hotfix-1.2.1&amp;rdquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout -b hotfix-1.2.1 master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;change version number on the notes or other files and commit it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -a -m &amp;quot;Bumped version number to 1.2.1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;working-1&#34;&gt;Working&lt;/h4&gt;
+
+&lt;p&gt;then modify all files needed files for hotfix-1.21 and commit changes (several commits can take place)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;quot;message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;finishing-1&#34;&gt;Finishing&lt;/h4&gt;
+
+&lt;p&gt;Switched to branch &amp;lsquo;master&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;merge changes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git merge --no-ff hotfix-1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;tag it and push tag to repository/server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git tag -a 1.2.1 -m &amp;quot;message&amp;quot;
+git push --tag
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;switch to develop and merge hotfix into it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout develop
+git merge --no-ff hotfix-1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and delete hotfix&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git branch -d hotfix-1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>IRC</title>
+      <link>http://iocast.github.io/cheatsheet/irc/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/irc/</guid>
+      <description>
+
+&lt;h2 id=&#34;user&#34;&gt;User&lt;/h2&gt;
+
+&lt;h3 id=&#34;register&#34;&gt;Register&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg NickServ register &amp;lt;password&amp;gt; &amp;lt;email&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;login&#34;&gt;Login&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg nickserv identify &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;administering-channel&#34;&gt;Administering Channel&lt;/h2&gt;
+
+&lt;p&gt;You cannot administer a channel until you become an operator with the op command. Only an operator can create other operators. If no operators are left in a channel, the channel can no longer be administered. You shouldn&amp;rsquo;t be operator any longer than you have to, as it creates an unhelpful class distinction among channel users and not knowing who is operator can help keep trolls from causing trouble. Once you have finished, drop to normal user status with the deop command.&lt;/p&gt;
+
+&lt;p&gt;You can see all the flags assigned to all users in a channel with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg chanserv access #&amp;lt;channel&amp;gt; list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;register-a-channel&#34;&gt;Register a Channel&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg chanserv register #&amp;lt;channel&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;becoming-founder&#34;&gt;Becoming Founder&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg ChanServ flags #vectorformats iocast +*F
+/msg ChanServ flags #vectorformats iocast -OV
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first command grants all flags to a user, including the founder flag &lt;code&gt;F&lt;/code&gt; which must be explicitly granted (it isn&amp;rsquo;t part of the &lt;code&gt;*&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The second command removes two flags which normally should not be used. &lt;code&gt;O&lt;/code&gt; automatically makes the user an operator when they join the channel, which should be avoided as previously explained. &lt;code&gt;V&lt;/code&gt; automatically voices a user when they join the channel. Voicing is only needed on moderated channels where new users cannot speak upon joining without the voice flag. An open channel for community participation should not require this, and not having the &lt;code&gt;V&lt;/code&gt; flag makes it easier to identify a problem with the channel.&lt;/p&gt;
+
+&lt;h3 id=&#34;becoming-operator&#34;&gt;Becoming Operator&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/msg chanserv op #&amp;lt;channel&amp;gt; &amp;lt;username&amp;gt;
+/msg chanserv flags #&amp;lt;channel&amp;gt; &amp;lt;username&amp;gt; &amp;lt;flags&amp;gt;
+/msg chanserv deop #&amp;lt;channel&amp;gt; &amp;lt;username&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>http://iocast.github.io/cheatsheet/linux/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/linux/</guid>
+      <description>
+
+&lt;h2 id=&#34;user-group-management&#34;&gt;User &amp;amp; Group Management&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;new group&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;groupadd sambashare&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;new user&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;useradd -m -g users -G sambashare -s /bin/bash unix_user&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;change password&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;passwd unix_user&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;rename user&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;usermod -l newUsername oldUsername&lt;/code&gt; and change home folder &lt;code&gt;usermod -d /home/newHomeDir -m newUsername&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;change to root&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;sudo -i&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;remove user&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;deluser --remove-home username&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&#34;user-with-sudo-rights&#34;&gt;User with &lt;code&gt;sudo&lt;/code&gt; rights&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;useradd --create-home --gid users --shell /bin/bash userName
+passwd userName
+visudo -f /etc/sudoers.d/sudoers
+
+# User privilege specification
+userName    ALL=(ALL:ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;samba-management&#34;&gt;Samba Management&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;new user&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;pdbedit -a -u samba_user&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;change password&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;smbpasswd samba_user&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;file-and-directory-handling&#34;&gt;File and Directory Handling&lt;/h2&gt;
+
+&lt;h3 id=&#34;find-remove&#34;&gt;Find &amp;amp; Remove&lt;/h3&gt;
+
+&lt;p&gt;specific files&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;find &amp;lt;path&amp;gt; -name &#39;&amp;lt;file-name&amp;gt;&#39; -delete
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If something &amp;ldquo;more portable&amp;rdquo; needed then you&amp;rsquo;re better off with&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;find &amp;lt;directory name&amp;gt; -name &#39;*.pyc&#39; -exec rm {} \;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;file-manipulation&#34;&gt;File Manipulation&lt;/h3&gt;
+
+&lt;p&gt;search the line which begins with &lt;code&gt;var feature server&lt;/code&gt; and replaces the whole line with &lt;code&gt;var featureserver = &amp;quot;http://featureserver.org/fs&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sed -e &#39;s%^var featureserver.*%var featureserver = &amp;quot;http://featureserver.org/fs&amp;quot;%g&#39; featureserver.org/assets/js/map.js &amp;gt; ${tmp}/website/assets/js/map.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;template command is as follow, where the first character after &lt;code&gt;s&lt;/code&gt; is used as separator and afterwards it comes a regex. Use &lt;code&gt;-i&lt;/code&gt; to do an &amp;ldquo;in place&amp;rdquo; replacement (no need for pipe)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sed -ie &#39;s/$search_for/$replace_with/g&#39; $file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;folder-size&#34;&gt;Folder size&lt;/h3&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;-h&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;human readable file size&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-s&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;sum all subfolders&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;du &amp;lt;directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;compression&#34;&gt;Compression&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;tar -cvzf &amp;lt;file.tar.bz2&amp;gt; --exclude-vcs --exlude=&#39;*.svn&#39; folder/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;extraction&#34;&gt;Extraction&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;tar -zxvf &amp;lt;file.tar.bz2&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;synchronization&#34;&gt;Synchronization&lt;/h3&gt;
+
+&lt;p&gt;Synchronization&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::bash
+#! /bin/bash
+rsync -av --delete &amp;lt;from&amp;gt; &amp;lt;to&amp;gt; &amp;gt; &amp;lt;log&amp;gt; &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;cloning&#34;&gt;Cloning&lt;/h3&gt;
+
+&lt;p&gt;burning image to disk (also usb drives)&lt;/p&gt;
+
+&lt;p&gt;optional use &lt;code&gt;bs=8192&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dd if=&amp;lt;path&amp;gt;.iso of=&amp;lt;disk&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;job-programs&#34;&gt;Job / Programs&lt;/h2&gt;
+
+&lt;p&gt;Keep job running despite of a logout&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nohup &amp;lt;command&amp;gt; &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;system-information&#34;&gt;System information&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;packages&#34;&gt;Packages&lt;/h3&gt;
+
+&lt;p&gt;getting installed packages including version number&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;time dpkg -l | perl -lane &#39;print &amp;quot;$F[1] : $F[2]&amp;quot; if m/^ii/&#39;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Oracle VirtualBox</title>
+      <link>http://iocast.github.io/cheatsheet/virtualbox/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/virtualbox/</guid>
+      <description>
+
+&lt;h2 id=&#34;virtualbox-management&#34;&gt;VirtualBox Management&lt;/h2&gt;
+
+&lt;p&gt;This section describes to to use &lt;code&gt;VBoxManage&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;** resizing your virtual disk**&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&#39;C:\Program Files\Oracle\VirtualBox\VBoxManage.exe&#39; modifyhd &#39;.\Windows.vdi&#39; --resize 40000
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL</title>
+      <link>http://iocast.github.io/cheatsheet/postgres/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/postgres/</guid>
+      <description>
+
+&lt;h2 id=&#34;basics&#34;&gt;Basics&lt;/h2&gt;
+
+&lt;p&gt;login as postgres use r&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo su postgres -
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;run sql command&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -U postgres -c &amp;quot;&amp;lt;sql&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;list&#34;&gt;List&lt;/h3&gt;
+
+&lt;p&gt;lists all databases&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql --list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;create&#34;&gt;Create&lt;/h3&gt;
+
+&lt;p&gt;create database&lt;/p&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;-O&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;owner&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-U&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;username&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-E&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;encoding&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-e&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;echo&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;--locale=&amp;lt;locale&amp;gt;&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;(This is equivalent to specifying both &lt;code&gt;--lc-collate&lt;/code&gt; and &lt;code&gt;--lc-ctype&lt;/code&gt;)&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;--lc-collate=&#39;&amp;lt;locale&amp;gt;&#39;&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;collation order&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;--lc-ctype=&#39;&amp;lt;locale&amp;gt;&#39;&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;character classification&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-T&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;template&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;createdb -U postgres &amp;lt;database&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;drop&#34;&gt;Drop&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;dropdb -U &amp;lt;user&amp;gt; -h &amp;lt;host&amp;gt; -i -e &amp;lt;database&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;log-into-database&#34;&gt;Log into database&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;-W&lt;/code&gt; to force password prompt&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -U &amp;lt;user&amp;gt; -W -d &amp;lt;database&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;user&#34;&gt;User&lt;/h3&gt;
+
+&lt;p&gt;create user&lt;/p&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;-D&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;(The new user will not be allowed to create databases.)&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-P&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;(If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.)&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-S&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;(The new user will not be a superuser.)&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;-E&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;(Encrypts the user&amp;rsquo;s password stored in the database. If not specified, the default password behavior is used.)&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;createuser -D -S -E -P &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;export-to-file&#34;&gt;Export To File&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;\h copy&lt;/code&gt; tells you what are the parameters for export&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;COPY (&amp;lt;sql&amp;gt;) TO &#39;&amp;lt;file&amp;gt;&#39; CSV
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;commands&#34;&gt;Commands&lt;/h2&gt;
+
+&lt;p&gt;load environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;list all users&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\dg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;list all databases&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;list all tables&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\dp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;table schema&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\d &amp;lt;table&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;cancel/go out&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CTRL+D
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;extensions&#34;&gt;Extensions&lt;/h2&gt;
+
+&lt;p&gt;Connect to the PostgreSQL server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -h localhost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;create a database&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE DATABASE mydatabase;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and connect to it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\c mydatabase
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;hstore&#34;&gt;Hstore&lt;/h3&gt;
+
+&lt;p&gt;creates / loads hstore extension for the current database&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE EXTENSION hstore;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;postgis&#34;&gt;PostGIS&lt;/h3&gt;
+
+&lt;p&gt;creates / load postgis extension for the current database&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE EXTENSION postgis;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;sql&#34;&gt;SQL&lt;/h2&gt;
+
+&lt;p&gt;grant access&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ALTER DATABASE &amp;lt;name&amp;gt; OWNER TO &amp;lt;user&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;issues&#34;&gt;Issues&lt;/h2&gt;
+
+&lt;h3 id=&#34;full-disk&#34;&gt;Full Disk&lt;/h3&gt;
+
+&lt;p&gt;Locate the directory which uses that much space on the disk. On a standard installation it is somewhere in the &lt;code&gt;/var/lib/&lt;/code&gt; directory. If found the PostgreSQL data directory (here as example &lt;code&gt;/var/lib/pgsql&lt;/code&gt; run the following command to find out which directory needs how much space on the disk&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;du -h
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;First stop PostgreSQL&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/postgresql stop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then move a &amp;ldquo;big&amp;rdquo; directory to a partition/disk that has space free.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv /var/lib/pgsql/main/ /media/tmp/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create a symlink to this directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ln -s /medai/tmp/main /var/lib/pgsql/main
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Start PostgreSQL&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/postgresql start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and VACUUM FULL&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -c &amp;quot;VACUUM FULL&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Shutdown the database.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/postgresql stop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove the symbolic link&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unlink /var/lib/pgsql/main
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and move the files back onto the &lt;code&gt;/var/lib/pgsql&lt;/code&gt; filesystem again&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv /media/tmp/main/ /var/lib/pgsql/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you are finished. Start the database.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/postgresql start
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python PyPi</title>
+      <link>http://iocast.github.io/cheatsheet/python_pypi/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/python_pypi/</guid>
+      <description>
+
+&lt;h2 id=&#34;comands&#34;&gt;Comands&lt;/h2&gt;
+
+&lt;h3 id=&#34;registration&#34;&gt;registration&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;python setup.py register
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update&#34;&gt;update&lt;/h3&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;bdist&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;create a built (binary) distribution&lt;br/&gt;&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;sdist&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;create a source distribution (tarball, zip file, etc.)&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;python setup.py sdist upload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;configuration-file&#34;&gt;configuration file&lt;/h3&gt;
+
+&lt;p&gt;is called &lt;code&gt;.pypirc&lt;/code&gt;, is located in your home direve &lt;code&gt;~&lt;/code&gt; and has the following structure&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[distutils]
+index-servers =
+    pypi
+    other
+
+[pypi]
+    repository: &amp;lt;repository-url&amp;gt;
+    username: &amp;lt;username&amp;gt;
+    password: &amp;lt;password&amp;gt;
+
+[other]
+    repository: http://example.com/pypi
+    username: &amp;lt;username&amp;gt;
+    password: &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sphinx</title>
+      <link>http://iocast.github.io/cheatsheet/sphinx/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/sphinx/</guid>
+      <description>
+
+&lt;h2 id=&#34;errors&#34;&gt;Errors&lt;/h2&gt;
+
+&lt;h3 id=&#34;valueerror-unknown-locale-utf-8&#34;&gt;ValueError: unknown locale: UTF-8&lt;/h3&gt;
+
+&lt;p&gt;If you try to build your documentation (&lt;code&gt;sphinx-build -b html -a . _build/&lt;/code&gt;) and get the following error&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;...
+  File &amp;quot;.../virtualenv/publishing/lib/python2.7/locale.py&amp;quot;, line 443, in _parse_localename
+    raise ValueError, &#39;unknown locale: %s&#39; % localename
+ValueError: unknown locale: UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;then try the following. Add the the below lines to your &lt;code&gt;$HOME/.bash_profile&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Do&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;source $HOME/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and try it again. Or simply export the &lt;strong&gt;locale&lt;/strong&gt; settings before running the &lt;code&gt;sphinx-build&lt;/code&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows general</title>
+      <link>http://iocast.github.io/cheatsheet/windows/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/windows/</guid>
+      <description>
+
+&lt;h2 id=&#34;desktop&#34;&gt;Desktop&lt;/h2&gt;
+
+&lt;p&gt;For all the command in this section I used &lt;strong&gt;command line prompt&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;sharing&#34;&gt;Sharing&lt;/h3&gt;
+
+&lt;p&gt;remove a network share&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;net use /delete &amp;lt;drive name or network path&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;server&#34;&gt;Server&lt;/h2&gt;
+
+&lt;p&gt;For all the command below I used &lt;strong&gt;PowerShell&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;sharing-1&#34;&gt;Sharing&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;list&lt;/strong&gt; of all connected users&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;Get-SmbSession
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;for &lt;strong&gt;command line&lt;/strong&gt; use&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;net session
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;closing&lt;/strong&gt; a session can be done using the session id, computer name or user name as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;Close-SmbSession -SessionId 171798691989
+Close-SmbSession –ClientComputerName \\192.168.0.20
+Close-SmbSession –ClientUserName Domain\Username
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;miscellaneous&#34;&gt;Miscellaneous&lt;/h2&gt;
+
+&lt;h3 id=&#34;synchronization&#34;&gt;Synchronization&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;mirror&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bat&#34;&gt;robocopy &amp;lt;source&amp;gt; &amp;lt;destination&amp;gt; /MIR /XD &amp;quot;&amp;lt;source&amp;gt;/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;folder&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;XD&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;exluding directories&lt;/dd&gt;
+&lt;/dl&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>about</title>
+      <link>http://iocast.github.io/about/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/about/</guid>
+      <description>
+
+&lt;h2 id=&#34;h2&#34;&gt;h2&lt;/h2&gt;
+
+&lt;p&gt;text h2&lt;/p&gt;
+
+&lt;h3 id=&#34;h3&#34;&gt;h3&lt;/h3&gt;
+
+&lt;p&gt;text h3&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My personal file server on a Cubox from SolidRun using Arch Linux</title>
+      <link>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</link>
+      <pubDate>Sun, 09 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
+      <description>
+
+&lt;p&gt;For my file server I have the following requirements:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;it should consume as less as possible electricity&lt;/li&gt;
+&lt;li&gt;it should be very silent, means no active cooling&lt;/li&gt;
+&lt;li&gt;the operation system should use OpenSSH&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Thus, for the hardware I have decided to use a &lt;a href=&#34;http://www.solid-run.com/&#34;&gt;Cubox from SolidRun&lt;/a&gt; because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use &lt;a href=&#34;http://archlinuxarm.org/platforms/armv7/marvell/cubox&#34;&gt;Arch Linux&lt;/a&gt; because it is more up-to-date then the Debian or Ubuntu distribution.&lt;/p&gt;
+
+&lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
+
+&lt;p&gt;Download the latest version of Arch Linux for the &lt;a href=&#34;http://archlinuxarm.org/platforms/armv7/marvell/cubox&#34;&gt;Marvell ARMv7 platform&lt;/a&gt; from the official site. Next, plug your MicroSD into your computer and find out which drive (&lt;code&gt;/dev/sdx&lt;/code&gt;) it is&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;df -ah
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clear your disk and create &lt;strong&gt;one&lt;/strong&gt; &lt;code&gt;ext3&lt;/code&gt; partition.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkfs.ext3 /dev/sdx1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Know mount it and extract Arch Linux onto your MicroSD partition&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The default login is user &lt;code&gt;root&lt;/code&gt; with password &lt;code&gt;root&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;configuration&#34;&gt;Configuration&lt;/h1&gt;
+
+&lt;p&gt;Now lets configure some basic stuff, like date and time, DHCP, etc.&lt;/p&gt;
+
+&lt;h2 id=&#34;network&#34;&gt;Network&lt;/h2&gt;
+
+&lt;p&gt;Create the &lt;code&gt;/etc/systemd/network/eth0.network&lt;/code&gt; file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;for DHCP&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Match]
+Name=eth0
+
+[Network]
+DHCP=both
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;for fixed IP&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Match]
+Name=eth0
+
+[Network]
+Address=10.0.1.2/24
+Gateway=10.0.1.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart systemd-networkd. To do so, run this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemctl restart systemd-networkd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;clientid&#34;&gt;Clientid&lt;/h3&gt;
+
+&lt;p&gt;If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in &lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
+duid
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.&lt;/p&gt;
+
+&lt;p&gt;To automatically start the DCHP daemon at start up you have to enable it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemctl enable dhcpcd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;system-upgrade&#34;&gt;System Upgrade&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;pacman -Syu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;bad-experience-with-vi&#34;&gt;Bad experience with &lt;code&gt;vi&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;If you have bad experience or strange behaviour with the standard &lt;code&gt;vi&lt;/code&gt; simply install &lt;code&gt;vim&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pacman -S vim-minimal
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;locale-and-date-time&#34;&gt;Locale and Date/Time&lt;/h2&gt;
+
+&lt;p&gt;Change your timezone to the one your are living at. All time zones can be found in the folder &lt;code&gt;/etc/timezones&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also do not forget to change your &lt;code&gt;locale&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;samba&#34;&gt;Samba&lt;/h1&gt;
+
+&lt;p&gt;For internal file sharing you could use Samba. Tips and tricks can be found on &lt;a href=&#34;https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks&#34;&gt;Arch Linux Samba site&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pacman -S samba
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your can restart the service using the follwing&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemctl enable smbd.service
+systemctl enable nmbd.service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new samba group&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;groupadd sambashare
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add user to it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Adding a user to the samba group&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usermod -a -G sambashare unix_user_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On my Cubox I use the following configuration (&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[global]
+workgroup = iocast
+server string = file server
+# Share-level security: Each share in the workgroup has one or more passwords associated with it. Anyone who knows a valid password for the share can access it.
+# User-level security: 	Each share in the workgroup is configured to allow access from certain users. With each initial tree connection, the Samba server verifies users and their passwords to allow them access to the share.
+# Server-level security: This is the same as user-level security, except that the Samba server uses another server to validate users and their passwords before granting access to the share.
+# Domain-level security: Samba becomes a member of a Windows NT domain and uses one of the domain&#39;s domain controllers—either the PDC or a BDC—to perform authentication. Once authenticated, the user is given a special token that allows her access to any share with appropriate access rights. With this token, the domain controller will not have to revalidate the user&#39;s password each time she attempts to access another share within the domain. The domain controller can be a Windows NT/2000 PDC or BDC, or Samba acting as a Windows NT PDC.
+security = user
+create mask = 0775
+force create mode = 0775
+directory mask = 02775
+force directory mode = 02775
+force group = sambashare
+
+[michel]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel
+read list = karolina
+
+[michel backup]
+comment = data disk backup
+path = /storage/backup/
+public = no
+writable = no
+guest ok = no
+valid users = michel
+write list = michel
+
+[ninalaki]
+comment = data disk1
+path = /storage/data1/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+
+[ninalaki backup]
+comment = data disk1 backup
+path = /storage/backup1/
+public = no
+writable = no
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+
+[scans]
+comment = documents from scanner
+path = /storage/scans/
+guest ok = yes
+guest account = michel
+available = yes
+browsable = yes
+public = yes
+writable = yes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;disks-management&#34;&gt;Disks management&lt;/h1&gt;
+
+&lt;p&gt;To automatically mount disks on startup, you need to add them to the &lt;code&gt;/etc/fstab&lt;/code&gt; configuration file. Also use the option &lt;code&gt;nofail&lt;/code&gt; to not report any error if the disk is absent. For more information read the &lt;a href=&#34;https://wiki.archlinux.org/index.php/fstab&#34;&gt;manual on Arch Linux&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Run &lt;code&gt;lsblk -f&lt;/code&gt; or &lt;code&gt;ls -l /dev/disk/by-uuid&lt;/code&gt; to list the partitions / disks. Edit the &lt;code&gt;/etc/fstab&lt;/code&gt; and prefix the values in the UUID column with &lt;code&gt;UUID=&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# &amp;lt;file system&amp;gt;                           &amp;lt;dir&amp;gt;             &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;                        &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/    ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/  ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=b5a1514e-6a87-4ea5-a3ce-a592a41abecc /storage/backup1/ ext4    nofail,rw,relatime,data=ordered  0       0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;dynamic-dns&#34;&gt;Dynamic DNS&lt;/h1&gt;
+
+&lt;p&gt;If you use &lt;a href=&#34;http://www.afraid.org&#34;&gt;afraid.org&lt;/a&gt; as your dynamic DNS service you can get an example &lt;code&gt;cron&lt;/code&gt; entry from the &lt;strong&gt;Dynamic DNS&lt;/strong&gt; menu entry. It look likes the following&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1 &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On Arch Linux you need to do the following changes to use it with &lt;code&gt;systemd/Timers&lt;/code&gt; (see &lt;a href=&#34;https://wiki.archlinux.org/index.php/Systemd/Timers&#34;&gt;here&lt;/a&gt;). First we need to create a new timer &lt;code&gt;vim /etc/systemd/system/afraid.org.timer&lt;/code&gt; and add the following lines&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=timer for service afraid.org.timer
+Requires=network-online.target
+Requires=network.target
+After=dhcpcd.service
+
+[Timer]
+OnCalendar=*:3,8,13,18,23,28,33,38,43,48,53,58
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then create a service file of the same name &lt;code&gt;/etc/systemd/system/afraid.org.service&lt;/code&gt; and add the following lines&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=service for afraid.org for pasithee.mooo.com
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &amp;gt;&amp;gt; /tmp/freedns_pasithee_mooo_com.log 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can test the service.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# test service
+systemctl start afraid.org.service
+systemctl stop afraid.org.service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As soon as it works you can enable the timer&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemctl enable afraid.org.timer
+systemctl start afraid.org.timer
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Javascript localization part 1</title>
+      <link>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</link>
+      <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
+      <description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
+
+&lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
+
+&lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var dateobj= new Date()
+	dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
+	// 21/7/2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	Date.locale = {
+		en: {
+			month_names: [&#39;January&#39;, &#39;February&#39;, &#39;March&#39;, &#39;April&#39;, &#39;May&#39;, &#39;June&#39;, &#39;July&#39;, &#39;August&#39;, &#39;September&#39;, &#39;October&#39;, &#39;November&#39;, &#39;December&#39;],
+			month_names_short: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]
+		}
+	};
+
+	Date.prototype.getMonthName = function(lang) {
+		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
+		return Date.locale[lang].month_names[this.getMonth()];
+	};
+	Date.prototype.getMonthNameShort = function(lang) {
+		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
+		return Date.locale[lang].month_names_short[this.getMonth()];
+	};
+
+	// that can be used as follow:
+	var now = new Date();
+	now.getMonthNameShort + &amp;quot; &amp;quot; + now.getFullYear();
+	// July 2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.&lt;/p&gt;
+
+&lt;p&gt;The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.&lt;/p&gt;
+
+&lt;p&gt;For the &lt;code&gt;Date&lt;/code&gt; object now have these functions, whereas I personally prefer the &lt;code&gt;toLocaleString()&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleDateString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the date portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleTimeString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the time portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;You can use it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var now = new Date()
+	date.toLocaleString(&#39;en&#39;, { month: &#39;long&#39;, year: &#39;numeric&#39; });
+	// July 2014
+	date.toLocaleString(&#39;en&#39;, { month: &#39;2-digit&#39;, day: &#39;2-digit&#39;, year: &#39;numberic&#39; });
+	// 21/07/2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where the first parameter is the &lt;code&gt;locale&lt;/code&gt; and the second parameter represents the &lt;code&gt;options&lt;/code&gt;. The allowed options can be found on the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString&#34;&gt;Mozilla Developer Network&lt;/a&gt;. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.&lt;/p&gt;
+
+&lt;p&gt;The same applies to the &lt;code&gt;Number&lt;/code&gt; object.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Number.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this number.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;You can use it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var number = 3600;
+	number.toLocaleString(&#39;en&#39;);
+	// 3,600
+	number.toLocaleString(&#39;de&#39;);
+	// 3.600
+	number.toLocaleString(&#39;en&#39;, {
+		style: &#39;currency&#39;,
+		currency: &#39;USD&#39;
+	});
+	// $3,600
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GitHub Pages for a repository compiling using Travis CI</title>
+      <link>http://iocast.github.io/post/versioning/github-travis-addition/</link>
+      <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/versioning/github-travis-addition/</guid>
+      <description>&lt;p&gt;First of all check if you have already a &lt;strong&gt;personal access token&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;github_personal_access_tokens.png&#34; alt=&#34;GitHub personal access tokens&#34; title=&#34;GitHub personal access tokens&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If not, you can follow these &lt;a href=&#34;{% post_url 2013-10-08-github-jekyll-travis %}&#34;&gt;instructions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;travis_grant_repository_access.png&#34; alt=&#34;Travis grant access to GitHub repository&#34; title=&#34;Travis grant access to GitHub repository&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next thing is to generate a new secure string for your &lt;code&gt;.travis.yml&lt;/code&gt; file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curl -X GET -u &amp;lt;your_github_username&amp;gt; https://api.github.com/authorizations
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should get a JSON response which looks like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;...
+{
+	&amp;quot;id&amp;quot;: 1234567,
+	&amp;quot;url&amp;quot;: &amp;quot;https://api.github.com/authorizations/1234567&amp;quot;,
+	&amp;quot;app&amp;quot;: {
+		&amp;quot;name&amp;quot;: &amp;quot;travis: token for pushing from travis (API)&amp;quot;,
+		&amp;quot;url&amp;quot;: &amp;quot;http://developer.github.com/v3/oauth_authorizations/&amp;quot;,
+		&amp;quot;client_id&amp;quot;: &amp;quot;00000000000000000000&amp;quot;
+		},
+	&amp;quot;token&amp;quot;: &amp;quot;1abc234d56efghi789&amp;quot;,
+	&amp;quot;note&amp;quot;: &amp;quot;travis: token for pushing from travis&amp;quot;,
+	&amp;quot;note_url&amp;quot;: null,
+	&amp;quot;created_at&amp;quot;: &amp;quot;2014-01-01T12:00:00Z&amp;quot;,
+	&amp;quot;updated_at&amp;quot;: &amp;quot;2014-01-01T12:00:00Z&amp;quot;,
+	&amp;quot;scopes&amp;quot;: [
+		&amp;quot;public_repo&amp;quot;
+	]
+},
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So we are ready to generate the secure string for Travis. Be sure that you have installed &lt;code&gt;travis&lt;/code&gt; rubygem using the following command &lt;code&gt;gem install travis&lt;/code&gt;. Open a terminal and go to the folder where &lt;code&gt;.travis.yml&lt;/code&gt; lays and add the secure string to it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /path/to/the/.travsi.yml/file
+travis encrypt -r &amp;lt;user&amp;gt;/&amp;lt;repository&amp;gt; GH_TOKEN=&amp;lt;token&amp;gt; --add env.global
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Joining a Active Directory on Linux - the easiest way!</title>
+      <link>http://iocast.github.io/post/server-management/linux-join-ad/</link>
+      <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/server-management/linux-join-ad/</guid>
+      <description>
+
+&lt;p&gt;The easiest way, at least for me, is to use the &lt;code&gt;likewise-open&lt;/code&gt; package. You can find the official documentation &lt;a href=&#34;https://help.ubuntu.com/community/LikewiseOpen&#34;&gt;here&lt;/a&gt;. Under Ubuntu you can simple install this package using &lt;code&gt;apt-get&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install likewise-open
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once you have installed it, you can join a Active Directory (AD) as follow.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.&lt;/p&gt;
+
+&lt;p&gt;Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under &lt;code&gt;/home/likewise-open&lt;/code&gt; and then a subfolder named as his username.&lt;/p&gt;
+
+&lt;h2 id=&#34;restricting-access-to-specific-groups&#34;&gt;Restricting access to specific groups&lt;/h2&gt;
+
+&lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;lwconfig RequireMembershipOf &amp;quot;&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;&amp;quot; &amp;quot;&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;&amp;quot;
+lw-update-dns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you forget which groups have access to you server, you could check it by running the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;lwconfig --detail RequireMembershipOf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;login&#34;&gt;Login&lt;/h2&gt;
+
+&lt;p&gt;Now you are able to login to your server using active directory authentication:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh &amp;lt;ad_domain&amp;gt;\\&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title>
+      <link>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</link>
+      <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</guid>
+      <description>
+
+&lt;h2 id=&#34;removing-preinstalled-packages&#34;&gt;Removing preinstalled packages&lt;/h2&gt;
+
+&lt;p&gt;First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;dpkg -l | grep &#39;postgres\|gdal&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should get a list like the following one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
+ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs for PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager for multiple PostgreSQL client versions
+ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities for PostgreSQL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want, you could remove these packages as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
+apt-get autoremove
+apt-get autoclean
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;installing-postgresql-9-3&#34;&gt;Installing PostgreSQL 9.3&lt;/h2&gt;
+
+&lt;p&gt;First you need to find out your release code name:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;lsb_release -c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;which get you something like that &lt;code&gt;Codename:    precise&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a new file &lt;code&gt;codename-pgdg.list&lt;/code&gt; in &lt;code&gt;/etc/apt/sources.list.d&lt;/code&gt; according to the &lt;a href=&#34;https://wiki.postgresql.org/wiki/Apt&#34; title=&#34;Apt - PostgreSQL wiki&#34;&gt;PostgreSQL wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vi /etc/apt/sources.list.d/precise-pgdg.list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add the following line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we need to import the repository key from&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can a update the repository and install the required packages from the PostgreSQL repository.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get update
+apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;compiling-postgis-2-1-against-libgdal-1-10-0&#34;&gt;Compiling PostGIS 2.1 against libgdal &amp;gt;= 1.10.0&lt;/h2&gt;
+
+&lt;p&gt;To install PostGIS 2.1 it is important that &lt;code&gt;postgresql-server-dev-x.x&lt;/code&gt; is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled &lt;code&gt;libgdal&lt;/code&gt; 1.10.0 version from &lt;strong&gt;ubuntugis&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Install &lt;code&gt;python-software-properties&lt;/code&gt; and add the apt sources (repositories):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install python-software-properties
+add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now install the new GDAL library called &lt;code&gt;libgdal1h&lt;/code&gt; and its&amp;rsquo; development package&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install libgdal1h
+apt-cache showpkg libgdal-dev*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;which gets you something like that:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;...
+Provides:
+1.10.0-1~precise1 -
+1.9.0-3.1~pgdg12.4+1 -
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can install a version using the &lt;code&gt;-f&lt;/code&gt; flag&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install -f libgdal-dev=1.10.0-1~precise1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before installing the PostGIS from source we install the required dependencies.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Download the latest PostGIS source and compile it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+tar xzvf postgis-2.1.0.tar.gz
+cd postgis-2.1.0
+./configure
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt; PostGIS is now configured for x86_64-unknown-linux-gnu
+
+-------------- Compiler Info -------------
+ C compiler:           gcc -g -O2
+ C++ compiler:         g++ -g -O2
+ SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P
+
+-------------- Dependencies --------------
+ GEOS config:          /usr/bin/geos-config
+ GEOS version:         3.3.8
+ GDAL config:          /usr/bin/gdal-config
+ GDAL version:         1.10.0
+ PostgreSQL config:    /usr/bin/pg_config
+ PostgreSQL version:   PostgreSQL 9.3.1
+ PROJ4 version:        48
+ Libxml2 config:       /usr/bin/xml2-config
+ Libxml2 version:      2.8.0
+ JSON-C support:       no
+ PostGIS debug level:  0
+ Perl:                 /usr/bin/perl
+
+--------------- Extensions ---------------
+ PostGIS Raster:       enabled
+ PostGIS Topology:     enabled
+ SFCGAL support:       disabled
+
+-------- Documentation Generation --------
+ xsltproc:             
+ xsl style sheets:     
+ dblatex:              
+ convert:              
+ mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;use &lt;code&gt;checkinstall&lt;/code&gt;, which runs &lt;code&gt;make install&lt;/code&gt; and registers the package in &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make
+checkinstall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;r-3-0-2-and-pl-r-for-postgresql&#34;&gt;R 3.0.2 and PL/R for PostgreSQL&lt;/h2&gt;
+
+&lt;p&gt;Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the &lt;a href=&#34;http://cran.r-project.org&#34; title=&#34;The Comprehensive R Archive Network&#34;&gt;R-Project&lt;/a&gt; site. First edit the&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vi /etc/apt/sources.list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add the following line and do a update&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;deb http://cran.r-project.org/bin/linux/ubuntu precise/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;as well as the key&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The search for the 3.0.2 R package version and install it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-cache showpkg r-base
+apt-get install -f r-base=3.0.2-1precise0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install postgresql-9.3-plr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So &amp;hellip; we are ready &amp;hellip; have fun.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

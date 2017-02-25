@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Linux -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a href="http://iocast.github.io/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="article">
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#user-group-management">User &amp; Group Management</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#user-with-sudo-rights">User with <code>sudo</code> rights</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#samba-management">Samba Management</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#file-and-directory-handling">File and Directory Handling</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#find-remove">Find &amp; Remove</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#file-manipulation">File Manipulation</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#folder-size">Folder size</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#compression">Compression</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#extraction">Extraction</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#synchronization">Synchronization</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#cloning">Cloning</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#job-programs">Job / Programs</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#system-information">System information</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#packages">Packages</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">Linux</div>
+      <div class="description">Linux general commands</div>
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<h2 id="user-group-management">User &amp; Group Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>new group</td>
+<td><code>groupadd sambashare</code></td>
+</tr>
+
+<tr>
+<td>new user</td>
+<td><code>useradd -m -g users -G sambashare -s /bin/bash unix_user</code></td>
+</tr>
+
+<tr>
+<td>change password</td>
+<td><code>passwd unix_user</code></td>
+</tr>
+
+<tr>
+<td>rename user</td>
+<td><code>usermod -l newUsername oldUsername</code> and change home folder <code>usermod -d /home/newHomeDir -m newUsername</code></td>
+</tr>
+
+<tr>
+<td>change to root</td>
+<td><code>sudo -i</code></td>
+</tr>
+
+<tr>
+<td>remove user</td>
+<td><code>deluser --remove-home username</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="user-with-sudo-rights">User with <code>sudo</code> rights</h3>
+
+<pre><code class="language-bash">useradd --create-home --gid users --shell /bin/bash userName
+passwd userName
+visudo -f /etc/sudoers.d/sudoers
+
+# User privilege specification
+userName    ALL=(ALL:ALL) ALL
+</code></pre>
+
+<h2 id="samba-management">Samba Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>new user</td>
+<td><code>pdbedit -a -u samba_user</code></td>
+</tr>
+
+<tr>
+<td>change password</td>
+<td><code>smbpasswd samba_user</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="file-and-directory-handling">File and Directory Handling</h2>
+
+<h3 id="find-remove">Find &amp; Remove</h3>
+
+<p>specific files</p>
+
+<pre><code>find &lt;path&gt; -name '&lt;file-name&gt;' -delete
+</code></pre>
+
+<p>If something &ldquo;more portable&rdquo; needed then you&rsquo;re better off with</p>
+
+<pre><code>find &lt;directory name&gt; -name '*.pyc' -exec rm {} \;
+</code></pre>
+
+<h3 id="file-manipulation">File Manipulation</h3>
+
+<p>search the line which begins with <code>var feature server</code> and replaces the whole line with <code>var featureserver = &quot;http://featureserver.org/fs&quot;</code></p>
+
+<pre><code>sed -e 's%^var featureserver.*%var featureserver = &quot;http://featureserver.org/fs&quot;%g' featureserver.org/assets/js/map.js &gt; ${tmp}/website/assets/js/map.js
+</code></pre>
+
+<p>template command is as follow, where the first character after <code>s</code> is used as separator and afterwards it comes a regex. Use <code>-i</code> to do an &ldquo;in place&rdquo; replacement (no need for pipe)</p>
+
+<pre><code>sed -ie 's/$search_for/$replace_with/g' $file
+</code></pre>
+
+<h3 id="folder-size">Folder size</h3>
+
+<dl>
+<dt><code>-h</code></dt>
+<dd>human readable file size</dd>
+<dt><code>-s</code></dt>
+<dd>sum all subfolders</dd>
+</dl>
+
+<pre><code class="language-bash">du &lt;directory&gt;
+</code></pre>
+
+<h3 id="compression">Compression</h3>
+
+<pre><code>tar -cvzf &lt;file.tar.bz2&gt; --exclude-vcs --exlude='*.svn' folder/
+</code></pre>
+
+<h3 id="extraction">Extraction</h3>
+
+<pre><code>tar -zxvf &lt;file.tar.bz2&gt;
+</code></pre>
+
+<h3 id="synchronization">Synchronization</h3>
+
+<p>Synchronization</p>
+
+<pre><code>:::bash
+#! /bin/bash
+rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; &amp;
+</code></pre>
+
+<h3 id="cloning">Cloning</h3>
+
+<p>burning image to disk (also usb drives)</p>
+
+<p>optional use <code>bs=8192</code></p>
+
+<pre><code>dd if=&lt;path&gt;.iso of=&lt;disk&gt;
+</code></pre>
+
+<h2 id="job-programs">Job / Programs</h2>
+
+<p>Keep job running despite of a logout</p>
+
+<pre><code>nohup &lt;command&gt; &amp;
+</code></pre>
+
+<h2 id="system-information">System information</h2>
+
+<pre><code>dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+</code></pre>
+
+<h3 id="packages">Packages</h3>
+
+<p>getting installed packages including version number</p>
+
+<pre><code>time dpkg -l | perl -lane 'print &quot;$F[1] : $F[2]&quot; if m/^ii/'
+</code></pre>
+
+  </section>
+
+  
+  <section class="comment">
+   <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'iocast-blog';
+    var disqus_identifier = 'http:\/\/iocast.github.io\/cheatsheet\/linux\/';
+    var disqus_title = 'Linux';
+    var disqus_url = 'http:\/\/iocast.github.io\/cheatsheet\/linux\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </section>
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>My personal file server on a Cubox from SolidRun using Arch Linux -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a href="http://iocast.github.io/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="post">
+
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#installation">Installation</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#configuration">Configuration</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#network">Network</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#clientid">Clientid</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#system-upgrade">System Upgrade</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#bad-experience-with-vi">Bad experience with <code>vi</code></a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#locale-and-date-time">Locale and Date/Time</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#samba">Samba</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#disks-management">Disks management</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#dynamic-dns">Dynamic DNS</a></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">My personal file server on a Cubox from SolidRun using Arch Linux</div>
+      <div class="description">Who does not dream from a fast electric saving home server. In this blog I&#39;m going to describe, how to setup a headless file server using Arch Linux on the Cubox from SolidRun.</div>
+      <div class="meta">
+  <small>by</small> <a href="http://iocast.github.io/author/iocast">iocast</a>
+  | Sun, 09 Nov 2014 |
+
+  in 
+    <a href="http://iocast.github.io/categories/server">
+          <span class="mdl-chip__text">Server</span>
+    </a>
+  
+
+  <div class="tags">
+  
+    <a href="http://iocast.github.io/tags/server">
+          <span class="mdl-chip__ext">#server</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/arch-linux">
+          <span class="mdl-chip__ext">#arch linux</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/file-server">
+          <span class="mdl-chip__ext">#file server</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/samba">
+          <span class="mdl-chip__ext">#samba</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/dyndns">
+          <span class="mdl-chip__ext">#dyndns</span>
+    </a>
+  
+  </div>
+</div>
+
+
+
+      
+      <div class="">
+          <img src="http://iocast.github.io/post/server/cubox-fileserver-archlinux//cover.jpg">
+      </div>
+
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<p>For my file server I have the following requirements:</p>
+
+<ol>
+<li>it should consume as less as possible electricity</li>
+<li>it should be very silent, means no active cooling</li>
+<li>the operation system should use OpenSSH</li>
+</ol>
+
+<p>Thus, for the hardware I have decided to use a <a href="http://www.solid-run.com/">Cubox from SolidRun</a> because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Arch Linux</a> because it is more up-to-date then the Debian or Ubuntu distribution.</p>
+
+<h1 id="installation">Installation</h1>
+
+<p>Download the latest version of Arch Linux for the <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Marvell ARMv7 platform</a> from the official site. Next, plug your MicroSD into your computer and find out which drive (<code>/dev/sdx</code>) it is</p>
+
+<pre><code class="language-bash">df -ah
+</code></pre>
+
+<p>Clear your disk and create <strong>one</strong> <code>ext3</code> partition.</p>
+
+<pre><code class="language-bash">mkfs.ext3 /dev/sdx1
+</code></pre>
+
+<p>Know mount it and extract Arch Linux onto your MicroSD partition</p>
+
+<pre><code class="language-bash">mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
+</code></pre>
+
+<p>The default login is user <code>root</code> with password <code>root</code>.</p>
+
+<h1 id="configuration">Configuration</h1>
+
+<p>Now lets configure some basic stuff, like date and time, DHCP, etc.</p>
+
+<h2 id="network">Network</h2>
+
+<p>Create the <code>/etc/systemd/network/eth0.network</code> file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.</p>
+
+<p><strong>for DHCP</strong></p>
+
+<pre><code>[Match]
+Name=eth0
+
+[Network]
+DHCP=both
+</code></pre>
+
+<p><strong>for fixed IP</strong></p>
+
+<pre><code>[Match]
+Name=eth0
+
+[Network]
+Address=10.0.1.2/24
+Gateway=10.0.1.1
+</code></pre>
+
+<p>Restart systemd-networkd. To do so, run this command:</p>
+
+<pre><code>systemctl restart systemd-networkd
+</code></pre>
+
+<h3 id="clientid">Clientid</h3>
+
+<p>If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in <code>/etc/dhcpcd.conf</code>:</p>
+
+<pre><code># Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
+duid
+</code></pre>
+
+<p>to:</p>
+
+<pre><code># Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+</code></pre>
+
+<p>Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.</p>
+
+<p>To automatically start the DCHP daemon at start up you have to enable it.</p>
+
+<pre><code>systemctl enable dhcpcd
+</code></pre>
+
+<h2 id="system-upgrade">System Upgrade</h2>
+
+<pre><code>pacman -Syu
+</code></pre>
+
+<h2 id="bad-experience-with-vi">Bad experience with <code>vi</code></h2>
+
+<p>If you have bad experience or strange behaviour with the standard <code>vi</code> simply install <code>vim</code>.</p>
+
+<pre><code>pacman -S vim-minimal
+</code></pre>
+
+<h2 id="locale-and-date-time">Locale and Date/Time</h2>
+
+<p>Change your timezone to the one your are living at. All time zones can be found in the folder <code>/etc/timezones</code>.</p>
+
+<pre><code># To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+</code></pre>
+
+<p>Also do not forget to change your <code>locale</code></p>
+
+<pre><code>localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+</code></pre>
+
+<h1 id="samba">Samba</h1>
+
+<p>For internal file sharing you could use Samba. Tips and tricks can be found on <a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks">Arch Linux Samba site</a></p>
+
+<pre><code>pacman -S samba
+</code></pre>
+
+<p>Your can restart the service using the follwing</p>
+
+<pre><code>systemctl enable smbd.service
+systemctl enable nmbd.service
+</code></pre>
+
+<p>Create a new samba group</p>
+
+<pre><code>groupadd sambashare
+</code></pre>
+
+<p>and add user to it</p>
+
+<pre><code># add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+</code></pre>
+
+<p>Adding a user to the samba group</p>
+
+<pre><code>usermod -a -G sambashare unix_user_name
+</code></pre>
+
+<p>On my Cubox I use the following configuration (<code>/etc/samba/smb.conf</code>):</p>
+
+<pre><code>[global]
+workgroup = iocast
+server string = file server
+# Share-level security: Each share in the workgroup has one or more passwords associated with it. Anyone who knows a valid password for the share can access it.
+# User-level security: 	Each share in the workgroup is configured to allow access from certain users. With each initial tree connection, the Samba server verifies users and their passwords to allow them access to the share.
+# Server-level security: This is the same as user-level security, except that the Samba server uses another server to validate users and their passwords before granting access to the share.
+# Domain-level security: Samba becomes a member of a Windows NT domain and uses one of the domain's domain controllers—either the PDC or a BDC—to perform authentication. Once authenticated, the user is given a special token that allows her access to any share with appropriate access rights. With this token, the domain controller will not have to revalidate the user's password each time she attempts to access another share within the domain. The domain controller can be a Windows NT/2000 PDC or BDC, or Samba acting as a Windows NT PDC.
+security = user
+create mask = 0775
+force create mode = 0775
+directory mask = 02775
+force directory mode = 02775
+force group = sambashare
+
+[michel]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel
+read list = karolina
+
+[michel backup]
+comment = data disk backup
+path = /storage/backup/
+public = no
+writable = no
+guest ok = no
+valid users = michel
+write list = michel
+
+[ninalaki]
+comment = data disk1
+path = /storage/data1/
+public = no
+writable = yes
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+
+[ninalaki backup]
+comment = data disk1 backup
+path = /storage/backup1/
+public = no
+writable = no
+guest ok = no
+valid users = michel karolina
+write list = michel karolina
+
+[scans]
+comment = documents from scanner
+path = /storage/scans/
+guest ok = yes
+guest account = michel
+available = yes
+browsable = yes
+public = yes
+writable = yes
+</code></pre>
+
+<h1 id="disks-management">Disks management</h1>
+
+<p>To automatically mount disks on startup, you need to add them to the <code>/etc/fstab</code> configuration file. Also use the option <code>nofail</code> to not report any error if the disk is absent. For more information read the <a href="https://wiki.archlinux.org/index.php/fstab">manual on Arch Linux</a></p>
+
+<p>Run <code>lsblk -f</code> or <code>ls -l /dev/disk/by-uuid</code> to list the partitions / disks. Edit the <code>/etc/fstab</code> and prefix the values in the UUID column with <code>UUID=</code>:</p>
+
+<pre><code># &lt;file system&gt;                           &lt;dir&gt;             &lt;type&gt;  &lt;options&gt;                        &lt;dump&gt;  &lt;pass&gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/    ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/  ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=b5a1514e-6a87-4ea5-a3ce-a592a41abecc /storage/backup1/ ext4    nofail,rw,relatime,data=ordered  0       0
+</code></pre>
+
+<h1 id="dynamic-dns">Dynamic DNS</h1>
+
+<p>If you use <a href="http://www.afraid.org">afraid.org</a> as your dynamic DNS service you can get an example <code>cron</code> entry from the <strong>Dynamic DNS</strong> menu entry. It look likes the following</p>
+
+<pre><code>PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1 &amp;
+</code></pre>
+
+<p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code> (see <a href="https://wiki.archlinux.org/index.php/Systemd/Timers">here</a>). First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
+
+<pre><code>[Unit]
+Description=timer for service afraid.org.timer
+Requires=network-online.target
+Requires=network.target
+After=dhcpcd.service
+
+[Timer]
+OnCalendar=*:3,8,13,18,23,28,33,38,43,48,53,58
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<p>Then create a service file of the same name <code>/etc/systemd/system/afraid.org.service</code> and add the following lines</p>
+
+<pre><code>[Unit]
+Description=service for afraid.org for pasithee.mooo.com
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1
+</code></pre>
+
+<p>Now you can test the service.</p>
+
+<pre><code># test service
+systemctl start afraid.org.service
+systemctl stop afraid.org.service
+</code></pre>
+
+<p>As soon as it works you can enable the timer</p>
+
+<pre><code>systemctl enable afraid.org.timer
+systemctl start afraid.org.timer
+</code></pre>
+
+  </section>
+
+  
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://iocast.github.io/contact/</loc>
+    <lastmod>2016-02-21T15:22:59-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/git/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/irc/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/linux/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/virtualbox/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/postgres/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/python_pypi/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/sphinx/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/windows/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/about/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/versioning/github-travis-addition/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/server-management/linux-join-ad/</loc>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/web-application/centos-python-modwsgi/</loc>
+    <lastmod>2013-10-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/gis/qgis-server-centos/</loc>
+    <lastmod>2013-10-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/server-management/osx-file-server-migration/</loc>
+    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/miscellaneous/github-jekyll-travis/</loc>
+    <lastmod>2013-10-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</loc>
+    <lastmod>2011-12-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/active-directory/</loc>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/apache/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/arch-linux/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/bash/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/centos/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/continuous-integration/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/dyndns/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/file-server/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/gis/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/github/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/httpd/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/jekyll/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/libgdal/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/likewise-open/</loc>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/linux/</loc>
+    <lastmod>2011-12-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/miscellaneous/</loc>
+    <lastmod>2013-10-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/networking/</loc>
+    <lastmod>2011-12-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/osx/</loc>
+    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/postgis/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/postgresql/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/python/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/qgis/</loc>
+    <lastmod>2013-10-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/rsync/</loc>
+    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/samba/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/server/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/server/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/server-management/</loc>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/ssh/</loc>
+    <lastmod>2011-12-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/</loc>
+    <lastmod>2014-11-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/travis/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/ubuntu/</loc>
+    <lastmod>2013-11-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/tags/ubuntugis/</loc>
+    <lastmod>2013-11-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/versioning/</loc>
+    <lastmod>2014-04-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/categories/web-application/</loc>
+    <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/</loc>
+    <lastmod>2016-02-21T15:22:59-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

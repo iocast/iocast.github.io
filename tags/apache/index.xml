@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache on think twice code once!</title>
+    <link>http://iocast.github.io/tags/apache/index.xml</link>
+    <description>Recent content in Apache on think twice code once!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved © 2017</copyright>
+    <atom:link href="http://iocast.github.io/tags/apache/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Javascript localization part 1</title>
+      <link>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</link>
+      <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
+      <description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
+
+&lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
+
+&lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var dateobj= new Date()
+	dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
+	// 21/7/2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	Date.locale = {
+		en: {
+			month_names: [&#39;January&#39;, &#39;February&#39;, &#39;March&#39;, &#39;April&#39;, &#39;May&#39;, &#39;June&#39;, &#39;July&#39;, &#39;August&#39;, &#39;September&#39;, &#39;October&#39;, &#39;November&#39;, &#39;December&#39;],
+			month_names_short: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]
+		}
+	};
+
+	Date.prototype.getMonthName = function(lang) {
+		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
+		return Date.locale[lang].month_names[this.getMonth()];
+	};
+	Date.prototype.getMonthNameShort = function(lang) {
+		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
+		return Date.locale[lang].month_names_short[this.getMonth()];
+	};
+
+	// that can be used as follow:
+	var now = new Date();
+	now.getMonthNameShort + &amp;quot; &amp;quot; + now.getFullYear();
+	// July 2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.&lt;/p&gt;
+
+&lt;p&gt;The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.&lt;/p&gt;
+
+&lt;p&gt;For the &lt;code&gt;Date&lt;/code&gt; object now have these functions, whereas I personally prefer the &lt;code&gt;toLocaleString()&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleDateString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the date portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleTimeString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the time portion of this date.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;You can use it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var now = new Date()
+	date.toLocaleString(&#39;en&#39;, { month: &#39;long&#39;, year: &#39;numeric&#39; });
+	// July 2014
+	date.toLocaleString(&#39;en&#39;, { month: &#39;2-digit&#39;, day: &#39;2-digit&#39;, year: &#39;numberic&#39; });
+	// 21/07/2014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where the first parameter is the &lt;code&gt;locale&lt;/code&gt; and the second parameter represents the &lt;code&gt;options&lt;/code&gt;. The allowed options can be found on the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString&#34;&gt;Mozilla Developer Network&lt;/a&gt;. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.&lt;/p&gt;
+
+&lt;p&gt;The same applies to the &lt;code&gt;Number&lt;/code&gt; object.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Number.prototype.toLocaleString()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this number.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;You can use it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var number = 3600;
+	number.toLocaleString(&#39;en&#39;);
+	// 3,600
+	number.toLocaleString(&#39;de&#39;);
+	// 3.600
+	number.toLocaleString(&#39;en&#39;, {
+		style: &#39;currency&#39;,
+		currency: &#39;USD&#39;
+	});
+	// $3,600
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python 2.7.x and mod_wsgi on a CentOS 6</title>
+      <link>http://iocast.github.io/post/web-application/centos-python-modwsgi/</link>
+      <pubDate>Wed, 16 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/post/web-application/centos-python-modwsgi/</guid>
+      <description>
+
+&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-python-2-7-x&#34;&gt;Getting Python 2.7.x&lt;/h2&gt;
+
+&lt;p&gt;The following explanations are based on a blog of &lt;a href=&#34;http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5&#34; title=&#34;Setup OSQA on CentOS 5.5 | nickhowell.co.uk&#34;&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href=&#34;http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html&#34; title=&#34;How do I compile mod_wsgi for Python 2.7&#34;&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Extract and install it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;tar -zxvf Python-2.7.5.tgz
+cd Python-2.7.5
+./configure --enable-shared
+make &amp;amp;&amp;amp; make altinstall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install httpd httpd-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
+
+&lt;p&gt;Download and unpack the latest version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+cd mod_wsgi-3.4.tar.gz
+./configure --with-python=/usr/local/bin/python2.7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;whereis python
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7&amp;hellip;&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+cd virtualenv-1.10.1
+python2.7 setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;install psycopg2&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+cd psycopg2-2.5.1
+vi setup.cfg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and add the following line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;now install it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/local/bin/python2.7 setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;virtualenv-2.7 --system-site-packages ENV
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

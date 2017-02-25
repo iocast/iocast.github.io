@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Creating your own blog using github pages, jekyll and travis -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-field">
+          </div>
+        </div>
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a href="http://iocast.github.io/">
+          <span class="mobile-title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="post">
+
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#github">Github</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#jekyll">Jekyll</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#travis-ci">Travis CI</a></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">Creating your own blog using github pages, jekyll and travis</div>
+      <div class="description">Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</div>
+      <div class="meta">
+  <small>by</small> <a href="http://iocast.github.io/author/iocast">iocast</a>
+  | Tue, 08 Oct 2013 |
+
+  in 
+    <a href="http://iocast.github.io/categories/miscellaneous">
+          <span class="mdl-chip__text">Miscellaneous</span>
+    </a>
+  
+
+  <div class="tags">
+  
+    <a href="http://iocast.github.io/tags/github">
+          <span class="mdl-chip__ext">#github</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/jekyll">
+          <span class="mdl-chip__ext">#jekyll</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/travis">
+          <span class="mdl-chip__ext">#travis</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/bash">
+          <span class="mdl-chip__ext">#bash</span>
+    </a>
+  
+    <a href="http://iocast.github.io/tags/continuous-integration">
+          <span class="mdl-chip__ext">#continuous integration</span>
+    </a>
+  
+  </div>
+</div>
+
+
+
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<p>Github offers at the time of writing three different types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
+
+<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github">Github&rsquo;s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI">travis</a> as our continuous integration solution for deployment purposes.</p>
+
+<h2 id="github">Github</h2>
+
+<p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
+
+<pre><code class="language-bash"># Creates our branch, without any parents (it's an orphan!)
+git checkout --orphan develop
+# Remove all files from the old working tree
+git rm -rf .
+
+echo &quot;My GitHub Page&quot; &gt; index.html
+git add index.html
+git commit -a -m &quot;First pages commit&quot;
+git push origin develop
+</code></pre>
+
+<p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to this <code>develop</code> branch.</p>
+
+<h2 id="jekyll">Jekyll</h2>
+
+<p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p>
+
+<p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> the compilation options. A example could look like the following:</p>
+
+<pre><code>destination: ./_site
+lsi:         true
+pygments:    true
+markdown:    rdiscount
+permalink:   date
+rdiscount:
+  extensions: [smart]
+
+exclude: ['Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', 'update-gh-pages.sh']
+</code></pre>
+
+<h2 id="travis-ci">Travis CI</h2>
+
+<p><a href="http://travis-ci.org" title="Travis CI">Travis</a> is used to automatically deploy the <code>develop</code> branch and push the result of the <code>jekyll build</code> output to the <code>master</code> branch which the would be published to the Github pages.</p>
+
+<p>For that we need first to get <a href="http://travis-ci.org" title="Travis CI">travis</a> access to our Github repository. If you do not have a <a href="http://travis-ci.org" title="Travis CI">travis</a> account register one on the homepage. On The <a href="http://travis-ci.org" title="Travis CI">travis</a> homepage go to the account settings and get access to the appropriate repository like in the image below:</p>
+
+<p><img src="travis_repository_access.png" alt="Travis Repository Access" title="Travis Repository Access" /></p>
+
+<p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p>
+
+<pre><code>language: ruby
+rvm: 1.9.3
+
+branches:
+  except:
+  - master
+
+branches:
+  only:
+  - develop
+
+script: rake travis
+</code></pre>
+
+<p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
+
+<p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p>
+
+<pre><code class="language-ruby">source 'http://rubygems.org'
+
+gem 'jekyll'
+gem 'rdiscount'
+gem 'redcarpet'
+</code></pre>
+
+<p>For <a href="http://travis-ci.org" title="Travis CI">travis</a> deployment add the following task to the <code>Rakefile</code>:</p>
+
+<pre><code class="language-ruby">	#!/usr/bin/env rake
+
+	task :travis do
+	  system(&quot;jekyll build&quot;)
+	end
+</code></pre>
+
+<p>Lastly we need to create a <code>bash</code> script to push the compiled <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to the <code>master</code> branch. For that authorize <a href="http://travis-ci.org" title="Travis CI">travis</a> to do commits and pushed as follow:</p>
+
+<pre><code class="language-bash">	curl -X POST -u &lt;your_github_username&gt; -H &quot;Content-Type: application/json&quot; -d &quot;{\&quot;scopes\&quot;:[\&quot;public_repo\&quot;],\&quot;note\&quot;:\&quot;token for pushing from travis\&quot;}&quot; https://api.github.com/authorizations
+</code></pre>
+
+<p>and copy the <code>token</code> key from the json result.</p>
+
+<p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p>
+
+<pre><code class="language-bash">gem install travis
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global
+</code></pre>
+
+<p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
+
+<pre><code class="language-bash">if [ &quot;$TRAVIS_PULL_REQUEST&quot; == &quot;false&quot; ]; then
+  echo -e &quot;Starting to update master\n&quot;
+
+  cp -R _site $HOME/_site
+
+  cd $HOME
+  git config --global user.email &quot;iocast@me.com&quot;
+  git config --global user.name &quot;iocast&quot;
+  git clone --quiet --branch=master https://${GH_TOKEN}@github.com/iocast/iocast.github.io.git master &gt; /dev/null
+
+  cd master
+  rm -rf ./*
+  cp -Rf $HOME/_site/* .
+
+  git add -f .
+  git commit -m &quot;Travis build $TRAVIS_BUILD_NUMBER pushed to master&quot;
+  git push -fq origin master &gt; /dev/null
+
+  echo -e &quot;Done magic with coverage\n&quot;
+fi
+</code></pre>
+
+<p>and add the following lines to the end of the <code>.travis.yml</code> file:</p>
+
+<pre><code>after_success: ./update-gh-pages.sh
+</code></pre>
+
+  </section>
+
+  
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

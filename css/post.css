@@ -1,0 +1,60 @@
+.post-list {
+    position: relative;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post-list .material-icons {
+    background-color: transparent;
+}
+
+.post-list-item .drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+}
+
+.post-list-item .mdl-menu__container {
+    z-index: 50;
+    margin: 0 !important;
+    right: 20px !important;
+}
+
+article.post {
+    padding: 0 20px;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+article.post header {
+    line-height: 1;
+    position: relative;
+    height: calc(100vh - 64px);
+    width: auto;
+}
+
+article.post .title {
+    padding-top: 160px;
+    font-size: 60px;
+}
+
+article.post .description {
+    font-size: 21px;
+    padding-top: 24px;
+}
+
+article.post .meta {
+    padding: 20px;
+    letter-spacing: 4px;
+}
+
+article.post .meta .tags {
+    padding-top: 20px;
+    letter-spacing: 3px;
+}
+
+section.content {
+    padding-top: 100px;
+}
