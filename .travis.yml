@@ -8,7 +8,7 @@ sudo: false
 env:
   global:
     - GH_REF: github.com/iocast/iocast.github.io.git
-    - secure: aIXkqfPLYW9ljCdNFBakSI+UjmkxjgCEUfjj9K9aQJilrs08Bdef6MOrkh0QjPawgJyTeVX26yylzCfuXeKqgFS9WMVJvDmhCK6eNh7uMJVQDFGHUv+/VwY/qhCLQw1qmdXB2HvyVUEbYplZY+jy2sBU76XSe5L19oL1KlaHcjo=
+    - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
 
 branches:
   except:
