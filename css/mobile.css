@@ -51,7 +51,6 @@
 
 
   /* POST */
-
   .post-list-header {
     padding-top: 20px;
     padding-left: 10px;
@@ -67,6 +66,10 @@
   }
 
   .post-list-item.mdl-list__item--three-line .mdl-list__item-text-body {
+    height: auto;
+  }
+
+  article.post header {
     height: auto;
   }
 
