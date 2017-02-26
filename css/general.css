@@ -42,10 +42,11 @@ section.comment {
 .card-container .mdl-card__media {
     overflow: hidden;
     background: transparent;
+    text-align: center;
 }
 
 .card-container .mdl-card__media img {
-    width: 100%;
+    height: 150px;
 }
 
 .card-container .mdl-card__title {
