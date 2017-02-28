@@ -3,7 +3,6 @@ title: Javascript localization part 1
 author: iocast
 date: 2014-07-21
 description: Since the first edition of ECMAScript (ECMA-402) Javascript supports the output of language sensitive representation of a Date or Number object which is often overseen by many developers.
-image: cover.jpeg
 categories:
 - Web Application
 tags:
