@@ -39,6 +39,7 @@ DisqusShortname = "iocast-blog"
   # set true if you are not proud of using Hugo (true will hide the footer note "Proudly published with HUGO.....")
   #twitter = "https://www.twitter.com/jamescampbell"
   ShowReadTime = false
+  ShowSearch = false
 
 [[params.social]]
   title = "github"

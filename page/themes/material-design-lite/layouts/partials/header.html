@@ -62,6 +62,7 @@
         </a>
         <!-- Add spacer, to align navigation to the right in desktop -->
         <div class="mdl-layout-spacer"></div>
+        {{ if .Site.Params.ShowSearch }}
         <div class="search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
           <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
             <i class="material-icons">search</i>
@@ -70,6 +71,7 @@
             <input class="mdl-textfield__input" type="text" id="search-field">
           </div>
         </div>
+        {{ end }}
         <!-- Navigation -->
         <div class="navigation-container">
           <nav class="navigation mdl-navigation">
