@@ -1,18 +1,12 @@
-name = "Startbootstrap Clean Blog"
+name = "Material Design Lite"
 license = "Apache 2.0"
-licenselink = "https://github.com/humboldtux/startbootstrap-clean-blog/blob/master/LICENSE.md"
-description = "Startbootstrap Clean Blog"
-homepage = "https://github.com/humboldtux/startbootstrap-clean-blog"
-tags = ["blog", "bootstrap"]
-features = ["blog", "bootstrap"]
+licenselink = "https://github.com/iocast/iocast.github.io/blob/develop/page/themes/material-design-lite/LICENSE.md"
+description = "Material Design Lite Blog Theme"
+homepage = "https://github.com/iocast/iocast.github.io/tree/develop/page/themes/material-design-lite"
+tags = ["blog", "material design lite"]
+features = ["blog", "material design lite"]
 min_version = 0.18.1
 
 [author]
-  name = "Benoît Benedetti"
-  homepage = "http://www.humboldtux.com"
-
-# original theme
-[original]
-  name = "Startbootstrap Clean Blog"
-  homepage = "http://startbootstrap.com/template-overviews/clean-blog/"
-  repo = "https://github.com/IronSummitMedia/startbootstrap-clean-blog"
+  name = "Iocast"
+  homepage = "http://iocast.github.io/"
