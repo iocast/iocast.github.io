@@ -2,7 +2,7 @@
 title: SAP Transactions
 author: iocast
 date: 2014-12-22
-draft: true
+draft: false
 description: SAP transactions
 type: cheatsheet
 ---
@@ -26,3 +26,6 @@ Trx Code     | Purpose
 ------------ | -----------------------------
 `SM30`       | Table view (customizing / transport )
 `SE14`       | Delete table entries
+
+
+## Gateway
