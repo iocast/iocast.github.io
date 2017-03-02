@@ -1110,54 +1110,55 @@ server string = file server
 # Server-level security: This is the same as user-level security, except that the Samba server uses another server to validate users and their passwords before granting access to the share.
 # Domain-level security: Samba becomes a member of a Windows NT domain and uses one of the domain&#39;s domain controllers—either the PDC or a BDC—to perform authentication. Once authenticated, the user is given a special token that allows her access to any share with appropriate access rights. With this token, the domain controller will not have to revalidate the user&#39;s password each time she attempts to access another share within the domain. The domain controller can be a Windows NT/2000 PDC or BDC, or Samba acting as a Windows NT PDC.
 security = user
+map to guest = bad user
 create mask = 0775
 force create mode = 0775
 directory mask = 02775
 force directory mode = 02775
 force group = sambashare
 
-[michel]
+[share 1]
 comment = data disk
 path = /storage/data/
 public = no
 writable = yes
 guest ok = no
-valid users = michel karolina
-write list = michel
-read list = karolina
+valid users = user1 user2
+write list = user1
+read list = user2
 
-[michel backup]
+[share 1 backup]
 comment = data disk backup
 path = /storage/backup/
 public = no
 writable = no
 guest ok = no
-valid users = michel
-write list = michel
+valid users = user1
+write list = user1
 
-[ninalaki]
+[share 2]
 comment = data disk1
 path = /storage/data1/
 public = no
 writable = yes
 guest ok = no
-valid users = michel karolina
-write list = michel karolina
+valid users = user1 user2
+write list = user1 user2
 
-[ninalaki backup]
+[share 2 backup]
 comment = data disk1 backup
 path = /storage/backup1/
 public = no
 writable = no
 guest ok = no
-valid users = michel karolina
-write list = michel karolina
+valid users = user1 user2
+write list = user1 user2
 
 [scans]
 comment = documents from scanner
 path = /storage/scans/
 guest ok = yes
-guest account = michel
+guest account = user1
 available = yes
 browsable = yes
 public = yes
