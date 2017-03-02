@@ -756,6 +756,74 @@ index-servers =
     </item>
     
     <item>
+      <title>SAP Transactions</title>
+      <link>http://iocast.github.io/cheatsheet/sap_transactions/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/sap_transactions/</guid>
+      <description>
+
+&lt;h2 id=&#34;development&#34;&gt;Development&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Trx Code&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Dynpro debugging&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/ha&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;ABAP debugging&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/hs&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;System debugging&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;SAT&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Profiling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;table-management&#34;&gt;Table Management&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Trx Code&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;SM30&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Table view (customizing / transport )&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;SE14&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Delete table entries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;gateway&#34;&gt;Gateway&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Sphinx</title>
       <link>http://iocast.github.io/cheatsheet/sphinx/</link>
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>

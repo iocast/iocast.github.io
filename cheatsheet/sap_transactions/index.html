@@ -8,7 +8,7 @@
      <meta name="author" content="Iocast">
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>Tags -- think twice code once!</title>
+    <title>SAP Transactions -- think twice code once!</title>
 
     
 
@@ -102,86 +102,148 @@
       <a name="top"></a>
 
 
-    
-    <header class="intro-header" style="background-image: url('http://iocast.github.io/img/home-bg.jpg')">
-     <div class="container">
-       <div class="row">
-         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-           <div class="site-heading">
-             <h1>Tags</h1>
-             <hr class="small">
-             
-           </div>
-         </div>
-       </div>
-     </div>
-    </header>
+<article class="article">
 
-    
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <ul>
-            
-            
-            <li><a href="http://iocast.github.io/tags/server">Server</a> 6</li>
-            
-            <li><a href="http://iocast.github.io/tags/bash">Bash</a> 4</li>
-            
-            <li><a href="http://iocast.github.io/tags/centos">Centos</a> 3</li>
-            
-            <li><a href="http://iocast.github.io/tags/apache">Apache</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/continuous-integration">Continuous-Integration</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/github">Github</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/httpd">Httpd</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/jekyll">Jekyll</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/postgis">Postgis</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/postgresql">Postgresql</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/python">Python</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/travis">Travis</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/ubuntu">Ubuntu</a> 2</li>
-            
-            <li><a href="http://iocast.github.io/tags/active-directory">Active-Directory</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/arch-linux">Arch-Linux</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/dyndns">Dyndns</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/file-server">File-Server</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/libgdal">Libgdal</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/likewise-open">Likewise-Open</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/linux">Linux</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/networking">Networking</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/osx">Osx</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/qgis">Qgis</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/rsync">Rsync</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/samba">Samba</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/ssh">Ssh</a> 1</li>
-            
-            <li><a href="http://iocast.github.io/tags/ubuntugis">Ubuntugis</a> 1</li>
-            
-          </ul>
-        </div>
-      </div>
-    </div>
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#development">Development</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#table-management">Table Management</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#gateway">Gateway</a></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">SAP Transactions</div>
+      <div class="description">SAP transactions</div>
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<h2 id="development">Development</h2>
+
+<table>
+<thead>
+<tr>
+<th>Trx Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>/h</code></td>
+<td>Dynpro debugging</td>
+</tr>
+
+<tr>
+<td><code>/ha</code></td>
+<td>ABAP debugging</td>
+</tr>
+
+<tr>
+<td><code>/hs</code></td>
+<td>System debugging</td>
+</tr>
+
+<tr>
+<td><code>SAT</code></td>
+<td>Profiling</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="table-management">Table Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Trx Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>SM30</code></td>
+<td>Table view (customizing / transport )</td>
+</tr>
+
+<tr>
+<td><code>SE14</code></td>
+<td>Delete table entries</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="gateway">Gateway</h2>
+
+  </section>
+
+  
+
+
+</article>
 
         <footer class="mdl-mega-footer footer">
             <div class="mdl-mega-footer--top-section">

@@ -37,6 +37,11 @@
   </url>
   
   <url>
+    <loc>http://iocast.github.io/cheatsheet/sap_transactions/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iocast.github.io/cheatsheet/sphinx/</loc>
     <lastmod>2014-12-22T00:00:00+00:00</lastmod>
   </url>
@@ -133,6 +138,11 @@
   <url>
     <loc>http://iocast.github.io/tags/centos/</loc>
     <lastmod>2014-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheets/</loc>
     <priority>0</priority>
   </url>
   
