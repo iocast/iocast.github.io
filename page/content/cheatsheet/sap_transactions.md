@@ -29,3 +29,10 @@ Trx Code     | Purpose
 
 
 ## Gateway
+
+Trx Code                 | Purpose
+------------------------ | -----------------------------
+`SEGW`                   | SAP Gateway Service Builder
+`/IWFND/ERROR_LOG`       | SAP Gateway Error Log
+`/IWFND/MAINT_SERVICE`   | Activate and Maintain Services
+`/IWFND/GW_CLIENT`       | SAP Gateway Client
