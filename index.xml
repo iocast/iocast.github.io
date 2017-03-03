@@ -830,6 +830,37 @@ index-servers =
 &lt;/table&gt;
 
 &lt;h2 id=&#34;gateway&#34;&gt;Gateway&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Trx Code&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;SEGW&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;SAP Gateway Service Builder&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/IWFND/ERROR_LOG&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;SAP Gateway Error Log&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/IWFND/MAINT_SERVICE&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Activate and Maintain Services&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/IWFND/GW_CLIENT&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;SAP Gateway Client&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 </description>
     </item>
     
