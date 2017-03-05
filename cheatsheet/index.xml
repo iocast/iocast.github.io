@@ -432,6 +432,19 @@ userName    ALL=(ALL:ALL) ALL
 &lt;pre&gt;&lt;code&gt;tar -zxvf &amp;lt;file.tar.bz2&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;h3 id=&#34;errors&#34;&gt;Errors&lt;/h3&gt;
+
+&lt;p&gt;When you get a error that the command is not found (e.g. &lt;code&gt;-bash: $&#39;\r&#39;: command not found&lt;/code&gt;) and you are sure everything is correct, then it has something to do with the file format or the characters.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Error:&lt;/strong&gt; &lt;code&gt;-bash: $&#39;\r&#39;: command not found&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Remove trailing \r character that causes this error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sed -i &#39;s/\r$//&#39; filename
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Option &lt;code&gt;-i&lt;/code&gt; is for in-place editing, we delete the trailing &lt;code&gt;\r&lt;/code&gt; directly in the input file. Thus be careful to type the pattern correctly.&lt;/p&gt;
+
 &lt;h3 id=&#34;synchronization&#34;&gt;Synchronization&lt;/h3&gt;
 
 &lt;p&gt;Synchronization&lt;/p&gt;

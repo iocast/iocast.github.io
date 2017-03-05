@@ -160,6 +160,7 @@
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#folder-size">Folder size</a></li>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#compression">Compression</a></li>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#extraction">Extraction</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#errors">Errors</a></li>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#synchronization">Synchronization</a></li>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#cloning">Cloning</a></li>
 </ul></li>
@@ -320,6 +321,19 @@ userName    ALL=(ALL:ALL) ALL
 
 <pre><code>tar -zxvf &lt;file.tar.bz2&gt;
 </code></pre>
+
+<h3 id="errors">Errors</h3>
+
+<p>When you get a error that the command is not found (e.g. <code>-bash: $'\r': command not found</code>) and you are sure everything is correct, then it has something to do with the file format or the characters.</p>
+
+<p><strong>Error:</strong> <code>-bash: $'\r': command not found</code></p>
+
+<p>Remove trailing \r character that causes this error:</p>
+
+<pre><code class="language-bash">sed -i 's/\r$//' filename
+</code></pre>
+
+<p>Option <code>-i</code> is for in-place editing, we delete the trailing <code>\r</code> directly in the input file. Thus be careful to type the pattern correctly.</p>
 
 <h3 id="synchronization">Synchronization</h3>
 
