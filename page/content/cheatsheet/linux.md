@@ -31,10 +31,7 @@ visudo -f /etc/sudoers.d/sudoers
 userName    ALL=(ALL:ALL) ALL
 ```
 
-
-
 ## Samba Management
-
 
 Purpose            | Command
 ------------------ | -------------------------------
@@ -43,7 +40,6 @@ change password    | `smbpasswd samba_user`
 
 
 ## File and Directory Handling
-
 
 ### Find & Remove
 
@@ -82,12 +78,29 @@ du <directory>
 
 ### Compression
 
-	tar -cvzf <file.tar.bz2> --exclude-vcs --exlude='*.svn' folder/
-
+```
+tar -cvzf <file.tar.bz2> --exclude-vcs --exlude='*.svn' folder/
+```
 
 ### Extraction
 
-	tar -zxvf <file.tar.bz2>
+```
+tar -zxvf <file.tar.bz2>
+```
+
+### Errors
+
+When you get a error that the command is not found (e.g. `-bash: $'\r': command not found`) and you are sure everything is correct, then it has something to do with the file format or the characters.
+
+**Error:** `-bash: $'\r': command not found`
+
+Remove trailing \r character that causes this error:
+```bash
+sed -i 's/\r$//' filename
+```
+Option `-i` is for in-place editing, we delete the trailing `\r` directly in the input file. Thus be careful to type the pattern correctly.
+
+
 
 
 

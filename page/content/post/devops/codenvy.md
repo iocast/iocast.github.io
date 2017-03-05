@@ -9,3 +9,9 @@ categories:
 tags:
 - codenvy
 ---
+
+${current.project.path}
+${server.port.<port>}
+${server.port.9000}
+
+prot to be exposed
