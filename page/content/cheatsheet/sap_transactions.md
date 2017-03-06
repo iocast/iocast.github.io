@@ -36,3 +36,10 @@ Trx Code                 | Purpose
 `/IWFND/ERROR_LOG`       | SAP Gateway Error Log
 `/IWFND/MAINT_SERVICE`   | Activate and Maintain Services
 `/IWFND/GW_CLIENT`       | SAP Gateway Client
+
+
+### Caches
+
+
+/UI2/INVALIDATE_GLOBAL_CACHES
+/UI2/INVALIDATE_CLIENT_CACHES
