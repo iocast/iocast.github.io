@@ -874,6 +874,11 @@ index-servers =
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;h3 id=&#34;caches&#34;&gt;Caches&lt;/h3&gt;
+
+&lt;p&gt;/UI2/INVALIDATE_GLOBAL_CACHES
+/UI2/INVALIDATE_CLIENT_CACHES&lt;/p&gt;
 </description>
     </item>
     
