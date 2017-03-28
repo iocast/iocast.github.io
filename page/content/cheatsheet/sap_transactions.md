@@ -28,7 +28,7 @@ Trx Code     | Purpose
 `SE14`       | Delete table entries
 
 
-## Gateway
+## Services (Gateway / OData)
 
 Trx Code                 | Purpose
 ------------------------ | -----------------------------
@@ -36,10 +36,12 @@ Trx Code                 | Purpose
 `/IWFND/ERROR_LOG`       | SAP Gateway Error Log
 `/IWFND/MAINT_SERVICE`   | Activate and Maintain Services
 `/IWFND/GW_CLIENT`       | SAP Gateway Client
+`SXI_MONITOR`            | XI: Message Monitoring
+`SXMB_MONI`              | Integration Engine - Monitoring
+
 
 
 ### Caches
 
+Open Transaction `SE38` and the programming `/UI2/INVALIDATE_CLIENT_CACHES` for clearing the client caches or `/UI2/INVALIDATE_GLOBAL_CACHES` for the global UI2 caches.
 
-/UI2/INVALIDATE_GLOBAL_CACHES
-/UI2/INVALIDATE_CLIENT_CACHES
