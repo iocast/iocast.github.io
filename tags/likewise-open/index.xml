@@ -2,12 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Likewise Open on think twice code once!</title>
-    <link>http://iocast.github.io/tags/likewise-open/index.xml</link>
+    <link>http://iocast.github.io/tags/likewise-open/</link>
     <description>Recent content in Likewise Open on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
-    <atom:link href="http://iocast.github.io/tags/likewise-open/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 30 Nov 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://iocast.github.io/tags/likewise-open/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Joining a Active Directory on Linux - the easiest way!</title>
@@ -15,42 +18,9 @@
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/server-management/linux-join-ad/</guid>
-      <description>
-
-&lt;p&gt;The easiest way, at least for me, is to use the &lt;code&gt;likewise-open&lt;/code&gt; package. You can find the official documentation &lt;a href=&#34;https://help.ubuntu.com/community/LikewiseOpen&#34;&gt;here&lt;/a&gt;. Under Ubuntu you can simple install this package using &lt;code&gt;apt-get&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install likewise-open
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Once you have installed it, you can join a Active Directory (AD) as follow.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.&lt;/p&gt;
-
-&lt;p&gt;Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under &lt;code&gt;/home/likewise-open&lt;/code&gt; and then a subfolder named as his username.&lt;/p&gt;
-
-&lt;h2 id=&#34;restricting-access-to-specific-groups&#34;&gt;Restricting access to specific groups&lt;/h2&gt;
-
-&lt;p&gt;By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;lwconfig RequireMembershipOf &amp;quot;&amp;lt;server&amp;gt;\\&amp;lt;group-1&amp;gt;&amp;quot; &amp;quot;&amp;lt;erver&amp;gt;\\&amp;lt;group-2&amp;gt;&amp;quot;
-lw-update-dns
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you forget which groups have access to you server, you could check it by running the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;lwconfig --detail RequireMembershipOf
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;login&#34;&gt;Login&lt;/h2&gt;
-
-&lt;p&gt;Now you are able to login to your server using active directory authentication:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh &amp;lt;ad_domain&amp;gt;\\&amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>The easiest way, at least for me, is to use the likewise-open package. You can find the official documentation here. Under Ubuntu you can simple install this package using apt-get.
+apt-get install likewise-open  Once you have installed it, you can join a Active Directory (AD) as follow.
+domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;  where you need to define the path to your organization unit, which is displayed in the AD as a folder.</description>
     </item>
     
   </channel>

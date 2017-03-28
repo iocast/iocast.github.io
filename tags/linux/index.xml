@@ -2,12 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on think twice code once!</title>
-    <link>http://iocast.github.io/tags/linux/index.xml</link>
+    <link>http://iocast.github.io/tags/linux/</link>
     <description>Recent content in Linux on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
-    <atom:link href="http://iocast.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Dec 2011 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://iocast.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Tunneling over an intermediate to overcome demilitarized zone</title>
@@ -15,85 +18,8 @@
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
-      <description>
-
-&lt;p&gt;Source code: &lt;a href=&#34;resources/code/shell/tunneling.sh&#34;&gt;shell script&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22. Last but not least, every time a server restarts we want that the tunnels automatically opens, means that we need to have an &lt;code&gt;cron&lt;/code&gt; job that checks, whether an open connection exists from the server to the intermediary or not, and if the server opens a connection to the intermediary the system does not need to prompt for password. Solution is here to register the public key of the server on the intermediary.&lt;/p&gt;
-
-&lt;h2 id=&#34;client&#34;&gt;Client&lt;/h2&gt;
-
-&lt;h3 id=&#34;opening-a-tunnel-from-client-to-intermediary&#34;&gt;Opening a tunnel from client to intermediary&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -L 22000:127.0.0.1:22000 -N root@152.96.56.32
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;connecting-to-server&#34;&gt;Connecting to server&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -P 22000 michel@127.0.0.1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;copy-files-scp&#34;&gt;Copy files (SCP)&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#get
-scp -P 22000 michel@127.0.0.1:/home/michel/tunelling.sh /Users/michel/Public/Drop\ Box/
-
-#put
-scp /Users/michel/Public/Drop\ Box/tunelling.sh -P 22000 michel@127.0.0.1:/home/michel/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;intermediary&#34;&gt;Intermediary&lt;/h2&gt;
-
-&lt;h3 id=&#34;register-gpg-key-from-server&#34;&gt;Register GPG key from server&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-key add &amp;lt;file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;server&#34;&gt;Server&lt;/h2&gt;
-
-&lt;h3 id=&#34;export-gpg-key&#34;&gt;Export GPG key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-key export &amp;lt;key&amp;gt; &amp;gt; &amp;lt;file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;open-a-connection-to-intermediary-from-server&#34;&gt;Open a connection to intermediary from server&lt;/h3&gt;
-
-&lt;p&gt;Save the following script as e.g. tunneling.sh&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/sh
-
-cmd=&amp;quot;ssh -R 22000:127.0.0.1:22 -N root@152.96.56.32&amp;quot;
-
-match=$(ps -aef | grep &amp;quot;${cmd}&amp;quot; | grep -v grep)
-if [ -z &amp;quot;${match}&amp;quot; ] ; then
-$cmd &amp;amp;
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;register-cron-job&#34;&gt;Register cron job&lt;/h3&gt;
-
-&lt;p&gt;Edit crontab&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;crontab -e
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Adding a new job to the crontab. The following entry executes the defined script &lt;code&gt;tunneling.sh&lt;/code&gt; every 5 minutes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;5 * * * * /&amp;lt;path&amp;gt;/tunnelilng.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Crontab is structured as follow:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;* * * * * command to be executed
-- - - - -
-| | | | |
-| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
-| | | ------- Month (1 - 12)
-| | --------- Day of month (1 - 31)
-| ----------- Hour (0 - 23)
-------------- Minute (0 - 59)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>Source code: shell script
+Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22.</description>
     </item>
     
   </channel>

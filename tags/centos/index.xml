@@ -2,12 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Centos on think twice code once!</title>
-    <link>http://iocast.github.io/tags/centos/index.xml</link>
+    <link>http://iocast.github.io/tags/centos/</link>
     <description>Recent content in Centos on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
-    <atom:link href="http://iocast.github.io/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Jul 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://iocast.github.io/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Javascript localization part 1</title>
@@ -15,116 +18,9 @@
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
-      <description>&lt;p&gt;Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.&lt;/p&gt;
-
-&lt;p&gt;Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.&lt;/p&gt;
-
-&lt;p&gt;Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  &lt;code&gt;mmmm yyyy&lt;/code&gt; or &lt;code&gt;mm/dd/yyyy&lt;/code&gt;. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var dateobj= new Date()
-	dateobj.getDate() + &amp;quot;/&amp;quot; + dateobj.getMonth()+1 + &amp;quot;/&amp;quot; + dateobj.getFullYear()
-	// 21/7/2014
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;or&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	Date.locale = {
-		en: {
-			month_names: [&#39;January&#39;, &#39;February&#39;, &#39;March&#39;, &#39;April&#39;, &#39;May&#39;, &#39;June&#39;, &#39;July&#39;, &#39;August&#39;, &#39;September&#39;, &#39;October&#39;, &#39;November&#39;, &#39;December&#39;],
-			month_names_short: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]
-		}
-	};
-
-	Date.prototype.getMonthName = function(lang) {
-		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
-		return Date.locale[lang].month_names[this.getMonth()];
-	};
-	Date.prototype.getMonthNameShort = function(lang) {
-		lang = lang &amp;amp;&amp;amp; (lang in Date.locale) ? lang : &#39;en&#39;;
-		return Date.locale[lang].month_names_short[this.getMonth()];
-	};
-
-	// that can be used as follow:
-	var now = new Date();
-	now.getMonthNameShort + &amp;quot; &amp;quot; + now.getFullYear();
-	// July 2014
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.&lt;/p&gt;
-
-&lt;p&gt;The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.&lt;/p&gt;
-
-&lt;p&gt;For the &lt;code&gt;Date&lt;/code&gt; object now have these functions, whereas I personally prefer the &lt;code&gt;toLocaleString()&lt;/code&gt;&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleDateString()&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the date portion of this date.&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleString()&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this date.&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Date.prototype.toLocaleTimeString()&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of the time portion of this date.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;You can use it as follow&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var now = new Date()
-	date.toLocaleString(&#39;en&#39;, { month: &#39;long&#39;, year: &#39;numeric&#39; });
-	// July 2014
-	date.toLocaleString(&#39;en&#39;, { month: &#39;2-digit&#39;, day: &#39;2-digit&#39;, year: &#39;numberic&#39; });
-	// 21/07/2014
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where the first parameter is the &lt;code&gt;locale&lt;/code&gt; and the second parameter represents the &lt;code&gt;options&lt;/code&gt;. The allowed options can be found on the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString&#34;&gt;Mozilla Developer Network&lt;/a&gt;. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.&lt;/p&gt;
-
-&lt;p&gt;The same applies to the &lt;code&gt;Number&lt;/code&gt; object.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;Function&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Number.prototype.toLocaleString()&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;returns a string with a language sensitive representation of this number.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;You can use it as follow&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;	var number = 3600;
-	number.toLocaleString(&#39;en&#39;);
-	// 3,600
-	number.toLocaleString(&#39;de&#39;);
-	// 3.600
-	number.toLocaleString(&#39;en&#39;, {
-		style: &#39;currency&#39;,
-		currency: &#39;USD&#39;
-	});
-	// $3,600
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.
+Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.
+Okey, lets take a step back.</description>
     </item>
     
     <item>
@@ -133,107 +29,11 @@
       <pubDate>Wed, 16 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/web-application/centos-python-modwsgi/</guid>
-      <description>
-
-&lt;p&gt;When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your &lt;code&gt;eth0&lt;/code&gt; at startup.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and set &lt;code&gt;ONBOOT&lt;/code&gt; to &lt;code&gt;yes&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;getting-python-2-7-x&#34;&gt;Getting Python 2.7.x&lt;/h2&gt;
-
-&lt;p&gt;The following explanations are based on a blog of &lt;a href=&#34;http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5&#34; title=&#34;Setup OSQA on CentOS 5.5 | nickhowell.co.uk&#34;&gt;Asim Teeshan&lt;/a&gt; and a post on &lt;a href=&#34;http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html&#34; title=&#34;How do I compile mod_wsgi for Python 2.7&#34;&gt;Fire3Net&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;First we need some development tools. Install the following once&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install gcc make zlib-devel bzip2-devel openssl-devel
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now download the latest 2.7.x Python release and enable shared library during the configuation&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /opt/
-wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Extract and install it:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;tar -zxvf Python-2.7.5.tgz
-cd Python-2.7.5
-./configure --enable-shared
-make &amp;amp;&amp;amp; make altinstall
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install Python setuptools for using &lt;code&gt;easy_setup&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-sh setuptools-0.6c11-py2.7.egg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Before we can install &lt;code&gt;mod_wsgi&lt;/code&gt; we need to install the http development libraries&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install httpd httpd-devel
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now we are ready to compile &lt;code&gt;mod_wsgi&lt;/code&gt; against Python 2.7.x&lt;/p&gt;
-
-&lt;p&gt;Download and unpack the latest version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
-tar -zxvf mod_wsgi-3.4.tar.gz
-cd mod_wsgi-3.4.tar.gz
-./configure --with-python=/usr/local/bin/python2.7
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;whereis python
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Once the configuration completed you can install it:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make &amp;amp;&amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you run into problems along the lines &lt;strong&gt;cannot load shared library libpython2.7&amp;hellip;&lt;/strong&gt; then you need run the &lt;code&gt;ldconfig&lt;/code&gt; first to tell where the &lt;code&gt;libpython2.7.so*&lt;/code&gt; files are:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
-ln -s /usr/local/lib/libpython2.7.so /usr/
-ldconfig
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Lastly we can install &lt;code&gt;virtualenv&lt;/code&gt; as follow:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
-tar -zxvf virtualenv-1.10.1.tar.gz
-cd virtualenv-1.10.1
-python2.7 setup.py install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;install psycopg2&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
-tar -zxvf psycopg2-2.5.1.tar.gz
-cd psycopg2-2.5.1
-vi setup.cfg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and add the following line&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pg_config=/usr/pgsql-9.3/bin/pg_config
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;now install it&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/local/bin/python2.7 setup.py install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;now creating a virtual env for you web application do it as follow&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;virtualenv-2.7 --system-site-packages ENV
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your eth0 at startup.
+vi /etc/sysconfig/network-scripts/ifcfg-eth0  and set ONBOOT to yes.
+Getting Python 2.7.x The following explanations are based on a blog of Asim Teeshan and a post on Fire3Net.
+First we need some development tools. Install the following once
+yum install gcc make zlib-devel bzip2-devel openssl-devel  Now download the latest 2.</description>
     </item>
     
     <item>
@@ -242,174 +42,10 @@ vi setup.cfg
       <pubDate>Sat, 12 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/gis/qgis-server-centos/</guid>
-      <description>
-
-&lt;p&gt;QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer &lt;code&gt;postgresql-libs&lt;/code&gt; you need first to install the desired version of PostgreSQL and PostGIS as described bellow.&lt;/p&gt;
-
-&lt;h2 id=&#34;postgresql-and-postgis&#34;&gt;PostgreSQL and PostGIS&lt;/h2&gt;
-
-&lt;p&gt;The following instructions are adapted from  &lt;a href=&#34;http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository&#34;&gt;YUM installation - PostgreSQL wiki&lt;/a&gt; and &lt;a href=&#34;http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg&#34;&gt;UsersWikiuPostGIS20CentOS6pgdg - PostGIS&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
-
-&lt;p&gt;Configure yum repository&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;	vi /etc/yum.repos.d/CentOS-Base.repo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and add the following excludes to &lt;code&gt;base&lt;/code&gt; and &lt;code&gt;updates&lt;/code&gt; sections:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;exclude=postgresql*
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;install-pgdg-rpm-file&#34;&gt;Install PGDG RPM file&lt;/h3&gt;
-
-&lt;p&gt;A PGDG file is available for each distribution/architecture/database version combination at &lt;a href=&#34;http://yum.postgresql.org&#34;&gt;http://yum.postgresql.org&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;	wget http://yum.postgresql.org/&amp;lt;version&amp;gt;/&amp;lt;distribution&amp;gt;/&amp;lt;architecture&amp;gt;/pgdg-&amp;lt;database&amp;gt;.noarch.rpm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where version is &lt;code&gt;9.3&lt;/code&gt;, distribution is &lt;code&gt;redhat&lt;/code&gt;, architecture is &lt;code&gt;rhel-6-x86_64&lt;/code&gt; and database is &lt;code&gt;centos93-9.3-1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Install RPM distribution:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;	rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;installation-of-postgresql-and-postgis&#34;&gt;Installation of PostgreSQL and PostGIS&lt;/h3&gt;
-
-&lt;p&gt;List the available packages:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::bash
-yum list postgres*
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Installation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::bash
-yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;configuration-1&#34;&gt;Configuration&lt;/h3&gt;
-
-&lt;p&gt;Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::bash
-service postgresql-9.3 initdb
-service postgresql-9.3 start
-chkconfig postgresql-9.3 on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Some important files&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;File / Application&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;/var/lib/pgsql/9.3/data/postgresql.conf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;changing host etc.&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;/var/lib/pgsql/9.3/data/pg_hba.conf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;client authentication configuration&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;In the &lt;code&gt;pg_hba.conf&lt;/code&gt; file comment out the &lt;code&gt;ident&lt;/code&gt; lines except for unix domain socket and add two new lines for &lt;code&gt;md5 encryption&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::yaml
-# IPv4 local connections:
-#host    all             all             127.0.0.1/32            ident
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-#host    all             all             ::1/128                 ident
-host    all             all             ::1/128                 md5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;database-and-user&#34;&gt;Database and User&lt;/h3&gt;
-
-&lt;p&gt;Before we can start, we need to create a new database and user.&lt;/p&gt;
-
-&lt;p&gt;Login as &lt;code&gt;postgres&lt;/code&gt; superuser and create a new database&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::bash
-su -l postgres
-createdb gis
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Login into the database create a user and set a encrypted password&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::bash
-psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD &#39;gis&#39;;
-ALTER USER gis WITH ENCRYPTED PASSWORD &#39;gis&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now test your configuration and install PostGIS extension&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;installation-qgis&#34;&gt;Installation QGIS&lt;/h2&gt;
-
-&lt;p&gt;First you need a running CentOS on a machine. In the default CentOS software repository &lt;code&gt;qgis-server&lt;/code&gt; is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&amp;lt;version&amp;gt;.noarch.rpm
-rpm -Uvh epel-release-&amp;lt;version&amp;gt;.noarch.rpm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where the version I have tested it was &lt;code&gt;6-8&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Add the ELGIS repositories&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget http://elgis.argeo.org/repos/6/elgis-release-&amp;lt;version&amp;gt;.noarch.rpm
-rpm -Uvh elgis-release-6-6_0.noarch.rpm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where the version I have tested it was &lt;code&gt;6-6_0&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now install QGIS server:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install qgis-mapserver.x86_64
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you want to have QGIS libraries, QGIS Desktop run the following command&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install qgis*
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The scripts and configs are installed on CentOS:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;Script / Config&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Purpose&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;/usr/libexec/qgis/qgis_mapserv.fcgi&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;main fast cgi script (OGC capabilities)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;/etc/httpd/conf.d/qgis-mapserver.conf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;qgis mapserver httpd configuration file&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</description>
+      <description>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer postgresql-libs you need first to install the desired version of PostgreSQL and PostGIS as described bellow.
+PostgreSQL and PostGIS The following instructions are adapted from YUM installation - PostgreSQL wiki and UsersWikiuPostGIS20CentOS6pgdg - PostGIS.
+Configuration Configure yum repository
+vi /etc/yum.repos.d/CentOS-Base.repo  and add the following excludes to base and updates sections:</description>
     </item>
     
   </channel>

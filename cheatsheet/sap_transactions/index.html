@@ -150,7 +150,7 @@
 <ul>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#development">Development</a></li>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#table-management">Table Management</a></li>
-<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#gateway">Gateway</a>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#services-gateway-odata">Services (Gateway / OData)</a>
 <ul>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#caches">Caches</a></li>
 </ul></li>
@@ -239,7 +239,7 @@
 </tbody>
 </table>
 
-<h2 id="gateway">Gateway</h2>
+<h2 id="services-gateway-odata">Services (Gateway / OData)</h2>
 
 <table>
 <thead>
@@ -269,13 +269,22 @@
 <td><code>/IWFND/GW_CLIENT</code></td>
 <td>SAP Gateway Client</td>
 </tr>
+
+<tr>
+<td><code>SXI_MONITOR</code></td>
+<td>XI: Message Monitoring</td>
+</tr>
+
+<tr>
+<td><code>SXMB_MONI</code></td>
+<td>Integration Engine - Monitoring</td>
+</tr>
 </tbody>
 </table>
 
 <h3 id="caches">Caches</h3>
 
-<p>/UI2/INVALIDATE_GLOBAL_CACHES
-/UI2/INVALIDATE_CLIENT_CACHES</p>
+<p>Open Transaction <code>SE38</code> and the programming <code>/UI2/INVALIDATE_CLIENT_CACHES</code> for clearing the client caches or <code>/UI2/INVALIDATE_GLOBAL_CACHES</code> for the global UI2 caches.</p>
 
   </section>
 

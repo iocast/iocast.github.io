@@ -2,12 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Osx on think twice code once!</title>
-    <link>http://iocast.github.io/tags/osx/index.xml</link>
+    <link>http://iocast.github.io/tags/osx/</link>
     <description>Recent content in Osx on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
-    <atom:link href="http://iocast.github.io/tags/osx/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Oct 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://iocast.github.io/tags/osx/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Mac OS X file server migration</title>
@@ -15,19 +18,7 @@
       <pubDate>Wed, 09 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/server-management/osx-file-server-migration/</guid>
-      <description>&lt;p&gt;Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.&lt;/p&gt;
-
-&lt;p&gt;So to solve these problems and many more I created a little bash script which is able to:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;sync files from a remote server using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;changing the POSIX permissions on the local server after sync&lt;/li&gt;
-&lt;li&gt;creating optionally a share point for each folder to be synced&lt;/li&gt;
-&lt;li&gt;propagating ACLs on a share point or on a individual directory.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Each of these feature can be used independently. For more information see the project description: &lt;a href=&#34;http://iocast.github.io/projects/file-server-management.html&#34;&gt;server migration tool&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.</description>
     </item>
     
   </channel>
