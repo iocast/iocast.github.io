@@ -9,6 +9,43 @@ categories:
 - Server
 ---
 
+
+
+
+What is the DSI port?
+
+The LCD Panel port is a 4 lane MIPI DSI up to 1920×1200@60fps. It provides connectivity to an LCD panel and turns the Pine A64 into a computer or tablet.
+
+DSI - Display Serial Interface, 4 lanes MiPi, up to 1080P
+TP - Touch Panel Port, SPI with interrupt
+CSI - CMOS Camera Interface up to 5 mega pixel
+
+
+What model of the LCD panel is compatible for the Pine A64?
+
+We currently offer a 7 inch color active matrix 1024 x 600 LCD panel with 24 chip LED backlight.
+
+
+
+http://wiki.pine64.org/index.php/Main_Page#Datasheets_for_Components_and_Peripherals
+4 Lane MIPI DSI touch panel screen
+
+http://files.pine64.org/doc/datasheet/pine64/FY07024DI26A30-D_feiyang_LCD_panel.pdf
+MIPI 30 pin ? (page 20)
+
+http://files.pine64.org/doc/datasheet/pine64/HK70DR2459-PG-V01.pdf
+TP 6 pin ? (page 9)
+
+
+
+
+
+
+
+
+
+
+
 ```bash
 sudo -i
 /usr/local/sbin/pine64_update_uboot.sh
