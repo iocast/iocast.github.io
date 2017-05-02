@@ -89,7 +89,7 @@ done
 if [ -z "$command" ]; then usage; return; fi
 
 
-if ! echo echo ${COMMANDS[@]} | grep -q \\${command}\\b
+if ! echo ${COMMANDS[@]} | grep -q \\${command}\\b
 then
   usage
   return
