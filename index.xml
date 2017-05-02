@@ -30,6 +30,22 @@
 
 <h2 id="programming-snippets">Programming / Snippets</h2>
 
+<table>
+<thead>
+<tr>
+<th align="left">Purpose</th>
+<th align="left">Command</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">directory of the script</td>
+<td align="left"><code>DIR=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &amp;&amp; pwd )&quot;</code></td>
+</tr>
+</tbody>
+</table>
+
 <h3 id="arrays">Arrays</h3>
 
 <h4 id="check-string-in-array">check string in array</h4>
@@ -531,6 +547,19 @@ userName    ALL=(ALL:ALL) ALL
 
 <pre><code>sed -ie 's/$search_for/$replace_with/g' $file
 </code></pre>
+
+<h4 id="r-command-not-found">&lsquo;\r&rsquo;: command not found</h4>
+
+<pre><code class="language-bash"># Error message
+-bash: '\r': command not found
+</code></pre>
+
+<p>Remove trailing <code>\r</code> character that causes this error:</p>
+
+<pre><code class="language-bash">sed -i 's/\r$//' filename
+</code></pre>
+
+<p>Option <code>-i</code> is for in-place editing, we delete the trailing <code>\r</code> directly in the input file. Thus be careful to type the pattern correctly.</p>
 
 <h3 id="folder-size">Folder size</h3>
 
