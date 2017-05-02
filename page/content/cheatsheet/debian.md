@@ -16,15 +16,14 @@ apt-cache rdepends kodi
 
 sudo -i
 chmod 0600 /etc/network/interfaces
-wpa_passphrase Callirrhoe
-> i3l?S$xs6H
+wpa_passphrase <ssid>
+> <passphrase>
 
 
 network={
-        ssid="Callirrhoe"
-        #psk="i3l?S$xs6H"
-        psk=69c93e4f3cdda446ddf6fd87234d3d20e910cd62405088923ab3d42343c55476
-}
+        ssid="<ssid>"
+        #psk="<passpharase"
+        psk=<wpa-psk>
 
 
 
@@ -51,8 +50,8 @@ iface eth0 inet dhcp
 
 auto wlan0
 iface wlan0 inet dhcp
-        wpa-ssid Callirrhoe
-        wpa-psk 69c93e4f3cdda446ddf6fd87234d3d20e910cd62405088923ab3d42343c55476
+        wpa-ssid <ssid>
+        wpa-psk <wpa-psk>
 
 
 ifup wlan0
@@ -89,8 +88,8 @@ iface eth0 inet static
 
 auto wlan0
 iface wlan0 inet dhcp
-        wpa-ssid Callirrhoe
-        wpa-psk 69c93e4f3cdda446ddf6fd87234d3d20e910cd62405088923ab3d42343c55476
+        wpa-ssid <ssid>
+        wpa-psk <wpa-psk>
 
 
 

@@ -64,6 +64,23 @@ template command is as follow, where the first character after `s` is used as se
 	sed -ie 's/$search_for/$replace_with/g' $file
 
 
+#### '\r': command not found
+
+```bash
+# Error message
+-bash: '\r': command not found
+```
+
+Remove trailing `\r` character that causes this error:
+
+```bash
+sed -i 's/\r$//' filename
+```
+
+Option `-i` is for in-place editing, we delete the trailing `\r` directly in the input file. Thus be careful to type the pattern correctly.
+
+
+
 ### Folder size
 
 `-h`
@@ -135,6 +152,8 @@ Keep job running despite of a logout
 
 
 ### Packages
+
 getting installed packages including version number
 
 	time dpkg -l | perl -lane 'print "$F[1] : $F[2]" if m/^ii/'
+
