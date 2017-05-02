@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title> -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a class="mobile-title" href="http://iocast.github.io/">
+          <span class="mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="post">
+
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#sapui5-cheatsheet">SAPUI5 - CHEATSHEET</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#content">Content</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-initialize-a-initialize-project-webide"><a class="mdl-menu__item mdl-js-ripple-effect" name="initialize"></a> Initialize Project (WebIDE)</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-router-a-router"><a class="mdl-menu__item mdl-js-ripple-effect" name="router"></a> Router</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-jsonmodel-a-jsonmodel"><a class="mdl-menu__item mdl-js-ripple-effect" name="jsonmodel"></a> JSONModel</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-jsfragment-a-js-fragment-basic"><a class="mdl-menu__item mdl-js-ripple-effect" name="jsfragment"></a> JS-Fragment (Basic)</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-xmlfragment-a-xml-fragment-basic"><a class="mdl-menu__item mdl-js-ripple-effect" name="xmlfragment"></a> XML-Fragment (Basic)</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-xmlview-a-xml-view"><a class="mdl-menu__item mdl-js-ripple-effect" name="xmlview"></a> XML View</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-viewcontroller-a-view-controller"><a class="mdl-menu__item mdl-js-ripple-effect" name="viewcontroller"></a> View-Controller</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-vizchart-a-chart-s-vizframe"><a class="mdl-menu__item mdl-js-ripple-effect" name="vizchart"></a> Chart&rsquo;s (VizFrame)</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-html-a-html-in-xml-view"><a class="mdl-menu__item mdl-js-ripple-effect" name="html"></a> HTML in XML View</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-css-a-css"><a class="mdl-menu__item mdl-js-ripple-effect" name="css"></a> CSS</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-i18n-a-i18n"><a class="mdl-menu__item mdl-js-ripple-effect" name="i18n"></a> i18n</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-externallibrary-a-external-js-library-use-example-google-maps-api"><a class="mdl-menu__item mdl-js-ripple-effect" name="externallibrary"></a> External JS Library use (Example: Google Maps API)</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#a-name-usefullinks-a-useful-links"><a class="mdl-menu__item mdl-js-ripple-effect" name="usefullinks"></a> Useful Links</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title"></div>
+      <div class="description"></div>
+      <div class="meta">
+  <small>by</small> 
+  | Mon, 01 Jan 0001 |
+
+  in 
+
+  <div class="tags">
+  
+  </div>
+</div>
+
+
+
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<h1 id="sapui5-cheatsheet">SAPUI5 - CHEATSHEET</h1>
+
+<h2 id="content">Content</h2>
+
+<p><a href="#initialize">Initialize Project (WebIDE)</a><br />
+<a href="#router">Router</a><br />
+<a href="#jsonmodel">JSONModel</a><br />
+<a href="#jsfragment">JS-Fragment</a><br />
+<a href="#xmlfragment">XML-Fragment</a><br />
+<a href="#xmlview">XML-View</a><br />
+<a href="#viewcontroller">View-Controller</a><br />
+<a href="#vizchart">Chart&rsquo;s</a><br />
+<a href="#html">HTML in XML View</a><br />
+<a href="#css">CSS</a><br />
+<a href="#i18n">i18n</a><br />
+<a href="#externallibrary">External JS Library use</a><br />
+<a href="#usefullinks">Useful Links</a></p>
+
+<h3 id="a-name-initialize-a-initialize-project-webide"><a name="initialize"></a> Initialize Project (WebIDE)</h3>
+
+<p>To make a project in SAP WebIDE follow this steps:
+1. Rightclick on folder <strong>Workspace</strong>
+2. New &gt; Project from Template
+3. Select <strong>SAPUI5 Application</strong>
+4. Give a project name and go to next page (do not finish!)
+5. Select yout view type and give a view name (like <strong>Main</strong>)
+6. Finish setup</p>
+
+<p>An folder with your project name is generated and you can start coding!</p>
+
+<h3 id="a-name-router-a-router"><a name="router"></a> Router</h3>
+
+<p>Setup the router in your first called View-Controller in onInit() function.
+For setting up the router, use following code:</p>
+
+<p>XML:</p>
+
+<pre><code class="language-xml">&lt;mvc:View xmlns:core=&quot;sap.ui.core&quot; xmlns:mvc=&quot;sap.ui.core.mvc&quot; xmlns=&quot;sap.m&quot; controllerName=&quot;Test.controller.Main&quot;
+			xmlns:html=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+	&lt;Page showHeader=&quot;false&quot;&gt;
+		&lt;content&gt;
+			&lt;!-- Create nav container for all the views --&gt;
+			&lt;NavContainer id=&quot;navContainer&quot; /&gt;
+		&lt;/content&gt;
+	&lt;/Page&gt;
+&lt;/mvc:View&gt;
+</code></pre>
+
+<p>JavaScript:</p>
+
+<pre><code class="language-javascript">var oRouter = new sap.ui.core.routing.Router({
+    main: {
+        pattern : &quot;main&quot;,
+        view    : &quot;Main&quot;
+    },
+    product: {
+        pattern : &quot;product/{id}&quot;,
+        view    : &quot;Product&quot;
+    }
+}, {
+    targetControl       : &quot;navContainer&quot;, // container id of element, where the pages will be showed
+    targetAggregation   : &quot;pages&quot;, // type of used aggregation
+    targetParent        : &quot;idApp&quot;, // id of App (See index.html and give id)
+    viewType            : &quot;XML&quot;, // type of view
+    viewPath            : &quot;Test.view&quot; // Place, where the views are
+});
+
+new sap.m.routing.RouteMatchedHandler(oRouter, false); // set the route handler
+oRouter.register(&quot;router&quot;); // register the router with name
+oRouter.initialize(); // initialize the router
+this._oRouter = oRouter; // set the content of attribute _oRouter
+</code></pre>
+
+<p>After this, your Router is functional!</p>
+
+<p>Notice: In the other views, if you want the parameters (here by product, the parameter <strong>id</strong>), you have to get the router in Controllers onInit function, as following:</p>
+
+<pre><code class="language-javascript">this._oRouter = sap.ui.core.routing.Router.getRouter(&quot;router&quot;); // get router by registered router name
+this._oRouter.attachRouteMatched(function(oEvent) { // annonymous function by match
+    if(oEvent.getParameter(&quot;name&quot;) === &quot;product&quot;) { // check for correct route
+        var parameters = oEvent.getParameter(&quot;arguments&quot;); // give you an json of the parameters, so you can easy access by name
+        var id = parameters.id; // return id as string
+
+        // do something with the id
+    }
+});
+</code></pre>
+
+<p>Now we can access, but how do we navigate?<br />
+Navigate to view without parameter:</p>
+
+<pre><code class="language-javascript">this._oRouter = sap.ui.core.routing.Router.getRouter(&quot;router&quot;); // get router by registered router name
+this._oRouter.navTo(&quot;main&quot;); // Navigate to &quot;Main&quot;
+</code></pre>
+
+<p>Navigate to view with parameter:</p>
+
+<pre><code class="language-javascript">this._oRouter = sap.ui.core.routing.Router.getRouter(&quot;router&quot;); // get router by registered router name
+this._oRouter.navTo(&quot;product&quot;, {id: 12}); // navigate to &quot;Product&quot; with parameter as JSON! Key see in routing initialization
+</code></pre>
+
+<h3 id="a-name-jsonmodel-a-jsonmodel"><a name="jsonmodel"></a> JSONModel</h3>
+
+<p>To initialize a JSONModel, you use the following code:</p>
+
+<pre><code class="language-javascript">var oModel = new sap.ui.model.json.JSONModel();
+oModel.setData({&quot;entry&quot;:[]}); // set data by direct input
+// oModel.loadData(&quot;resources/content.json&quot;, {}, false); // Load data from external json
+oModel.setDefaultBindingMode(&quot;OneWay&quot;);
+
+// bind model to view
+this.getView().setModel(oModel, &quot;ModelOnView&quot;);
+
+// bind model to core (not recommend)
+sap.ui.getCore().setModel(oModel, &quot;ModelOnCore&quot;)
+</code></pre>
+
+<h3 id="a-name-jsfragment-a-js-fragment-basic"><a name="jsfragment"></a> JS-Fragment (Basic)</h3>
+
+<h3 id="a-name-xmlfragment-a-xml-fragment-basic"><a name="xmlfragment"></a> XML-Fragment (Basic)</h3>
+
+<h3 id="a-name-xmlview-a-xml-view"><a name="xmlview"></a> XML View</h3>
+
+<p>The inital page will be look like this:</p>
+
+<pre><code class="language-xml">&lt;mvc:View controllerName=&quot;Test.controller.Main&quot; xmlns:html=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:mvc=&quot;sap.ui.core.mvc&quot; xmlns=&quot;sap.m&quot;&gt;
+	&lt;App&gt;
+		&lt;pages&gt;
+			&lt;Page title=&quot;{i18n&gt;title}&quot;&gt;
+				&lt;content&gt;&lt;/content&gt;
+			&lt;/Page&gt;
+		&lt;/pages&gt;
+	&lt;/App&gt;
+&lt;/mvc:View&gt;
+</code></pre>
+
+<p>This will show an empty page with the title <strong>Title</strong> that will be show the title from i18n.
+An important point is the mvc:View tag <strong>controllerName</strong> that say, where your controller is.</p>
+
+<p>In the <strong>content</strong>-tag you can put your content. For a list of all UI-Components see <a href="https://sapui5.hana.ondemand.com/sdk/explored.html">here</a>.</p>
+
+<h3 id="a-name-viewcontroller-a-view-controller"><a name="viewcontroller"></a> View-Controller</h3>
+
+<p>When you create an View, you also will get a empty View-Controller named <strong><View-Name>.controller.js</strong>.<br />
+This controller have functions, that will be called automatically. These functions are:</p>
+
+<p>|function|Call time|
+|:-|:-|
+|onInit()           | called once by initializing the view by system    |
+|onAfterRendering() | called when view is fully rendered                |
+|onBeforeRendering()| called before view will be rendered               |
+|onExit()           | called before exit the view                       |</p>
+
+<h3 id="a-name-vizchart-a-chart-s-vizframe"><a name="vizchart"></a> Chart&rsquo;s (VizFrame)</h3>
+
+<p>For using a Viz-Frame, generate an Content holder in the XML-View:</p>
+
+<pre><code class="language-xml">&lt;mvc:View controllerName=&quot;Test.controller.Main&quot; xmlns:html=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:mvc=&quot;sap.ui.core.mvc&quot; xmlns=&quot;sap.m&quot; xmlns:viz=&quot;sap.viz.ui5.controls&quot;&gt;
+	&lt;App&gt;
+		&lt;pages&gt;
+			&lt;Page id=&quot;main&quot; title=&quot;{i18n&gt;title}&quot;&gt;
+				&lt;content&gt;
+				    &lt;viz:VizFrame id=&quot;chart&quot; width=&quot;100%&quot;/&gt;
+				&lt;/content&gt;
+			&lt;/Page&gt;
+		&lt;/pages&gt;
+	&lt;/App&gt;
+&lt;/mvc:View&gt;
+</code></pre>
+
+<p>Now in your onBeforeRendering function you can create the chart. Code sample for pie-chart:</p>
+
+<pre><code class="language-javascript">sap.ui.define([
+	&quot;sap/ui/core/mvc/Controller&quot;
+], function(Controller) {
+	&quot;use strict&quot;;
+
+	return Controller.extend(&quot;Test.controller.Main&quot;, {
+        onBeforeRendering: function() {
+            var data = {&quot;entry&quot;:[ // PIE Chart data
+                {&quot;year&quot;:2016, &quot;revenue&quot;:12000.43},
+                {&quot;year&quot;:2015, &quot;revenue&quot;:9800.55},
+                {&quot;year&quot;:2014, &quot;revenue&quot;:24231.33},
+                {&quot;year&quot;:2013, &quot;revenue&quot;:13337.67},
+                {&quot;year&quot;:2012, &quot;revenue&quot;:5299.00},
+                {&quot;year&quot;:2011, &quot;revenue&quot;:4100.10},
+                {&quot;year&quot;:2010, &quot;revenue&quot;:2154.34}
+            ]};
+
+            var oModel = new sap.ui.model.json.JSONModel(data); // Create JSONModel
+
+            var chart = this.getView().byId(&quot;chart&quot;); // Get chart
+            chart.removeAllFeeds(); // remove the feeds
+
+            chart.setModel(oModel); // add the JSONModel to chart
+            chart.setVizProperties({&quot;title&quot;:{&quot;text&quot;:&quot;My awesome pie chart!&quot;}}); // Set the properties
+
+            var pieSettings = { // Settings of cahrt
+                path: &quot;/entry&quot;,
+                dimensions: [{
+					name: &quot;Year&quot;,
+					value: &quot;{year}&quot;
+				}],
+				measures: [{
+					name: &quot;Revenue&quot;,
+					value: &quot;{revenue}&quot;
+				}],
+				color: {
+					uid: &quot;color&quot;,
+					type: &quot;Dimension&quot;,
+					values: [&quot;Year&quot;]
+				},
+				size: {
+					uid: &quot;size&quot;,
+					type: &quot;Measure&quot;,
+					values: [&quot;Revenue&quot;]
+				}
+            };
+            var pieDataset = new sap.viz.ui5.data.FlattenedDataset({ // Dataset of PIE Chart
+				dimensions: pieSettings.dimensions,
+				measures: pieSettings.measures,
+				data: {
+					path: pieSettings.path
+				}
+			});
+			chart.addFeed(new sap.viz.ui5.controls.common.feeds.FeedItem(pieSettings.size));
+        	chart.addFeed(new sap.viz.ui5.controls.common.feeds.FeedItem(pieSettings.color));
+
+            chart.setVizType(&quot;pie&quot;);
+            chart.setDataset(pieDataset);
+        }
+	});
+
+});
+</code></pre>
+
+<p>NOTICE: The feeds are different by different vizTypes. See <a href="https://sapui5.hana.ondemand.com/docs/vizdocs/index.html#reference/chartProperty/Charts">here</a>, click on VizType, go on tab <strong>Bindings</strong> and fill Feeds with min 1!</p>
+
+<h3 id="a-name-html-a-html-in-xml-view"><a name="html"></a> HTML in XML View</h3>
+
+<p>To use native HTML, SAPUI5 is giving you an simple way. Example:</p>
+
+<pre><code class="language-xml">&lt;mvc:View controllerName=&quot;Test.controller.Main&quot; xmlns:html=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:mvc=&quot;sap.ui.core.mvc&quot; xmlns=&quot;sap.m&quot;&gt;
+	&lt;App&gt;
+		&lt;pages&gt;
+			&lt;Page id=&quot;main&quot; title=&quot;{i18n&gt;title}&quot;&gt;
+				&lt;content&gt;
+				    &lt;html:Input type=&quot;checkbox&quot; id=&quot;check&quot; name=&quot;check&quot;&gt;&lt;/html:Input&gt;
+				    &lt;html:Label for=&quot;check&quot;&gt;I'm a HTML Checkbox&lt;/html:Label&gt;
+				&lt;/content&gt;
+			&lt;/Page&gt;
+		&lt;/pages&gt;
+	&lt;/App&gt;
+&lt;/mvc:View&gt;
+</code></pre>
+
+<h3 id="a-name-css-a-css"><a name="css"></a> CSS</h3>
+
+<p>To use CSS, the WebIDE will generate you a folder named <strong>css</strong> with a file <strong>style.css</strong>. You can simply put your css in here.</p>
+
+<p>If you are using an older version of a project, you can create the folder and file yourself and make a css reference in <strong>index.html</strong> of the project. See here:</p>
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/style.css&quot;&gt;
+</code></pre>
+
+<p>Now you have two ways to access your css.</p>
+
+<p>First way: Set class like in HTML</p>
+
+<pre><code class="language-xml">&lt;Panel headerText=&quot;{i18n&gt;title}&quot; id=&quot;title&quot; class=&quot;your_style_class&quot;&gt;
+	&lt;content/&gt;
+&lt;/Panel&gt;
+</code></pre>
+
+<p>Second way: Add style class with JavaScript</p>
+
+<pre><code class="language-javascript">// Access your element and set style class
+this.getView().byId(&quot;element_id&quot;).addStyleClass(&quot;your_style_class&quot;);
+
+// Remove class from element
+this.getView().byId(&quot;element_id&quot;).removeStyleClass(&quot;your_style_class&quot;);
+</code></pre>
+
+<h3 id="a-name-i18n-a-i18n"><a name="i18n"></a> i18n</h3>
+
+<p>If you don&rsquo;t know what i18n is, see <a href="https://en.wikipedia.org/wiki/Internationalization_and_localization">here</a>.<br />
+By basic generation, WebIDE will give you the possibility to easy access to i18n!</p>
+
+<p>The settings are in the file <strong>.project.json</strong>. In section <strong>translation</strong> you find the information. Set here your supported languages iso-code and the default language.</p>
+
+<pre><code class="language-json">&quot;translation&quot;: {
+    &quot;translationDomain&quot;: &quot;&quot;,
+    &quot;supportedLanguages&quot;: &quot;en,fr,de&quot;,
+    &quot;defaultLanguage&quot;: &quot;en&quot;,
+    &quot;defaultI18NPropertyFile&quot;: &quot;i18n.properties&quot;,
+    &quot;resourceModelName&quot;: &quot;i18n&quot;
+}
+</code></pre>
+
+<p>WebIDE is generating you a file <strong>i18n.properties</strong> in folder <strong>i18n</strong>. This file is used for language, when no other file is found for local language of current user.</p>
+
+<p>SAPUI5 is giving you a naming syntax for file.<br />
+So if you want to make a file for english, generate file <strong>i18n_en.properties</strong> in the folder. For german use <strong>i18n_de.properties</strong> and so on.<br />
+Fill the files with content, and only change the content after <strong>&rsquo;=&rsquo;</strong>. The key has to be the same on all files!</p>
+
+<p>Now if you change your browser language, you will see the website i18n content with the text in file.</p>
+
+<h3 id="a-name-externallibrary-a-external-js-library-use-example-google-maps-api"><a name="externallibrary"></a> External JS Library use (Example: Google Maps API)</h3>
+
+<h3 id="a-name-usefullinks-a-useful-links"><a name="usefullinks"></a> Useful Links</h3>
+
+<p><a href="https://sapui5.netweaver.ondemand.com/#docs/api/symbols/sap.ui.html">API SAPUI5</a><br />
+<a href="https://sapui5.hana.ondemand.com/sdk/explored.html">SAPUI5 Explored (XML UI Elements)</a><br />
+<a href="https://openui5.hana.ondemand.com/iconExplorer.html">SAPUI5 Icon Explorer</a><br />
+<a href="https://sapui5.hana.ondemand.com/docs/vizdocs/index.html#reference/chartProperty/Charts">VizFrame Chart Settings</a></p>
+
+  </section>
+
+  
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

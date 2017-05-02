@@ -181,7 +181,7 @@
       <div class="title">Tunneling over an intermediate to overcome demilitarized zone</div>
       <div class="description">Often you want to connect to a computer inside a network that is hidden from the outside. This &#34;private&#34; network, aka demilitarized zone (DMZ), can be overcome by having a computer inside the DMZ that opens a connection to an other &#34;open&#34; network or computer. This article describes roughly how to do that using Linux.</div>
       <div class="meta">
-  <small>by</small> <a href="http://iocast.github.io/author/iocast">iocast</a>
+  <small>by</small> 
   | Sat, 03 Dec 2011 |
 
   in 
@@ -312,19 +312,22 @@ fi
   <section class="comment">
    <div id="disqus_thread"></div>
 <script type="text/javascript">
-    var disqus_shortname = 'iocast-blog';
-    var disqus_identifier = 'http:\/\/iocast.github.io\/post\/miscellaneous\/tunneling-over-an-intermediate\/';
-    var disqus_title = 'Tunneling over an intermediate to overcome demilitarized zone';
-    var disqus_url = 'http:\/\/iocast.github.io\/post\/miscellaneous\/tunneling-over-an-intermediate\/';
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'iocast-blog';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
   </section>
 
 

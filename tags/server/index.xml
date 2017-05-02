@@ -8,9 +8,7 @@
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
     <lastBuildDate>Sun, 09 Nov 2014 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://iocast.github.io/tags/server/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="http://iocast.github.io/tags/server/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>My personal file server on a Cubox from SolidRun using Arch Linux</title>
@@ -18,8 +16,281 @@
       <pubDate>Sun, 09 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
-      <description>For my file server I have the following requirements:
- it should consume as less as possible electricity it should be very silent, means no active cooling the operation system should use OpenSSH  Thus, for the hardware I have decided to use a Cubox from SolidRun because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie.</description>
+      <description>
+
+<p>For my file server I have the following requirements:</p>
+
+<ol>
+<li>it should consume as less as possible electricity</li>
+<li>it should be very silent, means no active cooling</li>
+<li>the operation system should use OpenSSH</li>
+</ol>
+
+<p>Thus, for the hardware I have decided to use a <a href="http://www.solid-run.com/">Cubox from SolidRun</a> because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie. For the operation system I use <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Arch Linux</a> because it is more up-to-date then the Debian or Ubuntu distribution.</p>
+
+<h1 id="installation">Installation</h1>
+
+<p>Download the latest version of Arch Linux for the <a href="http://archlinuxarm.org/platforms/armv7/marvell/cubox">Marvell ARMv7 platform</a> from the official site. Next, plug your MicroSD into your computer and find out which drive (<code>/dev/sdx</code>) it is</p>
+
+<pre><code class="language-bash">df -ah
+</code></pre>
+
+<p>Clear your disk and create <strong>one</strong> <code>ext3</code> partition.</p>
+
+<pre><code class="language-bash">mkfs.ext3 /dev/sdx1
+</code></pre>
+
+<p>Know mount it and extract Arch Linux onto your MicroSD partition</p>
+
+<pre><code class="language-bash">mkdir /media/arch
+mount /dev/sdx1 /media/arch
+tar -xzvf ArchLinuxARM-cubox-latest.tar.gz -C /media/arch
+umount /media/arch
+rm -rf /media/arch
+</code></pre>
+
+<p>The default login is user <code>root</code> with password <code>root</code>.</p>
+
+<h1 id="configuration">Configuration</h1>
+
+<p>Now lets configure some basic stuff, like date and time, DHCP, etc.</p>
+
+<h2 id="network">Network</h2>
+
+<p>Create the <code>/etc/systemd/network/eth0.network</code> file so that it resembles the example below. Be sure to change the IP addresses to reflect the values shown under the “Remote Access” tab of the Linode Manager.</p>
+
+<p><strong>for DHCP</strong></p>
+
+<pre><code>[Match]
+Name=eth0
+
+[Network]
+DHCP=both
+</code></pre>
+
+<p><strong>for fixed IP</strong></p>
+
+<pre><code>[Match]
+Name=eth0
+
+[Network]
+Address=10.0.1.2/24
+Gateway=10.0.1.1
+</code></pre>
+
+<p>Restart systemd-networkd. To do so, run this command:</p>
+
+<pre><code>systemctl restart systemd-networkd
+</code></pre>
+
+<h3 id="clientid">Clientid</h3>
+
+<p>If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in <code>/etc/dhcpcd.conf</code>:</p>
+
+<pre><code># Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
+duid
+</code></pre>
+
+<p>to:</p>
+
+<pre><code># Use the hardware address of the interface for the Client ID (DHCPv4).
+clientid
+</code></pre>
+
+<p>Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-style Client ID correctly. See RFC 4361 for more information.</p>
+
+<p>To automatically start the DCHP daemon at start up you have to enable it.</p>
+
+<pre><code>systemctl enable dhcpcd
+</code></pre>
+
+<h2 id="system-upgrade">System Upgrade</h2>
+
+<pre><code>pacman -Syu
+</code></pre>
+
+<h2 id="bad-experience-with-vi">Bad experience with <code>vi</code></h2>
+
+<p>If you have bad experience or strange behaviour with the standard <code>vi</code> simply install <code>vim</code>.</p>
+
+<pre><code>pacman -S vim-minimal
+</code></pre>
+
+<h2 id="locale-and-date-time">Locale and Date/Time</h2>
+
+<p>Change your timezone to the one your are living at. All time zones can be found in the folder <code>/etc/timezones</code>.</p>
+
+<pre><code># To check the current zone defined for the system:
+timedatectl status
+# To list available zones:
+timedatectl list-timezones
+# To change your time zone:
+timedatectl set-timezone Europe/Zurich
+</code></pre>
+
+<p>Also do not forget to change your <code>locale</code></p>
+
+<pre><code>localectl status
+ls /usr/share/i18n/locales
+localectl set-locale LANG=de_CH.UTF-8
+</code></pre>
+
+<h1 id="samba">Samba</h1>
+
+<p>For internal file sharing you could use Samba. Tips and tricks can be found on <a href="https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks">Arch Linux Samba site</a></p>
+
+<pre><code>pacman -S samba
+</code></pre>
+
+<p>Your can restart the service using the follwing</p>
+
+<pre><code>systemctl enable smbd.service
+systemctl enable nmbd.service
+</code></pre>
+
+<p>Create a new samba group</p>
+
+<pre><code>groupadd sambashare
+</code></pre>
+
+<p>and add user to it</p>
+
+<pre><code># add user to the samba grup
+pdbedit -a -u samba_user
+# changing samba password
+smbpasswd samba_user
+</code></pre>
+
+<p>Adding a user to the samba group</p>
+
+<pre><code>usermod -a -G sambashare unix_user_name
+</code></pre>
+
+<p>On my Cubox I use the following configuration (<code>/etc/samba/smb.conf</code>):</p>
+
+<pre><code>[global]
+workgroup = iocast
+server string = file server
+# Share-level security: Each share in the workgroup has one or more passwords associated with it. Anyone who knows a valid password for the share can access it.
+# User-level security: 	Each share in the workgroup is configured to allow access from certain users. With each initial tree connection, the Samba server verifies users and their passwords to allow them access to the share.
+# Server-level security: This is the same as user-level security, except that the Samba server uses another server to validate users and their passwords before granting access to the share.
+# Domain-level security: Samba becomes a member of a Windows NT domain and uses one of the domain's domain controllers—either the PDC or a BDC—to perform authentication. Once authenticated, the user is given a special token that allows her access to any share with appropriate access rights. With this token, the domain controller will not have to revalidate the user's password each time she attempts to access another share within the domain. The domain controller can be a Windows NT/2000 PDC or BDC, or Samba acting as a Windows NT PDC.
+security = user
+map to guest = bad user
+create mask = 0775
+force create mode = 0775
+directory mask = 02775
+force directory mode = 02775
+force group = sambashare
+
+[share 1]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = user1 user2
+write list = user1
+read list = user2
+
+[share 1 backup]
+comment = data disk backup
+path = /storage/backup/
+public = no
+writable = no
+guest ok = no
+valid users = user1
+write list = user1
+
+[share 2]
+comment = data disk1
+path = /storage/data1/
+public = no
+writable = yes
+guest ok = no
+valid users = user1 user2
+write list = user1 user2
+
+[share 2 backup]
+comment = data disk1 backup
+path = /storage/backup1/
+public = no
+writable = no
+guest ok = no
+valid users = user1 user2
+write list = user1 user2
+
+[scans]
+comment = documents from scanner
+path = /storage/scans/
+guest ok = yes
+guest account = user1
+available = yes
+browsable = yes
+public = yes
+writable = yes
+</code></pre>
+
+<h1 id="disks-management">Disks management</h1>
+
+<p>To automatically mount disks on startup, you need to add them to the <code>/etc/fstab</code> configuration file. Also use the option <code>nofail</code> to not report any error if the disk is absent. For more information read the <a href="https://wiki.archlinux.org/index.php/fstab">manual on Arch Linux</a></p>
+
+<p>Run <code>lsblk -f</code> or <code>ls -l /dev/disk/by-uuid</code> to list the partitions / disks. Edit the <code>/etc/fstab</code> and prefix the values in the UUID column with <code>UUID=</code>:</p>
+
+<pre><code># &lt;file system&gt;                           &lt;dir&gt;             &lt;type&gt;  &lt;options&gt;                        &lt;dump&gt;  &lt;pass&gt;
+UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/    ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/  ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=92e833e1-ecc4-4cd3-9874-969867eb5848 /storage/data1/   ext4    nofail,rw,relatime,data=ordered  0       0
+UUID=b5a1514e-6a87-4ea5-a3ce-a592a41abecc /storage/backup1/ ext4    nofail,rw,relatime,data=ordered  0       0
+</code></pre>
+
+<h1 id="dynamic-dns">Dynamic DNS</h1>
+
+<p>If you use <a href="http://www.afraid.org">afraid.org</a> as your dynamic DNS service you can get an example <code>cron</code> entry from the <strong>Dynamic DNS</strong> menu entry. It look likes the following</p>
+
+<pre><code>PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1 &amp;
+</code></pre>
+
+<p>On Arch Linux you need to do the following changes to use it with <code>systemd/Timers</code> (see <a href="https://wiki.archlinux.org/index.php/Systemd/Timers">here</a>). First we need to create a new timer <code>vim /etc/systemd/system/afraid.org.timer</code> and add the following lines</p>
+
+<pre><code>[Unit]
+Description=timer for service afraid.org.timer
+Requires=network-online.target
+Requires=network.target
+After=dhcpcd.service
+
+[Timer]
+OnCalendar=*:3,8,13,18,23,28,33,38,43,48,53,58
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<p>Then create a service file of the same name <code>/etc/systemd/system/afraid.org.service</code> and add the following lines</p>
+
+<pre><code>[Unit]
+Description=service for afraid.org for pasithee.mooo.com
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= &gt;&gt; /tmp/freedns_pasithee_mooo_com.log 2&gt;&amp;1
+</code></pre>
+
+<p>Now you can test the service.</p>
+
+<pre><code># test service
+systemctl start afraid.org.service
+systemctl stop afraid.org.service
+</code></pre>
+
+<p>As soon as it works you can enable the timer</p>
+
+<pre><code>systemctl enable afraid.org.timer
+systemctl start afraid.org.timer
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -28,9 +299,116 @@
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
-      <description>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.
-Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.
-Okey, lets take a step back.</description>
+      <description><p>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.</p>
+
+<p>Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.</p>
+
+<p>Okey, lets take a step back. When I was working on my semantic web library calendar web component I searched for a way to represent a Date object inside the DOM tree in different way. One question was is how to represent a Date object in the format  <code>mmmm yyyy</code> or <code>mm/dd/yyyy</code>. So I began to search for examples in the web and many entries dated back to 2009, 2010 and 2011. Some of them were also from 2013, which we really astound. Nonetheless, all answers had once thing in common. They put each component of the representation manually inside a string.</p>
+
+<pre><code class="language-javascript">	var dateobj= new Date()
+	dateobj.getDate() + &quot;/&quot; + dateobj.getMonth()+1 + &quot;/&quot; + dateobj.getFullYear()
+	// 21/7/2014
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="language-javascript">	Date.locale = {
+		en: {
+			month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		}
+	};
+
+	Date.prototype.getMonthName = function(lang) {
+		lang = lang &amp;&amp; (lang in Date.locale) ? lang : 'en';
+		return Date.locale[lang].month_names[this.getMonth()];
+	};
+	Date.prototype.getMonthNameShort = function(lang) {
+		lang = lang &amp;&amp; (lang in Date.locale) ? lang : 'en';
+		return Date.locale[lang].month_names_short[this.getMonth()];
+	};
+
+	// that can be used as follow:
+	var now = new Date();
+	now.getMonthNameShort + &quot; &quot; + now.getFullYear();
+	// July 2014
+</code></pre>
+
+<p>The problem you have with these solutions is that they not respect the language sensitive representation of a Date or Number object.</p>
+
+<p>The solution for this is quite simple. Javascript now provides different functions which respect the locale settings of the environment.</p>
+
+<p>For the <code>Date</code> object now have these functions, whereas I personally prefer the <code>toLocaleString()</code></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Date.prototype.toLocaleDateString()</td>
+<td align="left">returns a string with a language sensitive representation of the date portion of this date.</td>
+</tr>
+
+<tr>
+<td align="left">Date.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this date.</td>
+</tr>
+
+<tr>
+<td align="left">Date.prototype.toLocaleTimeString()</td>
+<td align="left">returns a string with a language sensitive representation of the time portion of this date.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use it as follow</p>
+
+<pre><code class="language-javascript">	var now = new Date()
+	date.toLocaleString('en', { month: 'long', year: 'numeric' });
+	// July 2014
+	date.toLocaleString('en', { month: '2-digit', day: '2-digit', year: 'numberic' });
+	// 21/07/2014
+</code></pre>
+
+<p>where the first parameter is the <code>locale</code> and the second parameter represents the <code>options</code>. The allowed options can be found on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString">Mozilla Developer Network</a>. As you can see in the example the main advantage is that you do need to worry about the representation of the date format in the different languages and that you do not need to add manually a leading zero if necessary.</p>
+
+<p>The same applies to the <code>Number</code> object.</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Number.prototype.toLocaleString()</td>
+<td align="left">returns a string with a language sensitive representation of this number.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use it as follow</p>
+
+<pre><code class="language-javascript">	var number = 3600;
+	number.toLocaleString('en');
+	// 3,600
+	number.toLocaleString('de');
+	// 3.600
+	number.toLocaleString('en', {
+		style: 'currency',
+		currency: 'USD'
+	});
+	// $3,600
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -39,9 +417,42 @@ Okey, lets take a step back.</description>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/server-management/linux-join-ad/</guid>
-      <description>The easiest way, at least for me, is to use the likewise-open package. You can find the official documentation here. Under Ubuntu you can simple install this package using apt-get.
-apt-get install likewise-open  Once you have installed it, you can join a Active Directory (AD) as follow.
-domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt;  where you need to define the path to your organization unit, which is displayed in the AD as a folder.</description>
+      <description>
+
+<p>The easiest way, at least for me, is to use the <code>likewise-open</code> package. You can find the official documentation <a href="https://help.ubuntu.com/community/LikewiseOpen">here</a>. Under Ubuntu you can simple install this package using <code>apt-get</code>.</p>
+
+<pre><code class="language-bash">apt-get install likewise-open
+</code></pre>
+
+<p>Once you have installed it, you can join a Active Directory (AD) as follow.</p>
+
+<pre><code class="language-bash">domainjoin-cli join --ou Hosting/&lt;path&gt;/&lt;to&gt;/&lt;your&gt;/&lt;organization-unit&gt; &lt;server&gt; &lt;login-user&gt;
+</code></pre>
+
+<p>where you need to define the path to your organization unit, which is displayed in the AD as a folder. The second parameter is the server and the last parameter is the user, that have rights to add new things in the AD.</p>
+
+<p>Without any configuration, all AD users have login rights to your server. At first login, each user is getting a personal user folder under <code>/home/likewise-open</code> and then a subfolder named as his username.</p>
+
+<h2 id="restricting-access-to-specific-groups">Restricting access to specific groups</h2>
+
+<p>By default, LikewiseOpen allows all AD users to logon. To limit this to specific groups you need to add required membership settings as follow:</p>
+
+<pre><code class="language-bash">lwconfig RequireMembershipOf &quot;&lt;server&gt;\\&lt;group-1&gt;&quot; &quot;&lt;erver&gt;\\&lt;group-2&gt;&quot;
+lw-update-dns
+</code></pre>
+
+<p>If you forget which groups have access to you server, you could check it by running the following command:</p>
+
+<pre><code class="language-bash">lwconfig --detail RequireMembershipOf
+</code></pre>
+
+<h2 id="login">Login</h2>
+
+<p>Now you are able to login to your server using active directory authentication:</p>
+
+<pre><code class="language-bash">ssh &lt;ad_domain&gt;\\&lt;user&gt;@&lt;server&gt;
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -50,9 +461,181 @@ domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</guid>
-      <description>Removing preinstalled packages First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).
-dpkg -l | grep &#39;postgres\|gdal&#39;  You should get a list like the following one:
-ii libgdal-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Development files ii libgdal1-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Development files ii libgdal1h 1.10.0-1~precise1 Geospatial Data Abstraction Library ii postgresql-9.</description>
+      <description>
+
+<h2 id="removing-preinstalled-packages">Removing preinstalled packages</h2>
+
+<p>First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).</p>
+
+<pre><code class="language-bash">dpkg -l | grep 'postgres\|gdal'
+</code></pre>
+
+<p>You should get a list like the following one:</p>
+
+<pre><code class="language-bash">ii  libgdal-dev                        1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1-dev                       1.10.0-1~precise1                 Geospatial Data Abstraction Library - Development files
+ii  libgdal1h                          1.10.0-1~precise1                 Geospatial Data Abstraction Library
+ii  postgresql-9.1                     9.1.10-0ubuntu12.04               object-relational SQL database, version 9.1 server
+ii  postgresql-9.1-postgis-2.0         2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1
+ii  postgresql-9.1-postgis-2.0-scripts 2.0.3-2~precise4                  Geographic objects support for PostgreSQL 9.1 -- scripts
+ii  postgresql-client-9.1              9.1.10-0ubuntu12.04               front-end programs for PostgreSQL 9.1
+ii  postgresql-client-common           129ubuntu1                        manager for multiple PostgreSQL client versions
+ii  postgresql-common                  129ubuntu1                        PostgreSQL database-cluster manager
+ii  postgresql-contrib-9.1             9.1.10-0ubuntu12.04               additional facilities for PostgreSQL
+</code></pre>
+
+<p>If you want, you could remove these packages as follow:</p>
+
+<pre><code class="language-bash">apt-get purge libgdal-dev libgdal1-dev libgdal1h postgresql-9.1 postgresql-9.1-postgis-2.0 postgresql-9.1-postgis-2.0-scripts postgresql-client-9.1 postgresql-client-common postgresql-common
+apt-get autoremove
+apt-get autoclean
+</code></pre>
+
+<h2 id="installing-postgresql-9-3">Installing PostgreSQL 9.3</h2>
+
+<p>First you need to find out your release code name:</p>
+
+<pre><code class="language-bash">lsb_release -c
+</code></pre>
+
+<p>which get you something like that <code>Codename:    precise</code></p>
+
+<p>Create a new file <code>codename-pgdg.list</code> in <code>/etc/apt/sources.list.d</code> according to the <a href="https://wiki.postgresql.org/wiki/Apt" title="Apt - PostgreSQL wiki">PostgreSQL wiki page</a>.</p>
+
+<pre><code class="language-bash">vi /etc/apt/sources.list.d/precise-pgdg.list
+</code></pre>
+
+<p>and add the following line</p>
+
+<pre><code class="language-bash">deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+</code></pre>
+
+<p>Now we need to import the repository key from</p>
+
+<pre><code class="language-bash">wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+</code></pre>
+
+<p>Now we can a update the repository and install the required packages from the PostgreSQL repository.</p>
+
+<pre><code class="language-bash">apt-get update
+apt-get install postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
+</code></pre>
+
+<h2 id="compiling-postgis-2-1-against-libgdal-1-10-0">Compiling PostGIS 2.1 against libgdal &gt;= 1.10.0</h2>
+
+<p>To install PostGIS 2.1 it is important that <code>postgresql-server-dev-x.x</code> is installed, because we need to compile PostGIS against these source files. We are going the install the precompiled <code>libgdal</code> 1.10.0 version from <strong>ubuntugis</strong>.</p>
+
+<p>Install <code>python-software-properties</code> and add the apt sources (repositories):</p>
+
+<pre><code class="language-bash">apt-get install python-software-properties
+add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+apt-get update
+</code></pre>
+
+<p>Now install the new GDAL library called <code>libgdal1h</code> and its&rsquo; development package</p>
+
+<pre><code class="language-bash">apt-get install libgdal1h
+apt-cache showpkg libgdal-dev*
+</code></pre>
+
+<p>which gets you something like that:</p>
+
+<pre><code class="language-bash">...
+Provides:
+1.10.0-1~precise1 -
+1.9.0-3.1~pgdg12.4+1 -
+...
+</code></pre>
+
+<p>You can install a version using the <code>-f</code> flag</p>
+
+<pre><code class="language-bash">apt-get install -f libgdal-dev=1.10.0-1~precise1
+</code></pre>
+
+<p>Before installing the PostGIS from source we install the required dependencies.</p>
+
+<pre><code class="language-bash">apt-get install make gcc checkinstall libxml2-dev libproj-dev libgeos-dev
+</code></pre>
+
+<p>Download the latest PostGIS source and compile it</p>
+
+<pre><code class="language-bash">wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+tar xzvf postgis-2.1.0.tar.gz
+cd postgis-2.1.0
+./configure
+</code></pre>
+
+<pre><code class="language-bash"> PostGIS is now configured for x86_64-unknown-linux-gnu
+
+-------------- Compiler Info -------------
+ C compiler:           gcc -g -O2
+ C++ compiler:         g++ -g -O2
+ SQL preprocessor:     /usr/bin/cpp -traditional-cpp -P
+
+-------------- Dependencies --------------
+ GEOS config:          /usr/bin/geos-config
+ GEOS version:         3.3.8
+ GDAL config:          /usr/bin/gdal-config
+ GDAL version:         1.10.0
+ PostgreSQL config:    /usr/bin/pg_config
+ PostgreSQL version:   PostgreSQL 9.3.1
+ PROJ4 version:        48
+ Libxml2 config:       /usr/bin/xml2-config
+ Libxml2 version:      2.8.0
+ JSON-C support:       no
+ PostGIS debug level:  0
+ Perl:                 /usr/bin/perl
+
+--------------- Extensions ---------------
+ PostGIS Raster:       enabled
+ PostGIS Topology:     enabled
+ SFCGAL support:       disabled
+
+-------- Documentation Generation --------
+ xsltproc:             
+ xsl style sheets:     
+ dblatex:              
+ convert:              
+ mathml2.dtd:          http://www.w3.org/Math/DTD/mathml2/mathml2.dtd
+</code></pre>
+
+<p>use <code>checkinstall</code>, which runs <code>make install</code> and registers the package in <code>dpkg</code>.</p>
+
+<pre><code class="language-bash">make
+checkinstall
+</code></pre>
+
+<h2 id="r-3-0-2-and-pl-r-for-postgresql">R 3.0.2 and PL/R for PostgreSQL</h2>
+
+<p>Before we can install PL/R extension for PostgreSQL 9.3 we need to install R 3.0.2 as describe on the <a href="http://cran.r-project.org" title="The Comprehensive R Archive Network">R-Project</a> site. First edit the</p>
+
+<pre><code class="language-bash">vi /etc/apt/sources.list
+</code></pre>
+
+<p>and add the following line and do a update</p>
+
+<pre><code class="language-bash">deb http://cran.r-project.org/bin/linux/ubuntu precise/
+</code></pre>
+
+<p>as well as the key</p>
+
+<pre><code class="language-bash">apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-get update
+</code></pre>
+
+<p>The search for the 3.0.2 R package version and install it.</p>
+
+<pre><code class="language-bash">apt-cache showpkg r-base
+apt-get install -f r-base=3.0.2-1precise0
+</code></pre>
+
+<p>Lastly we can install the PL/R extension for PostgreSQL from the PostgreSQL apt repository</p>
+
+<pre><code class="language-bash">apt-get install postgresql-9.3-plr
+</code></pre>
+
+<p>So &hellip; we are ready &hellip; have fun.</p>
+</description>
     </item>
     
     <item>
@@ -61,11 +644,107 @@ ii libgdal-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Developme
       <pubDate>Wed, 16 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/web-application/centos-python-modwsgi/</guid>
-      <description>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your eth0 at startup.
-vi /etc/sysconfig/network-scripts/ifcfg-eth0  and set ONBOOT to yes.
-Getting Python 2.7.x The following explanations are based on a blog of Asim Teeshan and a post on Fire3Net.
-First we need some development tools. Install the following once
-yum install gcc make zlib-devel bzip2-devel openssl-devel  Now download the latest 2.</description>
+      <description>
+
+<p>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your <code>eth0</code> at startup.</p>
+
+<pre><code class="language-bash">vi /etc/sysconfig/network-scripts/ifcfg-eth0
+</code></pre>
+
+<p>and set <code>ONBOOT</code> to <code>yes</code>.</p>
+
+<h2 id="getting-python-2-7-x">Getting Python 2.7.x</h2>
+
+<p>The following explanations are based on a blog of <a href="http://blog.nickhowell.co.uk/2010/11/30/setup-osqa-on-centos-5-5" title="Setup OSQA on CentOS 5.5 | nickhowell.co.uk">Asim Teeshan</a> and a post on <a href="http://www.fir3net.com/Redhat-/-Fedora/how-do-i-compile-modwgsi-for-python-27.html" title="How do I compile mod_wsgi for Python 2.7">Fire3Net</a>.</p>
+
+<p>First we need some development tools. Install the following once</p>
+
+<pre><code class="language-bash">yum install gcc make zlib-devel bzip2-devel openssl-devel
+</code></pre>
+
+<p>Now download the latest 2.7.x Python release and enable shared library during the configuation</p>
+
+<pre><code class="language-bash">cd /opt/
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+</code></pre>
+
+<p>Extract and install it:</p>
+
+<pre><code class="language-bash">tar -zxvf Python-2.7.5.tgz
+cd Python-2.7.5
+./configure --enable-shared
+make &amp;&amp; make altinstall
+</code></pre>
+
+<p>Install Python setuptools for using <code>easy_setup</code></p>
+
+<pre><code class="language-bash">wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+sh setuptools-0.6c11-py2.7.egg
+</code></pre>
+
+<p>Before we can install <code>mod_wsgi</code> we need to install the http development libraries</p>
+
+<pre><code class="language-bash">yum install httpd httpd-devel
+</code></pre>
+
+<p>Now we are ready to compile <code>mod_wsgi</code> against Python 2.7.x</p>
+
+<p>Download and unpack the latest version</p>
+
+<pre><code class="language-bash">wget http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+tar -zxvf mod_wsgi-3.4.tar.gz
+cd mod_wsgi-3.4.tar.gz
+./configure --with-python=/usr/local/bin/python2.7
+</code></pre>
+
+<p>Make sure you specify the path to the python binary. You can find out where your Python binary is by issuing the following command:</p>
+
+<pre><code class="language-bash">whereis python
+</code></pre>
+
+<p>Once the configuration completed you can install it:</p>
+
+<pre><code class="language-bash">make &amp;&amp; make install
+</code></pre>
+
+<p>If you run into problems along the lines <strong>cannot load shared library libpython2.7&hellip;</strong> then you need run the <code>ldconfig</code> first to tell where the <code>libpython2.7.so*</code> files are:</p>
+
+<pre><code class="language-bash">ln -s /usr/local/lib/libpython2.7.so.1.0 /usr/lib/
+ln -s /usr/local/lib/libpython2.7.so /usr/
+ldconfig
+</code></pre>
+
+<p>Lastly we can install <code>virtualenv</code> as follow:</p>
+
+<pre><code class="language-bash">wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+tar -zxvf virtualenv-1.10.1.tar.gz
+cd virtualenv-1.10.1
+python2.7 setup.py install
+</code></pre>
+
+<p>install psycopg2</p>
+
+<pre><code class="language-bash">wget --no-check-certificate https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz
+tar -zxvf psycopg2-2.5.1.tar.gz
+cd psycopg2-2.5.1
+vi setup.cfg
+</code></pre>
+
+<p>and add the following line</p>
+
+<pre><code>pg_config=/usr/pgsql-9.3/bin/pg_config
+</code></pre>
+
+<p>now install it</p>
+
+<pre><code class="language-bash">/usr/local/bin/python2.7 setup.py install
+</code></pre>
+
+<p>now creating a virtual env for you web application do it as follow</p>
+
+<pre><code class="language-bash">virtualenv-2.7 --system-site-packages ENV
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -74,10 +753,174 @@ yum install gcc make zlib-devel bzip2-devel openssl-devel  Now download the late
       <pubDate>Sat, 12 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/gis/qgis-server-centos/</guid>
-      <description>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer postgresql-libs you need first to install the desired version of PostgreSQL and PostGIS as described bellow.
-PostgreSQL and PostGIS The following instructions are adapted from YUM installation - PostgreSQL wiki and UsersWikiuPostGIS20CentOS6pgdg - PostGIS.
-Configuration Configure yum repository
-vi /etc/yum.repos.d/CentOS-Base.repo  and add the following excludes to base and updates sections:</description>
+      <description>
+
+<p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
+
+<h2 id="postgresql-and-postgis">PostgreSQL and PostGIS</h2>
+
+<p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Configure yum repository</p>
+
+<pre><code class="language-bash">	vi /etc/yum.repos.d/CentOS-Base.repo
+</code></pre>
+
+<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
+
+<pre><code class="language-yaml">exclude=postgresql*
+</code></pre>
+
+<h3 id="install-pgdg-rpm-file">Install PGDG RPM file</h3>
+
+<p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org">http://yum.postgresql.org</a></p>
+
+<pre><code class="language-bash">	wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
+</code></pre>
+
+<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
+
+<p>Install RPM distribution:</p>
+
+<pre><code class="language-bash">	rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
+</code></pre>
+
+<h3 id="installation-of-postgresql-and-postgis">Installation of PostgreSQL and PostGIS</h3>
+
+<p>List the available packages:</p>
+
+<pre><code>:::bash
+yum list postgres*
+</code></pre>
+
+<p>Installation:</p>
+
+<pre><code>:::bash
+yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
+</code></pre>
+
+<h3 id="configuration-1">Configuration</h3>
+
+<p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
+
+<pre><code>:::bash
+service postgresql-9.3 initdb
+service postgresql-9.3 start
+chkconfig postgresql-9.3 on
+</code></pre>
+
+<p>Some important files</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">File / Application</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
+<td align="left">changing host etc.</td>
+</tr>
+
+<tr>
+<td align="left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
+<td align="left">client authentication configuration</td>
+</tr>
+</tbody>
+</table>
+
+<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
+
+<pre><code>:::yaml
+# IPv4 local connections:
+#host    all             all             127.0.0.1/32            ident
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+#host    all             all             ::1/128                 ident
+host    all             all             ::1/128                 md5
+</code></pre>
+
+<h3 id="database-and-user">Database and User</h3>
+
+<p>Before we can start, we need to create a new database and user.</p>
+
+<p>Login as <code>postgres</code> superuser and create a new database</p>
+
+<pre><code>:::bash
+su -l postgres
+createdb gis
+</code></pre>
+
+<p>Login into the database create a user and set a encrypted password</p>
+
+<pre><code>:::bash
+psql gis
+CREATE USER gis WITH SUPERUSER LOGIN PASSWORD 'gis';
+ALTER USER gis WITH ENCRYPTED PASSWORD 'gis';
+</code></pre>
+
+<p>Now test your configuration and install PostGIS extension</p>
+
+<pre><code class="language-bash">psql -h localhost -d gis -U gis -W
+CREATE EXTENSION postgis;
+</code></pre>
+
+<h2 id="installation-qgis">Installation QGIS</h2>
+
+<p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
+
+<pre><code class="language-bash">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
+</code></pre>
+
+<p>where the version I have tested it was <code>6-8</code>.</p>
+
+<p>Add the ELGIS repositories</p>
+
+<pre><code class="language-bash">wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
+rpm -Uvh elgis-release-6-6_0.noarch.rpm
+</code></pre>
+
+<p>where the version I have tested it was <code>6-6_0</code>.</p>
+
+<p>Now install QGIS server:</p>
+
+<pre><code class="language-bash">yum install qgis-mapserver.x86_64
+</code></pre>
+
+<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
+
+<pre><code class="language-bash">yum install qgis*
+</code></pre>
+
+<p>The scripts and configs are installed on CentOS:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Script / Config</th>
+<th align="left">Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
+<td align="left">main fast cgi script (OGC capabilities)</td>
+</tr>
+
+<tr>
+<td align="left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
+<td align="left">qgis mapserver httpd configuration file</td>
+</tr>
+</tbody>
+</table>
+</description>
     </item>
     
   </channel>

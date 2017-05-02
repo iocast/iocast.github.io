@@ -8,9 +8,119 @@
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
     <lastBuildDate>Mon, 22 Dec 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://iocast.github.io/cheatsheet/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="http://iocast.github.io/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>Bash / Shell</title>
+      <link>http://iocast.github.io/cheatsheet/bash/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/bash/</guid>
+      <description>
+
+<h2 id="programming-snippets">Programming / Snippets</h2>
+
+<h3 id="arrays">Arrays</h3>
+
+<h4 id="check-string-in-array">check string in array</h4>
+
+<pre><code class="language-bash">...
+COMMANDS=(&quot;install&quot; &quot;upgrade&quot;)
+command=&quot;install&quot;
+...
+if ! echo echo ${COMMANDS[@]} | grep -q \\${command}\\b
+then
+  usage
+  exit
+fi
+...
+</code></pre>
+
+<h3 id="platform-detection">Platform Detection</h3>
+
+<pre><code class="language-bash"># Detect the platform (similar to $OSTYPE)
+OS=&quot;`uname`&quot;
+UNAME=&quot;unknown&quot;
+case $OS in
+  'Linux')
+    OS='linux'
+    UNAME='Linux'
+    ;;
+  'Darwin')
+    OS='darwin'
+    UNAME='Darwin'
+    ;;
+  *) ;;
+esac
+</code></pre>
+
+<h2 id="console-script-handling">Console / Script Handling</h2>
+
+<h3 id="color-and-style-the-console-output">Color and Style the Console Output</h3>
+
+<pre><code class="language-bash"># Black        0;30     Dark Gray     1;30
+# Red          0;31     Light Red     1;31
+# Green        0;32     Light Green   1;32
+# Brown/Orange 0;33     Yellow        1;33
+# Blue         0;34     Light Blue    1;34
+# Purple       0;35     Light Purple  1;35
+# Cyan         0;36     Light Cyan    1;36
+# Light Gray   0;37     White         1;37
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+...
+echo -e &quot;${BLUE}removing node${NC}&quot;
+...
+</code></pre>
+
+<h3 id="script-parameters">Script Parameters</h3>
+
+<pre><code class="language-bash"># first argument
+command=$1
+# default value
+version=&quot;0.1&quot;
+
+while [ &quot;$2&quot; != &quot;&quot; ]; do
+    case $2 in
+             --version )    shift
+                            version=$2  # set value from input
+                            ;;
+        -h | --help )       usage
+                            exit
+                            ;;
+        * )                 usage
+                            exit 1
+    esac
+    shift
+done
+...
+</code></pre>
+
+<p>you can use it like this</p>
+
+<pre><code>./&lt;script&gt; install --version 0.2
+</code></pre>
+
+<p>Parameter <code>version</code> is optional because we set a default value for it.</p>
+
+<h3 id="mutliline-output">Mutliline Output</h3>
+
+<pre><code class="language-bash">function usage
+{
+    cat &lt;&lt; EOF
+usage: ${FILENAME%%.*} [$(IFS='|' ; echo &quot;${COMMANDS[*]}&quot;)] [--option value --option etc.]
+
+options:
+       --version     value     default version is ${VERSION}
+  -h | --help                  this help
+EOF
+}
+</code></pre>
+</description>
+    </item>
     
     <item>
       <title>Git</title>
@@ -18,12 +128,235 @@
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/git/</guid>
-      <description>git submodule update --init  Settings Username in a local git repo
-git config user.name &amp;quot;iocast&amp;quot; git config user.email &amp;quot;iocast@me.com&amp;quot;  or for global settings
-git config --global user.name &amp;quot;iocast&amp;quot; git config --global user.email &amp;quot;iocast@me.com&amp;quot;  General download from git repository (normally branch &amp;lsquo;master&amp;rsquo;)
-git clone &amp;lt;remote_repo&amp;gt;  download specific branch
-git clone -b &amp;lt;branch&amp;gt; &amp;lt;remote_repo&amp;gt;  commit changes (check if you are on the correct branch)
-git commit -m &amp;quot;message&amp;quot;  Push / Pull send branch to repository/server</description>
+      <description>
+
+<pre><code>git submodule update --init
+</code></pre>
+
+<h2 id="settings">Settings</h2>
+
+<h3 id="username">Username</h3>
+
+<p>in a local git repo</p>
+
+<pre><code>git config user.name &quot;iocast&quot;
+git config user.email &quot;iocast@me.com&quot;
+</code></pre>
+
+<p>or for global settings</p>
+
+<pre><code>git config --global user.name &quot;iocast&quot;
+git config --global user.email &quot;iocast@me.com&quot;
+</code></pre>
+
+<h2 id="general">General</h2>
+
+<p>download from git repository (normally branch &lsquo;master&rsquo;)</p>
+
+<pre><code>git clone &lt;remote_repo&gt;
+</code></pre>
+
+<p>download specific branch</p>
+
+<pre><code>git clone -b &lt;branch&gt; &lt;remote_repo&gt;
+</code></pre>
+
+<p>commit changes (check if you are on the correct branch)</p>
+
+<pre><code>git commit -m &quot;message&quot;
+</code></pre>
+
+<h3 id="push-pull">Push / Pull</h3>
+
+<p>send branch to repository/server</p>
+
+<pre><code>git push origin &lt;branch&gt;
+</code></pre>
+
+<p>get branch from repository/server (update)</p>
+
+<pre><code>git pull origin &lt;branch&gt;
+</code></pre>
+
+<p>resetting local repository</p>
+
+<pre><code>git reset --hard origin/master
+</code></pre>
+
+<h3 id="branching">Branching</h3>
+
+<p>list all branches</p>
+
+<p>Options:</p>
+
+<dl>
+<dt><code>-a</code></dt>
+<dd><p>lists all branches</p>
+
+<p>git branch [options]</p></dd>
+</dl>
+
+<p>create local branch</p>
+
+<pre><code>git branch develop
+</code></pre>
+
+<p>delete a branch (origin - server)</p>
+
+<pre><code>git branch -d develop
+git push origin --delete develop
+</code></pre>
+
+<p>switch branch to work on it</p>
+
+<pre><code>git checkout develop
+</code></pre>
+
+<p>push branch to repository/server</p>
+
+<pre><code>git push origin &lt;name&gt;
+</code></pre>
+
+<h3 id="tagging">Tagging</h3>
+
+<p>first of all switch to master</p>
+
+<pre><code>git checkout master
+</code></pre>
+
+<p>and if necessary merge from a other branch</p>
+
+<pre><code>git merge --no-ff &lt;branch&gt;
+</code></pre>
+
+<p>create tag</p>
+
+<pre><code>git tag -a 1.2 -m &quot;message&quot;
+</code></pre>
+
+<p>push to repository/server</p>
+
+<pre><code>git push --tags
+</code></pre>
+
+<p>list tags</p>
+
+<pre><code>git tag
+</code></pre>
+
+<p>change to tag</p>
+
+<pre><code>git checkout &lt;tag&gt;
+</code></pre>
+
+<p>or make changes based on this tag (e.g. for hotfixes for this specific tag) where the first argument is the new branch name an the second is the tag name</p>
+
+<pre><code>git checkout -b hotfix-1.3.1 1.3
+</code></pre>
+
+<h2 id="release-managment">Release Managment</h2>
+
+<p>assume we are working on branch &lsquo;develop&rsquo; an are ready to create a new release.</p>
+
+<h3 id="releases">Releases</h3>
+
+<h4 id="creating">Creating</h4>
+
+<p>Switched to a new branch &ldquo;release-1.2&rdquo;</p>
+
+<pre><code>git checkout -b release-1.2 develop
+</code></pre>
+
+<p>change version number on the notes or other files and commit it</p>
+
+<pre><code>git commit -a -m &quot;Bumped version number to 1.2&quot;
+</code></pre>
+
+<h4 id="working">Working</h4>
+
+<p>then modify all files needed for release-1.2 and commit changes (several commits can take place)</p>
+
+<pre><code>git commit -m &quot;message&quot;
+</code></pre>
+
+<h4 id="finishing">Finishing</h4>
+
+<p>Now we can finish this release.
+Switch to branch &lsquo;master&rsquo;</p>
+
+<pre><code>git checkout master
+</code></pre>
+
+<p>merge from the release-1.2 branch and push to repository/server</p>
+
+<pre><code>git merge --no-ff release-1.2
+git push origin master
+</code></pre>
+
+<p>tag as release in branch master and push tag to repository/server</p>
+
+<pre><code>git tag -a 1.2 -m &quot;message&quot;
+git push --tags
+</code></pre>
+
+<p>release banch on our local drive is not needed anymore.
+Deleted branch release-1.2</p>
+
+<pre><code>git branch -d release-1.2
+</code></pre>
+
+<h3 id="hot-fixes">Hot Fixes</h3>
+
+<p>Hot fixes are done from the master (or release) branch.</p>
+
+<h4 id="creating-1">Creating</h4>
+
+<p>Switched to a new branch &ldquo;hotfix-1.2.1&rdquo;</p>
+
+<pre><code>git checkout -b hotfix-1.2.1 master
+</code></pre>
+
+<p>change version number on the notes or other files and commit it</p>
+
+<pre><code>git commit -a -m &quot;Bumped version number to 1.2.1&quot;
+</code></pre>
+
+<h4 id="working-1">Working</h4>
+
+<p>then modify all files needed files for hotfix-1.21 and commit changes (several commits can take place)</p>
+
+<pre><code>git commit -m &quot;message&quot;
+</code></pre>
+
+<h4 id="finishing-1">Finishing</h4>
+
+<p>Switched to branch &lsquo;master&rsquo;</p>
+
+<pre><code>git checkout master
+</code></pre>
+
+<p>merge changes</p>
+
+<pre><code>git merge --no-ff hotfix-1.2.1
+</code></pre>
+
+<p>tag it and push tag to repository/server</p>
+
+<pre><code>git tag -a 1.2.1 -m &quot;message&quot;
+git push --tag
+</code></pre>
+
+<p>switch to develop and merge hotfix into it</p>
+
+<pre><code>git checkout develop
+git merge --no-ff hotfix-1.2.1
+</code></pre>
+
+<p>and delete hotfix</p>
+
+<pre><code>git branch -d hotfix-1.2.1
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -32,7 +365,51 @@ git commit -m &amp;quot;message&amp;quot;  Push / Pull send branch to repository
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/irc/</guid>
-      <description>User Register /msg NickServ register &amp;lt;password&amp;gt; &amp;lt;email&amp;gt;  Login /msg nickserv identify &amp;lt;password&amp;gt;  Administering Channel You cannot administer a channel until you become an operator with the op command. Only an operator can create other operators. If no operators are left in a channel, the channel can no longer be administered. You shouldn&amp;rsquo;t be operator any longer than you have to, as it creates an unhelpful class distinction among channel users and not knowing who is operator can help keep trolls from causing trouble.</description>
+      <description>
+
+<h2 id="user">User</h2>
+
+<h3 id="register">Register</h3>
+
+<pre><code>/msg NickServ register &lt;password&gt; &lt;email&gt;
+</code></pre>
+
+<h3 id="login">Login</h3>
+
+<pre><code>/msg nickserv identify &lt;password&gt;
+</code></pre>
+
+<h2 id="administering-channel">Administering Channel</h2>
+
+<p>You cannot administer a channel until you become an operator with the op command. Only an operator can create other operators. If no operators are left in a channel, the channel can no longer be administered. You shouldn&rsquo;t be operator any longer than you have to, as it creates an unhelpful class distinction among channel users and not knowing who is operator can help keep trolls from causing trouble. Once you have finished, drop to normal user status with the deop command.</p>
+
+<p>You can see all the flags assigned to all users in a channel with:</p>
+
+<pre><code>/msg chanserv access #&lt;channel&gt; list
+</code></pre>
+
+<h3 id="register-a-channel">Register a Channel</h3>
+
+<pre><code>/msg chanserv register #&lt;channel&gt;
+</code></pre>
+
+<h3 id="becoming-founder">Becoming Founder</h3>
+
+<pre><code>/msg ChanServ flags #vectorformats iocast +*F
+/msg ChanServ flags #vectorformats iocast -OV
+</code></pre>
+
+<p>The first command grants all flags to a user, including the founder flag <code>F</code> which must be explicitly granted (it isn&rsquo;t part of the <code>*</code>).</p>
+
+<p>The second command removes two flags which normally should not be used. <code>O</code> automatically makes the user an operator when they join the channel, which should be avoided as previously explained. <code>V</code> automatically voices a user when they join the channel. Voicing is only needed on moderated channels where new users cannot speak upon joining without the voice flag. An open channel for community participation should not require this, and not having the <code>V</code> flag makes it easier to identify a problem with the channel.</p>
+
+<h3 id="becoming-operator">Becoming Operator</h3>
+
+<pre><code>/msg chanserv op #&lt;channel&gt; &lt;username&gt;
+/msg chanserv flags #&lt;channel&gt; &lt;username&gt; &lt;flags&gt;
+/msg chanserv deop #&lt;channel&gt; &lt;username&gt;
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -41,7 +418,182 @@ git commit -m &amp;quot;message&amp;quot;  Push / Pull send branch to repository
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/linux/</guid>
-      <description>User &amp;amp; Group Management    Purpose Command     new group groupadd sambashare   new user useradd -m -g users -G sambashare -s /bin/bash unix_user   change password passwd unix_user   rename user usermod -l newUsername oldUsername and change home folder usermod -d /home/newHomeDir -m newUsername   change to root sudo -i   remove user deluser --remove-home username    User with sudo rights useradd --create-home --gid users --shell /bin/bash userName passwd userName visudo -f /etc/sudoers.</description>
+      <description>
+
+<h2 id="user-group-management">User &amp; Group Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>new group</td>
+<td><code>groupadd sambashare</code></td>
+</tr>
+
+<tr>
+<td>new user</td>
+<td><code>useradd -m -g users -G sambashare -s /bin/bash unix_user</code></td>
+</tr>
+
+<tr>
+<td>change password</td>
+<td><code>passwd unix_user</code></td>
+</tr>
+
+<tr>
+<td>rename user</td>
+<td><code>usermod -l newUsername oldUsername</code> and change home folder <code>usermod -d /home/newHomeDir -m newUsername</code></td>
+</tr>
+
+<tr>
+<td>change to root</td>
+<td><code>sudo -i</code></td>
+</tr>
+
+<tr>
+<td>remove user</td>
+<td><code>deluser --remove-home username</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="user-with-sudo-rights">User with <code>sudo</code> rights</h3>
+
+<pre><code class="language-bash">useradd --create-home --gid users --shell /bin/bash userName
+passwd userName
+visudo -f /etc/sudoers.d/sudoers
+
+# User privilege specification
+userName    ALL=(ALL:ALL) ALL
+</code></pre>
+
+<h2 id="samba-management">Samba Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Command</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>new user</td>
+<td><code>pdbedit -a -u samba_user</code></td>
+</tr>
+
+<tr>
+<td>change password</td>
+<td><code>smbpasswd samba_user</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="file-and-directory-handling">File and Directory Handling</h2>
+
+<h3 id="find-remove">Find &amp; Remove</h3>
+
+<p>specific files</p>
+
+<pre><code>find &lt;path&gt; -name '&lt;file-name&gt;' -delete
+</code></pre>
+
+<p>If something &ldquo;more portable&rdquo; needed then you&rsquo;re better off with</p>
+
+<pre><code>find &lt;directory name&gt; -name '*.pyc' -exec rm {} \;
+</code></pre>
+
+<h3 id="file-manipulation">File Manipulation</h3>
+
+<p>search the line which begins with <code>var feature server</code> and replaces the whole line with <code>var featureserver = &quot;http://featureserver.org/fs&quot;</code></p>
+
+<pre><code>sed -e 's%^var featureserver.*%var featureserver = &quot;http://featureserver.org/fs&quot;%g' featureserver.org/assets/js/map.js &gt; ${tmp}/website/assets/js/map.js
+</code></pre>
+
+<p>template command is as follow, where the first character after <code>s</code> is used as separator and afterwards it comes a regex. Use <code>-i</code> to do an &ldquo;in place&rdquo; replacement (no need for pipe)</p>
+
+<pre><code>sed -ie 's/$search_for/$replace_with/g' $file
+</code></pre>
+
+<h3 id="folder-size">Folder size</h3>
+
+<dl>
+<dt><code>-h</code></dt>
+<dd>human readable file size</dd>
+<dt><code>-s</code></dt>
+<dd>sum all subfolders</dd>
+</dl>
+
+<pre><code class="language-bash">du &lt;directory&gt;
+</code></pre>
+
+<h3 id="compression">Compression</h3>
+
+<pre><code>tar -cvzf &lt;file.tar.bz2&gt; --exclude-vcs --exlude='*.svn' folder/
+</code></pre>
+
+<h3 id="extraction">Extraction</h3>
+
+<pre><code>tar -zxvf &lt;file.tar.bz2&gt;
+</code></pre>
+
+<h3 id="errors">Errors</h3>
+
+<p>When you get a error that the command is not found (e.g. <code>-bash: $'\r': command not found</code>) and you are sure everything is correct, then it has something to do with the file format or the characters.</p>
+
+<p><strong>Error:</strong> <code>-bash: $'\r': command not found</code></p>
+
+<p>Remove trailing \r character that causes this error:</p>
+
+<pre><code class="language-bash">sed -i 's/\r$//' filename
+</code></pre>
+
+<p>Option <code>-i</code> is for in-place editing, we delete the trailing <code>\r</code> directly in the input file. Thus be careful to type the pattern correctly.</p>
+
+<h3 id="synchronization">Synchronization</h3>
+
+<p>Synchronization</p>
+
+<pre><code>:::bash
+#! /bin/bash
+rsync -av --delete &lt;from&gt; &lt;to&gt; &gt; &lt;log&gt; &amp;
+</code></pre>
+
+<h3 id="cloning">Cloning</h3>
+
+<p>burning image to disk (also usb drives)</p>
+
+<p>optional use <code>bs=8192</code></p>
+
+<pre><code>dd if=&lt;path&gt;.iso of=&lt;disk&gt;
+</code></pre>
+
+<h2 id="job-programs">Job / Programs</h2>
+
+<p>Keep job running despite of a logout</p>
+
+<pre><code>nohup &lt;command&gt; &amp;
+</code></pre>
+
+<h2 id="system-information">System information</h2>
+
+<pre><code>dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+</code></pre>
+
+<h3 id="packages">Packages</h3>
+
+<p>getting installed packages including version number</p>
+
+<pre><code>time dpkg -l | perl -lane 'print &quot;$F[1] : $F[2]&quot; if m/^ii/'
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -50,9 +602,17 @@ git commit -m &amp;quot;message&amp;quot;  Push / Pull send branch to repository
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/virtualbox/</guid>
-      <description> VirtualBox Management This section describes to to use VBoxManage
-** resizing your virtual disk**
-&#39;C:\Program Files\Oracle\VirtualBox\VBoxManage.exe&#39; modifyhd &#39;.\Windows.vdi&#39; --resize 40000  </description>
+      <description>
+
+<h2 id="virtualbox-management">VirtualBox Management</h2>
+
+<p>This section describes to to use <code>VBoxManage</code></p>
+
+<p>** resizing your virtual disk**</p>
+
+<pre><code>'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' modifyhd '.\Windows.vdi' --resize 40000
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -61,11 +621,214 @@ git commit -m &amp;quot;message&amp;quot;  Push / Pull send branch to repository
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/postgres/</guid>
-      <description>Basics login as postgres use r
-sudo su postgres -  run sql command
-psql -U postgres -c &amp;quot;&amp;lt;sql&amp;gt;&amp;quot;  List lists all databases
-psql --list  Create create database
- -O owner -U username -E encoding -e echo --locale=&amp;lt;locale&amp;gt; (This is equivalent to specifying both --lc-collate and --lc-ctype) --lc-collate=&#39;&amp;lt;locale&amp;gt;&#39; collation order --lc-ctype=&#39;&amp;lt;locale&amp;gt;&#39; character classification -T template  createdb -U postgres &amp;lt;database&amp;gt;  Drop dropdb -U &amp;lt;user&amp;gt; -h &amp;lt;host&amp;gt; -i -e &amp;lt;database&amp;gt;  Log into database -W to force password prompt</description>
+      <description>
+
+<h2 id="basics">Basics</h2>
+
+<p>login as postgres use r</p>
+
+<pre><code>sudo su postgres -
+</code></pre>
+
+<p>run sql command</p>
+
+<pre><code>psql -U postgres -c &quot;&lt;sql&gt;&quot;
+</code></pre>
+
+<h3 id="list">List</h3>
+
+<p>lists all databases</p>
+
+<pre><code>psql --list
+</code></pre>
+
+<h3 id="create">Create</h3>
+
+<p>create database</p>
+
+<dl>
+<dt><code>-O</code></dt>
+<dd>owner</dd>
+<dt><code>-U</code></dt>
+<dd>username</dd>
+<dt><code>-E</code></dt>
+<dd>encoding</dd>
+<dt><code>-e</code></dt>
+<dd>echo</dd>
+<dt><code>--locale=&lt;locale&gt;</code></dt>
+<dd>(This is equivalent to specifying both <code>--lc-collate</code> and <code>--lc-ctype</code>)</dd>
+<dt><code>--lc-collate='&lt;locale&gt;'</code></dt>
+<dd>collation order</dd>
+<dt><code>--lc-ctype='&lt;locale&gt;'</code></dt>
+<dd>character classification</dd>
+<dt><code>-T</code></dt>
+<dd>template</dd>
+</dl>
+
+<pre><code class="language-bash">createdb -U postgres &lt;database&gt;
+</code></pre>
+
+<h3 id="drop">Drop</h3>
+
+<pre><code>dropdb -U &lt;user&gt; -h &lt;host&gt; -i -e &lt;database&gt;
+</code></pre>
+
+<h3 id="log-into-database">Log into database</h3>
+
+<p><code>-W</code> to force password prompt</p>
+
+<pre><code>psql -U &lt;user&gt; -W -d &lt;database&gt;
+</code></pre>
+
+<h3 id="user">User</h3>
+
+<p>create user</p>
+
+<dl>
+<dt><code>-D</code></dt>
+<dd>(The new user will not be allowed to create databases.)</dd>
+<dt><code>-P</code></dt>
+<dd>(If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.)</dd>
+<dt><code>-S</code></dt>
+<dd>(The new user will not be a superuser.)</dd>
+<dt><code>-E</code></dt>
+<dd>(Encrypts the user&rsquo;s password stored in the database. If not specified, the default password behavior is used.)</dd>
+</dl>
+
+<pre><code class="language-bash">createuser -D -S -E -P &lt;name&gt;
+</code></pre>
+
+<h3 id="export-to-file">Export To File</h3>
+
+<p><code>\h copy</code> tells you what are the parameters for export</p>
+
+<pre><code>COPY (&lt;sql&gt;) TO '&lt;file&gt;' CSV
+</code></pre>
+
+<h2 id="commands">Commands</h2>
+
+<p>load environment</p>
+
+<pre><code>psql
+</code></pre>
+
+<p>list all users</p>
+
+<pre><code>\dg
+</code></pre>
+
+<p>list all databases</p>
+
+<pre><code>\list
+</code></pre>
+
+<p>list all tables</p>
+
+<pre><code>\dp
+</code></pre>
+
+<p>table schema</p>
+
+<pre><code>\d &lt;table&gt;
+</code></pre>
+
+<p>cancel/go out</p>
+
+<pre><code>CTRL+D
+</code></pre>
+
+<h2 id="extensions">Extensions</h2>
+
+<p>Connect to the PostgreSQL server</p>
+
+<pre><code>psql -h localhost
+</code></pre>
+
+<p>create a database</p>
+
+<pre><code>CREATE DATABASE mydatabase;
+</code></pre>
+
+<p>and connect to it</p>
+
+<pre><code>\c mydatabase
+</code></pre>
+
+<h3 id="hstore">Hstore</h3>
+
+<p>creates / loads hstore extension for the current database</p>
+
+<pre><code>CREATE EXTENSION hstore;
+</code></pre>
+
+<h3 id="postgis">PostGIS</h3>
+
+<p>creates / load postgis extension for the current database</p>
+
+<pre><code>CREATE EXTENSION postgis;
+</code></pre>
+
+<h2 id="sql">SQL</h2>
+
+<p>grant access</p>
+
+<pre><code>ALTER DATABASE &lt;name&gt; OWNER TO &lt;user&gt;
+</code></pre>
+
+<h2 id="issues">Issues</h2>
+
+<h3 id="full-disk">Full Disk</h3>
+
+<p>Locate the directory which uses that much space on the disk. On a standard installation it is somewhere in the <code>/var/lib/</code> directory. If found the PostgreSQL data directory (here as example <code>/var/lib/pgsql</code> run the following command to find out which directory needs how much space on the disk</p>
+
+<pre><code>du -h
+</code></pre>
+
+<p>First stop PostgreSQL</p>
+
+<pre><code>/etc/init.d/postgresql stop
+</code></pre>
+
+<p>Then move a &ldquo;big&rdquo; directory to a partition/disk that has space free.</p>
+
+<pre><code>mv /var/lib/pgsql/main/ /media/tmp/
+</code></pre>
+
+<p>Now create a symlink to this directory</p>
+
+<pre><code>ln -s /medai/tmp/main /var/lib/pgsql/main
+</code></pre>
+
+<p>Start PostgreSQL</p>
+
+<pre><code>/etc/init.d/postgresql start
+</code></pre>
+
+<p>and VACUUM FULL</p>
+
+<pre><code>psql -c &quot;VACUUM FULL&quot;
+</code></pre>
+
+<p>Shutdown the database.</p>
+
+<pre><code>/etc/init.d/postgresql stop
+</code></pre>
+
+<p>Remove the symbolic link</p>
+
+<pre><code>unlink /var/lib/pgsql/main
+</code></pre>
+
+<p>and move the files back onto the <code>/var/lib/pgsql</code> filesystem again</p>
+
+<pre><code>mv /media/tmp/main/ /var/lib/pgsql/
+</code></pre>
+
+<p>Now you are finished. Start the database.</p>
+
+<pre><code>/etc/init.d/postgresql start
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -74,8 +837,47 @@ psql --list  Create create database
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/python_pypi/</guid>
-      <description> Comands registration python setup.py register  update  bdist create a built (binary) distribution sdist create a source distribution (tarball, zip file, etc.)  python setup.py sdist upload  configuration file is called .pypirc, is located in your home direve ~ and has the following structure
-[distutils] index-servers = pypi other [pypi] repository: &amp;lt;repository-url&amp;gt; username: &amp;lt;username&amp;gt; password: &amp;lt;password&amp;gt; [other] repository: http://example.com/pypi username: &amp;lt;username&amp;gt; password: &amp;lt;password&amp;gt;  </description>
+      <description>
+
+<h2 id="comands">Comands</h2>
+
+<h3 id="registration">registration</h3>
+
+<pre><code>python setup.py register
+</code></pre>
+
+<h3 id="update">update</h3>
+
+<dl>
+<dt><code>bdist</code></dt>
+<dd>create a built (binary) distribution<br/></dd>
+<dt><code>sdist</code></dt>
+<dd>create a source distribution (tarball, zip file, etc.)</dd>
+</dl>
+
+<pre><code class="language-bash">python setup.py sdist upload
+</code></pre>
+
+<h3 id="configuration-file">configuration file</h3>
+
+<p>is called <code>.pypirc</code>, is located in your home direve <code>~</code> and has the following structure</p>
+
+<pre><code>[distutils]
+index-servers =
+    pypi
+    other
+
+[pypi]
+    repository: &lt;repository-url&gt;
+    username: &lt;username&gt;
+    password: &lt;password&gt;
+
+[other]
+    repository: http://example.com/pypi
+    username: &lt;username&gt;
+    password: &lt;password&gt;
+</code></pre>
+</description>
     </item>
     
     <item>
@@ -84,7 +886,111 @@ psql --list  Create create database
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/sap_transactions/</guid>
-      <description>Development    Trx Code Purpose     /h Dynpro debugging   /ha ABAP debugging   /hs System debugging   SAT Profiling    Table Management    Trx Code Purpose     SM30 Table view (customizing / transport )   SE14 Delete table entries    Services (Gateway / OData)    Trx Code Purpose     SEGW SAP Gateway Service Builder   /IWFND/ERROR_LOG SAP Gateway Error Log   /IWFND/MAINT_SERVICE Activate and Maintain Services   /IWFND/GW_CLIENT SAP Gateway Client   SXI_MONITOR XI: Message Monitoring   SXMB_MONI Integration Engine - Monitoring    Caches Open Transaction SE38 and the programming /UI2/INVALIDATE_CLIENT_CACHES for clearing the client caches or /UI2/INVALIDATE_GLOBAL_CACHES for the global UI2 caches.</description>
+      <description>
+
+<h2 id="development">Development</h2>
+
+<table>
+<thead>
+<tr>
+<th>Trx Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>/h</code></td>
+<td>Dynpro debugging</td>
+</tr>
+
+<tr>
+<td><code>/ha</code></td>
+<td>ABAP debugging</td>
+</tr>
+
+<tr>
+<td><code>/hs</code></td>
+<td>System debugging</td>
+</tr>
+
+<tr>
+<td><code>SAT</code></td>
+<td>Profiling</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="table-management">Table Management</h2>
+
+<table>
+<thead>
+<tr>
+<th>Trx Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>SM30</code></td>
+<td>Table view (customizing / transport )</td>
+</tr>
+
+<tr>
+<td><code>SE14</code></td>
+<td>Delete table entries</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="services-gateway-odata">Services (Gateway / OData)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Trx Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>SEGW</code></td>
+<td>SAP Gateway Service Builder</td>
+</tr>
+
+<tr>
+<td><code>/IWFND/ERROR_LOG</code></td>
+<td>SAP Gateway Error Log</td>
+</tr>
+
+<tr>
+<td><code>/IWFND/MAINT_SERVICE</code></td>
+<td>Activate and Maintain Services</td>
+</tr>
+
+<tr>
+<td><code>/IWFND/GW_CLIENT</code></td>
+<td>SAP Gateway Client</td>
+</tr>
+
+<tr>
+<td><code>SXI_MONITOR</code></td>
+<td>XI: Message Monitoring</td>
+</tr>
+
+<tr>
+<td><code>SXMB_MONI</code></td>
+<td>Integration Engine - Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="caches">Caches</h3>
+
+<p>Open Transaction <code>SE38</code> and the programming <code>/UI2/INVALIDATE_CLIENT_CACHES</code> for clearing the client caches or <code>/UI2/INVALIDATE_GLOBAL_CACHES</code> for the global UI2 caches.</p>
+</description>
     </item>
     
     <item>
@@ -93,10 +999,33 @@ psql --list  Create create database
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/sphinx/</guid>
-      <description>Errors ValueError: unknown locale: UTF-8 If you try to build your documentation (sphinx-build -b html -a . _build/) and get the following error
-... File &amp;quot;.../virtualenv/publishing/lib/python2.7/locale.py&amp;quot;, line 443, in _parse_localename raise ValueError, &#39;unknown locale: %s&#39; % localename ValueError: unknown locale: UTF-8  then try the following. Add the the below lines to your $HOME/.bash_profile
-export LC_ALL=en_US.UTF-8 export LANG=en_US.UTF-8  Do
-source $HOME/.bash_profile  and try it again. Or simply export the locale settings before running the sphinx-build.</description>
+      <description>
+
+<h2 id="errors">Errors</h2>
+
+<h3 id="valueerror-unknown-locale-utf-8">ValueError: unknown locale: UTF-8</h3>
+
+<p>If you try to build your documentation (<code>sphinx-build -b html -a . _build/</code>) and get the following error</p>
+
+<pre><code class="language-bash">...
+  File &quot;.../virtualenv/publishing/lib/python2.7/locale.py&quot;, line 443, in _parse_localename
+    raise ValueError, 'unknown locale: %s' % localename
+ValueError: unknown locale: UTF-8
+</code></pre>
+
+<p>then try the following. Add the the below lines to your <code>$HOME/.bash_profile</code></p>
+
+<pre><code class="language-bash">export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+</code></pre>
+
+<p>Do</p>
+
+<pre><code class="language-bash">source $HOME/.bash_profile
+</code></pre>
+
+<p>and try it again. Or simply export the <strong>locale</strong> settings before running the <code>sphinx-build</code>.</p>
+</description>
     </item>
     
     <item>
@@ -105,13 +1034,56 @@ source $HOME/.bash_profile  and try it again. Or simply export the locale settin
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/windows/</guid>
-      <description>Desktop For all the command in this section I used command line prompt.
-Sharing remove a network share
-net use /delete &amp;lt;drive name or network path&amp;gt;  Server For all the command below I used PowerShell.
-Sharing list of all connected users
-Get-SmbSession  for command line use
-net session  closing a session can be done using the session id, computer name or user name as follow:
-Close-SmbSession -SessionId 171798691989 Close-SmbSession –ClientComputerName \\192.</description>
+      <description>
+
+<h2 id="desktop">Desktop</h2>
+
+<p>For all the command in this section I used <strong>command line prompt</strong>.</p>
+
+<h3 id="sharing">Sharing</h3>
+
+<p>remove a network share</p>
+
+<pre><code>net use /delete &lt;drive name or network path&gt;
+</code></pre>
+
+<h2 id="server">Server</h2>
+
+<p>For all the command below I used <strong>PowerShell</strong>.</p>
+
+<h3 id="sharing-1">Sharing</h3>
+
+<p><strong>list</strong> of all connected users</p>
+
+<pre><code class="language-powershell">Get-SmbSession
+</code></pre>
+
+<p>for <strong>command line</strong> use</p>
+
+<pre><code class="language-powershell">net session
+</code></pre>
+
+<p><strong>closing</strong> a session can be done using the session id, computer name or user name as follow:</p>
+
+<pre><code class="language-powershell">Close-SmbSession -SessionId 171798691989
+Close-SmbSession –ClientComputerName \\192.168.0.20
+Close-SmbSession –ClientUserName Domain\Username
+</code></pre>
+
+<h2 id="miscellaneous">Miscellaneous</h2>
+
+<h3 id="synchronization">Synchronization</h3>
+
+<p><strong>mirror</strong></p>
+
+<pre><code class="language-bat">robocopy &lt;source&gt; &lt;destination&gt; /MIR /XD &quot;&lt;source&gt;/&lt;path&gt;/&lt;to&gt;/&lt;folder&gt;&quot;
+</code></pre>
+
+<dl>
+<dt><code>XD</code></dt>
+<dd>exluding directories</dd>
+</dl>
+</description>
     </item>
     
   </channel>

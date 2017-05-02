@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>http://iocast.github.io/contact/</loc>
     <lastmod>2016-02-21T15:22:59-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/cheatsheet/bash/</loc>
+    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -104,6 +110,18 @@
   <url>
     <loc>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</loc>
     <lastmod>2011-12-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/sapui5/</loc>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/odata-bpm-ui5/</loc>
+  </url>
+  
+  <url>
+    <loc>http://iocast.github.io/post/webdynpro-java-2015-11.05/</loc>
   </url>
   
   <url>

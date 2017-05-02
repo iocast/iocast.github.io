@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="description" content="blog, cheatsheets, best practices, and more">
+     <meta name="author" content="Iocast">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Bash / Shell -- think twice code once!</title>
+
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    
+    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
+    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
+
+    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+
+
+    
+    
+    
+
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="header mdl-layout__header mdl-layout__header--waterfall">
+      <div class="mdl-layout__header-row">
+        <a href="http://iocast.github.io/">
+          <span class="title mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+        <div class="mdl-layout-spacer"></div>
+        
+        
+        <div class="navigation-container">
+          <nav class="navigation mdl-navigation">
+
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
+              </li>
+            
+              <li>
+                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+              </li>
+            
+
+          </nav>
+        </div>
+        <a class="mobile-title" href="http://iocast.github.io/">
+          <span class="mdl-layout-title">
+            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+          </span>
+        </a>
+        
+      </div>
+    </header>
+
+    <nav class="drawer mdl-layout__drawer">
+  <span class="mdl-layout-title">
+    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
+  </span>
+  <nav class="mdl-navigation">
+
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
+    
+    
+  </nav>
+</nav>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+
+
+<article class="article">
+
+  
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
+
+
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
+
+
+
+
+  
+
+  
+
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#programming-snippets">Programming / Snippets</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#arrays">Arrays</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#check-string-in-array">check string in array</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#platform-detection">Platform Detection</a></li>
+</ul></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#console-script-handling">Console / Script Handling</a>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#color-and-style-the-console-output">Color and Style the Console Output</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#script-parameters">Script Parameters</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#mutliline-output">Mutliline Output</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+
+
+</div>
+
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">Bash / Shell</div>
+      <div class="description">Bash / Shell sheat sheet</div>
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<h2 id="programming-snippets">Programming / Snippets</h2>
+
+<h3 id="arrays">Arrays</h3>
+
+<h4 id="check-string-in-array">check string in array</h4>
+
+<pre><code class="language-bash">...
+COMMANDS=(&quot;install&quot; &quot;upgrade&quot;)
+command=&quot;install&quot;
+...
+if ! echo echo ${COMMANDS[@]} | grep -q \\${command}\\b
+then
+  usage
+  exit
+fi
+...
+</code></pre>
+
+<h3 id="platform-detection">Platform Detection</h3>
+
+<pre><code class="language-bash"># Detect the platform (similar to $OSTYPE)
+OS=&quot;`uname`&quot;
+UNAME=&quot;unknown&quot;
+case $OS in
+  'Linux')
+    OS='linux'
+    UNAME='Linux'
+    ;;
+  'Darwin')
+    OS='darwin'
+    UNAME='Darwin'
+    ;;
+  *) ;;
+esac
+</code></pre>
+
+<h2 id="console-script-handling">Console / Script Handling</h2>
+
+<h3 id="color-and-style-the-console-output">Color and Style the Console Output</h3>
+
+<pre><code class="language-bash"># Black        0;30     Dark Gray     1;30
+# Red          0;31     Light Red     1;31
+# Green        0;32     Light Green   1;32
+# Brown/Orange 0;33     Yellow        1;33
+# Blue         0;34     Light Blue    1;34
+# Purple       0;35     Light Purple  1;35
+# Cyan         0;36     Light Cyan    1;36
+# Light Gray   0;37     White         1;37
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+...
+echo -e &quot;${BLUE}removing node${NC}&quot;
+...
+</code></pre>
+
+<h3 id="script-parameters">Script Parameters</h3>
+
+<pre><code class="language-bash"># first argument
+command=$1
+# default value
+version=&quot;0.1&quot;
+
+while [ &quot;$2&quot; != &quot;&quot; ]; do
+    case $2 in
+             --version )    shift
+                            version=$2  # set value from input
+                            ;;
+        -h | --help )       usage
+                            exit
+                            ;;
+        * )                 usage
+                            exit 1
+    esac
+    shift
+done
+...
+</code></pre>
+
+<p>you can use it like this</p>
+
+<pre><code>./&lt;script&gt; install --version 0.2
+</code></pre>
+
+<p>Parameter <code>version</code> is optional because we set a default value for it.</p>
+
+<h3 id="mutliline-output">Mutliline Output</h3>
+
+<pre><code class="language-bash">function usage
+{
+    cat &lt;&lt; EOF
+usage: ${FILENAME%%.*} [$(IFS='|' ; echo &quot;${COMMANDS[*]}&quot;)] [--option value --option etc.]
+
+options:
+       --version     value     default version is ${VERSION}
+  -h | --help                  this help
+EOF
+}
+</code></pre>
+
+  </section>
+
+  
+  <section class="comment">
+   <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'iocast-blog';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </section>
+
+
+
+</article>
+
+        <footer class="mdl-mega-footer footer">
+            <div class="mdl-mega-footer--top-section">
+                <div class="mdl-mega-footer--left-section">
+                  
+                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
+                  
+                </div>
+                <div class="mdl-mega-footer--right-section">
+                    <a class="mdl-typography--font-light" href="#top">
+                        Back to Top
+                        <i class="material-icons">expand_less</i>
+                    </a>
+                </div>
+            </div>
+
+        </footer>
+      </main>
+    </div>
+
+    
+    <script src="http://iocast.github.io/js/material.min.js"></script>
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script src="http://iocast.github.io/js/site.js"></script>
+
+  </body>
+
+</html>
+

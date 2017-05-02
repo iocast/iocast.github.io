@@ -8,9 +8,7 @@
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
     <lastBuildDate>Sat, 03 Dec 2011 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://iocast.github.io/tags/networking/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="http://iocast.github.io/tags/networking/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Tunneling over an intermediate to overcome demilitarized zone</title>
@@ -18,8 +16,85 @@
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
-      <description>Source code: shell script
-Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22.</description>
+      <description>
+
+<p>Source code: <a href="resources/code/shell/tunneling.sh">shell script</a></p>
+
+<p>Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22. Last but not least, every time a server restarts we want that the tunnels automatically opens, means that we need to have an <code>cron</code> job that checks, whether an open connection exists from the server to the intermediary or not, and if the server opens a connection to the intermediary the system does not need to prompt for password. Solution is here to register the public key of the server on the intermediary.</p>
+
+<h2 id="client">Client</h2>
+
+<h3 id="opening-a-tunnel-from-client-to-intermediary">Opening a tunnel from client to intermediary</h3>
+
+<pre><code class="language-bash">ssh -L 22000:127.0.0.1:22000 -N root@152.96.56.32
+</code></pre>
+
+<h3 id="connecting-to-server">Connecting to server</h3>
+
+<pre><code class="language-bash">ssh -P 22000 michel@127.0.0.1
+</code></pre>
+
+<h3 id="copy-files-scp">Copy files (SCP)</h3>
+
+<pre><code class="language-bash">#get
+scp -P 22000 michel@127.0.0.1:/home/michel/tunelling.sh /Users/michel/Public/Drop\ Box/
+
+#put
+scp /Users/michel/Public/Drop\ Box/tunelling.sh -P 22000 michel@127.0.0.1:/home/michel/
+</code></pre>
+
+<h2 id="intermediary">Intermediary</h2>
+
+<h3 id="register-gpg-key-from-server">Register GPG key from server</h3>
+
+<pre><code class="language-bash">apt-key add &lt;file&gt;
+</code></pre>
+
+<h2 id="server">Server</h2>
+
+<h3 id="export-gpg-key">Export GPG key</h3>
+
+<pre><code class="language-bash">apt-key export &lt;key&gt; &gt; &lt;file&gt;
+</code></pre>
+
+<h3 id="open-a-connection-to-intermediary-from-server">Open a connection to intermediary from server</h3>
+
+<p>Save the following script as e.g. tunneling.sh</p>
+
+<pre><code class="language-bash">#!/bin/sh
+
+cmd=&quot;ssh -R 22000:127.0.0.1:22 -N root@152.96.56.32&quot;
+
+match=$(ps -aef | grep &quot;${cmd}&quot; | grep -v grep)
+if [ -z &quot;${match}&quot; ] ; then
+$cmd &amp;
+fi
+</code></pre>
+
+<h3 id="register-cron-job">Register cron job</h3>
+
+<p>Edit crontab</p>
+
+<pre><code class="language-bash">crontab -e
+</code></pre>
+
+<p>Adding a new job to the crontab. The following entry executes the defined script <code>tunneling.sh</code> every 5 minutes.</p>
+
+<pre><code class="language-bash">5 * * * * /&lt;path&gt;/tunnelilng.sh
+</code></pre>
+
+<p>Crontab is structured as follow:</p>
+
+<pre><code class="language-bash">* * * * * command to be executed
+- - - - -
+| | | | |
+| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
+| | | ------- Month (1 - 12)
+| | --------- Day of month (1 - 31)
+| ----------- Hour (0 - 23)
+------------- Minute (0 - 59)
+</code></pre>
+</description>
     </item>
     
   </channel>
