@@ -12,7 +12,7 @@ sourceRelativeLinksEval = true
 #canonifyURLs = true
 #relativeURLs = true
 
-DisqusShortname = "iocast-blog"
+disqusShortname = "iocast-blog"
 #disqus_identifier = ""
 #disqus_title = ""
 #disqus_url = ""
