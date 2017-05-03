@@ -3,13 +3,12 @@
   left: calc(50% - 28px);
   bottom: -26px;
   z-index: 3;
-  
 }
 
 
 .title-section {
   position: relative;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 92px);
   width: auto;
   background-color: #f3f3f3;
   background: url('/img/site_cover.png') center 30% no-repeat;
