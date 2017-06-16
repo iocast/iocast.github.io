@@ -4,7 +4,7 @@
 
 - [ ] Config file cleanup
 - [x] Codenvy docker file (gist file `dockerfile_hugo`)
-- [ ] Travis deployment
+- [x] Travis deployment
 - [ ] define archteypes
 
 
