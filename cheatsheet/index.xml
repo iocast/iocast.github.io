@@ -7,8 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2017</copyright>
-    <lastBuildDate>Mon, 22 Dec 2014 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Oct 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://iocast.github.io/cheatsheet/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>MacOS</title>
+      <link>http://iocast.github.io/cheatsheet/macos/</link>
+      <pubDate>Mon, 09 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/macos/</guid>
+      <description>
+
+<h2 id="finding-files">Finding Files</h2>
+
+<pre><code class="language-bash">sudo find / -iname &quot;*search-string*&quot;
+sudo find / -ipath &quot;*search-string*&quot;
+</code></pre>
+</description>
+    </item>
     
     <item>
       <title>Bash / Shell</title>

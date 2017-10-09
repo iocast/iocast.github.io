@@ -8,11 +8,8 @@
      <meta name="author" content="Iocast">
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>Cheatsheets -- think twice code once!</title>
+    <title>MacOS -- think twice code once!</title>
 
-    
-    <link href="http://iocast.github.io/cheatsheet/index.xml" rel="alternate" type="application/rss+xml" title="think twice code once!" />
-    <link href="http://iocast.github.io/cheatsheet/index.xml" rel="feed" type="application/rss+xml" title="think twice code once!" />
     
 
     
@@ -105,142 +102,115 @@
       <a name="top"></a>
 
 
-<div class="cheatsheet-list">
-
-  <div class="mdl-grid">
-
-    
-
-    <div class="mdl-cell mdl-cell--6-col">
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/macos/">MacOS</a>
-     <br />
-     MacOS sheat sheet
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/bash/">Bash / Shell</a>
-     <br />
-     Bash / Shell sheat sheet
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/git/">Git</a>
-     <br />
-     Git commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/irc/">IRC</a>
-     <br />
-     Internet Relay Chat
-   </p>
-</div>
-
-    
-    </div>
-
-    <div class="mdl-cell mdl-cell--6-col">
-    
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/linux/">Linux</a>
-     <br />
-     Linux general commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/virtualbox/">Oracle VirtualBox</a>
-     <br />
-     Oracle VirtualBox most used commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/postgres/">PostgreSQL</a>
-     <br />
-     PostgreSQL commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/python_pypi/">Python PyPi</a>
-     <br />
-     Python PyPi commands
-   </p>
-</div>
-
-    
-    
-    </div>
-
-  </div>
-
-</div>
+<article class="article">
 
   
-<div class="paginator__container">
+
+<style>
+  .toc-container {
+    position: fixed;
+    top: 80px;
+    left: calc( 100% - 70px );
+    z-index: 500;
+  }
+
+  .toc {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+  }
+
+  .toc > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc > ul > li > ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div class="toc-container" style="">
 
 
-<span class="mdl-button mdl-js-button mdl-button--icon mdl-button" disabled>
-  <i class="material-icons">arrow_left</i>
-</span>
-
+<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
+  <i class="material-icons">format_list_numbered</i>
+</button>
 
 
 
 
   
-  <span class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-    <small>1</small>
-  </span>
-  
-
-
 
   
-  <a class="mdl-button mdl-js-button mdl-button--icon mdl-button" href="http://iocast.github.io/cheatsheet/page/2/" >
-    <small>2</small>
-  </a>
-  
 
+  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#finding-files">Finding Files</a></li>
+</ul></li>
+</ul>
+</nav>
 
-
-
-<a class="mdl-button mdl-js-button mdl-button--icon mdl-button" href="http://iocast.github.io/cheatsheet/page/2/">
-  <i class="material-icons">arrow_right</i>
-</a>
 
 
 </div>
 
+
+
+
+  <header class="mdl-typography--text-center">
+      <div class="title">MacOS</div>
+      <div class="description">MacOS sheat sheet</div>
+      
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+  <section class="content">
+      <a name="content"></a>
+      
+
+<h2 id="finding-files">Finding Files</h2>
+
+<pre><code class="language-bash">sudo find / -iname &quot;*search-string*&quot;
+sudo find / -ipath &quot;*search-string*&quot;
+</code></pre>
+
+  </section>
+
+  
+  <section class="comment">
+   <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'iocast-blog';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </section>
+
+
+
+</article>
 
         <footer class="mdl-mega-footer footer">
             <div class="mdl-mega-footer--top-section">
