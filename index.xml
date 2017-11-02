@@ -27,6 +27,34 @@ sudo find / -ipath &quot;*search-string*&quot;
     </item>
     
     <item>
+      <title>npmjs</title>
+      <link>http://iocast.github.io/cheatsheet/npmjs/</link>
+      <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/npmjs/</guid>
+      <description>
+
+<h2 id="comands">Comands</h2>
+
+<h3 id="login">login</h3>
+
+<p>open your shell and type</p>
+
+<pre><code class="language-bash">npm login
+</code></pre>
+
+<p>follow the onscreen instructions</p>
+
+<h3 id="update">update</h3>
+
+<p>verify that the <code>&quot;name&quot;: &quot;@username/package-name&quot;</code> and <code>&quot;version&quot;</code> is correct in your <code>package.json</code> file. Publish the package as follow</p>
+
+<pre><code class="language-bash">npm publish --access public
+</code></pre>
+</description>
+    </item>
+    
+    <item>
       <title>Contact</title>
       <link>http://iocast.github.io/contact/</link>
       <pubDate>Sun, 21 Feb 2016 15:22:59 -0500</pubDate>
@@ -2365,6 +2393,18 @@ fi
 | ----------- Hour (0 - 23)
 ------------- Minute (0 - 59)
 </code></pre>
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://iocast.github.io/cheatsheet/geo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/geo/</guid>
+      <description><p>## Coordinates</p>
+
+<p>A position is represented by an array of numbers. There must be at least two elements, and may be more. The order of elements must follow x, y, z order (easting, northing, altitude for coordinates in a projected coordinate reference system, or longitude, latitude, altitude for coordinates in a geographic coordinate reference system).</p>
 </description>
     </item>
     
