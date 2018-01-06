@@ -8,11 +8,8 @@
      <meta name="author" content="Iocast">
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>Cheatsheets -- think twice code once!</title>
+    <title>MacOS -- think twice code once!</title>
 
-    
-    <link href="http://iocast.github.io/cheatsheet/index.xml" rel="alternate" type="application/rss+xml" title="think twice code once!" />
-    <link href="http://iocast.github.io/cheatsheet/index.xml" rel="feed" type="application/rss+xml" title="think twice code once!" />
     
 
     
@@ -105,142 +102,100 @@
       <a name="top"></a>
 
 
-<div class="cheatsheet-list">
-
-  <div class="mdl-grid">
-
-    
-
-    <div class="mdl-cell mdl-cell--6-col">
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/macos/">MacOS</a>
-     <br />
-     MacOS sheat sheet
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/npm/">MacOS</a>
-     <br />
-     MacOS sheat sheet
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/npmjs/">npmjs</a>
-     <br />
-     npmjs commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/bash/">Bash / Shell</a>
-     <br />
-     Bash / Shell sheat sheet
-   </p>
-</div>
-
-    
-    </div>
-
-    <div class="mdl-cell mdl-cell--6-col">
-    
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/git/">Git</a>
-     <br />
-     Git commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/irc/">IRC</a>
-     <br />
-     Internet Relay Chat
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/linux/">Linux</a>
-     <br />
-     Linux general commands
-   </p>
-</div>
-
-    
-      
-
-<div class="post-preview">
-   <p class="post-meta"><a href="http://iocast.github.io/cheatsheet/virtualbox/">Oracle VirtualBox</a>
-     <br />
-     Oracle VirtualBox most used commands
-   </p>
-</div>
-
-    
-    
-    </div>
-
-  </div>
-
-</div>
+<article class="article">
 
   
-<div class="paginator__container">
 
 
-<span class="mdl-button mdl-js-button mdl-button--icon mdl-button" disabled>
-  <i class="material-icons">arrow_left</i>
-</span>
+  <header class="mdl-typography--text-center">
+      <div class="title">MacOS</div>
+      <div class="description">MacOS sheat sheet</div>
+      
 
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
 
+  </header>
 
+  <section class="content">
+      <a name="content"></a>
+      <p><code>prepublishOnly</code> ensures that the library is always built before we publish to npm.</p>
 
+<p>more flags here  <a href="https://docs.npmjs.com/misc/scripts">https://docs.npmjs.com/misc/scripts</a></p>
+
+<p>needed dev libraries</p>
+
+<p>babel-cli provides the command babel.
+babel-preset-env is the Babel preset we use for transpilation.</p>
+
+<p>for tests use
+babel-register lets AVA execute the tests via Babel.</p>
+
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;@iocast/koa-i18next&quot;,
+  &quot;version&quot;: &quot;0.0.0&quot;,
+  &quot;description&quot;: &quot;i18next middleware for koa&quot;,
+  &quot;main&quot;: &quot;lib&quot;,
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;babel src --out-dir dist&quot;,
+    &quot;prepublishOnly&quot;: &quot;npm run build&quot;,
+    &quot;patch&quot;: &quot;npm version patch &amp;&amp; npm publish&quot;,
+    &quot;minor&quot;: &quot;npm version minor &amp;&amp; npm publish&quot;,
+    &quot;major&quot;: &quot;npm version major &amp;&amp; npm publish&quot;,
+    &quot;postpublish&quot;: &quot;git push origin master --follow-tags&quot;
+  },
+  &quot;repository&quot;: {
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;git+https://github.com/iocast/koa-i18next.git&quot;
+  },
+  &quot;author&quot;: &quot;iocast&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;bugs&quot;: {
+    &quot;url&quot;: &quot;https://github.com/iocast/koa-i18next/issues&quot;
+  },
+  &quot;homepage&quot;: &quot;https://github.com/iocast/koa-i18next#readme&quot;,
+  &quot;keywords&quot;: [
+    &quot;koa&quot;,
+    &quot;i18next&quot;,
+    &quot;middleware&quot;
+  ],
+  &quot;devDependencies&quot;: {
+    &quot;babel-cli&quot;: &quot;^6.26.0&quot;
+  }
+}
+</code></pre>
+
+  </section>
 
   
-  <span class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-    <small>1</small>
-  </span>
-  
+  <section class="comment">
+   <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'iocast-blog';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </section>
 
 
 
-  
-  <a class="mdl-button mdl-js-button mdl-button--icon mdl-button" href="http://iocast.github.io/cheatsheet/page/2/" >
-    <small>2</small>
-  </a>
-  
-
-
-
-
-<a class="mdl-button mdl-js-button mdl-button--icon mdl-button" href="http://iocast.github.io/cheatsheet/page/2/">
-  <i class="material-icons">arrow_right</i>
-</a>
-
-
-</div>
-
+</article>
 
         <footer class="mdl-mega-footer footer">
             <div class="mdl-mega-footer--top-section">

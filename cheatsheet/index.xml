@@ -23,6 +23,67 @@
 <pre><code class="language-bash">sudo find / -iname &quot;*search-string*&quot;
 sudo find / -ipath &quot;*search-string*&quot;
 </code></pre>
+
+<h2 id="network">Network</h2>
+
+<p>See which process is listen on a specific port</p>
+
+<pre><code class="language-bash">ps -eaf | grep `lsof -t -i:3000`
+</code></pre>
+</description>
+    </item>
+    
+    <item>
+      <title>MacOS</title>
+      <link>http://iocast.github.io/cheatsheet/npm/</link>
+      <pubDate>Mon, 09 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/npm/</guid>
+      <description><p><code>prepublishOnly</code> ensures that the library is always built before we publish to npm.</p>
+
+<p>more flags here  <a href="https://docs.npmjs.com/misc/scripts">https://docs.npmjs.com/misc/scripts</a></p>
+
+<p>needed dev libraries</p>
+
+<p>babel-cli provides the command babel.
+babel-preset-env is the Babel preset we use for transpilation.</p>
+
+<p>for tests use
+babel-register lets AVA execute the tests via Babel.</p>
+
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;@iocast/koa-i18next&quot;,
+  &quot;version&quot;: &quot;0.0.0&quot;,
+  &quot;description&quot;: &quot;i18next middleware for koa&quot;,
+  &quot;main&quot;: &quot;lib&quot;,
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;babel src --out-dir dist&quot;,
+    &quot;prepublishOnly&quot;: &quot;npm run build&quot;,
+    &quot;patch&quot;: &quot;npm version patch &amp;&amp; npm publish&quot;,
+    &quot;minor&quot;: &quot;npm version minor &amp;&amp; npm publish&quot;,
+    &quot;major&quot;: &quot;npm version major &amp;&amp; npm publish&quot;,
+    &quot;postpublish&quot;: &quot;git push origin master --follow-tags&quot;
+  },
+  &quot;repository&quot;: {
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;git+https://github.com/iocast/koa-i18next.git&quot;
+  },
+  &quot;author&quot;: &quot;iocast&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;bugs&quot;: {
+    &quot;url&quot;: &quot;https://github.com/iocast/koa-i18next/issues&quot;
+  },
+  &quot;homepage&quot;: &quot;https://github.com/iocast/koa-i18next#readme&quot;,
+  &quot;keywords&quot;: [
+    &quot;koa&quot;,
+    &quot;i18next&quot;,
+    &quot;middleware&quot;
+  ],
+  &quot;devDependencies&quot;: {
+    &quot;babel-cli&quot;: &quot;^6.26.0&quot;
+  }
+}
+</code></pre>
 </description>
     </item>
     

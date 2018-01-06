@@ -149,6 +149,7 @@
 <li>
 <ul>
 <li><a class="mdl-menu__item mdl-js-ripple-effect" href="#finding-files">Finding Files</a></li>
+<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#network">Network</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -182,6 +183,13 @@
 
 <pre><code class="language-bash">sudo find / -iname &quot;*search-string*&quot;
 sudo find / -ipath &quot;*search-string*&quot;
+</code></pre>
+
+<h2 id="network">Network</h2>
+
+<p>See which process is listen on a specific port</p>
+
+<pre><code class="language-bash">ps -eaf | grep `lsof -t -i:3000`
 </code></pre>
 
   </section>
