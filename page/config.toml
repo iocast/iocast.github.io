@@ -3,9 +3,9 @@ LanguageCode= "en-US"
 Title= "think twice code once!"
 paginate = 8
 
-Copyright = "All rights reserved © 2017"
+Copyright = "All rights reserved © 2018"
 canonifyurls = true
-theme = "material-design-lite"
+theme = "material-design-components"
 newContentEditor = "nano"
 pygmentsStyle = "native"
 sourceRelativeLinksEval = true

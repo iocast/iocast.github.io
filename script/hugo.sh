@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 
 
 FILENAME=`basename "$0"`
-HUGO_VERSION="0.20.6"
+HUGO_VERSION="0.48"
 COMMANDS=("install" "upgrade")
 ARCH='64bit'
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -52,15 +52,14 @@ EOF
 
 function install_hugo_linux
 {
-    curl -fsSLO "https://github.com/spf13/hugo/releases/download/v${hugo_version}/hugo_${hugo_version}_${OS}-${ARCH}.tar.gz" && \
-    sudo mkdir -p /usr/local/hugo/bin && \
-    sudo tar -xzf "hugo_${hugo_version}_${OS}-${ARCH}.tar.gz" -C /usr/local/hugo/bin --exclude-from ${DIR}/exclude && \
+    curl -fsSLO "https://github.com/gohugoio/hugo/releases/download/v${hugo_version}/hugo_${hugo_version}_${OS}-${ARCH}.tar.gz" && \
+    sudo tar -xzf "hugo_${hugo_version}_${OS}-${ARCH}.tar.gz" -C /usr/local/bin --exclude-from ${DIR}/exclude && \
     sudo rm -rf "hugo_${hugo_version}_${OS}-${ARCH}.tar.gz"
 }
 
 function remove_hugo_linux
 {
-    sudo rm -rf /usr/local/hugo
+    sudo rm -rf /usr/local/bin/hugo
 }
 
 
@@ -109,7 +108,7 @@ then
   esac
 
   echo -e "${GREEN}done${NC}"
-  return
+  exit
 fi
 
 
@@ -126,7 +125,7 @@ then
   esac
 
   echo -e "${GREEN}done${NC}"
-  return
+  exit
 fi
 
 

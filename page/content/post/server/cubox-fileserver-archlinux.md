@@ -1,7 +1,7 @@
 ---
 title: My personal file server on a Cubox from SolidRun using Arch Linux
 author: iocast
-date: 2014-11-09
+date: 2014-11-30
 description: Who does not dream from a fast electric saving home server. In this blog I'm going to describe, how to setup a headless file server using Arch Linux on the Cubox from SolidRun.
 image: cover.jpg
 categories:
@@ -63,7 +63,7 @@ Create the `/etc/systemd/network/eth0.network` file so that it resembles the exa
 
 **for DHCP**
 
-```
+```apacheconf
 [Match]
 Name=eth0
 
@@ -73,7 +73,7 @@ DHCP=both
 
 **for fixed IP**
 
-```
+```apacheconf
 [Match]
 Name=eth0
 
@@ -91,14 +91,14 @@ Restart systemd-networkd. To do so, run this command:
 
 If you are on a network with DHCPv4 that filters Client IDs based on MAC addresses, you may need to change the following line in `/etc/dhcpcd.conf`:
 
-```
+```bash
 # Use the same DUID + IAID as set in DHCPv6 for DHCPv4 Client ID as per RFC4361.
 duid
 ```
 
 to:
 
-```
+```bash
 # Use the hardware address of the interface for the Client ID (DHCPv4).
 clientid
 ```
@@ -107,13 +107,13 @@ Else, you may not obtain a lease since the DHCP server may not read your DHCPv6-
 
 To automatically start the DCHP daemon at start up you have to enable it.
 
-```
+```bash
 systemctl enable dhcpcd
 ```
 
 ## System Upgrade
 
-```
+```bash
 pacman -Syu
 ```
 
@@ -121,7 +121,7 @@ pacman -Syu
 
 If you have bad experience or strange behaviour with the standard `vi` simply install `vim`.
 
-```
+```bash
 pacman -S vim-minimal
 ```
 
@@ -130,7 +130,7 @@ pacman -S vim-minimal
 
 Change your timezone to the one your are living at. All time zones can be found in the folder `/etc/timezones`.
 
-```
+```bash
 # To check the current zone defined for the system:
 timedatectl status
 # To list available zones:
@@ -141,7 +141,7 @@ timedatectl set-timezone Europe/Zurich
 
 Also do not forget to change your `locale`
 
-```
+```bash
 localectl status
 ls /usr/share/i18n/locales
 localectl set-locale LANG=de_CH.UTF-8
@@ -153,26 +153,26 @@ localectl set-locale LANG=de_CH.UTF-8
 
 For internal file sharing you could use Samba. Tips and tricks can be found on [Arch Linux Samba site](https://wiki.archlinux.org/index.php/Samba/Tips_and_tricks)
 
-```
+```bash
 pacman -S samba
 ```
 
 Your can restart the service using the follwing
 
-```
+```bash
 systemctl enable smbd.service
 systemctl enable nmbd.service
 ```
 
 Create a new samba group
 
-```
+```bash
 groupadd sambashare
 ```
 
 and add user to it
 
-```
+```bash
 # add user to the samba grup
 pdbedit -a -u samba_user
 # changing samba password
@@ -181,13 +181,13 @@ smbpasswd samba_user
 
 Adding a user to the samba group
 
-```
+```bash
 usermod -a -G sambashare unix_user_name
 ```
 
 On my Cubox I use the following configuration (`/etc/samba/smb.conf`):
 
-```
+```apacheconf
 [global]
 workgroup = iocast
 server string = file server
@@ -203,7 +203,7 @@ directory mask = 02775
 force directory mode = 02775
 force group = sambashare
 
-[share 1]
+[share_1]
 comment = data disk
 path = /storage/data/
 public = no
@@ -213,7 +213,7 @@ valid users = user1 user2
 write list = user1
 read list = user2
 
-[share 1 backup]
+[share_1_backup]
 comment = data disk backup
 path = /storage/backup/
 public = no
@@ -222,7 +222,7 @@ guest ok = no
 valid users = user1
 write list = user1
 
-[share 2]
+[share_2]
 comment = data disk1
 path = /storage/data1/
 public = no
@@ -231,7 +231,7 @@ guest ok = no
 valid users = user1 user2
 write list = user1 user2
 
-[share 2 backup]
+[share_2_backup]
 comment = data disk1 backup
 path = /storage/backup1/
 public = no
@@ -258,7 +258,7 @@ To automatically mount disks on startup, you need to add them to the `/etc/fstab
 
 Run `lsblk -f` or `ls -l /dev/disk/by-uuid` to list the partitions / disks. Edit the `/etc/fstab` and prefix the values in the UUID column with `UUID=`:
 
-```
+```apacheconf
 # <file system>                           <dir>             <type>  <options>                        <dump>  <pass>
 UUID=54940062-befb-4127-b1fc-15584cd4c2ea /storage/data/    ext4    nofail,rw,relatime,data=ordered  0       0
 UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69 /storage/backup/  ext4    nofail,rw,relatime,data=ordered  0       0
@@ -270,7 +270,7 @@ UUID=b5a1514e-6a87-4ea5-a3ce-a592a41abecc /storage/backup1/ ext4    nofail,rw,re
 
 If you use [afraid.org](http://www.afraid.org) as your dynamic DNS service you can get an example `cron` entry from the **Dynamic DNS** menu entry. It look likes the following
 
-```
+```apacheconf
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 37 ; wget -O - http://freedns.afraid.org/dynamic/update.php?key= >> /tmp/freedns_pasithee_mooo_com.log 2>&1 &
@@ -278,7 +278,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 On Arch Linux you need to do the following changes to use it with `systemd/Timers` (see [here](https://wiki.archlinux.org/index.php/Systemd/Timers)). First we need to create a new timer `vim /etc/systemd/system/afraid.org.timer` and add the following lines
 
-```
+```apacheconf
 [Unit]
 Description=timer for service afraid.org.timer
 Requires=network-online.target
@@ -294,7 +294,7 @@ WantedBy=multi-user.target
 
 Then create a service file of the same name `/etc/systemd/system/afraid.org.service` and add the following lines
 
-```
+```apacheconf
 [Unit]
 Description=service for afraid.org for pasithee.mooo.com
 
@@ -305,7 +305,7 @@ ExecStart=/usr/bin/curl -k http://freedns.afraid.org/dynamic/update.php?key= >> 
 
 Now you can test the service.
 
-```
+```bash
 # test service
 systemctl start afraid.org.service
 systemctl stop afraid.org.service
@@ -313,7 +313,7 @@ systemctl stop afraid.org.service
 
 As soon as it works you can enable the timer
 
-```
+```bash
 systemctl enable afraid.org.timer
 systemctl start afraid.org.timer
 ```

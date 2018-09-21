@@ -1,3 +1,13 @@
+# Setup
+
+```bash
+# Install
+./script/hugo.sh install
+
+# Run
+hugo server --source page/
+```
+
 # TODOs
 
 ## Configuration

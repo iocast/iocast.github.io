@@ -1,0 +1,30 @@
+{{ partial "header.html" .}}
+
+<article class="post">
+
+  {{ partial "toc.html" . }}
+
+  <header>
+    <h1 class="mdc-typography--headline4">{{ .Title }}</h1>
+    <h2 class="mdc-typography--headline6">{{ .Description }}</h2>
+    {{ partial "meta.html" . }}
+
+
+    {{ if isset .Params "image" }}
+    <div class="post-header--image">
+      <img src="{{ .Permalink }}/{{ .Params.image }}">
+    </div>
+    {{ end }}
+  </header>
+
+
+  <section class="post-content">
+    {{ .Content }}
+  </section>
+
+  {{ partial "comments.html" .}}
+
+
+</article>
+
+{{ partial "footer.html" .}}

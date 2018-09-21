@@ -157,3 +157,42 @@ getting installed packages including version number
 
 	time dpkg -l | perl -lane 'print "$F[1] : $F[2]" if m/^ii/'
 
+
+
+
+# TOOD
+uname -r 
+
+sudo dpkg --list 'linux-image*'|awk '{ if ($1=="ii") print $2}'|grep -v `uname -r`
+
+sudo apt-get purge linux-image-4.4.0-108-generic
+sudo apt-get purge linux-image-4.4.0-109-generic
+sudo apt-get purge linux-image-4.4.0-112-generic
+sudo apt-get purge linux-image-4.4.0-116-generic
+sudo apt-get purge linux-image-4.4.0-119-generic
+sudo apt-get purge linux-image-4.4.0-121-generic
+sudo apt-get purge linux-image-4.4.0-124-generic
+
+sudo apt-get autoremove
+
+sudo update-grub
+
+---------------------------------
+
+
+Case II: Can't Use apt i.e. /boot is 100% full
+
+
+sudo dpkg --list 'linux-image*'|awk '{ if ($1=="ii") print $2}'|grep -v `uname -r`
+
+
+sudo rm -rf /boot/*-4.4.0-{108,109,112,116,119,121,124}-*
+
+
+sudo apt-get -f install
+
+sudo apt-get autoremove
+
+sudo update-grub
+
+sudo apt-get update

@@ -1,0 +1,35 @@
+
+<div class="paginator__container" style="width: 100%; text-align: center;">
+
+    {{ if $.Paginator.HasPrev }}
+    <a href="{{ $.Paginator.Prev.URL }}">
+      <button class="mdc-icon-button material-icons">arrow_left</button>
+    </a>
+    {{ else }}
+    <button class="mdc-icon-button material-icons" disabled>arrow_left</button>
+    {{ end }}
+    
+    
+    {{ range $.Paginator.Pagers }}
+    
+      {{ if eq . $.Paginator }}
+      <button class="mdc-icon-button" disabled>{{ .PageNumber }}</button>
+      {{ else }}
+      <a href="{{ .URL }}">
+          <button class="mdc-icon-button">{{ .PageNumber }}</button>
+      </a>
+      {{ end }}
+    
+    {{ end }}
+    
+    {{ if $.Paginator.HasNext }}
+    <a href="{{ $.Paginator.Next.URL }}">
+        <button class="mdc-icon-button material-icons">arrow_right</button>
+      </a>
+    {{ else }}
+    <button class="mdc-icon-button material-icons" disabled>arrow_right</button>
+
+    {{ end }}
+    
+    </div>
+    
