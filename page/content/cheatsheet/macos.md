@@ -14,3 +14,11 @@ comments: true
 sudo find / -iname "*search-string*"
 sudo find / -ipath "*search-string*"
 ```
+
+## Network
+
+See which process is listen on a specific port
+
+```bash
+ps -eaf | grep `lsof -t -i:3000`
+```
