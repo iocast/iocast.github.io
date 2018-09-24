@@ -103,7 +103,7 @@ done
 
 you can use it like this
 
-```
+```bash
 ./<script> install --version 0.2
 ```
 

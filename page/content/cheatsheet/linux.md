@@ -7,7 +7,7 @@ type: cheatsheet
 comments: true
 ---
 
-## User & Group Management
+# User & Group Management
 
 
 Purpose            | Command
@@ -20,7 +20,7 @@ change to root  	 | `sudo -i`
 remove user        | `deluser --remove-home username`
 
 
-### User with `sudo` rights
+## User with `sudo` rights
 
 ```bash
 useradd --create-home --gid users --shell /bin/bash userName
@@ -31,40 +31,46 @@ visudo -f /etc/sudoers.d/sudoers
 userName    ALL=(ALL:ALL) ALL
 ```
 
-## Samba Management
+# Samba Management
 
 Purpose            | Command
 ------------------ | -------------------------------
 new user           | `pdbedit -a -u samba_user`
 change password    | `smbpasswd samba_user`
+list users         | `pdbedit -w -L`
 
 
-## File and Directory Handling
+# File and Directory Handling
 
-### Find & Remove
+## Find & Remove
 
 specific files
 
-	find <path> -name '<file-name>' -delete
-
+```bash
+find <path> -name '<file-name>' -delete
+```
 
 If something ''more portable'' needed then you're better off with
 
-	find <directory name> -name '*.pyc' -exec rm {} \;
+```bash
+find <directory name> -name '*.pyc' -exec rm {} \;
+```
 
-
-### File Manipulation
+## File Manipulation
 
 search the line which begins with `var feature server` and replaces the whole line with `var featureserver = "http://featureserver.org/fs"`
 
-	sed -e 's%^var featureserver.*%var featureserver = "http://featureserver.org/fs"%g' featureserver.org/assets/js/map.js > ${tmp}/website/assets/js/map.js
+```bash
+sed -e 's%^var featureserver.*%var featureserver = "http://featureserver.org/fs"%g' featureserver.org/assets/js/map.js > ${tmp}/website/assets/js/map.js
+```
 
 template command is as follow, where the first character after `s` is used as separator and afterwards it comes a regex. Use `-i` to do an ''in place'' replacement (no need for pipe)
 
-	sed -ie 's/$search_for/$replace_with/g' $file
+```bash
+sed -ie 's/$search_for/$replace_with/g' $file
+```
 
-
-#### '\r': command not found
+### '\r': command not found
 
 ```bash
 # Error message
@@ -81,7 +87,7 @@ Option `-i` is for in-place editing, we delete the trailing `\r` directly in the
 
 
 
-### Folder size
+## Folder size
 
 `-h`
 : human readable file size
@@ -93,25 +99,26 @@ Option `-i` is for in-place editing, we delete the trailing `\r` directly in the
 du <directory>
 ```
 
-### Compression
+## Compression
 
-```
+```bash
 tar -cvzf <file.tar.bz2> --exclude-vcs --exlude='*.svn' folder/
 ```
 
-### Extraction
+## Extraction
 
-```
+```bash
 tar -zxvf <file.tar.bz2>
 ```
 
-### Errors
+## Errors
 
 When you get a error that the command is not found (e.g. `-bash: $'\r': command not found`) and you are sure everything is correct, then it has something to do with the file format or the characters.
 
 **Error:** `-bash: $'\r': command not found`
 
 Remove trailing \r character that causes this error:
+
 ```bash
 sed -i 's/\r$//' filename
 ```
@@ -121,46 +128,106 @@ Option `-i` is for in-place editing, we delete the trailing `\r` directly in the
 
 
 
-### Synchronization
+## Synchronization
 
 Synchronization
 
-	:::bash
-	#! /bin/bash
-	rsync -av --delete <from> <to> > <log> &
+```bash
+#! /bin/bash
+rsync -av --delete <from> <to> > <log> &
+```
 
 
-### Cloning
+## Cloning
 burning image to disk (also usb drives)
 
 optional use `bs=8192`
 
-	dd if=<path>.iso of=<disk>
+```bash
+dd if=<path>.iso of=<disk>
+```
 
 
-
-## Job / Programs
+# Job / Programs
 
 Keep job running despite of a logout
 
-	nohup <command> &
+```bash
+nohup <command> &
+```
 
 
-## System information
+# System information
 
-	dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+```bash
+dmidecode -t [bios, system, baseboard, chassis, processor, memory, cache, connector, slot] | more
+```
 
-
-### Packages
+# Packages
 
 getting installed packages including version number
 
-	time dpkg -l | perl -lane 'print "$F[1] : $F[2]" if m/^ii/'
+```bash
+time dpkg -l | perl -lane 'print "$F[1] : $F[2]" if m/^ii/'
+```
 
 
+# Network
+
+## WiFi
 
 
-# TOOD
+```bash
+wpa_passphrase <ssid>
+# reading passphrase from stdin 
+```
+
+Enter your passphrase and confirm with enter. It will output the network configuration.
+
+```ini
+network={
+        ssid="<ssid>"
+        #psk="<passphrase>"
+        psk="<wpa-psk>"
+```
+
+Open the file `/etc/network/interfaces`
+
+```bash
+nano /etc/network/interfaces
+```
+
+and change it as follow with the information provided by `wpa_passphrase`.
+
+Check on wich interface your WiFi is connected.
+
+```bash
+ifconfig
+```
+
+shows you alle interfaces.
+
+
+```ini
+# Primary Ethernet Set To DHCP
+auto eth0
+iface eth0 inet dhcp
+
+# Wireless Interfaces wlan0 Set To DHCP using WPA2-PSK
+auto wlan0
+iface wlan0 inet dhcp
+        wpa-ssid <ssid>
+        wpa-psk <wpa-psk>
+```
+
+Now you can start the WiFi
+
+```bash
+ifup wlan0
+```
+
+
+# TODO
 uname -r 
 
 sudo dpkg --list 'linux-image*'|awk '{ if ($1=="ii") print $2}'|grep -v `uname -r`

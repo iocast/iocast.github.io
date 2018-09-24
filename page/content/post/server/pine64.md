@@ -1,181 +1,273 @@
 ---
-title: My new Server
+title: My new Server (Pine64) on armbian
 author: iocast
-date: 2017-02-20
-draft: true
-description: balblbal
+date: 2018-09-23
+draft: false
+description: Short instruction to install armbian on the Pine64+, configuring the hostname, WiFi, timezone, file system table and installing Samba.
 image: cover.jpg
 categories:
 - Server
+tags:
+- server
+- SoC
+- file server
+- samba
+- armbian
+- linux
 ---
 
 
+# Installation
 
+I flashed the SD card using [ETCHER](https://etcher.io/) with the latest [Armbian](https://www.armbian.com/pine64/) without desktop. 
 
-What is the DSI port?
-
-The LCD Panel port is a 4 lane MIPI DSI up to 1920×1200@60fps. It provides connectivity to an LCD panel and turns the Pine A64 into a computer or tablet.
-
-DSI - Display Serial Interface, 4 lanes MiPi, up to 1080P
-TP - Touch Panel Port, SPI with interrupt
-CSI - CMOS Camera Interface up to 5 mega pixel
-
-
-What model of the LCD panel is compatible for the Pine A64?
-
-We currently offer a 7 inch color active matrix 1024 x 600 LCD panel with 24 chip LED backlight.
-
-
-
-http://wiki.pine64.org/index.php/Main_Page#Datasheets_for_Components_and_Peripherals
-4 Lane MIPI DSI touch panel screen
-
-http://files.pine64.org/doc/datasheet/pine64/FY07024DI26A30-D_feiyang_LCD_panel.pdf
-MIPI 30 pin ? (page 20)
-
-http://files.pine64.org/doc/datasheet/pine64/HK70DR2459-PG-V01.pdf
-TP 6 pin ? (page 9)
-
-
-
-
-
-
-
-
-
-
+Once ETCHER is done burning the image on the SD card, insert the card into the Pine64 and attach an ethernet cable. Then login to the system as `root`
 
 ```bash
-sudo -i
-/usr/local/sbin/pine64_update_uboot.sh
-/usr/local/sbin/pine64_update_kernel.sh
-resize_rootfs.sh
-reboot
+$ ssh root@192.168.0.10
 ```
 
+The default password is `1234`. Only after the first login you are asked to change root's password and to create a default user with `sudo` privilege.
+
+![First login](first-login.png)
+
+Follow the screen instructions.
 
 
+# Configuration
 
-[2]	Change hostname permanently.
-root@debian:~# hostnamectl set-hostname dlp
-# show settings
-root@debian:~# hostnamectl
-   Static hostname: dlp
-         Icon name: computer-vm
-           Chassis: vm
-        Machine ID: 5f47b11299ed4689a48a7f78197e452a
-           Boot ID: bdeed3b6c079405bb45d79eff3e870a5
-    Virtualization: vmware
-  Operating System: Debian GNU/Linux 8 (jessie)
-            Kernel: Linux 3.16.0-4-amd64
-      Architecture: x86-64
+## Hostname
 
+The default hostename is `pine64`. It can be changed as follow.
 
+```bash
+$ hostnamectl set-hostname NAME
 
+# check your hostname
+$ hostnamectl
+   Static hostname: ganymede
+         Icon name: computer
+        Machine ID: a1754736e6414a42a02b12485f7cac40
+           Boot ID: b29752fb27614fd096eb2c2aecea430e
+  Operating System: Ubuntu 16.04.5 LTS
+            Kernel: Linux 3.10.107-pine64
+      Architecture: arm64
+```
 
+Open the `/etc/hostname` file with your favorite text editor and check if the new hostname has been applied to the file.
 
+```bash
+$ nano /etc/hostname
+```
 
+If not, update the hostname in this file manually. Then save the file, and exit the text editor.
 
+Next we need to check thes `hosts` file. Open the file `/etc/hosts`.
 
-How To Change Your Hostname on Debian
-
-Step 1: Login to your VPS
-
-Locate the IP address of your Vultr VPS and login as the root user.
-
-ssh root@server
-
-Step 2: Edit /etc/hostname
-
-Open the /etc/hostname file with your favorite text editor. For example:
-
-nano /etc/hostname
-
-Update the hostname in this file. Then save the file, and exit the text editor.
-
-Step 3: Edit /etc/hosts
-
-Open the /etc/hosts file with your favorite text editor. For example:
-
-nano /etc/hosts
+```bash
+$ nano /etc/hosts
+```
 
 Change the first line and replace your old hostname with the new one. Save the file and exit the editor.
 
-Step 4: Run hostname.sh
+Finally run the following command to update your hostname:
 
-Run the following command to update your hostname:
-
-/etc/init.d/hostname.sh start
-
-Step 5: Check your hostname
+```bash
+$ /etc/init.d/hostname.sh start
+```
 
 Run the following command to check your new hostname:
 
-hostname
+```bash
+$ hostname
+```
 
 The new hostname will be displayed in your ssh terminal.
 
-Step 6: (Optional) Change reverse DNS
 
-Visit https://my.vultr.com/, then navigate to your VPS. Click on the IPv4 tab. You will see an "Update" button in the "Reverse DNS" column. Click this button to update the reverse DNS address. By default it will read:
+## WiFi
 
-x.x.x.x.vultr.com
-It is common to replace x.x.x.x.vultr.com with the DNS name of your server, which may be related to its hostname.
+Armbian uses `Networkmanager` to manage the network interfaces. Simple run 
+
+```bash
+$ nmtui
+```
+
+and add a new WiFi connection. To see how you configure your WiFi manually read the [Linux cheatsheet](/cheatsheet/linux/#wifi)
+
+Activate a new connection.
+
+![Activate a connection](nmtui-1.png)
+
+Select your Wireless and enter the passphrase if needed.
+
+![Activate a connection](nmtui-2.png)
+
+Once you are done you can run `ifconfig` to check if you get an IP from the access point.
+
+## Timezone / Local time
+
+To check which timezone is linked to the `localetime` run this.
+
+```bash
+$ ls -al /etc/localtime
+lrwxrwxrwx 1 root root 27 Sep 23 15:54 /etc/localtime -> /usr/share/zoneinfo/Etc/UTC
+```
+
+As you see it is `UTC`. You can change as follow under root.
+
+```bash
+$ unlink /etc/localtime
+$ ln -s /usr/share/zoneinfo/Europe/Zurich /etc/localtime
+```
+
+Restart the `ntpd` service
+
+```bash
+$ systemctl restart ntp.service
+```
+
+and check the new date by running `date`.
 
 
+## Language
 
+First, you have to set environment variables such as `LANG`, `LANGUAGE`, `LC_CTYPE`, `LC_MESSAGES` to your local language. Usually `LANG` (or `LC_ALL`) is sufficient. Check check wich locals are preset on the system run
 
+```bash
+$ locale -a
+```
 
+Locales that are not listed can be generated.
 
+```bash
+$ locale-gen de_DE.UTF-8
+Generating locales...
+ de_DE.UTF-8... done
+Generation complete.
+```
 
+Locales can also be reconfigured issuing the following command:
 
+```bash
+$ dpkg-reconfigure locales
+```
 
-
-
-
-ChangeLanguage
-
-How to change the language of your Debian system
-
-* First, you have to set environment variables such as LANG, LANGUAGE, LC_CTYPE, LC_MESSAGES to your local language. Usually LANG (or LC_ALL) is sufficient. (shamelessly stolen from Claws Mail doc ;) Check what you have at present with:
-
-# env | grep LANG
-* Second, you may also need to reconfigure your locales.
-
-To do this, as root:
-
-First: issue on a root terminal #export LANG=(the two letter code for your country).UTF-8 That is, for the Spanish language it would be:
-
-# export LANG=es_ES.UTF-8
-Second: reconfigure locales issuing the following command:
-
-# dpkg-reconfigure locales
 A window will ask you to select the languages (you select with SPACE) you want to have available. Choose your own.
 
-Changes may not show immediately, a reboot will be needed.
+### Changing locals
 
-(Please feel free to modify these instructions if you know better. Thanks.)
+You may manually change your system's locale entries by modifying the file `/etc/default/locale`. [Here](https://help.ubuntu.com/community/Locale#List_current_settings) is a list of variables and its aspect.
+
+As an alternative to editing these files by hand `update-locale` may be used
+
+```bash
+$ update-locale LANG=de_DE.UTF-8
+```
 
 
+## Samba
 
+Install Samba Server using the `samba` package.
 
+```bash
+$ apt-get install samba
+```
 
+Be aware that Samba uses it's own password system. Hence users need to be added by root or sudoer. Note that the users have to exist in `/etc/passwd`.
 
+To add a user run the following command
 
-Generating locales
-Missing locales are generated with locale-gen:
+```bash
+$ smbpasswd -a <me>
+# follow the screen instructions
+Added user <me>.
+```
 
-locale-gen en_US.UTF-8
-Alternatively a locale file can be created manually with localedef:[1]
+Now you can add new shares to your samba config.
 
-localedef -i en_US -f UTF-8 en_US.UTF-8
-Setting Locale Settings
-The locale settings can be set (to en_US.UTF-8 in the example) as follows:
+```bash
+$ nano /etc/samba/smb.conf
+```
 
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-locale-gen en_US.UTF-8
-dpkg-reconfigure locales
-The dpkg-reconfigure locales command will open a dialog under Debian for selecting the desired locale. This dialog will not appear under Ubuntu. The Configure Locales in Ubuntu article shows how to find the information regarding Ubuntu.
+First change the global settings. It is under the section `[global]`.
+
+```ini
+[global]
+workgroup = your workgroup
+server string = file server
+
+security = user
+map to guest = bad user
+create mask = 0775
+force create mode = 0775
+directory mask = 0775
+force directory mode = 0775
+force group = sambashare
+```
+
+It means that the security is based on user level. Furthermore the file system permission will always be `0775`.
+
+Shares are addes as sections. For example add the following line to the end. This adds a new share called `scans` and can be accessed anonymously in read and write mode.
+
+```ini
+[scans]
+comment = documents from scanner
+path = /storage/scans/
+guest ok = yes
+guest account = test
+available = yes
+browseable = yes
+public = yes
+writable = yes
+```
+
+The following example addes the share `secret` which is only accessible by the `test`.
+
+```ini
+[secret]
+comment = data disk
+path = /storage/data/
+public = no
+writable = yes
+guest ok = no
+valid users = test
+write list = test
+```
+
+Restart samba using the following two commands.
+
+```bash
+$ systemctl restart smbd.service
+$ systemctl restart nmbd.service
+```
+
+## Disc Mount
+
+To see which disks are attached to the system you can use the "queries" inside the `/dev/disk/` folder.
+
+The following "query" listens all attached disks by its UUID.
+
+```bash
+$ ls -al /dev/disk/by-uuid/
+total 0
+drwxr-xr-x 2 root root 100 Sep 23 15:07 .
+drwxr-xr-x 5 root root 100 Jan  1  1970 ..
+lrwxrwxrwx 1 root root  15 Sep 23 14:50 97dbd6a3-cb6e-4dd8-a999-76e955b73f0e -> ../../mmcblk0p1
+lrwxrwxrwx 1 root root  10 Sep 23 15:07 dc067546-9c42-4f5a-a593-953e5e50897d -> ../../sda1
+lrwxrwxrwx 1 root root  10 Sep 23 15:07 e786913c-ee77-4e04-a0d6-1b70b2b4ff69 -> ../../sdb1
+```
+
+Now that you know the UUIDs of your discs are, you can change the file system table.
+
+```bash
+$ nano /etc/fstab
+```
+
+You can add the following lines for `sda1` and `sdb1`.
+
+```ini
+# <file system>                             <dir>              <type>  <options>                       <dump>  <pass>
+UUID=dc067546-9c42-4f5a-a593-953e5e50897d   /storage/data/     ext4    nofail,rw,relatime,data=ordered 0       0
+UUID=e786913c-ee77-4e04-a0d6-1b70b2b4ff69   /storage/backup/   ext4    nofail,rw,relatime,data=ordered 0       0
+```

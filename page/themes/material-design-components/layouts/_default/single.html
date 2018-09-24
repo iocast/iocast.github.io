@@ -2,7 +2,7 @@
 
 <article class="post">
 
-  {{ partial "toc.html" . }}
+  {{ partial "toc" . }}
 
   <header>
     <h1 class="mdc-typography--headline4">{{ .Title }}</h1>
@@ -17,9 +17,12 @@
     {{ end }}
   </header>
 
-
   <section class="post-content">
-    {{ .Content }}
+    {{ $content := replace .Content "<table" "<div class=\"mdc-data-table\"><table class=\"mdc-data-table__content\"" }}
+    {{ $content = replace $content "</table>" "</table></div>" }}
+
+    {{ $content | safeHTML }}
+
   </section>
 
   {{ partial "comments.html" .}}
