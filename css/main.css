@@ -1,0 +1,17 @@
+pre {
+  overflow: auto;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 1272px) {
+  .sticky--container > .right.rail {
+    padding-left: 1.5em;
+    width: 260px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .sticky--container > .right.rail {
+    display: none;
+  }
+}

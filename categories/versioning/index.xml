@@ -6,9 +6,11 @@
     <description>Recent content in Versioning on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>All rights reserved © 2017</copyright>
+    <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Thu, 17 Apr 2014 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://iocast.github.io/categories/versioning/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://iocast.github.io/categories/versioning/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>GitHub Pages for a repository compiling using Travis CI</title>
@@ -16,52 +18,10 @@
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/versioning/github-travis-addition/</guid>
-      <description><p>First of all check if you have already a <strong>personal access token</strong>.</p>
-
-<p><img src="github_personal_access_tokens.png" alt="GitHub personal access tokens" title="GitHub personal access tokens" /></p>
-
-<p>If not, you can follow these <a href="{% post_url 2013-10-08-github-jekyll-travis %}">instructions</a></p>
-
-<p>On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.</p>
-
-<p><img src="travis_grant_repository_access.png" alt="Travis grant access to GitHub repository" title="Travis grant access to GitHub repository" /></p>
-
-<p>The next thing is to generate a new secure string for your <code>.travis.yml</code> file. First we need to get the GitHub personal access token, which you generated beforehand. Run the following command to get a list of all your access tokens.</p>
-
-<pre><code class="language-bash">curl -X GET -u &lt;your_github_username&gt; https://api.github.com/authorizations
-</code></pre>
-
-<p>You should get a JSON response which looks like this</p>
-
-<pre><code class="language-json">...
-{
-	&quot;id&quot;: 1234567,
-	&quot;url&quot;: &quot;https://api.github.com/authorizations/1234567&quot;,
-	&quot;app&quot;: {
-		&quot;name&quot;: &quot;travis: token for pushing from travis (API)&quot;,
-		&quot;url&quot;: &quot;http://developer.github.com/v3/oauth_authorizations/&quot;,
-		&quot;client_id&quot;: &quot;00000000000000000000&quot;
-		},
-	&quot;token&quot;: &quot;1abc234d56efghi789&quot;,
-	&quot;note&quot;: &quot;travis: token for pushing from travis&quot;,
-	&quot;note_url&quot;: null,
-	&quot;created_at&quot;: &quot;2014-01-01T12:00:00Z&quot;,
-	&quot;updated_at&quot;: &quot;2014-01-01T12:00:00Z&quot;,
-	&quot;scopes&quot;: [
-		&quot;public_repo&quot;
-	]
-},
-...
-</code></pre>
-
-<p>So we are ready to generate the secure string for Travis. Be sure that you have installed <code>travis</code> rubygem using the following command <code>gem install travis</code>. Open a terminal and go to the folder where <code>.travis.yml</code> lays and add the secure string to it</p>
-
-<pre><code class="language-bash">cd /path/to/the/.travsi.yml/file
-travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global
-</code></pre>
-
-<p>That&rsquo;s all the magic. You are done and can push your changes to the GitHub repository which automatically deploys it on Travis CI.</p>
-</description>
+      <description>First of all check if you have already a personal access token.
+If not, you can follow these instructions
+On Travis we need to grant access to the GitHub repository. Login to Travis and in your account settings under repositories you can enable a project.
+The next thing is to generate a new secure string for your .travis.yml file. First we need to get the GitHub personal access token, which you generated beforehand.</description>
     </item>
     
   </channel>

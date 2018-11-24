@@ -1,191 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US">
-
 <head>
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="description" content="blog, cheatsheets, best practices, and more">
-     <meta name="author" content="Iocast">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="blog, cheatsheets, best practices, and more">
+  <meta name="author" content="Iocast">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>SAP Transactions -- think twice code once!</title>
-
-    
-
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+  <title>SAP Transactions -- think twice code once!</title>
 
 
-    
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  
 
 
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-
-    
-    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
-
-    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
-
-    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+  
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iosemantic/semantic.min.css">
 
 
-    
-    
-    
+  <style type="text/css">
+    .hidden.menu {
+      display: none;
+    }
+    .masthead.segment {
+      min-height: 700px;
+      padding: 1em 0em;
+    }
+    .masthead .logo.item img {
+      margin-right: 1em;
+    }
+    .masthead .ui.menu .ui.button {
+      margin-left: 0.5em;
+    }
+    .masthead h1.ui.header {
+      margin-top: 3em;
+      margin-bottom: 0em;
+      font-size: 4em;
+      font-weight: normal;
+    }
+    .masthead h2 {
+      font-size: 1.7em;
+      font-weight: normal;
+    }
+    .ui.vertical.stripe {
+      padding: 8em 0em;
+    }
+    .ui.vertical.stripe h3 {
+      font-size: 2em;
+    }
+    .ui.vertical.stripe .button + h3,
+    .ui.vertical.stripe p + h3 {
+      margin-top: 3em;
+    }
+    .ui.vertical.stripe .floated.image {
+      clear: both;
+    }
+    .ui.vertical.stripe p {
+      font-size: 1.33em;
+    }
+    .ui.vertical.stripe .horizontal.divider {
+      margin: 3em 0em;
+    }
+    .quote.stripe.segment {
+      padding: 0em;
+    }
+    .quote.stripe.segment .grid .column {
+      padding-top: 5em;
+      padding-bottom: 5em;
+    }
+    .footer.segment {
+      padding: 5em 0em;
+    }
+    .secondary.pointing.menu .toc.item {
+      display: none;
+    }
+    @media only screen and (max-width: 700px) {
+      .ui.fixed.menu {
+        display: none !important;
+      }
+      .secondary.pointing.menu .item,
+      .secondary.pointing.menu .menu {
+        display: none;
+      }
+      .secondary.pointing.menu .toc.item {
+        display: block;
+      }
+      .masthead.segment {
+        min-height: 350px;
+      }
+      .masthead h1.ui.header {
+        font-size: 2em;
+        margin-top: 1.5em;
+      }
+      .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+      }
+    }
+  </style>
+
+
+  <script src="http://iocast.github.iojquery-3.3.1.min.js"></script>
+  <script src="http://iocast.github.iosemantic/semantic.min.js"></script>
+  <script src="http://iocast.github.iomasonry.pkgd.min.js"></script>
+
+
+  <script>
+    $(document)
+      .ready(function () {
+        
+        $('.masthead')
+          .visibility({
+            once: false,
+            onBottomPassed: function () {
+              $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function () {
+              $('.fixed.menu').transition('fade out');
+            }
+          })
+          ;
+        
+        $('.ui.sidebar')
+          .sidebar('attach events', '.toc.item')
+          ;
+      });
+  </script>
+
+
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iocss/syntax.css">
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iocss/main.css">
 
 </head>
-
 <body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <header class="header mdl-layout__header mdl-layout__header--waterfall">
-      <div class="mdl-layout__header-row">
-        <a href="http://iocast.github.io/">
-          <span class="title mdl-layout-title">
-            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-          </span>
-        </a>
-        
-        <div class="mdl-layout-spacer"></div>
-        
-        
-        <div class="navigation-container">
-          <nav class="navigation mdl-navigation">
+  
+  <div class="ui large top fixed hidden menu">
+    <div class="ui container">
+      
+      <a class=" item" href="http://iocast.github.io/">Home</a>
+      
+      <a class=" item" href="http://iocast.github.io/post/">Archives</a>
+      
+      <a class="active item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
+      
+      
+    </div>
+  </div>
 
-            
-              <li>
-                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
-              </li>
-            
-              <li>
-                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
-              </li>
-            
+  
+  <div class="ui vertical inverted sidebar menu">
+    
+    <a class=" item" href="http://iocast.github.io/">Home</a>
+    
+    <a class=" item" href="http://iocast.github.io/post/">Archives</a>
+    
+    <a class="active item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
+    
+    
+  </div>
 
-          </nav>
+  
+  <div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+
+      <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+          <a class="toc item">
+            <i class="sidebar icon"></i>
+          </a>
+          
+          <a class=" item" href="http://iocast.github.io/">Home</a>
+          
+          <a class=" item" href="http://iocast.github.io/post/">Archives</a>
+          
+          <a class="active item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
+          
+          
         </div>
-        <a class="mobile-title" href="http://iocast.github.io/">
-          <span class="mdl-layout-title">
-            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-          </span>
-        </a>
-        
       </div>
-    </header>
 
-    <nav class="drawer mdl-layout__drawer">
-  <span class="mdl-layout-title">
-    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-  </span>
-  <nav class="mdl-navigation">
+      <div class="ui text container">
+        <h1 class="ui inverted header">
+          SAP TRANSACTIONS
+        </h1>
+        <h2>SAP transactions</h2>
+      </div>
 
-    
-    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
-    
-    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
-    
-    
-  </nav>
-</nav>
+    </div>
 
 
-    <main class="mdl-layout__content">
-      <a name="top"></a>
+    <div class="ui vertical stripe segment">
+      <div class="ui middle aligned stackable grid container">
+        <div class="row">
+          <div class="sixteen  wide column">
+            
 
+<div class="main ui container sticky--container" style="position: relative; margin-right: 387px !important; width: auto !important; max-width: 960px !important;">
 
-<article class="article">
-
-  
-
-<style>
-  .toc-container {
-    position: fixed;
-    top: 80px;
-    left: calc( 100% - 70px );
-    z-index: 500;
-  }
-
-  .toc {
-    overflow-y: auto;
-    max-height: calc(100vh - 150px);
-  }
-
-  .toc > ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  .toc > ul > li > ul {
-    margin: 0;
-    padding: 0;
-  }
-</style>
-
-<div class="toc-container" style="">
-
-
-<button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-toc">
-  <i class="material-icons">format_list_numbered</i>
-</button>
-
-
-
-
-  
-
-  
-
-  <nav class="toc mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-toc" id="TableOfContents">
+  <div class="ui dividing right rail" style="margin-left: 3em; padding-top: 2em; width: 319px;">
+    <div class="ui sticky">
+      <h4 class="ui header">SAP Transactions</h4>
+<nav id="TableOfContents">
 <ul>
 <li>
 <ul>
-<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#development">Development</a></li>
-<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#table-management">Table Management</a></li>
-<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#services-gateway-odata">Services (Gateway / OData)</a>
+<li><a href="#development">Development</a></li>
+<li><a href="#table-management">Table Management</a></li>
+<li><a href="#services-gateway-odata">Services (Gateway / OData)</a>
 <ul>
-<li><a class="mdl-menu__item mdl-js-ripple-effect" href="#caches">Caches</a></li>
+<li><a href="#caches">Caches</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </nav>
 
+    </div>
+  </div>
 
+  <div>
+    
 
-</div>
+<h2 class="ui header" id="development">Development</h2>
 
-
-
-
-  <header class="mdl-typography--text-center">
-      <div class="title">SAP Transactions</div>
-      <div class="description">SAP transactions</div>
-      
-
-      <a href="#content">
-          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
-              <i class="material-icons">expand_more</i>
-              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
-          </button>
-      </a>
-
-  </header>
-
-  <section class="content">
-      <a name="content"></a>
-      
-
-<h2 id="development">Development</h2>
-
-<table>
+</table><table class="ui celled table">
 <thead>
 <tr>
 <th>Trx Code</th>
@@ -216,9 +253,9 @@
 </tbody>
 </table>
 
-<h2 id="table-management">Table Management</h2>
+<h2 class="ui header" id="table-management">Table Management</h2>
 
-<table>
+</table><table class="ui celled table">
 <thead>
 <tr>
 <th>Trx Code</th>
@@ -239,9 +276,9 @@
 </tbody>
 </table>
 
-<h2 id="services-gateway-odata">Services (Gateway / OData)</h2>
+<h2 class="ui header" id="services-gateway-odata">Services (Gateway / OData)</h2>
 
-<table>
+</table><table class="ui celled table">
 <thead>
 <tr>
 <th>Trx Code</th>
@@ -282,47 +319,29 @@
 </tbody>
 </table>
 
-<h3 id="caches">Caches</h3>
+<h3 class="ui header" id="caches">Caches</h3>
 
 <p>Open Transaction <code>SE38</code> and the programming <code>/UI2/INVALIDATE_CLIENT_CACHES</code> for clearing the client caches or <code>/UI2/INVALIDATE_GLOBAL_CACHES</code> for the global UI2 caches.</p>
 
-  </section>
+  </div>
 
-  
+</div>
+
+<script>
+  $('.ui.sticky').sticky({
+    context: '.sticky--container',
+    offset: 56
+  });
+</script>
 
 
-</article>
-
-        <footer class="mdl-mega-footer footer">
-            <div class="mdl-mega-footer--top-section">
-                <div class="mdl-mega-footer--left-section">
-                  
-                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
-                  
-                </div>
-                <div class="mdl-mega-footer--right-section">
-                    <a class="mdl-typography--font-light" href="#top">
-                        Back to Top
-                        <i class="material-icons">expand_less</i>
-                    </a>
-                </div>
-            </div>
-
-        </footer>
-      </main>
+          </div>
+        </div>
+      </div>
     </div>
 
-    
-    <script src="http://iocast.github.io/js/material.min.js"></script>
-
-    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    
-    <script src="http://iocast.github.io/js/site.js"></script>
+  </div>
 
   </body>
 
 </html>
-

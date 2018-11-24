@@ -6,9 +6,11 @@
     <description>Recent content in Miscellaneous on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>All rights reserved © 2017</copyright>
+    <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Tue, 08 Oct 2013 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://iocast.github.io/categories/miscellaneous/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://iocast.github.io/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Creating your own blog using github pages, jekyll and travis</title>
@@ -16,132 +18,8 @@
       <pubDate>Tue, 08 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/miscellaneous/github-jekyll-travis/</guid>
-      <description>
-
-<p>Github offers at the time of writing three different types of pages: for <a href="https://help.github.com/articles/user-organization-and-project-pages" title="Github Pages (Help)">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p>
-
-<p>Hence this post is going to discuss the a simple workflow using <a href="http://github.com/" title="Github">Github&rsquo;s</a> user pages, <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> as blog and pseudo dynamic page, <a href="http://travis-ci.org" title="Travis CI">travis</a> as our continuous integration solution for deployment purposes.</p>
-
-<h2 id="github">Github</h2>
-
-<p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href="http://jekyllrb.com" title="Jekyll">jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p>
-
-<pre><code class="language-bash"># Creates our branch, without any parents (it's an orphan!)
-git checkout --orphan develop
-# Remove all files from the old working tree
-git rm -rf .
-
-echo &quot;My GitHub Page&quot; &gt; index.html
-git add index.html
-git commit -a -m &quot;First pages commit&quot;
-git push origin develop
-</code></pre>
-
-<p>Now we are ready to add our <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to this <code>develop</code> branch.</p>
-
-<h2 id="jekyll">Jekyll</h2>
-
-<p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href="http://jekyllrb.com/docs/home/" title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p>
-
-<p>In addition we need to setup a <code>_config.yml</code> file to tell <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> the compilation options. A example could look like the following:</p>
-
-<pre><code>destination: ./_site
-lsi:         true
-pygments:    true
-markdown:    rdiscount
-permalink:   date
-rdiscount:
-  extensions: [smart]
-
-exclude: ['Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', 'update-gh-pages.sh']
-</code></pre>
-
-<h2 id="travis-ci">Travis CI</h2>
-
-<p><a href="http://travis-ci.org" title="Travis CI">Travis</a> is used to automatically deploy the <code>develop</code> branch and push the result of the <code>jekyll build</code> output to the <code>master</code> branch which the would be published to the Github pages.</p>
-
-<p>For that we need first to get <a href="http://travis-ci.org" title="Travis CI">travis</a> access to our Github repository. If you do not have a <a href="http://travis-ci.org" title="Travis CI">travis</a> account register one on the homepage. On The <a href="http://travis-ci.org" title="Travis CI">travis</a> homepage go to the account settings and get access to the appropriate repository like in the image below:</p>
-
-<p><img src="travis_repository_access.png" alt="Travis Repository Access" title="Travis Repository Access" /></p>
-
-<p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p>
-
-<pre><code>language: ruby
-rvm: 1.9.3
-
-branches:
-  except:
-  - master
-
-branches:
-  only:
-  - develop
-
-script: rake travis
-</code></pre>
-
-<p>As you can see in the <code>.travis.yml</code> file the <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p>
-
-<p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p>
-
-<pre><code class="language-ruby">source 'http://rubygems.org'
-
-gem 'jekyll'
-gem 'rdiscount'
-gem 'redcarpet'
-</code></pre>
-
-<p>For <a href="http://travis-ci.org" title="Travis CI">travis</a> deployment add the following task to the <code>Rakefile</code>:</p>
-
-<pre><code class="language-ruby">	#!/usr/bin/env rake
-
-	task :travis do
-	  system(&quot;jekyll build&quot;)
-	end
-</code></pre>
-
-<p>Lastly we need to create a <code>bash</code> script to push the compiled <a href="http://jekyllrb.com" title="Jekyll">jekyll</a> page to the <code>master</code> branch. For that authorize <a href="http://travis-ci.org" title="Travis CI">travis</a> to do commits and pushed as follow:</p>
-
-<pre><code class="language-bash">	curl -X POST -u &lt;your_github_username&gt; -H &quot;Content-Type: application/json&quot; -d &quot;{\&quot;scopes\&quot;:[\&quot;public_repo\&quot;],\&quot;note\&quot;:\&quot;token for pushing from travis\&quot;}&quot; https://api.github.com/authorizations
-</code></pre>
-
-<p>and copy the <code>token</code> key from the json result.</p>
-
-<p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p>
-
-<pre><code class="language-bash">gem install travis
-travis encrypt -r &lt;user&gt;/&lt;repository&gt; GH_TOKEN=&lt;token&gt; --add env.global
-</code></pre>
-
-<p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p>
-
-<pre><code class="language-bash">if [ &quot;$TRAVIS_PULL_REQUEST&quot; == &quot;false&quot; ]; then
-  echo -e &quot;Starting to update master\n&quot;
-
-  cp -R _site $HOME/_site
-
-  cd $HOME
-  git config --global user.email &quot;iocast@me.com&quot;
-  git config --global user.name &quot;iocast&quot;
-  git clone --quiet --branch=master https://${GH_TOKEN}@github.com/iocast/iocast.github.io.git master &gt; /dev/null
-
-  cd master
-  rm -rf ./*
-  cp -Rf $HOME/_site/* .
-
-  git add -f .
-  git commit -m &quot;Travis build $TRAVIS_BUILD_NUMBER pushed to master&quot;
-  git push -fq origin master &gt; /dev/null
-
-  echo -e &quot;Done magic with coverage\n&quot;
-fi
-</code></pre>
-
-<p>and add the following lines to the end of the <code>.travis.yml</code> file:</p>
-
-<pre><code>after_success: ./update-gh-pages.sh
-</code></pre>
-</description>
+      <description>Github offers at the time of writing three different types of pages: for users, organizations and projects. For the users and organizations the master branch is going to be used to deploy as static web page. For projects, means in a repository which is not called username.github.io, a subpath of the user pages would be created username.github.io/projectname.
+Hence this post is going to discuss the a simple workflow using Github&amp;rsquo;s user pages, jekyll as blog and pseudo dynamic page, travis as our continuous integration solution for deployment purposes.</description>
     </item>
     
     <item>
@@ -150,85 +28,8 @@ fi
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
-      <description>
-
-<p>Source code: <a href="resources/code/shell/tunneling.sh">shell script</a></p>
-
-<p>Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22. Last but not least, every time a server restarts we want that the tunnels automatically opens, means that we need to have an <code>cron</code> job that checks, whether an open connection exists from the server to the intermediary or not, and if the server opens a connection to the intermediary the system does not need to prompt for password. Solution is here to register the public key of the server on the intermediary.</p>
-
-<h2 id="client">Client</h2>
-
-<h3 id="opening-a-tunnel-from-client-to-intermediary">Opening a tunnel from client to intermediary</h3>
-
-<pre><code class="language-bash">ssh -L 22000:127.0.0.1:22000 -N root@152.96.56.32
-</code></pre>
-
-<h3 id="connecting-to-server">Connecting to server</h3>
-
-<pre><code class="language-bash">ssh -P 22000 michel@127.0.0.1
-</code></pre>
-
-<h3 id="copy-files-scp">Copy files (SCP)</h3>
-
-<pre><code class="language-bash">#get
-scp -P 22000 michel@127.0.0.1:/home/michel/tunelling.sh /Users/michel/Public/Drop\ Box/
-
-#put
-scp /Users/michel/Public/Drop\ Box/tunelling.sh -P 22000 michel@127.0.0.1:/home/michel/
-</code></pre>
-
-<h2 id="intermediary">Intermediary</h2>
-
-<h3 id="register-gpg-key-from-server">Register GPG key from server</h3>
-
-<pre><code class="language-bash">apt-key add &lt;file&gt;
-</code></pre>
-
-<h2 id="server">Server</h2>
-
-<h3 id="export-gpg-key">Export GPG key</h3>
-
-<pre><code class="language-bash">apt-key export &lt;key&gt; &gt; &lt;file&gt;
-</code></pre>
-
-<h3 id="open-a-connection-to-intermediary-from-server">Open a connection to intermediary from server</h3>
-
-<p>Save the following script as e.g. tunneling.sh</p>
-
-<pre><code class="language-bash">#!/bin/sh
-
-cmd=&quot;ssh -R 22000:127.0.0.1:22 -N root@152.96.56.32&quot;
-
-match=$(ps -aef | grep &quot;${cmd}&quot; | grep -v grep)
-if [ -z &quot;${match}&quot; ] ; then
-$cmd &amp;
-fi
-</code></pre>
-
-<h3 id="register-cron-job">Register cron job</h3>
-
-<p>Edit crontab</p>
-
-<pre><code class="language-bash">crontab -e
-</code></pre>
-
-<p>Adding a new job to the crontab. The following entry executes the defined script <code>tunneling.sh</code> every 5 minutes.</p>
-
-<pre><code class="language-bash">5 * * * * /&lt;path&gt;/tunnelilng.sh
-</code></pre>
-
-<p>Crontab is structured as follow:</p>
-
-<pre><code class="language-bash">* * * * * command to be executed
-- - - - -
-| | | | |
-| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
-| | | ------- Month (1 - 12)
-| | --------- Day of month (1 - 31)
-| ----------- Hour (0 - 23)
-------------- Minute (0 - 59)
-</code></pre>
-</description>
+      <description>Source code: shell script
+Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22.</description>
     </item>
     
   </channel>

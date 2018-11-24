@@ -6,9 +6,11 @@
     <description>Recent content in Qgis on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>All rights reserved © 2017</copyright>
+    <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Sat, 12 Oct 2013 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://iocast.github.io/tags/qgis/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://iocast.github.io/tags/qgis/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Setting up a QGIS server and PostGIS on CentOS 6</title>
@@ -16,174 +18,10 @@
       <pubDate>Sat, 12 Oct 2013 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/post/gis/qgis-server-centos/</guid>
-      <description>
-
-<p>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer <code>postgresql-libs</code> you need first to install the desired version of PostgreSQL and PostGIS as described bellow.</p>
-
-<h2 id="postgresql-and-postgis">PostgreSQL and PostGIS</h2>
-
-<p>The following instructions are adapted from  <a href="http://wiki.postgresql.org/wiki/YUM_Installation#Configure_your_YUM_repository">YUM installation - PostgreSQL wiki</a> and <a href="http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS20CentOS6pgdg">UsersWikiuPostGIS20CentOS6pgdg - PostGIS</a>.</p>
-
-<h3 id="configuration">Configuration</h3>
-
-<p>Configure yum repository</p>
-
-<pre><code class="language-bash">	vi /etc/yum.repos.d/CentOS-Base.repo
-</code></pre>
-
-<p>and add the following excludes to <code>base</code> and <code>updates</code> sections:</p>
-
-<pre><code class="language-yaml">exclude=postgresql*
-</code></pre>
-
-<h3 id="install-pgdg-rpm-file">Install PGDG RPM file</h3>
-
-<p>A PGDG file is available for each distribution/architecture/database version combination at <a href="http://yum.postgresql.org">http://yum.postgresql.org</a></p>
-
-<pre><code class="language-bash">	wget http://yum.postgresql.org/&lt;version&gt;/&lt;distribution&gt;/&lt;architecture&gt;/pgdg-&lt;database&gt;.noarch.rpm
-</code></pre>
-
-<p>where version is <code>9.3</code>, distribution is <code>redhat</code>, architecture is <code>rhel-6-x86_64</code> and database is <code>centos93-9.3-1</code>.</p>
-
-<p>Install RPM distribution:</p>
-
-<pre><code class="language-bash">	rpm -ivh pgdg-centos93-9.3-1.noarch.rpm
-</code></pre>
-
-<h3 id="installation-of-postgresql-and-postgis">Installation of PostgreSQL and PostGIS</h3>
-
-<p>List the available packages:</p>
-
-<pre><code>:::bash
-yum list postgres*
-</code></pre>
-
-<p>Installation:</p>
-
-<pre><code>:::bash
-yum install postgresql93-libs.x86_64 postgresql93-server.x86_64 postgresql93-devel.x86_64 postgis2_93
-</code></pre>
-
-<h3 id="configuration-1">Configuration</h3>
-
-<p>Now perform a few post-installation setup commands, in the order: (1) Initialize the database cluster (required), (2) start database (recommended, if you want to use it straight away), (3) allow it to start-up automatically on reboot (recommended):</p>
-
-<pre><code>:::bash
-service postgresql-9.3 initdb
-service postgresql-9.3 start
-chkconfig postgresql-9.3 on
-</code></pre>
-
-<p>Some important files</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">File / Application</th>
-<th align="left">Purpose</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="left">/var/lib/pgsql/9.3/data/postgresql.conf</td>
-<td align="left">changing host etc.</td>
-</tr>
-
-<tr>
-<td align="left">/var/lib/pgsql/9.3/data/pg_hba.conf</td>
-<td align="left">client authentication configuration</td>
-</tr>
-</tbody>
-</table>
-
-<p>In the <code>pg_hba.conf</code> file comment out the <code>ident</code> lines except for unix domain socket and add two new lines for <code>md5 encryption</code></p>
-
-<pre><code>:::yaml
-# IPv4 local connections:
-#host    all             all             127.0.0.1/32            ident
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-#host    all             all             ::1/128                 ident
-host    all             all             ::1/128                 md5
-</code></pre>
-
-<h3 id="database-and-user">Database and User</h3>
-
-<p>Before we can start, we need to create a new database and user.</p>
-
-<p>Login as <code>postgres</code> superuser and create a new database</p>
-
-<pre><code>:::bash
-su -l postgres
-createdb gis
-</code></pre>
-
-<p>Login into the database create a user and set a encrypted password</p>
-
-<pre><code>:::bash
-psql gis
-CREATE USER gis WITH SUPERUSER LOGIN PASSWORD 'gis';
-ALTER USER gis WITH ENCRYPTED PASSWORD 'gis';
-</code></pre>
-
-<p>Now test your configuration and install PostGIS extension</p>
-
-<pre><code class="language-bash">psql -h localhost -d gis -U gis -W
-CREATE EXTENSION postgis;
-</code></pre>
-
-<h2 id="installation-qgis">Installation QGIS</h2>
-
-<p>First you need a running CentOS on a machine. In the default CentOS software repository <code>qgis-server</code> is not available. So you need first to add extra packages for enterprise linux (EPEL) repository as follow:</p>
-
-<pre><code class="language-bash">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-&lt;version&gt;.noarch.rpm
-rpm -Uvh epel-release-&lt;version&gt;.noarch.rpm
-</code></pre>
-
-<p>where the version I have tested it was <code>6-8</code>.</p>
-
-<p>Add the ELGIS repositories</p>
-
-<pre><code class="language-bash">wget http://elgis.argeo.org/repos/6/elgis-release-&lt;version&gt;.noarch.rpm
-rpm -Uvh elgis-release-6-6_0.noarch.rpm
-</code></pre>
-
-<p>where the version I have tested it was <code>6-6_0</code>.</p>
-
-<p>Now install QGIS server:</p>
-
-<pre><code class="language-bash">yum install qgis-mapserver.x86_64
-</code></pre>
-
-<p>If you want to have QGIS libraries, QGIS Desktop run the following command</p>
-
-<pre><code class="language-bash">yum install qgis*
-</code></pre>
-
-<p>The scripts and configs are installed on CentOS:</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">Script / Config</th>
-<th align="left">Purpose</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="left">/usr/libexec/qgis/qgis_mapserv.fcgi</td>
-<td align="left">main fast cgi script (OGC capabilities)</td>
-</tr>
-
-<tr>
-<td align="left">/etc/httpd/conf.d/qgis-mapserver.conf</td>
-<td align="left">qgis mapserver httpd configuration file</td>
-</tr>
-</tbody>
-</table>
-</description>
+      <description>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer postgresql-libs you need first to install the desired version of PostgreSQL and PostGIS as described bellow.
+PostgreSQL and PostGIS The following instructions are adapted from YUM installation - PostgreSQL wiki and UsersWikiuPostGIS20CentOS6pgdg - PostGIS.
+Configuration Configure yum repository
+vi /etc/yum.repos.d/CentOS-Base.repo and add the following excludes to base and updates sections:</description>
     </item>
     
   </channel>

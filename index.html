@@ -1,372 +1,421 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US">
-
 <head>
-	<meta name="generator" content="Hugo 0.33-DEV" />
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="description" content="blog, cheatsheets, best practices, and more">
-     <meta name="author" content="Iocast">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<meta name="generator" content="Hugo 0.52-DEV" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="blog, cheatsheets, best practices, and more">
+  <meta name="author" content="Iocast">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>think twice code once! -- think twice code once!</title>
-
-    
-    <link href="http://iocast.github.io/index.xml" rel="alternate" type="application/rss+xml" title="think twice code once!" />
-    <link href="http://iocast.github.io/index.xml" rel="feed" type="application/rss+xml" title="think twice code once!" />
-    
-
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://iocast.github.io/css/material.min.css">
+  <title>think twice code once! -- think twice code once!</title>
 
 
-    
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  
+  <link href="http://iocast.github.io/index.xml" rel="alternate" type="application/rss+xml" title="think twice code once!" />
+  <link href="http://iocast.github.io/index.xml" rel="feed" type="application/rss+xml" title="think twice code once!" />
+  
 
 
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-
-    
-    <link rel="stylesheet" href="http://iocast.github.io/css/general.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/header.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/page.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/contact.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/article.css">
-
-    <link rel="stylesheet" href="http://iocast.github.io/css/post.css">
-    <link rel="stylesheet" href="http://iocast.github.io/css/cheatsheet.css">
-
-    <link rel="stylesheet" href="http://iocast.github.io/css/mobile.css">
+  
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iosemantic/semantic.min.css">
 
 
-    
-    
-    
+  <style type="text/css">
+    .hidden.menu {
+      display: none;
+    }
+    .masthead.segment {
+      min-height: 700px;
+      padding: 1em 0em;
+    }
+    .masthead .logo.item img {
+      margin-right: 1em;
+    }
+    .masthead .ui.menu .ui.button {
+      margin-left: 0.5em;
+    }
+    .masthead h1.ui.header {
+      margin-top: 3em;
+      margin-bottom: 0em;
+      font-size: 4em;
+      font-weight: normal;
+    }
+    .masthead h2 {
+      font-size: 1.7em;
+      font-weight: normal;
+    }
+    .ui.vertical.stripe {
+      padding: 8em 0em;
+    }
+    .ui.vertical.stripe h3 {
+      font-size: 2em;
+    }
+    .ui.vertical.stripe .button + h3,
+    .ui.vertical.stripe p + h3 {
+      margin-top: 3em;
+    }
+    .ui.vertical.stripe .floated.image {
+      clear: both;
+    }
+    .ui.vertical.stripe p {
+      font-size: 1.33em;
+    }
+    .ui.vertical.stripe .horizontal.divider {
+      margin: 3em 0em;
+    }
+    .quote.stripe.segment {
+      padding: 0em;
+    }
+    .quote.stripe.segment .grid .column {
+      padding-top: 5em;
+      padding-bottom: 5em;
+    }
+    .footer.segment {
+      padding: 5em 0em;
+    }
+    .secondary.pointing.menu .toc.item {
+      display: none;
+    }
+    @media only screen and (max-width: 700px) {
+      .ui.fixed.menu {
+        display: none !important;
+      }
+      .secondary.pointing.menu .item,
+      .secondary.pointing.menu .menu {
+        display: none;
+      }
+      .secondary.pointing.menu .toc.item {
+        display: block;
+      }
+      .masthead.segment {
+        min-height: 350px;
+      }
+      .masthead h1.ui.header {
+        font-size: 2em;
+        margin-top: 1.5em;
+      }
+      .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+      }
+    }
+  </style>
+
+
+  <script src="http://iocast.github.iojquery-3.3.1.min.js"></script>
+  <script src="http://iocast.github.iosemantic/semantic.min.js"></script>
+  <script src="http://iocast.github.iomasonry.pkgd.min.js"></script>
+
+
+  <script>
+    $(document)
+      .ready(function () {
+        
+        $('.masthead')
+          .visibility({
+            once: false,
+            onBottomPassed: function () {
+              $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function () {
+              $('.fixed.menu').transition('fade out');
+            }
+          })
+          ;
+        
+        $('.ui.sidebar')
+          .sidebar('attach events', '.toc.item')
+          ;
+      });
+  </script>
+
+
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iocss/syntax.css">
+  <link rel="stylesheet" type="text/css" href="http://iocast.github.iocss/main.css">
 
 </head>
-
 <body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <header class="header mdl-layout__header mdl-layout__header--waterfall">
-      <div class="mdl-layout__header-row">
-        <a href="http://iocast.github.io/">
-          <span class="title mdl-layout-title">
-            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-          </span>
-        </a>
-        
-        <div class="mdl-layout-spacer"></div>
-        
-        
-        <div class="navigation-container">
-          <nav class="navigation mdl-navigation">
-
-            
-              <li>
-                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/post/">Archives</a>
-              </li>
-            
-              <li>
-                  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
-              </li>
-            
-
-          </nav>
-        </div>
-        <a class="mobile-title" href="http://iocast.github.io/">
-          <span class="mdl-layout-title">
-            <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-          </span>
-        </a>
-        
-      </div>
-    </header>
-
-    <nav class="drawer mdl-layout__drawer">
-  <span class="mdl-layout-title">
-    <img class="logo-image" src="http://iocast.github.io/img/logo-white.png">
-  </span>
-  <nav class="mdl-navigation">
-
-    
-    <a class="mdl-navigation__link" href="http://iocast.github.io/post/">Archives</a>
-    
-    <a class="mdl-navigation__link" href="http://iocast.github.io/cheatsheet/">Cheatsheet</a>
-    
-    
-  </nav>
-</nav>
-
-
-    <main class="mdl-layout__content">
-      <a name="top"></a>
-
-
-    
-    <div class="title-section mdl-typography--text-center">
-      <div class="slogan">THINK TWICE CODE ONCE!</div>
-      <div class="sub-slogan">Welcome to my collection of things I meet in my everyday life.</div>
+  
+  <div class="ui large top fixed hidden menu">
+    <div class="ui container">
       
-
-      <a href="#latest_posts">
-        <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-          <i class="material-icons">expand_more</i>
-        </button>
-      </a>
+      <a class="active item" href="http://iocast.github.io/">Home</a>
+      
+      <a class=" item" href="http://iocast.github.io/post/">Archives</a>
+      
+      <a class=" item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
+      
+      
     </div>
+  </div>
 
-
+  
+  <div class="ui vertical inverted sidebar menu">
     
-    <div class="latest-post-section">
-      <a name="latest_posts"></a>
-
-      <div class="latest-post-title mdl-typography--display-1-color-contrast">latest posts</div>
-
-      <div class="card-container mdl-grid">
-
-        
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
+    <a class="active item" href="http://iocast.github.io/">Home</a>
     
-    <div class="mdl-card__media">
-        <img class="article-image" src="http://iocast.github.io/post/server/cubox-fileserver-archlinux//cover.jpg">
-    </div>
+    <a class=" item" href="http://iocast.github.io/post/">Archives</a>
     
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">My personal file server on a Cubox from SolidRun using Arch Linux</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">Who does not dream from a fast electric saving home server. In this blog I&#39;m going to describe, how to setup a headless file server using Arch Linux on the Cubox from SolidRun.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/server/cubox-fileserver-archlinux/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
+    <a class=" item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
     
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Javascript localization part 1</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">Since the first edition of ECMAScript (ECMA-402) Javascript supports the output of language sensitive representation of a Date or Number object which is often overseen by many developers.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/web-application/javascript-internationalization-part1/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
     
+  </div>
 
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">GitHub Pages for a repository compiling using Travis CI</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">Here I describe how you could use Travis CI to generate e.g. a Sphinx documentation when you already have a GitHub token for Travsi CI and want to reuse it.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/versioning/github-travis-addition/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
+  
+  <div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
 
+      <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+          <a class="toc item">
+            <i class="sidebar icon"></i>
+          </a>
+          
+          <a class="active item" href="http://iocast.github.io/">Home</a>
+          
+          <a class=" item" href="http://iocast.github.io/post/">Archives</a>
+          
+          <a class=" item" href="http://iocast.github.io/cheatsheet/">Cheatsheets</a>
+          
+          
+        </div>
+      </div>
 
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Joining a Active Directory on Linux - the easiest way!</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">This post shortly outlines how you could join a Active Directory under linux.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/server-management/linux-join-ad/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">In this post I am going to describe how you could install PostgreSQL 9.3 and compile PostGIS 2.1 against libgdal1h on Ubuntu 12.04. It also describes how to install the latest R environment 3.0.2 and the PL/R extension for PostgreSQL.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Python 2.7.x and mod_wsgi on a CentOS 6</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">Read how to install Python 2.7.x on CentOS 6 and compile mod_wsgi against Python 2.7.x.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/web-application/centos-python-modwsgi/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Setting up a QGIS server and PostGIS on CentOS 6</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">This post describes how to setup a QGSI server and PostGIS on CentOS 6.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/gis/qgis-server-centos/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Mac OS X file server migration</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">How could you migrate a OS X file server from open directory to Microsoft&#39;s active directory using rsync and other bash commands.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/server-management/osx-file-server-migration/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-
-    
-
-    <div class="mdl-card__title">
-        <h4 class="mdl-card__title-text">Creating your own blog using github pages, jekyll and travis</h4>
-    </div>
-    <div class="mdl-card__supporting-text">
-        <span class="mdl-typography--font-light mdl-typography--subhead">Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</span>
-    </div>
-    <div class="mdl-card__actions">
-        <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="http://iocast.github.io/post/miscellaneous/github-jekyll-travis/">
-           read more
-           <i class="material-icons">chevron_right</i>
-        </a>
-    </div>
-
-
-
-</div>
-
-        
-
+      <div class="ui text container">
+        <h1 class="ui inverted header">
+          THINK TWICE CODE ONCE!
+        </h1>
+        <h2></h2>
       </div>
 
     </div>
 
-        <footer class="mdl-mega-footer footer">
-            <div class="mdl-mega-footer--top-section">
-                <div class="mdl-mega-footer--left-section">
-                  
-                    <button name="social-" data-url="https://github.com/iocast" class="mdl-mega-footer--social-btn"><i class="zmdi zmdi-github zmdi-hc-2x"></i></button>&nbsp;
-                  
-                </div>
-                <div class="mdl-mega-footer--right-section">
-                    <a class="mdl-typography--font-light" href="#top">
-                        Back to Top
-                        <i class="material-icons">expand_less</i>
-                    </a>
-                </div>
-            </div>
 
-        </footer>
-      </main>
+    <div class="ui vertical stripe segment">
+      <div class="ui middle aligned stackable grid container">
+        <div class="row">
+          <div class="sixteen  wide column">
+            
+
+
+<h1>Latest Posts</h1>
+
+<div class="ui cards" data-masonry='{ "itemSelector": ".card" }'>
+
+
+  
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/server/pine64/">
+    <div class="content">
+      
+      <img class="right floated mini ui image" src="http://iocast.github.io/post/server/pine64//cover.jpg">
+      
+      <div class="header">My new Server (Pine64) on armbian</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Short instruction to install armbian on the Pine64&#43;, configuring the hostname, WiFi, timezone, file system table and installing Samba.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
     </div>
 
-    
-    <script src="http://iocast.github.io/js/material.min.js"></script>
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/server/cubox-fileserver-archlinux/">
+    <div class="content">
+      
+      <img class="right floated mini ui image" src="http://iocast.github.io/post/server/cubox-fileserver-archlinux//cover.jpg">
+      
+      <div class="header">My personal file server on a Cubox from SolidRun using Arch Linux</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Who does not dream from a fast electric saving home server. In this blog I&#39;m going to describe, how to setup a headless file server using Arch Linux on the Cubox from SolidRun.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
 
-    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/web-application/javascript-internationalization-part1/">
+    <div class="content">
+      
+      <div class="header">Javascript localization part 1</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Since the first edition of ECMAScript (ECMA-402) Javascript supports the output of language sensitive representation of a Date or Number object which is often overseen by many developers.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
 
-    
-    <script src="http://iocast.github.io/js/site.js"></script>
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/versioning/github-travis-addition/">
+    <div class="content">
+      
+      <div class="header">GitHub Pages for a repository compiling using Travis CI</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Here I describe how you could use Travis CI to generate e.g. a Sphinx documentation when you already have a GitHub token for Travsi CI and want to reuse it.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/server-management/linux-join-ad/">
+    <div class="content">
+      
+      <div class="header">Joining a Active Directory on Linux - the easiest way!</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">This post shortly outlines how you could join a Active Directory under linux.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/">
+    <div class="content">
+      
+      <div class="header">Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">In this post I am going to describe how you could install PostgreSQL 9.3 and compile PostGIS 2.1 against libgdal1h on Ubuntu 12.04. It also describes how to install the latest R environment 3.0.2 and the PL/R extension for PostgreSQL.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/web-application/centos-python-modwsgi/">
+    <div class="content">
+      
+      <div class="header">Python 2.7.x and mod_wsgi on a CentOS 6</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Read how to install Python 2.7.x on CentOS 6 and compile mod_wsgi against Python 2.7.x.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/gis/qgis-server-centos/">
+    <div class="content">
+      
+      <div class="header">Setting up a QGIS server and PostGIS on CentOS 6</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">This post describes how to setup a QGSI server and PostGIS on CentOS 6.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/server-management/osx-file-server-migration/">
+    <div class="content">
+      
+      <div class="header">Mac OS X file server migration</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">How could you migrate a OS X file server from open directory to Microsoft&#39;s active directory using rsync and other bash commands.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/miscellaneous/github-jekyll-travis/">
+    <div class="content">
+      
+      <div class="header">Creating your own blog using github pages, jekyll and travis</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+  <a class="ui card dimmable" href="http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/">
+    <div class="content">
+      
+      <div class="header">Tunneling over an intermediate to overcome demilitarized zone</div>
+      <div class="meta">by Iocast</div>
+      <div class="description">Often you want to connect to a computer inside a network that is hidden from the outside. This &#34;private&#34; network, aka demilitarized zone (DMZ), can be overcome by having a computer inside the DMZ that opens a connection to an other &#34;open&#34; network or computer. This article describes roughly how to do that using Linux.</div>
+    </div>
+    <div class="ui dimmer">
+      <div class="content">
+        <h2 class="ui inverted icon">
+          <i class="newspaper icon"></i> read more
+        </h2>
+      </div>
+    </div>
+
+  </a>
+  
+
+</div>
+
+<script>
+  $('.card.dimmable').dimmer({
+    on: 'hover'
+  });
+</script>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   </body>
 
 </html>
-
