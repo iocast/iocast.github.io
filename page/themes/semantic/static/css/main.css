@@ -3,6 +3,25 @@ pre {
   padding: 1rem;
 }
 
+.abstract {
+  border-bottom: 1px solid rgba(34,36,38,.15);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ui.container.sticky--container {
+  position: relative;
+  margin-right: 387px !important;
+  width: auto !important;
+  max-width: 960px !important;
+}
+
+.sticky--container > .right.rail {
+  margin-left: 3em;
+  padding-top: 2em;
+  width: 319px;
+}
+
 @media only screen and (max-width: 1272px) {
   .sticky--container > .right.rail {
     padding-left: 1.5em;
@@ -11,6 +30,13 @@ pre {
 }
 
 @media only screen and (max-width: 992px) {
+  .ui.container.sticky--container {
+    position: relative;
+    margin-right: 1em !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+  
   .sticky--container > .right.rail {
     display: none;
   }
