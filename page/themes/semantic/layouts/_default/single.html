@@ -1,0 +1,24 @@
+{{ define "main" }}
+
+<div class="main ui container sticky--container" style="position: relative; margin-right: 387px !important; width: auto !important; max-width: 960px !important;">
+
+  <div class="ui dividing right rail" style="margin-left: 3em; padding-top: 2em; width: 319px;">
+    <div class="ui sticky">
+      {{ partial "toc" . }}
+    </div>
+  </div>
+
+  <div>
+    {{ .Content | replaceRE "<table>" "</table><table class=\"ui celled table\">" | replaceRE "<h1" "<h1 class=\"ui header\"" | replaceRE "<h2" "<h2 class=\"ui header\"" | replaceRE "<h3" "<h3 class=\"ui header\"" | replaceRE "<h4" "<h4 class=\"ui header\"" | replaceRE "<h5" "<h5 class=\"ui header\"" | replaceRE "<h6" "<h6 class=\"ui header\"" | safeHTML }}
+  </div>
+
+</div>
+
+<script>
+  $('.ui.sticky').sticky({
+    context: '.sticky--container',
+    offset: 56
+  });
+</script>
+
+{{ end }}

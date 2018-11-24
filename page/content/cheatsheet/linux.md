@@ -228,17 +228,13 @@ ifup wlan0
 
 
 # TODO
+current used image version
 uname -r 
 
+list all unused images
 sudo dpkg --list 'linux-image*'|awk '{ if ($1=="ii") print $2}'|grep -v `uname -r`
 
 sudo apt-get purge linux-image-4.4.0-108-generic
-sudo apt-get purge linux-image-4.4.0-109-generic
-sudo apt-get purge linux-image-4.4.0-112-generic
-sudo apt-get purge linux-image-4.4.0-116-generic
-sudo apt-get purge linux-image-4.4.0-119-generic
-sudo apt-get purge linux-image-4.4.0-121-generic
-sudo apt-get purge linux-image-4.4.0-124-generic
 
 sudo apt-get autoremove
 

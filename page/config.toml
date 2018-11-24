@@ -5,23 +5,25 @@ paginate = 8
 
 Copyright = "All rights reserved © 2018"
 canonifyurls = true
-theme = "material-design-components"
+theme = "semantic"
 newContentEditor = "nano"
-pygmentsStyle = "native"
 sourceRelativeLinksEval = true
 #canonifyURLs = true
 #relativeURLs = true
+pygmentsCodefences = true
+pygmentsUseClasses = true
+pygmentsCodefencesGuessSyntax = true
+#pygmentsOptions = "linenos=table"
 
 disqusShortname = "iocast-blog"
 #disqus_identifier = ""
 #disqus_title = ""
 #disqus_url = ""
 
-
+# like alias
 [taxonomies]
   tag = "tags"
   category = "categories"
-  cheatsheet = "cheatsheets"
 
 [[author]]
     name = "James Campbell"
@@ -33,7 +35,7 @@ disqusShortname = "iocast-blog"
   Description = "Welcome to my collection of things I meet in my everyday life."
   Author = "Iocast"
   email = "iocast@me.com"
-  PostSummariesFrontPage = 9
+  PostSummariesFrontPage = 12
   #Ganalytics = "XX-00000000-0"
   #RSSLink = "https://www.jamescampbell.us/index.xml"
   # set true if you are not proud of using Hugo (true will hide the footer note "Proudly published with HUGO.....")
@@ -48,8 +50,14 @@ disqusShortname = "iocast-blog"
 
 [menu]
   [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = -100
+  [[menu.main]]
     name = "Archives"
     url = "/post/"
+    weight = -90
   [[menu.main]]
-    name = "Cheatsheet"
+    name = "Cheatsheets"
     url = "/cheatsheet/"
+    weight = -80

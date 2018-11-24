@@ -1,0 +1,45 @@
+{{ define "main" }}
+
+<div class="ui very relaxed list">
+
+  <div class="ui stackable three column grid">
+
+    {{ range (.Paginator 21).Pages }}
+    <div class="column">
+
+      <div class="item">
+        <!--
+      <img class="ui avatar image" src="/images/avatar/small/daniel.jpg">
+      -->
+        <div class="content">
+          <a class="header" href="{{ .URL }}">{{ .Title }}</a>
+          <div class="description">{{ .Description }}</div>
+        </div>
+      </div>
+
+    </div>
+
+    {{ end }}
+  </div>
+
+</div>
+
+<div class="ui center aligned container">
+  <div class="ui pagination menu">
+    {{ if $.Paginator.HasPrev }}
+    <a class="icon item" href="{{ $.Paginator.Prev.URL }}">
+      <i class="left chevron icon"></i>
+    </a>
+    {{ end }}
+    {{ range $.Paginator.Pagers }}
+    <a class="item" href="{{ .URL }}">{{ .PageNumber }}</a>
+    {{ end }}
+    {{ if $.Paginator.HasNext }}
+    <a class="icon item" href="{{ $.Paginator.Next.URL }}">
+      <i class="right chevron icon"></i>
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+{{ end }}
