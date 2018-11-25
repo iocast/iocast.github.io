@@ -1,3 +1,15 @@
+---
+title: Java
+author: iocast
+date: 2014-12-22
+description: Bash / Shell sheat sheet
+type: cheatsheet
+comments: true
+draft: true
+group: ""
+---
+
+
 https://stackoverflow.com/questions/1619662/how-can-i-get-the-latest-jre-jdk-as-a-zip-file-rather-than-exe-or-msi-installe
 
 

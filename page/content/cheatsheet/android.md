@@ -1,3 +1,13 @@
+---
+title: Android
+author: iocast
+date: 2014-12-22
+description: Bash / Shell sheat sheet
+type: cheatsheet
+comments: true
+draft: true
+group: ""
+---
 
 
 # ADB

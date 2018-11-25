@@ -1,10 +1,19 @@
 {{ define "main" }}
 
+
+
+{{ range (.Paginator 21).Pages.GroupByParam  "group" }}
+
+{{ if gt (len .Key) 0 }}
+<h3 class="ui blue header">{{ .Key | upper  }}</h3>
+{{ end }}
+
+
 <div class="ui very relaxed list">
 
   <div class="ui stackable three column grid">
 
-    {{ range (.Paginator 21).Pages }}
+    {{ range .Pages.ByTitle }}
     <div class="column">
 
       <div class="item">
@@ -12,7 +21,7 @@
       <img class="ui avatar image" src="/images/avatar/small/daniel.jpg">
       -->
         <div class="content">
-          <a class="header" href="{{ .URL }}">{{ .Title }}</a>
+          <a class="header" href="{{ .Permalink }}">{{ .Title }}</a>
           <div class="description">{{ .Description }}</div>
         </div>
       </div>
@@ -23,6 +32,8 @@
   </div>
 
 </div>
+
+{{ end }}
 
 <div class="ui center aligned container">
   <div class="ui pagination menu">

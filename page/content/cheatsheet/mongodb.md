@@ -5,6 +5,7 @@ date: 2018-10-01
 draft: true
 description:
 type: cheatsheet
+group: "database"
 ---
 
 # User Management

@@ -5,6 +5,7 @@ date: 2017-10-09
 description: MacOS sheat sheet
 type: cheatsheet
 comments: true
+group: "*nix"
 ---
 
 

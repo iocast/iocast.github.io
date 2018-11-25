@@ -1,9 +1,10 @@
 ---
-title: Windows general
+title: Powershell
 author: iocast
 date: 2014-12-22
 description: Windows general commands
 type: cheatsheet
+group: windows
 ---
 
 

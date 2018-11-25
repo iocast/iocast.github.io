@@ -5,6 +5,7 @@ date: 2014-12-22
 description: Bash / Shell sheat sheet
 type: cheatsheet
 comments: true
+group: "*nix"
 ---
 
 
