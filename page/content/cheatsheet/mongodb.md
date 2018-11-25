@@ -2,7 +2,7 @@
 title: MongoDB
 author: iocast
 date: 2018-10-01
-draft: true
+draft: false
 description:
 type: cheatsheet
 group: "database"
@@ -10,24 +10,32 @@ group: "database"
 
 # User Management
 
-**create user**
+## Create
 
 open the MongoDB shell
 
 ```bash
-$ mongo
+$ mongo -u <user> -p <password> --authenticationDatabase <db>
 ```
 
-create an admin user
+Optional parameters
 
-https://docs.mongodb.com/manual/reference/built-in-roles/
+`-u`
+: Username
 
+`-p`
+: Password
+
+`--authenticationDatabase`
+: Check user against this database
+
+
+and create a user.
 
 ```bash
-> use admin
 > db.createUser({
 ...   "user": "admin",
-...   "pwd": "e2eS2J5EY7HueC7e",
+...   "pwd": "password",
 ...   "roles": [
 ...     {"role": "dbOwner", "db": "admin" },
 ...     {"role": "userAdmin", "db": "admin" },
@@ -42,74 +50,25 @@ Successfully added user: {
         ...
 ```
 
-list all users
-db.getUsers()
+To create an admin user
 
-drop user
-db.dropUser("userName")
-
-
-admin user
-
-use admin
+```javascript
+// admin user
 db.createUser({
   "user": "admin",
   "pwd": "e2eS2J5EY7HueC7e",
   "roles": ["root"]
 })
+```
 
+or for other option please consider the [documentation](https://docs.mongodb.com/manual/reference/built-in-roles/).
 
-app user kirke
-use kirke
-db.createUser(
-  {
-    user: "app",
-    pwd: "mrgBU85Mc6Qq7E5Z",
-    roles: [ { role: "readWrite", db: "kirke" }  ]
-  }
-)
-db.createUser({
-  "user": "reporting",
-  "pwd": "42qBaEZLS69is7yU",
-  "roles": [
-    {"role": "read", "db": "kirke"}
-  ]
-})
-
-
-use kirke-staging
-db.createUser(
-  {
-    user: "app",
-    pwd: "mrgBU85Mc6Qq7E5Z",
-    roles: [ { role: "readWrite", db: "kirke-staging" }  ]
-  }
-)
-db.createUser({
-  "user": "reporting",
-  "pwd": "42qBaEZLS69is7yU",
-  "roles": [
-    {"role": "read", "db": "kirke-staging"}
-  ]
-})
-
-
-
-app user disciplinam
-use disciplinam
-db.createUser(
-  {
-    user: "app",
-    pwd: "ewBtA2YN8f5A34kK",
-    roles: [ { role: "readWrite", db: "disciplinam" } ]
-  }
-)
-
-
-create a read-only user for e.g. reporting.
+If you need a read-only user for e.g. reporting you can do it like this.
 
 ```bash
+# connect to database
 > use anyDB
+# create user
 > db.createUser({
 ...   "user": "reporting",
 ...   "pwd": "test",
@@ -117,12 +76,15 @@ create a read-only user for e.g. reporting.
 ...     {"role": "read", "db": "anyDb" }
 ...   ]
 ... })
+# response
 Successfully added user: {
         "user" : "reporting",
         ...
 ```
 
-start the server with `auth` flag
+## Auth
+
+If you work with users you have to start MongoDB with `--auth` flag.
 
 ```bash
 $ mongod --auth --port 27017
@@ -130,7 +92,22 @@ $ mongod --auth --port 27017
 
 or add the following lines to your MongoDB config file.
 
-```ini
+```yaml
 security:
     authorization: enabled
+```
+
+
+## List
+
+```javascript
+// list all users
+db.getUsers()
+```
+
+## Delete / Drop
+
+```javascript
+// drop a user
+db.dropUser("userName")
 ```

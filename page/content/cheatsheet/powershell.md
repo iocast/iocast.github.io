@@ -16,7 +16,9 @@ For all the command in this section I used **command line prompt**.
 
 remove a network share
 
-	net use /delete <drive name or network path>
+```bat
+net use /delete <drive name or network path>
+```
 
 
 ## Server
@@ -56,5 +58,4 @@ Close-SmbSession –ClientUserName Domain\Username
 robocopy <source> <destination> /MIR /XD "<source>/<path>/<to>/<folder>"
 ```
 
-`XD`
-: exluding directories
+`XD`: exluding directories
