@@ -119,6 +119,8 @@
       <h4 class="ui header">MongoDB</h4>
 <nav id="TableOfContents">
 <ul>
+<li><a href="#installation-upgrade">Installation / Upgrade</a></li>
+<li><a href="#replica-set">Replica set</a></li>
 <li><a href="#user-management">User Management</a>
 <ul>
 <li><a href="#authentication-access-control">Authentication / Access control</a></li>
@@ -141,6 +143,18 @@
   <div>
     
 
+<h1 class="ui header" id="installation-upgrade">Installation / Upgrade</h1>
+
+<p>Ater you have upgraded MongoDB the compatiblity version need to be upgraded too. This can only be achieved in master mode. If MongoDB is running in replicat set mode shutdown your server and start it in master mode. Then connect to the server and change the compatibility version.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mongo -u &lt;user&gt; -p &lt;password&gt; --authenticationDatabase &lt;db&gt;
+&gt; db.adminCommand<span class="o">(</span> <span class="o">{</span> getParameter: <span class="m">1</span>, featureCompatibilityVersion: <span class="m">1</span> <span class="o">}</span> <span class="o">)</span>
+&gt; db.adminCommand<span class="o">(</span> <span class="o">{</span> setFeatureCompatibilityVersion: <span class="s2">&#34;4.0&#34;</span> <span class="o">}</span> <span class="o">)</span></code></pre></div>
+<h1 class="ui header" id="replica-set">Replica set</h1>
+
+<p>After you have started the MongoDB in replica set mode you need to initialize it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mongo -u &lt;user&gt; -p &lt;password&gt; --authenticationDatabase &lt;db&gt;
+&gt; rs.initiate<span class="o">()</span>
+&gt; rs.status<span class="o">()</span></code></pre></div>
 <h1 class="ui header" id="user-management">User Management</h1>
 
 <h2 class="ui header" id="authentication-access-control">Authentication / Access control</h2>
