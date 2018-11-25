@@ -7,7 +7,7 @@
   <meta name="author" content="Iocast">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <title>MacOS -- think twice code once!</title>
+  <title>Powershell -- think twice code once!</title>
 
 
   
@@ -181,7 +181,7 @@
 
       <div class="ui text container">
         <h1 class="ui inverted header">
-          MACOS
+          POWERSHELL
         </h1>
         
       </div>
@@ -199,62 +199,72 @@
 
   <div class="ui dividing right rail">
     <div class="ui sticky">
-      <h4 class="ui header">MacOS</h4>
-
+      <h4 class="ui header">Powershell</h4>
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#desktop">Desktop</a>
+<ul>
+<li><a href="#sharing">Sharing</a></li>
+</ul></li>
+<li><a href="#server">Server</a>
+<ul>
+<li><a href="#sharing-1">Sharing</a></li>
+</ul></li>
+<li><a href="#miscellaneous">Miscellaneous</a>
+<ul>
+<li><a href="#synchronization">Synchronization</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
 
     </div>
   </div>
   
   <div class="abstract">
     <p>
-      <i>MacOS sheat sheet</i>
+      <i>Windows general commands</i>
     </p>
   </div>
 
   <div>
-    <p><code>prepublishOnly</code> ensures that the library is always built before we publish to npm.</p>
+    
 
-<p>more flags here  <a href="https://docs.npmjs.com/misc/scripts">https://docs.npmjs.com/misc/scripts</a></p>
+<h2 class="ui header" id="desktop">Desktop</h2>
 
-<p>needed dev libraries</p>
+<p>For all the command in this section I used <strong>command line prompt</strong>.</p>
 
-<p>babel-cli provides the command babel.
-babel-preset-env is the Babel preset we use for transpilation.</p>
+<h3 class="ui header" id="sharing">Sharing</h3>
 
-<p>for tests use
-babel-register lets AVA execute the tests via Babel.</p>
-<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;@iocast/koa-i18next&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.0.0&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;i18next middleware for koa&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;main&#34;</span><span class="p">:</span> <span class="s2">&#34;lib&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;build&#34;</span><span class="p">:</span> <span class="s2">&#34;babel src --out-dir dist&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;prepublishOnly&#34;</span><span class="p">:</span> <span class="s2">&#34;npm run build&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;patch&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version patch &amp;&amp; npm publish&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;minor&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version minor &amp;&amp; npm publish&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;major&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version major &amp;&amp; npm publish&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;postpublish&#34;</span><span class="p">:</span> <span class="s2">&#34;git push origin master --follow-tags&#34;</span>
-  <span class="p">},</span>
-  <span class="nt">&#34;repository&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;git&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;url&#34;</span><span class="p">:</span> <span class="s2">&#34;git+https://github.com/iocast/koa-i18next.git&#34;</span>
-  <span class="p">},</span>
-  <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;iocast&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;license&#34;</span><span class="p">:</span> <span class="s2">&#34;MIT&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;bugs&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;url&#34;</span><span class="p">:</span> <span class="s2">&#34;https://github.com/iocast/koa-i18next/issues&#34;</span>
-  <span class="p">},</span>
-  <span class="nt">&#34;homepage&#34;</span><span class="p">:</span> <span class="s2">&#34;https://github.com/iocast/koa-i18next#readme&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;keywords&#34;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&#34;koa&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;i18next&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;middleware&#34;</span>
-  <span class="p">],</span>
-  <span class="nt">&#34;devDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;babel-cli&#34;</span><span class="p">:</span> <span class="s2">&#34;^6.26.0&#34;</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<p>remove a network share</p>
+<div class="highlight"><pre class="chroma">net use /delete &lt;drive name or network path&gt;</pre></div>
+<h2 class="ui header" id="server">Server</h2>
+
+<p>For all the command below I used <strong>PowerShell</strong>.</p>
+
+<h3 class="ui header" id="sharing-1">Sharing</h3>
+
+<p><strong>list</strong> of all connected users</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Get-SmbSession</span></code></pre></div>
+<p>for <strong>command line</strong> use</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">net</span> <span class="n">session</span></code></pre></div>
+<p><strong>closing</strong> a session can be done using the session id, computer name or user name as follow:</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">Close-SmbSession</span> <span class="n">-SessionId</span> <span class="n">171798691989</span>
+<span class="n">Close-SmbSession</span> <span class="err">–</span><span class="n">ClientComputerName</span> <span class="p">\\</span><span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">20</span>
+<span class="n">Close-SmbSession</span> <span class="err">–</span><span class="n">ClientUserName</span> <span class="n">Domain</span><span class="p">\</span><span class="n">Username</span></code></pre></div>
+<h2 class="ui header" id="miscellaneous">Miscellaneous</h2>
+
+<h3 class="ui header" id="synchronization">Synchronization</h3>
+
+<p><strong>mirror</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-bat" data-lang="bat">robocopy <span class="p">&lt;</span>source<span class="p">&gt;</span> &lt;destination<span class="p">&gt;</span> /MIR /XD <span class="s2">&#34;&lt;source&gt;/&lt;path&gt;/&lt;to&gt;/&lt;folder&gt;&#34;</span></code></pre></div>
+<dl>
+<dt><code>XD</code></dt>
+<dd>exluding directories</dd>
+</dl>
+
   </div>
 
 </div>

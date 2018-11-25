@@ -34,29 +34,18 @@ ps -eaf | grep `lsof -t -i:3000`</description>
     </item>
     
     <item>
-      <title>MacOS</title>
-      <link>http://iocast.github.io/cheatsheet/npm/</link>
-      <pubDate>Mon, 09 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://iocast.github.io/cheatsheet/npm/</guid>
-      <description>prepublishOnly ensures that the library is always built before we publish to npm.
-more flags here https://docs.npmjs.com/misc/scripts
-needed dev libraries
-babel-cli provides the command babel. babel-preset-env is the Babel preset we use for transpilation.
-for tests use babel-register lets AVA execute the tests via Babel.
-{ &amp;#34;name&amp;#34;: &amp;#34;@iocast/koa-i18next&amp;#34;, &amp;#34;version&amp;#34;: &amp;#34;0.0.0&amp;#34;, &amp;#34;description&amp;#34;: &amp;#34;i18next middleware for koa&amp;#34;, &amp;#34;main&amp;#34;: &amp;#34;lib&amp;#34;, &amp;#34;scripts&amp;#34;: { &amp;#34;build&amp;#34;: &amp;#34;babel src --out-dir dist&amp;#34;, &amp;#34;prepublishOnly&amp;#34;: &amp;#34;npm run build&amp;#34;, &amp;#34;patch&amp;#34;: &amp;#34;npm version patch &amp;amp;&amp;amp; npm publish&amp;#34;, &amp;#34;minor&amp;#34;: &amp;#34;npm version minor &amp;amp;&amp;amp; npm publish&amp;#34;, &amp;#34;major&amp;#34;: &amp;#34;npm version major &amp;amp;&amp;amp; npm publish&amp;#34;, &amp;#34;postpublish&amp;#34;: &amp;#34;git push origin master --follow-tags&amp;#34; }, &amp;#34;repository&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;git&amp;#34;, &amp;#34;url&amp;#34;: &amp;#34;git+https://github.</description>
-    </item>
-    
-    <item>
       <title>npmjs</title>
       <link>http://iocast.github.io/cheatsheet/npmjs/</link>
       <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/npmjs/</guid>
-      <description> Comands login open your shell and type
+      <description>Comands login open your shell and type
 npm login follow the onscreen instructions
 update verify that the &amp;quot;name&amp;quot;: &amp;quot;@username/package-name&amp;quot; and &amp;quot;version&amp;quot; is correct in your package.json file. Publish the package as follow
-npm publish --access public</description>
+npm publish --access public prepublishOnly ensures that the library is always built before we publish to npm.
+more flags here https://docs.npmjs.com/misc/scripts
+needed dev libraries
+babel-cli provides the command babel. babel-preset-env is the Babel preset we use for transpilation.</description>
     </item>
     
     <item>
@@ -134,6 +123,21 @@ psql --list Create create database
     </item>
     
     <item>
+      <title>Powershell</title>
+      <link>http://iocast.github.io/cheatsheet/powershell/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://iocast.github.io/cheatsheet/powershell/</guid>
+      <description>Desktop For all the command in this section I used command line prompt.
+Sharing remove a network share
+net use /delete &amp;lt;drive name or network path&amp;gt; Server For all the command below I used PowerShell.
+Sharing list of all connected users
+Get-SmbSession for command line use
+net session closing a session can be done using the session id, computer name or user name as follow:
+Close-SmbSession -SessionId 171798691989 Close-SmbSession –ClientComputerName \\192.</description>
+    </item>
+    
+    <item>
       <title>Python PyPi</title>
       <link>http://iocast.github.io/cheatsheet/python_pypi/</link>
       <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
@@ -162,21 +166,6 @@ psql --list Create create database
 ... File &amp;#34;.../virtualenv/publishing/lib/python2.7/locale.py&amp;#34;, line 443, in _parse_localename raise ValueError, &amp;#39;unknown locale: %s&amp;#39; % localename ValueError: unknown locale: UTF-8 then try the following. Add the the below lines to your $HOME/.bash_profile
 export LC_ALL=en_US.UTF-8 export LANG=en_US.UTF-8 Do
 source $HOME/.bash_profile and try it again. Or simply export the locale settings before running the sphinx-build.</description>
-    </item>
-    
-    <item>
-      <title>Windows general</title>
-      <link>http://iocast.github.io/cheatsheet/windows/</link>
-      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
-      
-      <guid>http://iocast.github.io/cheatsheet/windows/</guid>
-      <description>Desktop For all the command in this section I used command line prompt.
-Sharing remove a network share
-net use /delete &amp;lt;drive name or network path&amp;gt; Server For all the command below I used PowerShell.
-Sharing list of all connected users
-Get-SmbSession for command line use
-net session closing a session can be done using the session id, computer name or user name as follow:
-Close-SmbSession -SessionId 171798691989 Close-SmbSession –ClientComputerName \\192.</description>
     </item>
     
     <item>
@@ -296,30 +285,6 @@ Hence this post is going to discuss the a simple workflow using Github&amp;rsquo
       <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
       <description>Source code: shell script
 Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://iocast.github.io/cheatsheet/android/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://iocast.github.io/cheatsheet/android/</guid>
-      <description>ADB commands devices
-$ adb devices -l remote conection
-$ adb connect &amp;lt;ip[:port]&amp;gt; Screen Mirror bash $ scrcpy -s &amp;lt;from adb devices&amp;gt; `</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://iocast.github.io/cheatsheet/java/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://iocast.github.io/cheatsheet/java/</guid>
-      <description>https://stackoverflow.com/questions/1619662/how-can-i-get-the-latest-jre-jdk-as-a-zip-file-rather-than-exe-or-msi-installe
-https://stackoverflow.com/questions/45268254/how-do-i-install-the-standalone-android-sdk-and-then-add-it-to-intellij-idea-on/45268592#45268592
-open cmd set JAVA_HOME=c:\asdfasdf
-For JDK 8u102 things have changed, this worked for me:
-Download windows JDK exe Open with 7-Zip Dump contents into a directory %JDK-EXE% cmd: cd %JDK-EXE%.rsrc\1033\JAVA_CAB10 cmd: extrac32 111 Now have a tools.zip in directory, open it in 7-Zip Extract contents into a new directory %JDK-VERSION% cmd: cd %JDK-VERSION% cmd: for /r %x in (*.pack) do .\bin\unpack200 -r &amp;ldquo;%x&amp;rdquo; &amp;ldquo;%~dx%~px%~nx.jar&amp;rdquo; src.zip is in %JDK-EXE%.rsrc\1033\JAVA_CAB9\110\ - put a copy into %JDK-VERSION% Now you are ready to go.</description>
     </item>
     
   </channel>

@@ -237,6 +237,49 @@
 
 <p>verify that the <code>&quot;name&quot;: &quot;@username/package-name&quot;</code> and <code>&quot;version&quot;</code> is correct in your <code>package.json</code> file. Publish the package as follow</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">npm publish --access public</code></pre></div>
+<p><code>prepublishOnly</code> ensures that the library is always built before we publish to npm.</p>
+
+<p>more flags here  <a href="https://docs.npmjs.com/misc/scripts">https://docs.npmjs.com/misc/scripts</a></p>
+
+<p>needed dev libraries</p>
+
+<p>babel-cli provides the command babel.
+babel-preset-env is the Babel preset we use for transpilation.</p>
+
+<p>for tests use
+babel-register lets AVA execute the tests via Babel.</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;@iocast/koa-i18next&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.0.0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;i18next middleware for koa&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;main&#34;</span><span class="p">:</span> <span class="s2">&#34;lib&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;build&#34;</span><span class="p">:</span> <span class="s2">&#34;babel src --out-dir dist&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;prepublishOnly&#34;</span><span class="p">:</span> <span class="s2">&#34;npm run build&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;patch&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version patch &amp;&amp; npm publish&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;minor&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version minor &amp;&amp; npm publish&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;major&#34;</span><span class="p">:</span> <span class="s2">&#34;npm version major &amp;&amp; npm publish&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;postpublish&#34;</span><span class="p">:</span> <span class="s2">&#34;git push origin master --follow-tags&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;repository&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;git&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;url&#34;</span><span class="p">:</span> <span class="s2">&#34;git+https://github.com/iocast/koa-i18next.git&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;iocast&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;license&#34;</span><span class="p">:</span> <span class="s2">&#34;MIT&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;bugs&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;url&#34;</span><span class="p">:</span> <span class="s2">&#34;https://github.com/iocast/koa-i18next/issues&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;homepage&#34;</span><span class="p">:</span> <span class="s2">&#34;https://github.com/iocast/koa-i18next#readme&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;keywords&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;koa&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;i18next&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;middleware&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;devDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;babel-cli&#34;</span><span class="p">:</span> <span class="s2">&#34;^6.26.0&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
   </div>
 
 </div>
