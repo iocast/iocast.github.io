@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Osx on think twice code once!</title>
-    <link>http://iocast.github.io/tags/osx/</link>
+    <link>https://iocast.github.io/tags/osx/</link>
     <description>Recent content in Osx on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Wed, 09 Oct 2013 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iocast.github.io/tags/osx/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://iocast.github.io/tags/osx/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Mac OS X file server migration</title>
-      <link>http://iocast.github.io/post/server-management/osx-file-server-migration/</link>
+      <link>https://iocast.github.io/post/server-management/osx-file-server-migration/</link>
       <pubDate>Wed, 09 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/server-management/osx-file-server-migration/</guid>
+      <guid>https://iocast.github.io/post/server-management/osx-file-server-migration/</guid>
       <description>Managing a OS X server is sometimes a pain, when it comes to manage ACL permissions on the file system using OS X Server share point application. For example if you want to migrate from one file server to another you need to define all shares and ACLs again or if you want to propagate permissions on a share with explicit ACLs on a sub-directory you are going to overwrite these explicit ACLs.</description>
     </item>
     

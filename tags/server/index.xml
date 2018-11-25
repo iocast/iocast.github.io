@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Server on think twice code once!</title>
-    <link>http://iocast.github.io/tags/server/</link>
+    <link>https://iocast.github.io/tags/server/</link>
     <description>Recent content in Server on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Sun, 23 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iocast.github.io/tags/server/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://iocast.github.io/tags/server/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My new Server (Pine64) on armbian</title>
-      <link>http://iocast.github.io/post/server/pine64/</link>
+      <link>https://iocast.github.io/post/server/pine64/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/server/pine64/</guid>
+      <guid>https://iocast.github.io/post/server/pine64/</guid>
       <description>Installation I flashed the SD card using ETCHER with the latest Armbian without desktop.
 Once ETCHER is done burning the image on the SD card, insert the card into the Pine64 and attach an ethernet cable. Then login to the system as root
 $ ssh root@192.168.0.10 The default password is 1234. Only after the first login you are asked to change root&amp;rsquo;s password and to create a default user with sudo privilege.</description>
@@ -25,20 +25,20 @@ $ ssh root@192.168.0.10 The default password is 1234. Only after the first login
     
     <item>
       <title>My personal file server on a Cubox from SolidRun using Arch Linux</title>
-      <link>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</link>
+      <link>https://iocast.github.io/post/server/cubox-fileserver-archlinux/</link>
       <pubDate>Sun, 30 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
+      <guid>https://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
       <description>For my file server I have the following requirements:
  it should consume as less as possible electricity it should be very silent, means no active cooling the operation system should use OpenSSH  Thus, for the hardware I have decided to use a Cubox from SolidRun because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie.</description>
     </item>
     
     <item>
       <title>Javascript localization part 1</title>
-      <link>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</link>
+      <link>https://iocast.github.io/post/web-application/javascript-internationalization-part1/</link>
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
+      <guid>https://iocast.github.io/post/web-application/javascript-internationalization-part1/</guid>
       <description>Take some seconds and thing about how you represent a date or number. Do you convert the object to a string and slices it at the needed position? Or do you extend the Date class and adds some new output representation functionality.
 Since the ECMA-402 Standard, published on December 2012, you have some really great new functions which respects the locale settings of your environment.
 Okey, lets take a step back.</description>
@@ -46,10 +46,10 @@ Okey, lets take a step back.</description>
     
     <item>
       <title>Joining a Active Directory on Linux - the easiest way!</title>
-      <link>http://iocast.github.io/post/server-management/linux-join-ad/</link>
+      <link>https://iocast.github.io/post/server-management/linux-join-ad/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/server-management/linux-join-ad/</guid>
+      <guid>https://iocast.github.io/post/server-management/linux-join-ad/</guid>
       <description>The easiest way, at least for me, is to use the likewise-open package. You can find the official documentation here. Under Ubuntu you can simple install this package using apt-get.
 apt-get install likewise-open Once you have installed it, you can join a Active Directory (AD) as follow.
 domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt;your&amp;gt;/&amp;lt;organization-unit&amp;gt; &amp;lt;server&amp;gt; &amp;lt;login-user&amp;gt; where you need to define the path to your organization unit, which is displayed in the AD as a folder.</description>
@@ -57,10 +57,10 @@ domainjoin-cli join --ou Hosting/&amp;lt;path&amp;gt;/&amp;lt;to&amp;gt;/&amp;lt
     
     <item>
       <title>Ubuntu 12.04, PGSQL 9.3, PostGIS 2.1 and PL/R against libgdal1h from scratch</title>
-      <link>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</link>
+      <link>https://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</link>
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</guid>
+      <guid>https://iocast.github.io/post/gis/ubuntu-postgresql-postgis-plr-libgdal1h/</guid>
       <description>Removing preinstalled packages First we need to check which PostgreSQL, PostGIS and GDAL versions are installed. To do so check your Debian package management system (dpkg).
 dpkg -l | grep &amp;#39;postgres\|gdal&amp;#39; You should get a list like the following one:
 ii libgdal-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Development files ii libgdal1-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Development files ii libgdal1h 1.10.0-1~precise1 Geospatial Data Abstraction Library ii postgresql-9.1 9.</description>
@@ -68,10 +68,10 @@ ii libgdal-dev 1.10.0-1~precise1 Geospatial Data Abstraction Library - Developme
     
     <item>
       <title>Python 2.7.x and mod_wsgi on a CentOS 6</title>
-      <link>http://iocast.github.io/post/web-application/centos-python-modwsgi/</link>
+      <link>https://iocast.github.io/post/web-application/centos-python-modwsgi/</link>
       <pubDate>Wed, 16 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/web-application/centos-python-modwsgi/</guid>
+      <guid>https://iocast.github.io/post/web-application/centos-python-modwsgi/</guid>
       <description>When you have installed CentOS 6 using the minimal image we need first to do some preparation. Fist login into your system and enable your eth0 at startup.
 vi /etc/sysconfig/network-scripts/ifcfg-eth0 and set ONBOOT to yes.
 Getting Python 2.7.x The following explanations are based on a blog of Asim Teeshan and a post on Fire3Net.
@@ -81,10 +81,10 @@ yum install gcc make zlib-devel bzip2-devel openssl-devel Now download the lates
     
     <item>
       <title>Setting up a QGIS server and PostGIS on CentOS 6</title>
-      <link>http://iocast.github.io/post/gis/qgis-server-centos/</link>
+      <link>https://iocast.github.io/post/gis/qgis-server-centos/</link>
       <pubDate>Sat, 12 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/gis/qgis-server-centos/</guid>
+      <guid>https://iocast.github.io/post/gis/qgis-server-centos/</guid>
       <description>QGIS server provides a web map server (WMS) by simply copying a QGIS project int the server directory. If you want to depend on newer postgresql-libs you need first to install the desired version of PostgreSQL and PostGIS as described bellow.
 PostgreSQL and PostGIS The following instructions are adapted from YUM installation - PostgreSQL wiki and UsersWikiuPostGIS20CentOS6pgdg - PostGIS.
 Configuration Configure yum repository

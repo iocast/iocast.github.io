@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Arch Linux on think twice code once!</title>
-    <link>http://iocast.github.io/tags/arch-linux/</link>
+    <link>https://iocast.github.io/tags/arch-linux/</link>
     <description>Recent content in Arch Linux on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Sun, 30 Nov 2014 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iocast.github.io/tags/arch-linux/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://iocast.github.io/tags/arch-linux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My personal file server on a Cubox from SolidRun using Arch Linux</title>
-      <link>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</link>
+      <link>https://iocast.github.io/post/server/cubox-fileserver-archlinux/</link>
       <pubDate>Sun, 30 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
+      <guid>https://iocast.github.io/post/server/cubox-fileserver-archlinux/</guid>
       <description>For my file server I have the following requirements:
  it should consume as less as possible electricity it should be very silent, means no active cooling the operation system should use OpenSSH  Thus, for the hardware I have decided to use a Cubox from SolidRun because it has a very good value for money. Notice that I use the first revision of the Cubox and not the Cubox-i serie.</description>
     </item>

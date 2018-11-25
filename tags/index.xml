@@ -2,274 +2,274 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on think twice code once!</title>
-    <link>http://iocast.github.io/tags/</link>
+    <link>https://iocast.github.io/tags/</link>
     <description>Recent content in Tags on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Sat, 30 Nov 2013 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iocast.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://iocast.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Active Directory</title>
-      <link>http://iocast.github.io/tags/active-directory/</link>
+      <link>https://iocast.github.io/tags/active-directory/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/active-directory/</guid>
+      <guid>https://iocast.github.io/tags/active-directory/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Apache</title>
-      <link>http://iocast.github.io/tags/apache/</link>
+      <link>https://iocast.github.io/tags/apache/</link>
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/apache/</guid>
+      <guid>https://iocast.github.io/tags/apache/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Arch Linux</title>
-      <link>http://iocast.github.io/tags/arch-linux/</link>
+      <link>https://iocast.github.io/tags/arch-linux/</link>
       <pubDate>Sun, 30 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/arch-linux/</guid>
+      <guid>https://iocast.github.io/tags/arch-linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Armbian</title>
-      <link>http://iocast.github.io/tags/armbian/</link>
+      <link>https://iocast.github.io/tags/armbian/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/armbian/</guid>
+      <guid>https://iocast.github.io/tags/armbian/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bash</title>
-      <link>http://iocast.github.io/tags/bash/</link>
+      <link>https://iocast.github.io/tags/bash/</link>
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/bash/</guid>
+      <guid>https://iocast.github.io/tags/bash/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Centos</title>
-      <link>http://iocast.github.io/tags/centos/</link>
+      <link>https://iocast.github.io/tags/centos/</link>
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/centos/</guid>
+      <guid>https://iocast.github.io/tags/centos/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Continuous Integration</title>
-      <link>http://iocast.github.io/tags/continuous-integration/</link>
+      <link>https://iocast.github.io/tags/continuous-integration/</link>
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/continuous-integration/</guid>
+      <guid>https://iocast.github.io/tags/continuous-integration/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dyndns</title>
-      <link>http://iocast.github.io/tags/dyndns/</link>
+      <link>https://iocast.github.io/tags/dyndns/</link>
       <pubDate>Sun, 30 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/dyndns/</guid>
+      <guid>https://iocast.github.io/tags/dyndns/</guid>
       <description></description>
     </item>
     
     <item>
       <title>File Server</title>
-      <link>http://iocast.github.io/tags/file-server/</link>
+      <link>https://iocast.github.io/tags/file-server/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/file-server/</guid>
+      <guid>https://iocast.github.io/tags/file-server/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Github</title>
-      <link>http://iocast.github.io/tags/github/</link>
+      <link>https://iocast.github.io/tags/github/</link>
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/github/</guid>
+      <guid>https://iocast.github.io/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Httpd</title>
-      <link>http://iocast.github.io/tags/httpd/</link>
+      <link>https://iocast.github.io/tags/httpd/</link>
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/httpd/</guid>
+      <guid>https://iocast.github.io/tags/httpd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Jekyll</title>
-      <link>http://iocast.github.io/tags/jekyll/</link>
+      <link>https://iocast.github.io/tags/jekyll/</link>
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/jekyll/</guid>
+      <guid>https://iocast.github.io/tags/jekyll/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Libgdal</title>
-      <link>http://iocast.github.io/tags/libgdal/</link>
+      <link>https://iocast.github.io/tags/libgdal/</link>
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/libgdal/</guid>
+      <guid>https://iocast.github.io/tags/libgdal/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Likewise Open</title>
-      <link>http://iocast.github.io/tags/likewise-open/</link>
+      <link>https://iocast.github.io/tags/likewise-open/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/likewise-open/</guid>
+      <guid>https://iocast.github.io/tags/likewise-open/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>http://iocast.github.io/tags/linux/</link>
+      <link>https://iocast.github.io/tags/linux/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/linux/</guid>
+      <guid>https://iocast.github.io/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Networking</title>
-      <link>http://iocast.github.io/tags/networking/</link>
+      <link>https://iocast.github.io/tags/networking/</link>
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/networking/</guid>
+      <guid>https://iocast.github.io/tags/networking/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Osx</title>
-      <link>http://iocast.github.io/tags/osx/</link>
+      <link>https://iocast.github.io/tags/osx/</link>
       <pubDate>Wed, 09 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/osx/</guid>
+      <guid>https://iocast.github.io/tags/osx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Postgis</title>
-      <link>http://iocast.github.io/tags/postgis/</link>
+      <link>https://iocast.github.io/tags/postgis/</link>
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/postgis/</guid>
+      <guid>https://iocast.github.io/tags/postgis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Postgresql</title>
-      <link>http://iocast.github.io/tags/postgresql/</link>
+      <link>https://iocast.github.io/tags/postgresql/</link>
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/postgresql/</guid>
+      <guid>https://iocast.github.io/tags/postgresql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>http://iocast.github.io/tags/python/</link>
+      <link>https://iocast.github.io/tags/python/</link>
       <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/python/</guid>
+      <guid>https://iocast.github.io/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Qgis</title>
-      <link>http://iocast.github.io/tags/qgis/</link>
+      <link>https://iocast.github.io/tags/qgis/</link>
       <pubDate>Sat, 12 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/qgis/</guid>
+      <guid>https://iocast.github.io/tags/qgis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rsync</title>
-      <link>http://iocast.github.io/tags/rsync/</link>
+      <link>https://iocast.github.io/tags/rsync/</link>
       <pubDate>Wed, 09 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/rsync/</guid>
+      <guid>https://iocast.github.io/tags/rsync/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Samba</title>
-      <link>http://iocast.github.io/tags/samba/</link>
+      <link>https://iocast.github.io/tags/samba/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/samba/</guid>
+      <guid>https://iocast.github.io/tags/samba/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Server</title>
-      <link>http://iocast.github.io/tags/server/</link>
+      <link>https://iocast.github.io/tags/server/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/server/</guid>
+      <guid>https://iocast.github.io/tags/server/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Soc</title>
-      <link>http://iocast.github.io/tags/soc/</link>
+      <link>https://iocast.github.io/tags/soc/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/soc/</guid>
+      <guid>https://iocast.github.io/tags/soc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ssh</title>
-      <link>http://iocast.github.io/tags/ssh/</link>
+      <link>https://iocast.github.io/tags/ssh/</link>
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/ssh/</guid>
+      <guid>https://iocast.github.io/tags/ssh/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Travis</title>
-      <link>http://iocast.github.io/tags/travis/</link>
+      <link>https://iocast.github.io/tags/travis/</link>
       <pubDate>Thu, 17 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/travis/</guid>
+      <guid>https://iocast.github.io/tags/travis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ubuntu</title>
-      <link>http://iocast.github.io/tags/ubuntu/</link>
+      <link>https://iocast.github.io/tags/ubuntu/</link>
       <pubDate>Sat, 30 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/ubuntu/</guid>
+      <guid>https://iocast.github.io/tags/ubuntu/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ubuntugis</title>
-      <link>http://iocast.github.io/tags/ubuntugis/</link>
+      <link>https://iocast.github.io/tags/ubuntugis/</link>
       <pubDate>Mon, 11 Nov 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/tags/ubuntugis/</guid>
+      <guid>https://iocast.github.io/tags/ubuntugis/</guid>
       <description></description>
     </item>
     

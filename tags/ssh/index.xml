@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ssh on think twice code once!</title>
-    <link>http://iocast.github.io/tags/ssh/</link>
+    <link>https://iocast.github.io/tags/ssh/</link>
     <description>Recent content in Ssh on think twice code once!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved © 2018</copyright>
     <lastBuildDate>Sat, 03 Dec 2011 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iocast.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://iocast.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Tunneling over an intermediate to overcome demilitarized zone</title>
-      <link>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</link>
+      <link>https://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</link>
       <pubDate>Sat, 03 Dec 2011 00:00:00 +0000</pubDate>
       
-      <guid>http://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
+      <guid>https://iocast.github.io/post/miscellaneous/tunneling-over-an-intermediate/</guid>
       <description>Source code: shell script
 Tunneling over a intermediar is often used to connect to a server which is e.g. in a DMZ. In the following case we have a server that is the company network and does only allow connections on port 22 from the DMZ. Means the server cannot be connection over the internet. In addition, we have a server in the DMZ which allows connection on port 22 from outside (internet) and can connect to the company network over port 22.</description>
     </item>
