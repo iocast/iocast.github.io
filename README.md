@@ -17,7 +17,7 @@ hugo server --source page/
 - [ ] Config file cleanup
 - [x] Codenvy docker file (gist file `dockerfile_hugo`)
 - [x] Travis deployment
-- [ ] define archteypes
+- [x] define archteypes
 
 
 ## Theme `material-design-lite`
