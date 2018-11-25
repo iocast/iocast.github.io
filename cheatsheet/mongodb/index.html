@@ -121,8 +121,8 @@
 <ul>
 <li><a href="#user-management">User Management</a>
 <ul>
+<li><a href="#authentication-access-control">Authentication / Access control</a></li>
 <li><a href="#create">Create</a></li>
-<li><a href="#auth">Auth</a></li>
 <li><a href="#list">List</a></li>
 <li><a href="#delete-drop">Delete / Drop</a></li>
 </ul></li>
@@ -143,6 +143,13 @@
 
 <h1 class="ui header" id="user-management">User Management</h1>
 
+<h2 class="ui header" id="authentication-access-control">Authentication / Access control</h2>
+
+<p>If you work with users you have to start MongoDB with <code>--auth</code> flag.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mongod --auth --port <span class="m">27017</span></code></pre></div>
+<p>or add the following lines to your MongoDB config file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">security<span class="p">:</span><span class="w">
+</span><span class="w">    </span>authorization<span class="p">:</span><span class="w"> </span>enabled</code></pre></div>
 <h2 class="ui header" id="create">Create</h2>
 
 <p>open the MongoDB shell</p>
@@ -199,13 +206,6 @@ Successfully added user: <span class="o">{</span>
 Successfully added user: <span class="o">{</span>
         <span class="s2">&#34;user&#34;</span> : <span class="s2">&#34;reporting&#34;</span>,
         ...</code></pre></div>
-<h2 class="ui header" id="auth">Auth</h2>
-
-<p>If you work with users you have to start MongoDB with <code>--auth</code> flag.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mongod --auth --port <span class="m">27017</span></code></pre></div>
-<p>or add the following lines to your MongoDB config file.</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">security<span class="p">:</span><span class="w">
-</span><span class="w">    </span>authorization<span class="p">:</span><span class="w"> </span>enabled</code></pre></div>
 <h2 class="ui header" id="list">List</h2>
 <div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// list all users
 </span><span class="c1"></span><span class="nx">db</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">()</span>

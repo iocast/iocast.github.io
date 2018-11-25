@@ -18,10 +18,12 @@
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>http://iocast.github.io/cheatsheet/mongodb/</guid>
-      <description>User Management Create open the MongoDB shell
+      <description>User Management Authentication / Access control If you work with users you have to start MongoDB with --auth flag.
+$ mongod --auth --port 27017 or add the following lines to your MongoDB config file.
+security:authorization:enabled Create open the MongoDB shell
 $ mongo -u &amp;lt;user&amp;gt; -p &amp;lt;password&amp;gt; --authenticationDatabase &amp;lt;db&amp;gt; Optional parameters
  -u Username -p Password --authenticationDatabase Check user against this database  and create a user.
-&amp;gt; db.createUser({ ... &amp;#34;user&amp;#34;: &amp;#34;admin&amp;#34;, ... &amp;#34;pwd&amp;#34;: &amp;#34;password&amp;#34;, ... &amp;#34;roles&amp;#34;: [ ... {&amp;#34;role&amp;#34;: &amp;#34;dbOwner&amp;#34;, &amp;#34;db&amp;#34;: &amp;#34;admin&amp;#34; }, ... {&amp;#34;role&amp;#34;: &amp;#34;userAdmin&amp;#34;, &amp;#34;db&amp;#34;: &amp;#34;admin&amp;#34; }, ... {&amp;#34;role&amp;#34;: &amp;#34;userAdminAnyDatabase&amp;#34;, db: &amp;#34;admin&amp;#34; }, ... {&amp;#34;role&amp;#34;: &amp;#34;clusterAdmin&amp;#34;, &amp;#34;db&amp;#34;: &amp;#34;admin&amp;#34; }, ... {&amp;#34;role&amp;#34;: &amp;#34;dbAdminAnyDatabase&amp;#34;, db: &amp;#34;admin&amp;#34; }, .</description>
+&amp;gt; db.createUser({ ... &amp;#34;user&amp;#34;: &amp;#34;admin&amp;#34;, .</description>
     </item>
     
     <item>
