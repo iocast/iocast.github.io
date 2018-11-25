@@ -1,8 +1,6 @@
 {{ define "main" }}
 
-
-
-{{ range (.Paginator 21).Pages.GroupByParam  "group" }}
+{{ range (.Paginate (.Pages.GroupByParam "group") 21).PageGroups }}
 
 {{ if gt (len .Key) 0 }}
 <h3 class="ui blue header">{{ .Key | upper  }}</h3>

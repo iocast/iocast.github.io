@@ -5,10 +5,25 @@ date: 2018-10-01
 draft: false
 description:
 type: cheatsheet
-group: "database"
+group: database
 ---
 
 # User Management
+
+## Authentication / Access control
+
+If you work with users you have to start MongoDB with `--auth` flag.
+
+```bash
+$ mongod --auth --port 27017
+```
+
+or add the following lines to your MongoDB config file.
+
+```yaml
+security:
+    authorization: enabled
+```
 
 ## Create
 
@@ -81,22 +96,6 @@ Successfully added user: {
         "user" : "reporting",
         ...
 ```
-
-## Auth
-
-If you work with users you have to start MongoDB with `--auth` flag.
-
-```bash
-$ mongod --auth --port 27017
-```
-
-or add the following lines to your MongoDB config file.
-
-```yaml
-security:
-    authorization: enabled
-```
-
 
 ## List
 

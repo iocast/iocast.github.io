@@ -4,7 +4,7 @@ author: iocast
 date: 2014-12-22
 description: PostgreSQL commands
 type: cheatsheet
-group: "database"
+group: database
 ---
 
 
