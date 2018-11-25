@@ -8,6 +8,27 @@ type: cheatsheet
 group: database
 ---
 
+# Installation / Upgrade
+
+Ater you have upgraded MongoDB the compatiblity version need to be upgraded too. This can only be achieved in master mode. If MongoDB is running in replicat set mode shutdown your server and start it in master mode. Then connect to the server and change the compatibility version.
+
+```bash
+$ mongo -u <user> -p <password> --authenticationDatabase <db>
+> db.adminCommand( { getParameter: 1, featureCompatibilityVersion: 1 } )
+> db.adminCommand( { setFeatureCompatibilityVersion: "4.0" } )
+```
+
+# Replica set
+
+After you have started the MongoDB in replica set mode you need to initialize it.
+
+```bash
+$ mongo -u <user> -p <password> --authenticationDatabase <db>
+> rs.initiate()
+> rs.status()
+```
+
+
 # User Management
 
 ## Authentication / Access control
