@@ -9,6 +9,13 @@ group: sap
 ---
 
 
+## Administration
+
+Trx Code       | Purpose
+-------------- | ----------------------------
+`dbacockpit`   | DB Tools like SQL editor , etc.
+
+
 ## Development
 
 
