@@ -1,5 +1,6 @@
 BaseUrl= "https://iocast.github.io"
 LanguageCode= "en-US"
+DefaultContentLanguage = "en"
 Title= "think twice code once!"
 paginate = 8
 
@@ -26,14 +27,30 @@ disqusShortname = "iocast-blog"
   category = "categories"
 
 [[author]]
-    name = "James Campbell"
+    name = "iocast"
+
+# https://gohugo.io/content-management/multilingual/
+#[languages]
+#  [languages.en]
+#    weight = 1
+#    BaseUrl = "https://iocast.github.io/"
+#    [languages.en.params]
+#      linkedin = "https://linkedin.com/whoever"
+#  [languages.de]
+#    weight = 2
+#    BaseUrl = "https://iocast.github.io/de"
+#    [languages.fr.params]
+#      linkedin = "https://linkedin.com/de/whoever"
+#      [languages.fr.params.navigation]
+#        help = "Aide"
+
 
 [params]
-  SiteDescription = "blog, cheatsheets, best practices, and more"
+  SiteDescription = "blog, cheatsheets, best practices, notes, and more"
   DateForm = "Mon, 02 Jan 2006 15:04:05 MST"
   DateFormShort = "Mon, 02 Jan 2006"
   Description = "Welcome to my collection of things I meet in my everyday life."
-  Author = "Iocast"
+  Author = "iocast"
   email = "iocast@me.com"
   PostSummariesFrontPage = 12
   #Ganalytics = "XX-00000000-0"

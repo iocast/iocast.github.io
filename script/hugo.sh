@@ -15,7 +15,8 @@ NC='\033[0m' # No Color
 
 
 FILENAME=`basename "$0"`
-HUGO_VERSION="0.51"
+# extended version with SCSS/SASS support
+HUGO_VERSION="0.53"
 COMMANDS=("install" "upgrade")
 ARCH='64bit'
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

@@ -63,6 +63,14 @@
 }
 
 
+.masthead .ui.secondary.inverted.pointing.menu {
+  border-width: 0;
+  border-color: transparent;
+}
+.masthead .ui.secondary.inverted.pointing.menu {
+  border-color: transparent;
+}
+
 
 pre {
   overflow: auto;

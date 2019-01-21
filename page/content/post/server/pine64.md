@@ -4,7 +4,7 @@ author: iocast
 date: 2018-09-23
 draft: false
 description: Short instruction to install armbian on the Pine64+, configuring the hostname, WiFi, timezone, file system table and installing Samba.
-image: cover.jpg
+image: cover.png
 categories:
 - Server
 tags:

@@ -20,6 +20,10 @@ hugo server --source page/
 - [x] define archteypes
 
 
+## Theme `SemanticUI`
+
+- [ ] a
+
 ## Theme `material-design-lite`
 
 - [ ] On all layout files consider configuration parameter settings
