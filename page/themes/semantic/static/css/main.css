@@ -100,6 +100,38 @@ dd {
   padding-top: 2em;
 }
 
+
+#TableOfContents > ul {
+  padding: 0;
+}
+
+#TableOfContents ul {
+  list-style-type: none;
+}
+
+
+#TableOfContents a {
+  color: inherit;
+  font-size: inherit;
+}
+#TableOfContents a.bold {
+  font-weight: 900;
+}
+
+#TableOfContents > ul ul {
+  padding-left: 1em;
+}
+
+:target {
+  animation: highlight 1s ease;
+}
+
+@keyframes highlight {
+  0% { background: none }
+  100% { background: rgba(255, 243, 78, 0.74); }
+}
+
+
 @media only screen and (max-width: 1272px) {
   .sticky--container > .right.rail {
     padding-left: 1.5em;
