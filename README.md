@@ -10,7 +10,7 @@ hugo server --source page/
 # hugo gen chromastyles --style=monokai > page/static/syntax.css
 ```
 
-# TODOs
+# ToDo's
 
 ## Configuration
 

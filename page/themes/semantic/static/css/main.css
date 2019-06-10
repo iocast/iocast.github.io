@@ -96,8 +96,8 @@ dd {
 
 .sticky--container > .right.rail {
   margin-left: 3em;
-  padding-top: 2em;
   width: 319px;
+  padding-top: 2em;
 }
 
 @media only screen and (max-width: 1272px) {
