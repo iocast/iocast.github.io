@@ -1,0 +1,55 @@
+<li class="post-list-item mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+
+      {{ if isset .Params "image" }}
+      <img class="material-icons mdl-list__item-avatar" src="{{ .Permalink }}/{{ .Params.image }}">
+      {{ else }}
+      <i class="material-icons mdl-list__item-avatar" style="background-color: transparent;"></i>
+      {{ end }}
+
+      <a href="{{ .Permalink }}">
+        <span>{{ .Title }}</span>
+      </a>
+      <small> on {{ dateFormat .Site.Params.DateFormShort .Date }}</small>
+
+      <span class="mdl-list__item-text-body">
+        {{ .Description }}
+      </span>
+
+    </span>
+
+    <span class="mdl-list__item-secondary-content">
+      {{ if or (isset .Params "tags") (isset .Params "categories") }}
+
+      <button class="mdl-list__item-secondary-action more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-post-{{ .UniqueID }}">
+        <i class="material-icons">more_vert</i>
+      </button>
+
+      <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-post-{{ .UniqueID }}">
+
+        {{ if isset .Params "tags" }}
+        {{ range first 3 .Params.tags }}
+        <li>
+          <a class="mdl-menu__item" href="/tags/{{ urlize . }}">{{ lower . }}</a>
+        </li>
+        {{ end }}
+        {{ end }}
+
+        {{ if and (isset .Params "tags") (isset .Params "categories") }}
+        <div class="drawer-separator"></div>
+        {{ end }}
+
+        {{ if isset .Params "categories" }}
+        {{ range first 3 .Params.categories }}
+        <li>
+          <a class="mdl-menu__item" href="/categories/{{ urlize . }}">{{ title . }}</a>
+        </li>
+        {{ end }}
+        {{ end }}
+
+      </ul>
+      {{ else }}
+      <span class="mdl-list__item-secondary-action"></span>
+      {{ end }}
+    </span>
+</li>

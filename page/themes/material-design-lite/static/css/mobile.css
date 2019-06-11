@@ -1,0 +1,76 @@
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+
+  .fab {
+    display: none;
+  }
+
+  header .navigation-container {
+    display: none;
+  }
+
+  header.header .title {
+    display: none !important;
+  }
+
+
+  header .mobile-title {
+    display: block !important;
+    position: absolute;
+    left: calc(50% - 70px);
+    top: 12px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+
+  header .search-box .mdl-textfield__expandable-holder {
+    width: 100%;
+  }
+
+
+  /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
+     consecutive "+" operators in some cases. Therefore, we need to use both
+     here to cover all the bases. */
+  header .search-box.is-focused ~ .mobile-title,
+  header .search-box.is-focused + .navigation-container + .mobile-title {
+    opacity: 0;
+  }
+
+
+  header .search-box.is-focused {
+    width: calc(100% - 48px);
+  }
+
+  header .search-box .mdl-textfield__expandable-holder {
+    width: 100%;
+  }
+
+  header .more-button {
+    display: none;
+  }
+
+
+  /* POST */
+  .post-list-header {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .post-list-item.mdl-list__item--three-line {
+    height: auto;
+  }
+
+  .post-list-item.mdl-list__item--three-line .mdl-list__item-primary-content {
+    height: auto;
+  }
+
+  .post-list-item.mdl-list__item--three-line .mdl-list__item-text-body {
+    height: auto;
+  }
+
+  article.post header {
+    height: auto;
+  }
+
+}

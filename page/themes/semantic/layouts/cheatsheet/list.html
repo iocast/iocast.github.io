@@ -1,0 +1,54 @@
+{{ define "main" }}
+
+{{ range (.Paginate (.Pages.GroupByParam "group") 21).PageGroups }}
+
+{{ if gt (len .Key) 0 }}
+<h3 class="ui blue header">{{ .Key | upper  }}</h3>
+{{ end }}
+
+
+<div class="ui very relaxed list">
+
+  <div class="ui stackable three column grid">
+
+    {{ range .Pages.ByTitle }}
+    <div class="column">
+
+      <div class="item">
+        <!--
+      <img class="ui avatar image" src="/images/avatar/small/daniel.jpg">
+      -->
+        <div class="content">
+          <a class="header" href="{{ .Permalink }}">{{ .Title }}</a>
+          <div class="description">{{ .Description }}</div>
+        </div>
+      </div>
+
+    </div>
+
+    {{ end }}
+  </div>
+
+</div>
+
+{{ end }}
+
+<div class="ui center aligned container">
+  <div class="ui pagination menu">
+    {{ if $.Paginator.HasPrev }}
+    <a class="icon item" href="{{ $.Paginator.Prev.URL }}">
+      <i class="left chevron icon"></i>
+    </a>
+    {{ end }}
+    {{ range $.Paginator.Pagers }}
+    <a class="item" href="{{ .URL }}">{{ .PageNumber }}</a>
+    {{ end }}
+    {{ if $.Paginator.HasNext }}
+    <a class="icon item" href="{{ $.Paginator.Next.URL }}">
+      <i class="right chevron icon"></i>
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+{{ end }}

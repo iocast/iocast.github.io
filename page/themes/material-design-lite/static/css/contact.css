@@ -1,0 +1,15 @@
+article.contact {
+    padding: 0 20px;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+article.contact .mdl-textfield {
+    width: 100%;
+}
+
+article.contact form {
+    max-width: 550px;
+    margin: auto;
+}

@@ -1,0 +1,52 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="{{ .Site.Params.SiteDescription }}">
+  <meta name="author" content="{{ .Site.Params.Author }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>{{ .Title }} -- {{ .Site.Title }}</title>
+
+
+  {{ if .RSSLink }}
+  <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+  <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+  {{ end }}
+
+  <!-- polyfills -->
+  <script src="{{ .Site.BaseURL }}/libs/smoothscroll.min.js"></script>
+
+  <!-- Site specific things -->
+  <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/semantic/semantic.min.css">
+
+  <script src="{{ .Site.BaseURL }}/libs/jquery-3.3.1.min.js"></script>
+  <script src="{{ .Site.BaseURL }}/semantic/semantic.min.js"></script>
+  <script src="{{ .Site.BaseURL }}/libs/masonry.pkgd.min.js"></script>
+
+  <script>
+    $(document)
+      .ready(function () {
+        // fix menu when passed
+        $('.masthead')
+          .visibility({
+            once: false,
+            onBottomPassed: function () {
+              $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function () {
+              $('.fixed.menu').transition('fade out');
+            }
+          })
+          ;
+        // create sidebar and attach to menu open
+        $('.ui.sidebar')
+          .sidebar('attach events', '.toc.item')
+          ;
+      });
+  </script>
+
+
+  <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/syntax.css">
+  <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/main.css">
+
+</head>

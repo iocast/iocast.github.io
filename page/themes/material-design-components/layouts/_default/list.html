@@ -1,0 +1,28 @@
+{{ partial "header.html" . }}
+
+<h2 class="mdc-typography--headline6">Filtered by <strong>{{ .Title }}</strong></h2>
+
+
+<div class="masonry">
+
+
+    {{ $.Scratch.Set "loopCounter" 1 }}
+
+    {{ range .Paginator.Pages }}
+
+      {{ $loopCounter := $.Scratch.Get "loopCounter" }}
+      {{ .Scratch.Set "loopCounter" $loopCounter }}
+      
+      <div class="masonry__item">
+          {{ .Render "summary" }}
+      </div>
+
+      {{ $.Scratch.Add "loopCounter" 1 }}
+
+    {{end}}
+
+  </div>
+
+  {{ partial "pagination" . }}
+
+{{ partial "footer.html" . }}

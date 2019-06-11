@@ -1,0 +1,34 @@
+{{ partial "header.html" .}}
+
+<article class="article">
+
+  {{ partial "toc.html" . }}
+
+  <header class="mdl-typography--text-center">
+      <div class="title">{{ .Title }}</div>
+      <div class="description">{{ .Description }}</div>
+      {{ if isset .Params "image" }}
+      <div class="">
+          <img src="{{ .Permalink }}/{{ .Params.image }}">
+      </div>
+      {{ end }}
+
+      <a href="#content">
+          <button class="fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+              <i class="material-icons">expand_more</i>
+              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+          </button>
+      </a>
+
+  </header>
+
+  <section class="content">
+      <a name="content"></a>
+      {{ .Content }}
+  </section>
+
+  {{ partial "comments.html" .}}
+
+</article>
+
+{{ partial "footer.html" .}}

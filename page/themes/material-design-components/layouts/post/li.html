@@ -1,0 +1,31 @@
+<div class="mdc-card card">
+    <a class="card__content" href="{{ .Permalink }}">
+      <div class="mdc-card__primary-action">
+  
+        {{ if isset .Params "image" }}
+        <div class="mdc-card__media mdc-card__media--16-9 demo-card__media" style="background-image: url(&quot;{{ .Permalink }}/{{ .Params.image }}&quot;);"></div>
+        {{ end }}
+  
+        <div class="card__primary">
+          <h2 class="card__title mdc-typography--headline6">{{ .Title }}</h2>
+          <h3 class="card__subtitle mdc-typography--subtitle2">by {{ $.Param "author" }}</h3>
+        </div>
+  
+        <div class="card__secondary mdc-typography--body2">{{ .Description }}</div>
+  
+      </div>
+    </a>
+  
+    <div class="mdc-card__actions">
+      <div class="mdc-card__action-buttons">
+        <button class="mdc-button mdc-card__action mdc-card__action--button">Read</button>
+      </div>
+      <div class="mdc-card__action-icons">
+        <button class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon"
+          title="Share" data-mdc-ripple-is-unbounded="true">share</button>
+        <button class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon"
+          title="More options" data-mdc-ripple-is-unbounded="true">more_vert</button>
+      </div>
+    </div>
+  </div>
+  

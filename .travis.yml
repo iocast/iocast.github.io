@@ -1,17 +1,70 @@
-language: ruby
-rvm: 1.9.3
+git:
+  depth: false
+  
 env:
   global:
-    - secure: gUVSU/Eu2rRJ4WZzvlDPseTbCIV/Nv/xNkAeSyMSqsCcdbP57y22YrArQGYLJ7UB4lNlQDDCtQTaMtoE28GCHjPWBDsX22X2hTJQxhS0fTFN9aIpPea2dcCiKTnNIS2Jh9qmV23Ly3XuI0YvDLuIs3YK9E4NtH/msz6IiUUmN9w=
+    - HUGO_VERSION="0.55.6"
+  matrix:
+     - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
 
-branches:
-  except:
-    - master
+install:
+  - wget -q https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+  - tar xf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+  - mv hugo ~/bin/
 
 branches:
   only:
-    - develop
+  - develop
 
-script: rake travis
+script:
+  - cd ./page/
+  - hugo --gc --minify
 
-after_success: ./update-gh-pages.sh
+deploy:
+  provider: pages
+  # local_dir: ./page
+  skip_cleanup: true
+  github_token: $GH_TOKEN
+  keep_history: true
+  # repo: iocast/iocast.github.io
+  target_branch: master
+  verbose: true
+  on:
+    branch: develop
+
+
+# language: go
+
+# go:
+#   - master
+
+# sudo: false
+
+# env:
+#   global:
+#     - GH_REF: github.com/iocast/iocast.github.io.git
+#     - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
+
+# branches:
+#   except:
+#   - master
+
+# branches:
+#   only:
+#   - develop
+
+# install:
+#   - go get -v github.com/spf13/hugo
+
+# #after_install:
+
+# #before_script:
+
+# script:
+#   - hugo --source page/ --destination ../public/
+
+# #after_script:
+
+# after_success:
+#   - chmod a+x ./script/update-gh-pages.sh
+#   - ./script/update-gh-pages.sh

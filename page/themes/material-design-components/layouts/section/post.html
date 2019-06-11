@@ -1,0 +1,27 @@
+{{ partial "header.html" . }}
+
+  <div class="post-list">
+
+    {{ $paginator := .Paginate (where .Data.Pages "Type" "post") }}
+
+    {{ range $paginator.Pages.GroupByDate "2006" }}
+    
+    <h2 class="mdc-typography--headline6">{{ .Key }}</h2>
+
+    <div class="masonry">
+
+    {{ range .Pages }}
+      <div class="masonry__item">
+      {{ .Render "li" }}
+      </div>
+    {{end}}
+
+    </div>
+
+    {{end}}
+
+  </div>
+
+  {{ partial "pagination" . }}
+
+{{ partial "footer.html" . }}
