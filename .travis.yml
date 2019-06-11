@@ -21,7 +21,7 @@ script:
 
 deploy:
   provider: pages
-  local_dir: public
+  local_dir: page/public
   skip_cleanup: true
   github_token: $GH_TOKEN
   keep_history: true
