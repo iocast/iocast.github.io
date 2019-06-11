@@ -1,9 +1,0 @@
-.git/
-.che/
-node_modules/
-.DS_Store
-
-*.log
-
-page/db.json
-page/public/

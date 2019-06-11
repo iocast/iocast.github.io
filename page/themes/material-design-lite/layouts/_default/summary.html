@@ -1,8 +1,0 @@
-{{ $loopCounter := .Scratch.Get "loopCounter" }}
-
-<div class="post-preview">
-   <p class="post-meta"><a href="{{ .Permalink }}">{{ .Title }}</a> on {{ dateFormat .Site.Params.DateFormShort .Date }}
-     <br />
-     {{ .Description }}
-   </p>
-</div>
