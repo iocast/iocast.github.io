@@ -8,7 +8,8 @@
   <div class="ui large top fixed hidden menu">
     <div class="ui container">
       {{ range .Site.Menus.main }}
-      <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item" href="{{ .URL }}">{{ .Name }}</a>
+      <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
+        href="{{ .URL }}">{{ .Name }}</a>
       {{ end }}
       <!--
             <div class="right menu">
@@ -26,7 +27,8 @@
   <!-- Sidebar Menu -->
   <div class="ui vertical inverted sidebar menu">
     {{ range .Site.Menus.main }}
-    <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item" href="{{ .URL }}">{{ .Name }}</a>
+    <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
+      href="{{ .URL }}">{{ .Name }}</a>
     {{ end }}
     <!--
           <a class="item">Login</a>
@@ -44,7 +46,8 @@
             <i class="sidebar icon"></i>
           </a>
           {{ range .Site.Menus.main }}
-          <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item" href="{{ .URL }}">{{ .Name }}</a>
+          <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
+            href="{{ .URL }}">{{ .Name }}</a>
           {{ end }}
           <!--
                 <div class="right item">
@@ -59,9 +62,7 @@
         <h1 class="ui inverted header">
           {{ .Title | upper }}
         </h1>
-        <!--
-        <h2>{{ .Description }}</h2>
-        -->
+        <div class="abstract">{{ .Description }}</div>
       </div>
 
     </div>

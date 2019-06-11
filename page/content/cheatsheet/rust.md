@@ -3,13 +3,25 @@ title: Rust
 author: iocast
 date: 2019-01-29
 draft: false
-description:
+description: Small collection of commands and scripts
 type: cheatsheet
 group: ""
 ---
 
+# Overview
 
-uninstall
+| Command                    | Description                                     |
+| :------------------------- | :---------------------------------------------- |
+| `rustup self uninstall `   | uninstall                                       |
+| `rustup update`            | updates rust                                    |
+| `rustup show`              | shows the current innstallation incl. toolchain |
+| `cargo new test_app --bin` | creates a new application / binary project      |
+| `cargo new test_lib --lib` | creates a new library project                   |
+
+
+# Rustup (Setup / Info / etc.)
+
+Uninstall rust on your system.
 
 ```bash
 $ rustup self uninstall
@@ -23,52 +35,68 @@ C:\Users\<name>\.rustup
 ~/.rustup
 ```
 
-rust information
-
-```bash
-rustup show
-```
-
-
-update rust
+## Update
 
 ```bash
 $ rustup udpate
 ```
 
-create new project
+## Current installation
+
+```bash
+$ rustup show
+```
+
+## Toolchain
+
+Install the nightly toolchain as follow.
+
+```bash
+$ rustup toolchain install nightly
+```
+
+Now Rust nightly is installed, but not activated. To test it out you can run a command from the nightly toolchain like
+
+```bash
+$ rustup run nightly rustc --version
+```
+
+But more likely you want to use it for a while. To switch to nightly globally, change the default with rustup default nightly.
+
+```bash
+$ rustup default nightly
+```
+
+
+# Cargo
+
+> Cargo is the Rust package manager. Cargo downloads your Rust package’s dependencies, compiles your packages, makes distributable packages, and uploads them to crates.io, the Rust community’s package registry. You can contribute to this book on GitHub.
+
+
+## New project
 
 ```bash
 $ cargo new <project-name> [--bin|--lib]
 ```
 
 `--bin`
-: binary programm
+: binary programm / project
 
 `--lib`
-: library
+: library project
 
 
 This also initializes a new `git` repository by default. If you don't want it to do that, pass `--vcs none`.
 
 
-compile
 
-```bash
-$ rustc ../*.rs
-```
+## Others
 
-```bash
-$ cargo new test-test
-```
 
 ```bash
 $ cargo check
 ```
 
-```bash
-$ cargo build
-```
 
 ```bash
 $ cargo test
@@ -78,29 +106,25 @@ $ cargo test
 $ cargo clean
 ```
 
+## Dependencies
+
 install creates from creates.io
 
 ```bash
 $ cargo install <name>
 ```
 
-nightly
 
-rustup toolchain install nightly
-
-Now Rust nightly is installed, but not activated. To test it out you can run a command from the nightly toolchain like
-```bash
-$ rustup run nightly rustc --version
-```
-
-But more likely you want to use it for a while. To switch to nightly globally, change the default with rustup default nightly:
-```bash
-$ rustup default nightly
-```
 
 # Building
 
-release using `Cargo.toml`
+To build / compile using `rustc` you can do it as follow.
+
+```bash
+$ rustc ../*.rs
+```
+
+With cargo, which uses `Cargo.toml` the command is as follow.
 
 ```bash
 $ cargo build [--release]

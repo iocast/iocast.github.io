@@ -13,6 +13,9 @@
   <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
   {{ end }}
 
+  <!-- polyfills -->
+  <script src="{{ .Site.BaseURL }}/libs/smoothscroll.min.js"></script>
+
   <!-- Site specific things -->
   <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/semantic/semantic.min.css">
 
