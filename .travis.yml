@@ -22,7 +22,7 @@ script:
 
 deploy:
   provider: pages
-  # local_dir: ./page
+  local_dir: public
   skip_cleanup: true
   github_token: $GH_TOKEN
   keep_history: true
