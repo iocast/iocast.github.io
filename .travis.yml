@@ -12,16 +12,21 @@ install:
   - tar xf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
   - mv hugo ~/bin/
 
+branches:
+  only:
+  - develop
+
 script:
   - hugo --gc --minify
 
 deploy:
   provider: pages
-  skip_cleanup: true
+  local-dir: ./page
+  skip-cleanup: true
   github-token: $GH_TOKEN
-  keep_history: true
+  keep-history: true
   repo: iocast/iocast.github.io
-  target_branch: master
+  target-branch: master
   verbose: true
   on:
     branch: develop
