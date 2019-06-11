@@ -17,11 +17,12 @@ branches:
   - develop
 
 script:
+  - cd ./page/
   - hugo --gc --minify
 
 deploy:
   provider: pages
-  local_dir: ./page
+  # local_dir: ./page
   skip_cleanup: true
   github_token: $GH_TOKEN
   keep_history: true
