@@ -17,8 +17,7 @@ branches:
   - develop
 
 script:
-  - cd ./page/
-  - hugo --gc --minify
+  - hugo --gc --minify --source page/
 
 deploy:
   provider: pages
