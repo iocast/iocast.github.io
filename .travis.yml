@@ -5,8 +5,7 @@ env:
   global:
     - HUGO_VERSION="0.55.6"
   matrix:
-    - GH_REF: github.com/iocast/iocast.github.io.git
-    - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
+     - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
 
 install:
   - wget -q https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
