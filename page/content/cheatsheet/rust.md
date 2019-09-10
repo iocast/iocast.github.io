@@ -10,13 +10,14 @@ group: ""
 
 # Overview
 
-| Command                    | Description                                     |
-| :------------------------- | :---------------------------------------------- |
-| `rustup self uninstall `   | uninstall                                       |
-| `rustup update`            | updates rust                                    |
-| `rustup show`              | shows the current innstallation incl. toolchain |
-| `cargo new test_app --bin` | creates a new application / binary project      |
-| `cargo new test_lib --lib` | creates a new library project                   |
+| Command                    | Description                                            |
+| :------------------------- | :----------------------------------------------------- |
+| `rustup self uninstall `   | uninstall                                              |
+| `rustup update`            | updates rust                                           |
+| `rustup show`              | shows the current innstallation incl. toolchain        |
+| `cargo new test_app --bin` | creates a new application / binary project             |
+| `cargo new test_lib --lib` | creates a new library project                          |
+| `cargo update`             | Update dependencies as recorded in the local lock file |
 
 
 # Rustup (Setup / Info / etc.)
