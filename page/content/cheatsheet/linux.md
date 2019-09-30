@@ -227,6 +227,11 @@ Now you can start the WiFi
 ifup wlan0
 ```
 
+## Speed test
+
+```
+curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+```
 
 # TODO
 current used image version
