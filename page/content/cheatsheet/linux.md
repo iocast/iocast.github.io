@@ -103,7 +103,7 @@ du <directory>
 ## Compression
 
 ```bash
-tar -cvzf <file.tar.bz2> --exclude-vcs --exlude='*.svn' folder/
+tar -cvzf <file.tar.bz2> --exclude-vcs --exclude='*.svn' folder/
 ```
 
 ## Extraction
@@ -200,7 +200,7 @@ nano /etc/network/interfaces
 
 and change it as follow with the information provided by `wpa_passphrase`.
 
-Check on wich interface your WiFi is connected.
+Check on which interface your WiFi is connected.
 
 ```bash
 ifconfig
