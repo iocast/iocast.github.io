@@ -3,7 +3,7 @@ git:
   
 env:
   global:
-    - HUGO_VERSION="0.55.6"
+    - HUGO_VERSION="0.59.0"
   matrix:
      - secure: Hi/jaJsG2H0wu4ey0LO/5/hblUzCiy97s26FaVNJpEJ20rvzFd4HjMKFeyf8cQGosHecpnWAwVYZOfdvxLtz5gai42aMYTDwTLGtWKepXiYuFwS+F7iy3DAUe/tS07OZBJ4piAOT4YUp86QYMTQRg6Q1N65Ephad/sTz9wLZzRc=
 

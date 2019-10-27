@@ -11,14 +11,14 @@ group: "*nix"
 # User & Group Management
 
 
-Purpose            | Command
------------------- | -------------------------------
-new group          | `groupadd sambashare`
-new user           | `useradd -m -g users -G sambashare -s /bin/bash unix_user`
-change password    | `passwd unix_user`
-rename user				 | `usermod -l newUsername oldUsername` and change home folder `usermod -d /home/newHomeDir -m newUsername`
-change to root  	 | `sudo -i`
-remove user        | `deluser --remove-home username`
+| Purpose         | Command                                                                                                  |
+| --------------- | -------------------------------------------------------------------------------------------------------- |
+| new group       | `groupadd sambashare`                                                                                    |
+| new user        | `useradd -m -g users -G sambashare -s /bin/bash unix_user`                                               |
+| change password | `passwd unix_user`                                                                                       |
+| rename user     | `usermod -l newUsername oldUsername` and change home folder `usermod -d /home/newHomeDir -m newUsername` |
+| change to root  | `sudo -i`                                                                                                |
+| remove user     | `deluser --remove-home username`                                                                         |
 
 
 ## User with `sudo` rights
@@ -34,11 +34,11 @@ userName    ALL=(ALL:ALL) ALL
 
 # Samba Management
 
-Purpose            | Command
------------------- | -------------------------------
-new user           | `pdbedit -a -u samba_user`
-change password    | `smbpasswd samba_user`
-list users         | `pdbedit -w -L`
+| Purpose         | Command                    |
+| --------------- | -------------------------- |
+| new user        | `pdbedit -a -u samba_user` |
+| change password | `smbpasswd samba_user`     |
+| list users      | `pdbedit -w -L`            |
 
 
 # File and Directory Handling

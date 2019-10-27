@@ -21,6 +21,8 @@ disqusShortname = "iocast-blog"
 #disqus_title = ""
 #disqus_url = ""
 
+enableEmoji = true
+
 # like alias
 [taxonomies]
   tag = "tags"

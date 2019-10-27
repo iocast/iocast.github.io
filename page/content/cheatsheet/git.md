@@ -77,6 +77,8 @@ Options:
 
 `-a`
 : lists all branches
+`-r`
+: lists all remote branches
 
 ```bash
 git branch [options]
