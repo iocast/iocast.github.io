@@ -1,4 +1,5 @@
 ---
+translationKey: rust-oop
 draft: false
 title: Rust OOP?!...
 author: iocast

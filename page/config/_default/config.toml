@@ -1,0 +1,57 @@
+BaseUrl= "https://iocast.github.io"
+Title= "think twice code once!"
+paginate = 8
+
+Copyright = "All rights reserved © 2019"
+canonifyurls = true
+theme = "semantic"
+
+# Set `true` for Chinese/Japanese/Korean languages.
+hasCJKLanguage = false
+metaDataFormat = "yaml"
+
+languageCode = "en-us"
+# English is the default language
+# DefaultContentLanguage = "en"
+# Force to have /en/my-page and /fr/my-page routes, even for default language.
+defaultContentLanguageInSubdir = true
+enableMissingTranslationPlaceholders = true
+
+
+
+
+
+newContentEditor = "nano"
+sourceRelativeLinksEval = true
+#canonifyURLs = true
+#relativeURLs = true
+pygmentsCodefences = true
+pygmentsUseClasses = true
+pygmentsCodefencesGuessSyntax = true
+#pygmentsOptions = "linenos=table"
+
+disqusShortname = "iocast-blog"
+#disqus_identifier = ""
+#disqus_title = ""
+#disqus_url = ""
+
+enableEmoji = true
+
+
+# https://gohugo.io/getting-started/configuration/
+[blackfriday]
+  angledQuotes = true
+  hrefTargetBlank = true
+  plainIDAnchors = true
+
+
+# like alias
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+
+[[authors]]
+  name = "admin"
+[[authors]]
+  name = "iocast"

@@ -15,10 +15,11 @@ group: ""
 | `rustup self uninstall `   | uninstall                                              |
 | `rustup update`            | updates rust                                           |
 | `rustup show`              | shows the current innstallation incl. toolchain        |
+| `rustup install nightly`   | install toolchain `nightly`                            |
+| `rustup default nightly`   | switch default toolchain to `nightly`                  |
 | `cargo new test_app --bin` | creates a new application / binary project             |
 | `cargo new test_lib --lib` | creates a new library project                          |
 | `cargo update`             | Update dependencies as recorded in the local lock file |
-
 
 # Rustup (Setup / Info / etc.)
 
@@ -186,4 +187,7 @@ cargo +beta test
 
 https://lifthrasiir.github.io/rustlog/why-is-a-rust-executable-large.html
 
+
+
+https://doc.rust-lang.org/cargo/reference/manifest.html
 

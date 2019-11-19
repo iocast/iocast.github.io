@@ -9,7 +9,7 @@
     <div class="ui container">
       {{ range .Site.Menus.main }}
       <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
-        href="{{ .URL }}">{{ .Name }}</a>
+        href="{{ .URL | relLangURL }}">{{ .Name }}</a>
       {{ end }}
       <!--
             <div class="right menu">
@@ -28,7 +28,7 @@
   <div class="ui vertical inverted sidebar menu">
     {{ range .Site.Menus.main }}
     <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
-      href="{{ .URL }}">{{ .Name }}</a>
+      href="{{ .URL | relLangURL }}">{{ .Name }}</a>
     {{ end }}
     <!--
           <a class="item">Login</a>
@@ -47,7 +47,7 @@
           </a>
           {{ range .Site.Menus.main }}
           <a class="{{ if or (and (ne .URL "/") (hasPrefix $.URL .URL)) (and (eq .URL "/") (eq $.URL "/")) }}active{{ end }} item"
-            href="{{ .URL }}">{{ .Name }}</a>
+            href="{{ .URL | relLangURL }}">{{ .Name }}</a>
           {{ end }}
           <!--
                 <div class="right item">
@@ -58,11 +58,42 @@
         </div>
       </div>
 
+
+
+
       <div class="ui text container">
         <h1 class="ui inverted header">
           {{ .Title | upper }}
         </h1>
-        <div class="abstract">{{ .Description }}</div>
+        <div class="abstract">
+          <hr/>
+
+          {{ $frSite := false}}
+          {{ range where .Sites ".Language.Lang" "de" }}
+            {{ $frSite = . }}
+          {{ end }}
+          {{/* ⛑️ Safely wrap the result in a with clause and voilà: */}}
+          {{ with $frSite }}
+            <a href="{{ .Home.RelPermalink }}">🏠 Accueil</a>
+          {{ end }}
+
+
+          {{ if .IsTranslated }}
+          <h4>{{ i18n "translations" }}</h4>
+          <ul>
+              {{ range .Translations }}
+              <li>
+                  <a href="{{ .Permalink }}">{{ .Lang }}: {{ .Title }}{{ if .IsPage }} ({{ i18n "wordCount" . }}){{ end }}</a>
+              </li>
+              {{ end }}
+          </ul>
+          {{ end }}
+
+          {{ .Content }}
+
+          <hr/>
+          
+          {{ .Description }}</div>
       </div>
 
     </div>

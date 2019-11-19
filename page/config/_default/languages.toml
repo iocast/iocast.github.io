@@ -1,0 +1,12 @@
+
+[en]
+title = "think twice code once!"
+weight = 1
+languageName = "English"
+[en.blackfriday]
+angledQuotes = false
+
+[de]
+title = "think twice code once!"
+weight = 2
+languageName = "Deutsch"

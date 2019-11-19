@@ -5,7 +5,7 @@
 ./script/hugo.sh install
 
 # Run
-hugo server --source page/
+hugo server --disableFastRender --ignoreCache --source page/
 
 # hugo gen chromastyles --style=monokai > page/static/syntax.css
 ```

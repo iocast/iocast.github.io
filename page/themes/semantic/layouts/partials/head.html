@@ -13,6 +13,13 @@
   <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
   {{ end }}
 
+
+  {{ if .IsTranslated }}
+    {{ range .Translations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" title="{{ .Language.LanguageName }}">
+    {{ end }}
+  {{ end }}
+
   <!-- polyfills -->
   <script src="{{ .Site.BaseURL }}/libs/smoothscroll.min.js"></script>
 
