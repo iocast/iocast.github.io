@@ -1,0 +1,117 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=description content="blog, cheatsheets, best practices, notes, and more"><meta name=author content="iocast"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1"><title>Creating your own blog using github pages, jekyll and travis -- think twice code once!</title><script src=https://iocast.github.io/libs/smoothscroll.min.js></script><link rel=stylesheet type=text/css href=https://iocast.github.io/semantic/semantic.min.css><script src=https://iocast.github.io/libs/jquery-3.3.1.min.js></script><script src=https://iocast.github.io/semantic/semantic.min.js></script><script src=https://iocast.github.io/libs/masonry.pkgd.min.js></script><script>$(document).ready(function(){$('.masthead').visibility({once:false,onBottomPassed:function(){$('.fixed.menu').transition('fade in');},onBottomPassedReverse:function(){$('.fixed.menu').transition('fade out');}});$('.ui.sidebar').sidebar('attach events','.toc.item');});</script><link rel=stylesheet type=text/css href=https://iocast.github.io/css/syntax.css><link rel=stylesheet type=text/css href=https://iocast.github.io/css/main.css></head><body><div class="ui large top fixed hidden menu"><div class="ui container"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui vertical inverted sidebar menu"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div><div class=pusher><div class="ui inverted vertical masthead center aligned segment"><div class="ui container"><div class="ui large secondary inverted pointing menu"><a class="toc item"><i class="sidebar icon"></i></a><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui text container"><h1 class="ui inverted header">CREATING YOUR OWN BLOG USING GITHUB PAGES, JEKYLL AND TRAVIS</h1><div class=abstract><hr><a href=https://iocast.github.io/de/>🏠 Accueil</a><p>Github offers at the time of writing three different types of pages: for <a href=https://help.github.com/articles/user-organization-and-project-pages title="Github Pages (Help)">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p><p>Hence this post is going to discuss the a simple workflow using <a href=http://github.com/ title=Github>Github&rsquo;s</a> user pages, <a href=http://jekyllrb.com title=Jekyll>jekyll</a> as blog and pseudo dynamic page, <a href=http://travis-ci.org title="Travis CI">travis</a> as our continuous integration solution for deployment purposes.</p><h2 id=github>Github</h2><p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href=http://jekyllrb.com title=Jekyll>jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash><span class=c1># Creates our branch, without any parents (it&#39;s an orphan!)</span>
+git checkout --orphan develop
+<span class=c1># Remove all files from the old working tree</span>
+git rm -rf .
+
+<span class=nb>echo</span> <span class=s2>&#34;My GitHub Page&#34;</span> &gt; index.html
+git add index.html
+git commit -a -m <span class=s2>&#34;First pages commit&#34;</span>
+git push origin develop</code></pre></div><p>Now we are ready to add our <a href=http://jekyllrb.com title=Jekyll>jekyll</a> page to this <code>develop</code> branch.</p><h2 id=jekyll>Jekyll</h2><p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href=http://jekyllrb.com title=Jekyll>jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href=http://jekyllrb.com/docs/home/ title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p><p>In addition we need to setup a <code>_config.yml</code> file to tell <a href=http://jekyllrb.com title=Jekyll>jekyll</a> the compilation options. A example could look like the following:</p><div class=highlight><pre class=chroma>destination: ./_site
+lsi:         true
+pygments:    true
+markdown:    rdiscount
+permalink:   date
+rdiscount:
+  extensions: [smart]
+
+exclude: [&#39;Gemfile&#39;, &#39;Gemfile.lock&#39;, &#39;Rakefile&#39;, &#39;README.md&#39;, &#39;update-gh-pages.sh&#39;]</pre></div><h2 id=travis-ci>Travis CI</h2><p><a href=http://travis-ci.org title="Travis CI">Travis</a> is used to automatically deploy the <code>develop</code> branch and push the result of the <code>jekyll build</code> output to the <code>master</code> branch which the would be published to the Github pages.</p><p>For that we need first to get <a href=http://travis-ci.org title="Travis CI">travis</a> access to our Github repository. If you do not have a <a href=http://travis-ci.org title="Travis CI">travis</a> account register one on the homepage. On The <a href=http://travis-ci.org title="Travis CI">travis</a> homepage go to the account settings and get access to the appropriate repository like in the image below:</p><p><img src=travis_repository_access.png alt="Travis Repository Access" title="Travis Repository Access"></p><p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p><div class=highlight><pre class=chroma>language: ruby
+rvm: 1.9.3
+
+branches:
+  except:
+  - master
+
+branches:
+  only:
+  - develop
+
+script: rake travis</pre></div><p>As you can see in the <code>.travis.yml</code> file the <a href=http://jekyllrb.com title=Jekyll>jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p><p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=n>source</span> <span class=s1>&#39;http://rubygems.org&#39;</span>
+
+<span class=n>gem</span> <span class=s1>&#39;jekyll&#39;</span>
+<span class=n>gem</span> <span class=s1>&#39;rdiscount&#39;</span>
+<span class=n>gem</span> <span class=s1>&#39;redcarpet&#39;</span></code></pre></div><p>For <a href=http://travis-ci.org title="Travis CI">travis</a> deployment add the following task to the <code>Rakefile</code>:</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>	<span class=c1>#!/usr/bin/env rake</span>
+
+	<span class=n>task</span> <span class=ss>:travis</span> <span class=k>do</span>
+	  <span class=nb>system</span><span class=p>(</span><span class=s2>&#34;jekyll build&#34;</span><span class=p>)</span>
+	<span class=k>end</span></code></pre></div><p>Lastly we need to create a <code>bash</code> script to push the compiled <a href=http://jekyllrb.com title=Jekyll>jekyll</a> page to the <code>master</code> branch. For that authorize <a href=http://travis-ci.org title="Travis CI">travis</a> to do commits and pushed as follow:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>	curl -X POST -u &lt;your_github_username&gt; -H <span class=s2>&#34;Content-Type: application/json&#34;</span> -d <span class=s2>&#34;{\&#34;scopes\&#34;:[\&#34;public_repo\&#34;],\&#34;note\&#34;:\&#34;token for pushing from travis\&#34;}&#34;</span> https://api.github.com/authorizations</code></pre></div><p>and copy the <code>token</code> key from the json result.</p><p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>gem install travis
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class=nv>GH_TOKEN</span><span class=o>=</span>&lt;token&gt; --add env.global</code></pre></div><p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$TRAVIS_PULL_REQUEST</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;false&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+  <span class=nb>echo</span> -e <span class=s2>&#34;Starting to update master\n&#34;</span>
+
+  cp -R _site <span class=nv>$HOME</span>/_site
+
+  <span class=nb>cd</span> <span class=nv>$HOME</span>
+  git config --global user.email <span class=s2>&#34;iocast@me.com&#34;</span>
+  git config --global user.name <span class=s2>&#34;iocast&#34;</span>
+  git clone --quiet --branch<span class=o>=</span>master https://<span class=si>${</span><span class=nv>GH_TOKEN</span><span class=si>}</span>@github.com/iocast/iocast.github.io.git master &gt; /dev/null
+
+  <span class=nb>cd</span> master
+  rm -rf ./*
+  cp -Rf <span class=nv>$HOME</span>/_site/* .
+
+  git add -f .
+  git commit -m <span class=s2>&#34;Travis build </span><span class=nv>$TRAVIS_BUILD_NUMBER</span><span class=s2> pushed to master&#34;</span>
+  git push -fq origin master &gt; /dev/null
+
+  <span class=nb>echo</span> -e <span class=s2>&#34;Done magic with coverage\n&#34;</span>
+<span class=k>fi</span></code></pre></div><p>and add the following lines to the end of the <code>.travis.yml</code> file:</p><div class=highlight><pre class=chroma>after_success: ./update-gh-pages.sh</pre></div><hr>Github overs gh-pages to create a own site for personal or project usage. Together with jekyll you are able to create your own blog and using Travis CI enables automatic building of your blog.</div></div></div><div class="ui vertical stripe segment"><div class="ui middle aligned stackable grid container"><div class=row><div class="sixteen wide column"><div class="main ui container sticky--container"><div class="ui dividing right rail"><div class="ui sticky"><h4 class="ui header">Creating your own blog using github pages, jekyll and travis</h4><nav id=TableOfContents><ul><li><ul><li><a href=#github>Github</a></li><li><a href=#jekyll>Jekyll</a></li><li><a href=#travis-ci>Travis CI</a></li></ul></li></ul></nav></div></div><div><p>Github offers at the time of writing three different types of pages: for <a href=https://help.github.com/articles/user-organization-and-project-pages title="Github Pages (Help)">users, organizations and projects</a>. For the users and organizations the <code>master</code> branch is going to be used to deploy as static web page. For projects, means in a repository which is not called <code>username.github.io</code>, a subpath of the user pages would be created <code>username.github.io/projectname</code>.</p><p>Hence this post is going to discuss the a simple workflow using <a href=http://github.com/ title=Github>Github&rsquo;s</a> user pages, <a href=http://jekyllrb.com title=Jekyll>jekyll</a> as blog and pseudo dynamic page, <a href=http://travis-ci.org title="Travis CI">travis</a> as our continuous integration solution for deployment purposes.</p><h2 class="ui header" id=github>Github</h2><p>First setup a new user page on Github using for example the page generator or simply setting up a new repository called <code>username.github.io</code>. Github will automatically create a new <code>master</code> branch which is used for deploying the content to the web server. In our case, we need to have a separate branch for our blog which is setup using <a href=http://jekyllrb.com title=Jekyll>jekyll</a>. Therefore create a new branch e.g. called <code>develop</code> as follow</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash><span class=c1># Creates our branch, without any parents (it&#39;s an orphan!)</span>
+git checkout --orphan develop
+<span class=c1># Remove all files from the old working tree</span>
+git rm -rf .
+
+<span class=nb>echo</span> <span class=s2>&#34;My GitHub Page&#34;</span> &gt; index.html
+git add index.html
+git commit -a -m <span class=s2>&#34;First pages commit&#34;</span>
+git push origin develop</code></pre></div><p>Now we are ready to add our <a href=http://jekyllrb.com title=Jekyll>jekyll</a> page to this <code>develop</code> branch.</p><h2 class="ui header" id=jekyll>Jekyll</h2><p>Now that we have a <code>master</code> and <code>develop</code> branch, former for the <a href=http://jekyllrb.com title=Jekyll>jekyll</a> compilation and later for your source, we can setup our blog. As described in the <a href=http://jekyllrb.com/docs/home/ title="Jekyll Documentation">jekyll documentation</a> we need to have at least a <code>_layouts</code> directory for the templates that wrap posts, a <code>_posts</code> for dynamic content and the rest of html and other files for you layout.</p><p>In addition we need to setup a <code>_config.yml</code> file to tell <a href=http://jekyllrb.com title=Jekyll>jekyll</a> the compilation options. A example could look like the following:</p><div class=highlight><pre class=chroma>destination: ./_site
+lsi:         true
+pygments:    true
+markdown:    rdiscount
+permalink:   date
+rdiscount:
+  extensions: [smart]
+
+exclude: [&#39;Gemfile&#39;, &#39;Gemfile.lock&#39;, &#39;Rakefile&#39;, &#39;README.md&#39;, &#39;update-gh-pages.sh&#39;]</pre></div><h2 class="ui header" id=travis-ci>Travis CI</h2><p><a href=http://travis-ci.org title="Travis CI">Travis</a> is used to automatically deploy the <code>develop</code> branch and push the result of the <code>jekyll build</code> output to the <code>master</code> branch which the would be published to the Github pages.</p><p>For that we need first to get <a href=http://travis-ci.org title="Travis CI">travis</a> access to our Github repository. If you do not have a <a href=http://travis-ci.org title="Travis CI">travis</a> account register one on the homepage. On The <a href=http://travis-ci.org title="Travis CI">travis</a> homepage go to the account settings and get access to the appropriate repository like in the image below:</p><p><img src=travis_repository_access.png alt="Travis Repository Access" title="Travis Repository Access"></p><p>The next step is to configure the build process. For that create a new file called <code>.travis.yml</code> in the root directory of the <code>develop</code> branch and add the <code>master</code> branch to the blacklist and the <code>develop</code> branch to the whitelist.</p><div class=highlight><pre class=chroma>language: ruby
+rvm: 1.9.3
+
+branches:
+  except:
+  - master
+
+branches:
+  only:
+  - develop
+
+script: rake travis</pre></div><p>As you can see in the <code>.travis.yml</code> file the <a href=http://jekyllrb.com title=Jekyll>jekyll</a> deployment starts with the command <code>rake travis</code> which is implemented in the <code>Rakefile</code> file which uses the <code>Gemfile</code> for ruby library dependencies. So create the files <code>Gemfile</code> and <code>Rakefile</code> in the root directory of the <code>develop</code> branch.</p><p>For the above <code>_config.yml</code> configuration add the following RubyGem dependencies to the <code>Gemfile</code>:</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=n>source</span> <span class=s1>&#39;http://rubygems.org&#39;</span>
+
+<span class=n>gem</span> <span class=s1>&#39;jekyll&#39;</span>
+<span class=n>gem</span> <span class=s1>&#39;rdiscount&#39;</span>
+<span class=n>gem</span> <span class=s1>&#39;redcarpet&#39;</span></code></pre></div><p>For <a href=http://travis-ci.org title="Travis CI">travis</a> deployment add the following task to the <code>Rakefile</code>:</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>	<span class=c1>#!/usr/bin/env rake</span>
+
+	<span class=n>task</span> <span class=ss>:travis</span> <span class=k>do</span>
+	  <span class=nb>system</span><span class=p>(</span><span class=s2>&#34;jekyll build&#34;</span><span class=p>)</span>
+	<span class=k>end</span></code></pre></div><p>Lastly we need to create a <code>bash</code> script to push the compiled <a href=http://jekyllrb.com title=Jekyll>jekyll</a> page to the <code>master</code> branch. For that authorize <a href=http://travis-ci.org title="Travis CI">travis</a> to do commits and pushed as follow:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>	curl -X POST -u &lt;your_github_username&gt; -H <span class=s2>&#34;Content-Type: application/json&#34;</span> -d <span class=s2>&#34;{\&#34;scopes\&#34;:[\&#34;public_repo\&#34;],\&#34;note\&#34;:\&#34;token for pushing from travis\&#34;}&#34;</span> https://api.github.com/authorizations</code></pre></div><p>and copy the <code>token</code> key from the json result.</p><p>Now install the travis gem, encrypt the values of environment variables and add it to the <code>.tavis.yml</code> file:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>gem install travis
+travis encrypt -r &lt;user&gt;/&lt;repository&gt; <span class=nv>GH_TOKEN</span><span class=o>=</span>&lt;token&gt; --add env.global</code></pre></div><p>Lastly you need to create a bash file which pushes the update to he <code>master</code> branch using the <code>GH_TOKEN</code> which was encrypted before and need to be registered in the <code>.travis.yml</code> as <code>after_success</code> task:</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$TRAVIS_PULL_REQUEST</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;false&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+  <span class=nb>echo</span> -e <span class=s2>&#34;Starting to update master\n&#34;</span>
+
+  cp -R _site <span class=nv>$HOME</span>/_site
+
+  <span class=nb>cd</span> <span class=nv>$HOME</span>
+  git config --global user.email <span class=s2>&#34;iocast@me.com&#34;</span>
+  git config --global user.name <span class=s2>&#34;iocast&#34;</span>
+  git clone --quiet --branch<span class=o>=</span>master https://<span class=si>${</span><span class=nv>GH_TOKEN</span><span class=si>}</span>@github.com/iocast/iocast.github.io.git master &gt; /dev/null
+
+  <span class=nb>cd</span> master
+  rm -rf ./*
+  cp -Rf <span class=nv>$HOME</span>/_site/* .
+
+  git add -f .
+  git commit -m <span class=s2>&#34;Travis build </span><span class=nv>$TRAVIS_BUILD_NUMBER</span><span class=s2> pushed to master&#34;</span>
+  git push -fq origin master &gt; /dev/null
+
+  <span class=nb>echo</span> -e <span class=s2>&#34;Done magic with coverage\n&#34;</span>
+<span class=k>fi</span></code></pre></div><p>and add the following lines to the end of the <code>.travis.yml</code> file:</p><div class=highlight><pre class=chroma>after_success: ./update-gh-pages.sh</pre></div></div></div><script>$('.ui.sticky').sticky({context:'.sticky--container',offset:56});</script></div></div></div></div></div><script src=https://iocast.github.io/main.js></script></body></html>

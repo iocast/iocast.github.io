@@ -1,0 +1,43 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=description content="blog, cheatsheets, best practices, notes, and more"><meta name=author content="iocast"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1"><title>-- think twice code once!</title><script src=https://iocast.github.io/libs/smoothscroll.min.js></script><link rel=stylesheet type=text/css href=https://iocast.github.io/semantic/semantic.min.css><script src=https://iocast.github.io/libs/jquery-3.3.1.min.js></script><script src=https://iocast.github.io/semantic/semantic.min.js></script><script src=https://iocast.github.io/libs/masonry.pkgd.min.js></script><script>$(document).ready(function(){$('.masthead').visibility({once:false,onBottomPassed:function(){$('.fixed.menu').transition('fade in');},onBottomPassedReverse:function(){$('.fixed.menu').transition('fade out');}});$('.ui.sidebar').sidebar('attach events','.toc.item');});</script><link rel=stylesheet type=text/css href=https://iocast.github.io/css/syntax.css><link rel=stylesheet type=text/css href=https://iocast.github.io/css/main.css></head><body><div class="ui large top fixed hidden menu"><div class="ui container"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui vertical inverted sidebar menu"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div><div class=pusher><div class="ui inverted vertical masthead center aligned segment"><div class="ui container"><div class="ui large secondary inverted pointing menu"><a class="toc item"><i class="sidebar icon"></i></a><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui text container"><h1 class="ui inverted header"></h1><div class=abstract><hr><a href=https://iocast.github.io/de/>🏠 Accueil</a><p><a href=https://kodi.wiki/view/JSON-RPC_API/v8#PVR.GetRecordings>Kodi JSONRPC</a></p><div class=highlight><pre class=chroma><code class=language-curl data-lang=curl>POST http://elara:8080/jsonrpc
+Content-Type: application/json
+
+{
+    &#34;jsonrpc&#34;:&#34;2.0&#34;,
+    &#34;method&#34;:&#34;GUI.ShowNotification&#34;,
+    &#34;params&#34;:{
+        &#34;title&#34;:&#34;durst ...&#34;,
+        &#34;message&#34;:&#34;wo bleibt mein teee .....&#34;
+    },
+    &#34;id&#34;:1
+}</code></pre></div><div class=highlight><pre class=chroma><code class=language-curl data-lang=curl>POST {{url}}
+Content-Type: application/json
+
+{
+    &#34;jsonrpc&#34;:&#34;2.0&#34;,
+    &#34;method&#34;:&#34;PVR.GetRecordings&#34;,
+    &#34;id&#34;:1
+}</code></pre></div><hr></div></div></div><div class="ui vertical stripe segment"><div class="ui middle aligned stackable grid container"><div class=row><div class="sixteen wide column"><div class="main ui container sticky--container"><div class="ui dividing right rail"><div class="ui sticky"><h4 class="ui header"></h4></div></div><div><p><a href=https://kodi.wiki/view/JSON-RPC_API/v8#PVR.GetRecordings>Kodi JSONRPC</a></p><div class=highlight><pre class=chroma><code class=language-curl data-lang=curl>POST http://elara:8080/jsonrpc
+Content-Type: application/json
+
+{
+    &#34;jsonrpc&#34;:&#34;2.0&#34;,
+    &#34;method&#34;:&#34;GUI.ShowNotification&#34;,
+    &#34;params&#34;:{
+        &#34;title&#34;:&#34;durst ...&#34;,
+        &#34;message&#34;:&#34;wo bleibt mein teee .....&#34;
+    },
+    &#34;id&#34;:1
+}</code></pre></div><div class=highlight><pre class=chroma><code class=language-curl data-lang=curl>POST {{url}}
+Content-Type: application/json
+
+{
+    &#34;jsonrpc&#34;:&#34;2.0&#34;,
+    &#34;method&#34;:&#34;PVR.GetRecordings&#34;,
+    &#34;id&#34;:1
+}</code></pre></div></div></div><script>$('.ui.sticky').sticky({context:'.sticky--container',offset:56});</script></div></div></div></div></div><script src=https://iocast.github.io/main.js></script></body></html>

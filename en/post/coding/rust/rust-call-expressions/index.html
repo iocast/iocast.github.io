@@ -1,0 +1,83 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=description content="blog, cheatsheets, best practices, notes, and more"><meta name=author content="iocast"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1"><title>Rust OOP?!... -- think twice code once!</title><link rel=alternate hreflang=de href=https://iocast.github.io/de/post/coding/rust/rust-call-expressions/ title=Deutsch><script src=https://iocast.github.io/libs/smoothscroll.min.js></script><link rel=stylesheet type=text/css href=https://iocast.github.io/semantic/semantic.min.css><script src=https://iocast.github.io/libs/jquery-3.3.1.min.js></script><script src=https://iocast.github.io/semantic/semantic.min.js></script><script src=https://iocast.github.io/libs/masonry.pkgd.min.js></script><script>$(document).ready(function(){$('.masthead').visibility({once:false,onBottomPassed:function(){$('.fixed.menu').transition('fade in');},onBottomPassedReverse:function(){$('.fixed.menu').transition('fade out');}});$('.ui.sidebar').sidebar('attach events','.toc.item');});</script><link rel=stylesheet type=text/css href=https://iocast.github.io/css/syntax.css><link rel=stylesheet type=text/css href=https://iocast.github.io/css/main.css></head><body><div class="ui large top fixed hidden menu"><div class="ui container"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui vertical inverted sidebar menu"><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div><div class=pusher><div class="ui inverted vertical masthead center aligned segment"><div class="ui container"><div class="ui large secondary inverted pointing menu"><a class="toc item"><i class="sidebar icon"></i></a><a class=item href=https://iocast.github.io/en/>Home</a>
+<a class=item href=https://iocast.github.io/en/post/>Archives</a>
+<a class=item href=https://iocast.github.io/en/cheatsheet/>Cheatsheets</a></div></div><div class="ui text container"><h1 class="ui inverted header">RUST OOP?!...</h1><div class=abstract><hr><a href=https://iocast.github.io/de/>🏠 Accueil</a><h4></h4><ul><li><a href=https://iocast.github.io/de/post/coding/rust/rust-call-expressions/>de: ()</a></li></ul><p>Wer kennt das nicht. Man lernt gerade eine neue Programmiersprache und möchte alt bewärtes anwenden. Hmmm 😕 😠 😡 &hellip; nur wie? Diesesmal versuche ich einige OOP Konzepte in Rust umzusetzen.</p><h1 id=mehrdeutiger-funktionsaufruf-funktionen-überladen>Mehrdeutiger Funktionsaufruf (&ldquo;Funktionen überladen&rdquo;)</h1><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>trait</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>trait</span><span class=w> </span><span class=n>Ugly</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>  </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>struct</span> <span class=nc>Foo</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Foo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>struct</span> <span class=nc>Bar</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Bar</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Ugly</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Bar</span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>f</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Foo</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>b</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Bar</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=c1>// we can do this because we only have one item called `print` for `Foo`s
+</span><span class=c1></span><span class=w>    </span><span class=n>f</span><span class=p>.</span><span class=n>print</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=c1>// more explicit, and, in the case of `Foo`, not necessary
+</span><span class=c1></span><span class=w>    </span><span class=n>Foo</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>f</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=c1>// if you&#39;re not into the whole brevity thing
+</span><span class=c1></span><span class=w>    </span><span class=o>&lt;</span><span class=n>Foo</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>Pretty</span><span class=o>&gt;</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>f</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=c1>// b.print(); // Error: multiple &#39;print&#39; found
+</span><span class=c1></span><span class=w>    </span><span class=c1>// Bar::print(&amp;b); // Still an error: multiple `print` found
+</span><span class=c1></span><span class=w>
+</span><span class=w>    </span><span class=c1>// necessary because of in-scope items defining `print`
+</span><span class=c1></span><span class=w>    </span><span class=o>&lt;</span><span class=n>Bar</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>Pretty</span><span class=o>&gt;</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>b</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></div><hr>Wer kennt das nicht. Man lernt gerade eine neue Programmiersprache und möchte alt bewärtes anwenden. Hmmm ... nur wie? Diesesmal versuche ich einige OOP Konzepte in Rust umzusetzen.</div></div></div><div class="ui vertical stripe segment"><div class="ui middle aligned stackable grid container"><div class=row><div class="sixteen wide column"><div class="main ui container sticky--container"><div class="ui dividing right rail"><div class="ui sticky"><h4 class="ui header">Rust OOP?!...</h4><nav id=TableOfContents><ul><li><a href=#mehrdeutiger-funktionsaufruf-funktionen-überladen>Mehrdeutiger Funktionsaufruf (&ldquo;Funktionen überladen&rdquo;)</a></li></ul></nav></div></div><div><p>Wer kennt das nicht. Man lernt gerade eine neue Programmiersprache und möchte alt bewärtes anwenden. Hmmm 😕 😠 😡 &hellip; nur wie? Diesesmal versuche ich einige OOP Konzepte in Rust umzusetzen.</p><h1 class="ui header" id=mehrdeutiger-funktionsaufruf-funktionen-überladen>Mehrdeutiger Funktionsaufruf (&ldquo;Funktionen überladen&rdquo;)</h1><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>trait</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>trait</span><span class=w> </span><span class=n>Ugly</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>  </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>struct</span> <span class=nc>Foo</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Foo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>struct</span> <span class=nc>Bar</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Pretty</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Bar</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>Ugly</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>Bar</span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>f</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Foo</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>b</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Bar</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=c1>// we can do this because we only have one item called `print` for `Foo`s
+</span><span class=c1></span><span class=w>    </span><span class=n>f</span><span class=p>.</span><span class=n>print</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=c1>// more explicit, and, in the case of `Foo`, not necessary
+</span><span class=c1></span><span class=w>    </span><span class=n>Foo</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>f</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=c1>// if you&#39;re not into the whole brevity thing
+</span><span class=c1></span><span class=w>    </span><span class=o>&lt;</span><span class=n>Foo</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>Pretty</span><span class=o>&gt;</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>f</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=c1>// b.print(); // Error: multiple &#39;print&#39; found
+</span><span class=c1></span><span class=w>    </span><span class=c1>// Bar::print(&amp;b); // Still an error: multiple `print` found
+</span><span class=c1></span><span class=w>
+</span><span class=w>    </span><span class=c1>// necessary because of in-scope items defining `print`
+</span><span class=c1></span><span class=w>    </span><span class=o>&lt;</span><span class=n>Bar</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>Pretty</span><span class=o>&gt;</span>::<span class=n>print</span><span class=p>(</span><span class=o>&amp;</span><span class=n>b</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></div></div></div><script>$('.ui.sticky').sticky({context:'.sticky--container',offset:56});</script></div></div></div></div></div><script src=https://iocast.github.io/main.js></script></body></html>
